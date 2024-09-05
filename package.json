@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.0.12",
+	"version": "0.0.13",
 	"devDependencies": {
 		"@parcel/logger": "*",
 		"autoprefixer": "^10.1.0",
@@ -16,11 +16,12 @@
 		"postcss-nesting": "^10.2.0"
 	},
 	"scripts": {
-		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u autoprefixer -u cssnano --no-map -d dist/",
-		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
-		"build": "npm run build-css && npm run build-js",
-		"test": "exit 0"
+    "build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u autoprefixer -u cssnano --no-map -d dist/",
+    "build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
+    "build": "npm run build-css && npm run build-js",
+    "test": "exit 0"
 	},
+  "main": "dist/x.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/andreyshpigunov/x.git"
@@ -35,6 +36,6 @@
 		"defaults"
 	],
     "publishConfig": {
-        "@andreyshpigunov:registry": "https://npm.pkg.github.com"
+      "@andreyshpigunov:registry": "https://npm.pkg.github.com"
     }
 }
