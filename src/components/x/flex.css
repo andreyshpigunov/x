@@ -1,0 +1,131 @@
+/*---------------------------
+flex.css
+auto
+
+Created by andreyshpigunov on 19.01.2022.
+---------------------------*/
+
+/* Flexbox */
+
+:root {
+    --flex-gap: 0;
+}
+
+.flex {
+    display: flex;
+    gap: var(--flex-gap);
+    
+    &.fr { flex-direction: row }
+    &.fc { flex-direction: column }
+    &.fw { flex-wrap: wrap }
+    &.fnw { flex-wrap: nowrap }
+    
+    &.ais { align-items: stretch }
+    &.aifs { align-items: flex-start }
+    &.aic { align-items: center }
+    &.aife { align-items: flex-end }
+    
+    &.jcfs { justify-content: flex-start }
+    &.jcc { justify-content: center }
+    &.jcfe { justify-content: flex-end }
+    &.jcsb { justify-content: space-between }
+    &.jcsa { justify-content: space-around }
+    &.jcse { justify-content: space-evenly }
+    
+    @for $i from 0 to 10 {
+        & .f$(i) {
+            flex: $(i);
+        }
+    }
+    
+    @for $i from 0 to 10 {
+        & .fb$(i) {
+            flex: 0 0 calc($(i) * 10%);
+            max-width: calc($(i) * 10%);
+        }
+    }
+    
+    @for $i from 0 to 10 {
+        & .fg$(i) {
+            flex-grow: $(i);
+        }
+    }
+    
+    @media(max-width: 1023px){
+        
+        &.md\:fr { flex-direction: row }
+        &.md\:fc { flex-direction: column }
+        &.md\:fw { flex-wrap: wrap }
+        &.md\:fnw { flex-wrap: nowrap }
+        
+        &.md\:ais { align-items: stretch }
+        &.md\:aifs { align-items: flex-start }
+        &.md\:aic { align-items: center }
+        &.md\:aife { align-items: flex-end }
+        
+        &.md\:jcfs { justify-content: flex-start }
+        &.md\:jcc { justify-content: center }
+        &.md\:jcfe { justify-content: flex-end }
+        &.md\:jcsb { justify-content: space-between }
+        &.md\:jcsa { justify-content: space-around }
+        &.md\:jcse { justify-content: space-evenly }
+        
+        @for $i from 0 to 10 {
+            & .md\:f$(i) {
+                flex: $(i);
+            }
+        }
+        
+        @for $i from 0 to 10 {
+            & .md\:fb$(i) {
+                flex: 0 0 calc($(i) * 10%);
+                max-width: calc($(i) * 10%);
+            }
+        }
+        
+        @for $i from 0 to 10 {
+            & .md\:fg$(i) {
+                flex-grow: $(i);
+            }
+        }
+    }
+    
+    @media(max-width: 639px){
+        
+        &.sm\:fr { flex-direction: row }
+        &.sm\:fc { flex-direction: column }
+        &.sm\:fw { flex-wrap: wrap }
+        &.sm\:fnw { flex-wrap: nowrap }
+        
+        &.sm\:ais { align-items: stretch }
+        &.sm\:aifs { align-items: flex-start }
+        &.sm\:aic { align-items: center }
+        &.sm\:aife { align-items: flex-end }
+        
+        &.sm\:jcfs { justify-content: flex-start }
+        &.sm\:jcc { justify-content: center }
+        &.sm\:jcfe { justify-content: flex-end }
+        &.sm\:jcsb { justify-content: space-between }
+        &.sm\:jcsa { justify-content: space-around }
+        &.sm\:jcse { justify-content: space-evenly }
+        
+        @for $i from 0 to 10 {
+            & .sm\:f$(i) {
+                flex: $(i);
+            }
+        }
+        
+        @for $i from 0 to 10 {
+            & .sm\:fb$(i) {
+                flex: 0 0 calc($(i) * 10%);
+                max-width: calc($(i) * 10%);
+            }
+        }
+        
+        @for $i from 0 to 10 {
+            & .sm\:fg$(i) {
+                flex-grow: $(i);
+            }
+        }
+    }
+}

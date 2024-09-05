@@ -1,0 +1,18 @@
+/*---------------------------
+sheets.css
+auto
+
+Created by andreyshpigunov on 14.04.2022.
+---------------------------*/
+
+/* Sheets */
+
+.sheets {
+    
+}
+.sheets-tab {
+    
+}
+.sheets-body:not(.active) {
+    display: none;
+}

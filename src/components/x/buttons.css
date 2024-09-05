@@ -1,0 +1,300 @@
+/*---------------------------
+buttons.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+/* Buttons */
+
+:root {
+    --button-padding: .6em 1.1em;
+    --button-font-family: var(--font-family);
+    --button-font-size: var(--font-size);
+    --button-font-size-xsmall: calc(var(--button-font-size) * .8);
+    --button-font-size-small: calc(var(--button-font-size) * .9);
+    --button-font-size-large: calc(var(--button-font-size) * 1.2);
+    --button-font-size-xlarge: calc(var(--button-font-size) * 1.4);
+    --button-font-size-xs: calc(var(--button-font-size) * .8);
+    --button-font-size-sm: calc(var(--button-font-size) * .9);
+    --button-font-size-lg: calc(var(--button-font-size) * 1.25);
+    --button-font-size-xl: calc(var(--button-font-size) * 1.5);
+    --button-font-weight: 400;
+    --button-border-radius: 10px;
+    --button-transition: all .1s ease-out;
+    
+    --button-transform: scale(1);
+    --button-transform-hover: scale(1);
+    --button-transform-active: scale(1);
+    --button-transform-origin: center;
+    
+    --button-color: #f2f4f6;
+    --button-color-hover: var(--button-color);
+    --button-color-active: var(--button-color);
+    --button-font-color: #000;
+    --button-font-color-hover: var(--button-font-color);
+    --button-font-color-active: var(--button-font-color);
+    
+    --button-primary-color: #0074d9;
+    --button-primary-color-hover: var(--button-primary-color);
+    --button-primary-color-active: var(--button-primary-color);
+    --button-primary-font-color: #fff;
+    --button-primary-font-color-hover: var(--button-primary-font-color);
+    --button-primary-font-color-active: var(--button-primary-font-color);
+    
+    --button-success-color: #2bc016;
+    --button-success-color-hover: var(--button-success-color);
+    --button-success-color-active: var(--button-success-color);
+    --button-success-font-color: #fff;
+    --button-success-font-color-hover: var(--button-success-font-color);
+    --button-success-font-color-active: var(--button-success-font-color);
+    
+    --button-danger-color: #e63838;
+    --button-danger-color-hover: var(--button-danger-color);
+    --button-danger-color-active: var(--button-danger-color);
+    --button-danger-font-color: #fff;
+    --button-danger-font-color-hover: var(--button-danger-font-color);
+    --button-danger-font-color-active: var(--button-danger-font-color);
+    
+    --button-warning-color: #fb8500;
+    --button-warning-color-hover: var(--button-warning-color);
+    --button-warning-color-active: var(--button-warning-color);
+    --button-warning-font-color: #fff;
+    --button-warning-font-color-hover: var(--button-warning-font-color);
+    --button-warning-font-color-active: var(--button-warning-font-color);
+    
+    --button-white-color: #fff;
+    --button-white-color-hover: var(--button-white-color);
+    --button-white-color-active: var(--button-white-color);
+    --button-white-font-color: #000;
+    --button-white-font-color-hover: var(--button-white-font-color);
+    --button-white-font-color-active: var(--button-white-font-color);
+    
+    --button-black-color: #000;
+    --button-black-color-hover: var(--button-black-color);
+    --button-black-color-active: var(--button-black-color);
+    --button-black-font-color: #fff;
+    --button-black-font-color-hover: var(--button-black-font-color);
+    --button-black-font-color-active: var(--button-black-font-color);
+}
+
+.button,
+a.button {
+    position: relative;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    padding: var(--button-padding);
+    color: var(--button-font-color);
+    font-family: var(--button-font-family);
+    font-size: var(--button-font-size);
+    font-weight: var(--button-font-weight);
+    vertical-align: bottom;
+    white-space: nowrap;
+    /* line-height: var(--button-line-height); */
+    text-align: center;
+    text-shadow: none;
+    text-transform: none;
+    text-decoration: none;
+    outline: none;
+    cursor: pointer;
+    overflow: hidden;
+    border: none;
+    border-radius: var(--button-border-radius);
+    background: var(--button-color);
+    transition: var(--button-transition);
+    transform: var(--button-transform);
+    transform-origin: var(--button-transform-origin);
+    user-select: none;
+    appearance: none;
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            text-decoration: none;
+            color: var(--button-font-color-hover);
+            background: var(--button-color-hover);
+            transform: var(--button-transform-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        text-decoration: none;
+        color: var(--button-font-color-active);
+        background: var(--button-color-active);
+        transform: var(--button-transform-active);
+    }
+    
+    &[disabled],
+    &.disabled {
+        opacity: .5;
+        pointer-events: none;
+    }
+    
+    /* &.xsmall { font-size: var(--button-font-size-xsmall) }
+    &.small  { font-size: var(--button-font-size-small) }
+    &.large  { font-size: var(--button-font-size-large) }
+    &.xlarge { font-size: var(--button-font-size-xlarge) }
+    
+    @media(max-width: 1023px){
+        &.md\:xsmall { font-size: var(--button-font-size-xsmall) }
+        &.md\:small  { font-size: var(--button-font-size-small) }
+        &.md\:large  { font-size: var(--button-font-size-large) }
+        &.md\:xlarge { font-size: var(--button-font-size-xlarge) }
+    }
+    
+    @media(max-width: 639px){
+        &.sm\:xsmall { font-size: var(--button-font-size-xsmall) }
+        &.sm\:small  { font-size: var(--button-font-size-small) }
+        &.sm\:large  { font-size: var(--button-font-size-large) }
+        &.sm\:xlarge { font-size: var(--button-font-size-xlarge) }
+    } */
+}
+
+.button_xs { font-size: var(--button-font-size-xs) }
+.button_sm { font-size: var(--button-font-size-sm) }
+.button_lg { font-size: var(--button-font-size-lg) }
+.button_xl { font-size: var(--button-font-size-xl) }
+
+@media (--md) {
+    .md\:button_size1 { font-size: var(--button-font-size-xs) }
+    .md\:button_size2 { font-size: var(--button-font-size-sm) }
+    .md\:button_size3 { font-size: var(--button-font-size-md) }
+    .md\:button_lg { font-size: var(--button-font-size-lg) }
+    .md\:button_xl { font-size: var(--button-font-size-xl) }
+}
+
+@media (--sm) {
+    .sm\:button_xs { font-size: var(--button-font-size-xs) }
+    .sm\:button_sm { font-size: var(--button-font-size-sm) }
+    .sm\:button_md { font-size: var(--button-font-size-sm) }
+    .sm\:button_lg { font-size: var(--button-font-size-lg) }
+    .sm\:button_xl { font-size: var(--button-font-size-xl) }
+}
+
+/* Primary */
+
+.button.primary {
+    color: var(--button-primary-font-color);
+    background: var(--button-primary-color);
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            color: var(--button-primary-font-color-hover);
+            background: var(--button-primary-color-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        color: var(--button-primary-font-color-active);
+        background: var(--button-primary-color-active);
+    }
+}
+
+/* Success */
+
+.button.success {
+    color: var(--button-success-font-color);
+    background: var(--button-success-color);
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            color: var(--button-success-font-color-hover);
+            background: var(--button-success-color-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        color: var(--button-success-font-color-active);
+        background: var(--button-success-color-active);
+    }
+}
+
+/* Danger */
+
+.button.danger {
+    color: var(--button-danger-font-color);
+    background: var(--button-danger-color);
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            color: var(--button-danger-font-color-hover);
+            background: var(--button-danger-color-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        color: var(--button-danger-font-color-active);
+        background: var(--button-danger-color-active);
+    }
+}
+
+/* Warning */
+
+.button.warning {
+    color: var(--button-warning-font-color);
+    background: var(--button-warning-color);
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            color: var(--button-warning-font-color-hover);
+            background: var(--button-warning-color-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        color: var(--button-warning-font-color-active);
+        background: var(--button-warning-color-active);
+    }
+}
+
+/* White */
+
+.button.white {
+    color: var(--button-white-font-color);
+    background: var(--button-white-color);
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            color: var(--button-white-font-color-hover);
+            background: var(--button-white-color-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        color: var(--button-white-font-color-active);
+        background: var(--button-white-color-active);
+    }
+}
+
+/* Black */
+
+.button.black {
+    color: var(--button-black-font-color);
+    background: var(--button-black-color);
+    
+    @media (hover: hover) {
+        &:hover,
+        &.hover {
+            color: var(--button-black-font-color-hover);
+            background: var(--button-black-color-hover);
+        }
+    }
+    
+    &:active,
+    &.active {
+        color: var(--button-black-font-color-active);
+        background: var(--button-black-color-active);
+    }
+}

@@ -1,0 +1,292 @@
+/*---------------------------
+modal.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+/* Modal windows */
+
+:root {
+    --modal-padding: 50px;
+    --modal-padding-small: 40px 6vw;
+    --modal-background: #fff;
+    --modal-box-shadow: 0 10px 40px #00000044;
+    --modal-border-radius: 10px;
+    --modal-closer-area: 40px;
+    --modal-closer-size: 26px;
+    --modal-closer-width: 2px;
+    --modal-closer-color: #ccc;
+    --modal-closer-color-hover: #f00;
+    --modal-overlay-background-color: #00000088;
+}
+
+html.modal-active body,
+html.modal-active body {
+    overflow: hidden;
+}
+
+/* Modal window content */
+.modal-content {
+    display: none;
+}
+
+/* Main div */
+.modal {
+    position: fixed;
+    z-index: -10000;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    visibility: hidden;
+    pointer-events: none;
+    
+    &.top {
+        z-index: 10000;
+        visibility: visible;
+        pointer-events: all;
+        
+        &.level1 { z-index: 10001; }
+        &.level2 { z-index: 10002; }
+        &.level3 { z-index: 10003; }
+        &.level4 { z-index: 10004; }
+        &.level5 { z-index: 10005; }
+        &.level6 { z-index: 10006; }
+        &.level7 { z-index: 10007; }
+        &.level8 { z-index: 10008; }
+        &.level9 { z-index: 10009; }
+        &.level10 { z-index: 10010; }
+    }
+}
+
+/* Overlay */
+.modal-overlay {
+    position: absolute;
+    z-index: 10010;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--modal-overlay-background-color);
+}
+
+/* Main structure */
+.modal-outer {
+    position: relative;
+    z-index: 10020;
+    width: 100%;
+    height: 100%;
+    padding: 60px;
+    overflow: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    
+    @media (max-width: 639px) {
+        & {
+            padding: 5px;
+        }
+    }
+}
+.modal-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+/* Modal window */
+.modal-window {
+    position: relative;
+    z-index: 10030;
+    width: 100%;
+    max-width: 800px;
+    margin: auto;
+    padding: var(--modal-padding);
+    text-align: left;
+    background: var(--modal-background);
+    box-shadow: var(--modal-box-shadow);
+    border-radius: var(--modal-border-radius);
+    
+    @media (max-width: 639px) {
+        padding: var(--modal-padding-small);
+    }
+}
+
+
+/* Close cross */
+.modal-rail {
+    position: absolute;
+    top: 6px;
+    bottom: 6px;
+    right: 6px;
+    width: 0;
+    
+    & .modal-close {
+        display: block;
+        position: sticky;
+        z-index: 10040;
+        top: -54px;
+        width: var(--modal-closer-area);
+        height: var(--modal-closer-area);
+        margin-left: calc(-1 * var(--modal-closer-area));
+        font-weight: 200;
+        border: none;
+        border-radius: var(--modal-border-radius);
+        
+        will-change: opacity;
+        opacity: 0;
+        transition: opacity .15s ease-out;
+        
+        @media (max-width: 639px) {
+            top: 1px;
+            background: var(--modal-background);
+        }
+        
+        &:before,
+        &:after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: calc(var(--modal-closer-area) / 2 - var(--modal-closer-width) / 2);
+            left: calc((var(--modal-closer-area) - var(--modal-closer-size)) / 2);
+            width: var(--modal-closer-size);
+            height: var(--modal-closer-width);
+            
+            will-change: color;
+            background: var(--modal-closer-color);
+            transition: background .15s ease-out;
+            transform-origin: center;
+        }
+        &:before {
+            transform: rotate(-45deg);
+        }
+        &:after {
+            transform: rotate(45deg);
+        }
+    }
+}
+
+.modal.active {
+    & .modal-rail .modal-close {
+        opacity: 1;
+        
+        @media (hover: hover) {
+            &:hover:before, &:hover:after,
+            &:active:before, &:active:after {
+                background: var(--modal-closer-color-hover);
+            }
+        }
+    }
+}
+
+
+
+/* Effects
+   https://github.com/codrops/ModalWindowEffects */
+
+.modal {
+    & .modal-overlay {
+        will-change: opacity;
+        opacity: 0;
+        transition: opacity .2s ease-out;
+    }
+    &.active .modal-overlay {
+        opacity: 1;
+    }
+}
+
+/* Default */
+
+.modal {
+    & .modal-window {
+        will-change: visibility, opacity, transform;
+        opacity: 0;
+        transform: scale(.97);
+        transition: all .12s ease-out;
+    }
+    &.active .modal-window {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Zoom in */
+
+.modal.effectIn,
+.modal.effect-in {
+    & .modal-window {
+        transform: scale(.9);
+        transition: all .15s ease-out;
+    }
+    &.active .modal-window {
+        transform: scale(1);
+        transition: all .2s ease-out;
+    }
+}
+
+/* Zoom out */
+
+.modal.effectOut,
+.modal.effect-out {
+    & .modal-window {
+        transform: scale(1.1);
+        transition: all .15s ease-out;
+    }
+    &.active .modal-window {
+        transform: scale(1);
+        transition: all .2s ease-out;
+    }
+}
+
+/* Slide up */
+
+.modal.effectUp,
+.modal.effect-up {
+    & .modal-window {
+        transform: translateY(30px);
+        transition: all .2s ease-out;
+    }
+    &.active .modal-window {
+        transform: translateY(0);
+    }
+}
+
+/* Slide down */
+
+.modal.effectDown,
+.modal.effect-down {
+    & .modal-window {
+        transform: translateY(-30px);
+        transition: all .2s ease-out;
+    }
+    &.active .modal-window {
+        transform: translateY(0);
+    }
+}
+
+/* Slide from left */
+
+.modal.effectLeft,
+.modal.effect-left {
+    & .modal-window {
+        transform: translateX(-30px);
+        transition: all .2s ease-out;
+    }
+    &.active .modal-window {
+        transform: translateX(0);
+    }
+}
+
+/* Slide from right */
+
+.modal.effectRight,
+.modal.effect-right {
+    & .modal-window {
+        transform: translateX(30px);
+        transition: all .2s ease-out;
+    }
+    &.active .modal-window {
+        transform: translateX(0);
+    }
+}

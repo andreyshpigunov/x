@@ -1,0 +1,40 @@
+/*---------------------------
+flow.css
+auto-x
+
+Created by Andrey Shpigunov on 03.09.2024.
+---------------------------*/
+
+
+/* Vertical flow of elements with margin-top space  */
+
+.flow {
+    
+    & > * { margin: 0 }
+    
+    @for $i from 0 to 10 {
+        & .s$(i) > * {
+            margin-top: var(--space-$(i));
+        }
+    }
+    
+    & > *:first-child { margin-top: 0 }
+    
+    @media(max-width: 1023px){
+        
+        @for $i from 0 to 10 {
+            & .md\:s$(i) > * {
+                margin-top: var(--space-$(i));
+            }
+        }
+    }
+    
+    @media(max-width: 639px){
+        
+        @for $i from 0 to 10 {
+            & .sm\:s$(i) > * {
+                margin-top: var(--space-$(i));
+            }
+        }
+    }
+}

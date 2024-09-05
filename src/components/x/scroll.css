@@ -1,0 +1,50 @@
+/*---------------------------
+scroller.css
+auto-x
+
+Created by Andrey Shpigunov on 03.09.2024.
+---------------------------*/
+
+
+:root {
+    --scroll-scrollbar-size: 6px;
+    --scroll-scrollbar-thumb-background: #00000011;
+    --scroll-scrollbar-thumb-background-hover: #00000022;
+}
+
+
+.scroll {
+    flex-wrap: nowrap;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    /* Hide scrollbar in IE and Edge */
+    -ms-overflow-style: none;
+    /* Hide scrollbar in Firefox */
+    scrollbar-width: none;
+    
+    &_x-proximity {
+        scroll-snap-type: x proximity;
+    }
+    
+    &::-webkit-scrollbar {
+        width: var(--scroll-scrollbar-size);
+        height: var(--scroll-scrollbar-size);
+    }
+    
+    &::-webkit-scrollbar-track {
+        background-color: none;
+        border-radius: var(--scroll-scrollbar-size);
+    }
+    
+    &::-webkit-scrollbar-thumb {
+        border-radius: var(--scroll-scrollbar-size);
+        background-color: var(--scroll-scrollbar-thumb-background);
+        transition: background .2s ease-out;
+        cursor: pointer;
+    }
+    
+    &::-webkit-scrollbar-thumb:hover {
+        background-color: var(--scroll-scrollbar-thumb-background-hover);
+    }
+}

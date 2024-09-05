@@ -1,0 +1,2604 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>X — Javascript library with interesting features</title>
+    <meta name="description" content="Small and simple Javascript library with interesting features"/>
+    <link rel="shortcut icon" href="https://andreyshpigunov.github.io/auto-x/favicon.ico"/>
+    <link rel="icon" href="https://andreyshpigunov.github.io/auto-x/favicon.svg" type="image/svg+xml"/>
+    <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/auto/assets/apple-touch-icon.png"/>
+    <link rel="stylesheet" href="dist/app.css"/>
+</head>
+<body id="top" data-animate='{
+    "start": "0px",
+    "end": "-50vh",
+    "functionName": "headerAnimation"
+}'>
+
+    <header class="header flex aic sticky">
+        <div class="header-version nowrap">1.0.0 β</div>
+        <div class="header-logo mxa">
+            <a role="button" data-scrollto="top">
+                <img src="assets/logo.png" alt="Auto-X"/>
+            </a>
+        </div>
+        <div class="header-github">
+            <a href="https://github.com/andreyshpigunov/auto-x" target="_blank"></a>
+        </div>
+    </header>
+    
+    <!-- <div id="headerTrigger" class="header-trigger"></div> -->
+    <!--
+    <div class="headerAnimation" data-animate='{
+        "start": "100px",
+        "end": "0px",
+        "functionName": "headerAnimation"
+    }'></div>
+    -->
+    
+    <div class="element3" data-animate='{
+        "start": "50vh",
+        "end": "-100px",
+        "functionName": "element3",
+        "class": "active",
+        "classRemove": true
+    }'>
+        <div class="element3-figure"></div>
+    </div>
+    
+    <section class="section-header mt8">
+        <h1 class="mxa ac max800">Small and simple Javascript library with interesting features</h1>
+    </section>
+    
+    <div class="element2" data-animate='{
+        "start": "70vh",
+        "end": "-100px",
+        "functionName": "element1",
+        "class": "active",
+        "classRemove": true
+    }'>
+        <div class="element2-figure"></div>
+    </div>
+    
+    <section class="section-plugins mt7">
+        <div class="container max700">
+            <div class="-grid -g3 flex jcsb">
+                <div class="c1">
+                    <h2>CSS</h2>
+                    <ul class="reset">
+                        <li><a class="link" data-modal="modalReset">Reset</a></li>
+                        <li><a class="link" data-modal="modalLinks">Links</a></li>
+                        <li><a class="link" data-modal="modalTypo">Typo</a></li>
+                        <li><a class="link" data-modal="modalForms">Forms</a></li>
+                        <li><a class="link" data-modal="modalHelpers">Helpers</a></li>
+                        <li><a class="link" data-modal="modalButtons">Buttons</a></li>
+                        <li><a class="link" data-modal="modalGrid">Grid</a></li>
+                        <li><a class="link" data-modal="modalFlex">Flex</a></li>
+                        <li><a class="link" data-modal="modalFlow">Flow</a></li>
+                    </ul>
+                </div>
+                <div class="c1">
+                    <h2>JS</h2>
+                    <ul class="reset" style="column-count:2">
+                        <li><a class="link" data-modal="modalModal">Modal</a></li>
+                        <li><a class="link" data-modal="modalScroll">Scroll</a></li>
+                        <li><a class="link" data-modal="modalAnimate">Animate</a></li>
+                        <li><a class="link" data-modal="modalSheets">Sheets</a></li>
+                        <li><a class="link" data-modal="modalLoadmore">Loadmore</a></li>
+                        <li><a class="link" data-modal="modalLazyload">Lazyload</a></li>
+                        <li><a class="link" data-modal="modalAppear">Appear</a></li>
+                        <li><a class="link" data-modal="modalHover">Hover</a></li>
+                        <li><a class="link" data-modal="modalDevice">Device</a></li>
+                        <li><a class="link" data-modal="modalLib">Lib</a></li>
+                        <li><a class="link" data-modal="modalForm">Form</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="section-header mt8">
+        <h2 class="ac">Start usage</h2>
+    </section>
+    
+    <div class="element1" data-animate='{
+        "start": "100vh",
+        "end": "-100px",
+        "functionName": "element1",
+        "class": "active",
+        "classRemove": true
+    }'>
+        <div class="element1-figure"></div>
+    </div>
+    
+    <section class="section-content mt7">
+        <div class="container max700">
+        
+            <h3>HTML</h3>
+            <p>Manually download x.js and x.css and connect them in HTML.</p>
+            <p>In the <code>&lt;head&gt;</code> tag, as first style.</p>
+            <div class="codeBlock">
+                <code>&lt;link rel="stylesheet" href="x.css"/&gt;</code>
+            </div>
+            <p>At the end of page, before <code>&lt;/body&gt;</code> tag, as first script.</p>
+            <div class="codeBlock">
+                <code>&lt;script src="x.js"&gt;&lt;/script&gt</code>
+                <code>&lt;script&gt;x.init();&lt;/script&gt</code>
+            </div>
+            
+            <hr class="my7"/>
+            <h3>NPM</h3>
+            <p>Install package in project folder:</p>
+            <div class="codeBlock">
+                <code>$ npm i auto-x</code>
+            </div>
+            <p>Import module in app.js:</p>
+            <div class="codeBlock">
+                <code>import { x } from 'auto-x';</code>
+                <code>x.init();</code>
+            </div>
+            <p>Best way to connect styles, download them from CDN and import manually in app.css:</p>
+            <div class="codeBlock">
+                <code>@import "../components/x.css";</code>
+            </div>
+            
+            <hr class="my7"/>
+            <h3>CDN links</h3>
+            <p class="breakWord">
+                Latest release:<br/>
+                <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@1.0.0/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@1.0.0/dist/x.css</a><br/>
+                <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@1.0.0/dist/x.js">https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@1.0.0/dist/x.js</a>
+            </p>
+            <p class="breakWord">
+                Latest build:<br/>
+                <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@latest/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@latest/dist/x.css</a><br/>
+                <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@latest/dist/x.js">https://cdn.jsdelivr.net/gh/andreyshpigunov/auto-x@latest/dist/x.js</a>
+            </p>
+            
+            <hr class="my7"/>
+            <h3>Project on GitHub</h3>
+            <p><a href="https://github.com/andreyshpigunov/auto-x">https://github.com/andreyshpigunov/auto-x</a></p>
+            <hr class="my7"/>
+        </div>
+    </section>
+    
+    
+    
+    <div id="modalReset" class="modal-content hash" data-window-class="max1000">
+        <h2>Reset</h2>
+        <p>Глобальный сброс стилей и базовые переменные.</p>
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Переменная</th>
+                <th width="50%">Значение по умолчанию</th>
+            </tr>
+            <tr>
+                <td><code>--line-height</code></td>
+                <td><code>1.5</code></td>
+            </tr>
+            <tr>
+                <td><code>--font-color</code></td>
+                <td><code>#000000</code></td>
+            </tr>
+            <tr>
+                <td><code>--font-size</code></td>
+                <td><code>16px</code></td>
+            </tr>
+            <tr>
+                <td><code>--font-family</code></td>
+                <td><code>-apple-system, BlinkMacSystemFont, Segoe UI,
+                Helvetica, Arial, sans-serif, Apple Color Emoji,
+                Segoe UI Emoji, Segoe UI Symbol;</code></td>
+            </tr>
+            <tr>
+                <td><code>--font-family-mono</code></td>
+                <td><code>SFMono-Regular, Consolas, Liberation Mono,
+                Menlo, monospace</code></td>
+            </tr>
+            <tr><td><code>--space-0</code></td><td><code>0</code></td></tr>
+            <tr><td><code>--space-1</code></td><td><code>0.25rem</code></td></tr>
+            <tr><td><code>--space-2</code></td><td><code>0.5rem</code></td></tr>
+            <tr><td><code>--space-3</code></td><td><code>1rem</code></td></tr>
+            <tr><td><code>--space-4</code></td><td><code>1.5rem</code></td></tr>
+            <tr><td><code>--space-5</code></td><td><code>2rem</code></td></tr>
+            <tr><td><code>--space-6</code></td><td><code>3rem</code></td></tr>
+            <tr><td><code>--space-7</code></td><td><code>4rem</code></td></tr>
+            <tr><td><code>--space-8</code></td><td><code>6rem</code></td></tr>
+            <tr><td><code>--space-9</code></td><td><code>8rem</code></td></tr>
+            <tr><td><code>--space-10</code></td><td><code>10rem</code></td></tr>
+        </table>
+    </div>
+    
+    
+    <div id="modalLinks" class="modal-content hash" data-window-class="max1000">
+        <h2>Links</h2>
+        <p>Стилизация ссылок.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Элемент</th>
+                <th width="50%">Модификатор</th>
+            </tr>
+            <tr>
+                <td><code>a</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.link</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.hover</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.active</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.pseudo</code></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Переменная</th>
+                <th width="50%">Значение по умолчанию</th>
+            </tr>
+            <tr>
+                <td><code>--link-decoration</code></td>
+                <td><code>underline</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-border-style</code></td>
+                <td><code>solid</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-underline-offset</code></td>
+                <td><code>.3em</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-color</code></td>
+                <td><code>#0060cc</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-border-color</code></td>
+                <td><code>#0060cc77</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-color-hover</code></td>
+                <td><code>#f40000</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-border-color-hover</code></td>
+                <td><code>var(--link-color-hover)</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-color-visited</code></td>
+                <td><code>var(--link-color)</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-border-color-visited</code></td>
+                <td><code>var(--link-border-color)</code></td>
+            </tr>
+            <tr>
+                <td><code>--link-transition</code></td>
+                <td><code>none</code></td>
+            </tr>
+        </table>
+    </div>
+    
+    
+    <div id="modalTypo" class="modal-content hash" data-window-class="max1000">
+        <h2>Typo</h2>
+        <p>Типографика.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="30%">Элемент</th>
+                <th width="30%">Адаптивность</th>
+                <th width="40%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>.antialiased</code></td>
+                <td></td>
+                <td>Добавляет сглаживание</td>
+            </tr>
+            <tr>
+                <td><code>.h[1..6]</code></td>
+                <td></td>
+                <td>Заголовки</td>
+            </tr>
+            <tr>
+                <td><code>.italic</code></td>
+                <td></td>
+                <td><code>font-style: italic</code></td>
+            </tr>
+            <tr>
+                <td><code>.fsxxl</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 1.5rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fsxl</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 1.3rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fsl</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 1.15rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fsn</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: var(--font-size)</code></td>
+            </tr>
+            <tr>
+                <td><code>.fss</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: .9rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fsxs</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: .8rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fsxxs</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: .7rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs[8..20]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: .7rem</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs22</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 22px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs24</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 24px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs26</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 26px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs28</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 28px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs30</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 30px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs32</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 32px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs34</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 34px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs36</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 36px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs38</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 38px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs40</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 40px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs44</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 44px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs48</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 48px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs52</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 52px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs56</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 56px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs60</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 60px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fs64</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-size: 64px</code></td>
+            </tr>
+            <tr>
+                <td><code>.fw[100..900]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>font-weight: [100..900]</code></td>
+            </tr>
+            <tr>
+                <td><code>.lh[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>line-height: [1..2]</code></td>
+            </tr>
+            <tr>
+                <td><code>.ls[0..10]</code></td>
+                <td><code>lg: md: sm:</code></td>
+                <td><code>letter-spacing: [0..10]px</code></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Переменная</th>
+                <th width="50%">Значение по умолчанию</th>
+            </tr>
+            <tr><td><code>--headers-margin-top</code></td><td><code>2rem</code></td></tr>
+            <tr><td><code>--headers-margin-bottom</code></td><td><code>1.5rem</code></td></tr>
+            <tr><td><code>--headers-font-family</code></td><td><code>var(--font-family)</code></td></tr>
+            <tr><td><code>--headers-font-weight</code></td><td><code>700</code></td></tr>
+            <tr><td><code>--headers-font-color</code></td><td><code>#000</code></td></tr>
+            
+            <tr><td><code>--h1-font-size</code></td><td><code>calc(var(--font-size) + 30px)</code></td></tr>
+            <tr><td><code>--h2-font-size</code></td><td><code>calc(var(--font-size) + 22px)</code></td></tr>
+            <tr><td><code>--h3-font-size</code></td><td><code>calc(var(--font-size) + 16px)</code></td></tr>
+            <tr><td><code>--h4-font-size</code></td><td><code>calc(var(--font-size) + 10px)</code></td></tr>
+            <tr><td><code>--h5-font-size</code></td><td><code>calc(var(--font-size) + 4px)</code></td></tr>
+            <tr><td><code>--h6-font-size</code></td><td><code>var(--font-size)</code></td></tr>
+            
+            <tr><td><code>--h1-line-height</code></td><td><code>1.2</code></td></tr>
+            <tr><td><code>--h2-line-height</code></td><td><code>1.3</code></td></tr>
+            <tr><td><code>--h3-line-height</code></td><td><code>1.4</code></td></tr>
+            
+            <tr><td><code>--paragraph-margin</code></td><td><code>var(--space-4)</code></td></tr>
+            <tr><td><code>--figcaption-font-size</code></td><td><code>14px</code></td></tr>
+            <tr><td><code>--figcaption-color</code></td><td><code>#999</code></td></tr>
+            <tr><td><code>--table-padding</code></td><td><code>6px 10px</code></td></tr>
+            <tr><td><code>--table-border-color</code></td><td><code>#ccc</code></td></tr>
+            <tr><td><code>--table-header-weight</code></td><td><code>700</code></td></tr>
+        </table>
+    </div>
+    
+    
+    <div id="modalForms" class="modal-content hash" data-window-class="max1000">
+        <h2>Forms</h2>
+        <p>Элементы формы.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="25%">Элемент</th>
+                <th width="25%">Модификатор</th>
+                <th width="50%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>input<br/>textarea<br/>select<br/>button</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.error</code></td>
+                <td><code>border-color: var(--forms-border-color-error)</code></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Переменная</th>
+                <th width="50%">Значение по умолчанию</th>
+            </tr>
+            <tr>
+                <td><code>--forms-width</code></td>
+                <td><code>400px</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-padding</code></td>
+                <td><code>.4rem .6rem</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-font-size</code></td>
+                <td><code>var(--font-size)</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-font-color</code></td>
+                <td><code>#000</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-font-color-readonly</code></td>
+                <td><code>#000</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-font-color-disabled</code></td>
+                <td><code>#666</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-font-color-placeholder</code></td>
+                <td><code>#ccc</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-width</code></td>
+                <td><code>1px</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-radius</code></td>
+                <td><code>4px</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-color</code></td>
+                <td><code>#ddd</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-color-focused</code></td>
+                <td><code>#8cf</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-color-error</code></td>
+                <td><code>#f00</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-color-readonly</code></td>
+                <td><code>#ddd</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-border-color-disabled</code></td>
+                <td><code>#ddd</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-background-color</code></td>
+                <td><code>#fff</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-background-color-readonly</code></td>
+                <td><code>#f8f8f8</code></td>
+            </tr>
+            <tr>
+                <td><code>--forms-background-color-disabled</code></td>
+                <td><code>#f6f6f6</code></td>
+            </tr>
+        </table>
+    </div>
+    
+    
+    
+    <div id="modalButtons" class="modal-content hash" data-window-class="max1000">
+        <h2>Buttons</h2>
+        <p>Стили оформления кнопок.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="25%">Элемент</th>
+                <th width="25%">Модификатор</th>
+                <th width="50%">Адаптивность</th>
+            </tr>
+            <tr><td><code>.button</code></td><td></td><td></td></tr>
+            <tr><td></td><td><code>.hover</code></td><td></td></tr>
+            <tr><td></td><td><code>.active</code></td><td></td></tr>
+            <tr><td></td><td><code>.disabled</code></td><td></td></tr>
+            <tr><td></td><td><code>.xsmall</code></td><td><code>md: sm:</code></td></tr>
+            <tr><td></td><td><code>.small</code></td><td><code>md: sm:</code></td></tr>
+            <tr><td></td><td><code>.large</code></td><td><code>md: sm:</code></td></tr>
+            <tr><td></td><td><code>.xlarge</code></td><td><code>md: sm:</code></td></tr>
+            <tr><td></td><td><code>.primary</code></td><td></td></tr>
+            <tr><td></td><td><code>.success</code></td><td></td></tr>
+            <tr><td></td><td><code>.danger</code></td><td></td></tr>
+            <tr><td></td><td><code>.warning</code></td><td></td></tr>
+            <tr><td></td><td><code>.white</code></td><td></td></tr>
+            <tr><td></td><td><code>.black</code></td><td></td></tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="33%">Переменная</th>
+                <th width="33%">Значение по умолчанию</th>
+                <th width="33%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>--button-padding</code></td>
+                <td><code>.7em 1.1em</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-family</code></td>
+                <td><code>var(--font-family)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-size</code></td>
+                <td><code>var(--font-size)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-size-xsmall</code></td>
+                <td><code>calc(var(--font-size) * .8)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-size-small</code></td>
+                <td><code>calc(var(--font-size) * .9)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-size-large</code></td>
+                <td><code>calc(var(--font-size) * 1.2)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-size-xlarge</code></td>
+                <td><code>calc(var(--font-size) * 1.4)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-weight</code></td>
+                <td><code>400</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-line-height</code></td>
+                <td><code>1</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-border-radius</code></td>
+                <td><code>10px</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-transition</code></td>
+                <td><code>all .1s ease-out</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-transform</code></td>
+                <td><code>scale(1)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-transform-hover</code></td>
+                <td><code>scale(1)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-transform-active</code></td>
+                <td><code>scale(1)</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-transform-origin</code></td>
+                <td><code>center</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>--button-color</code></td>
+                <td><code>#f2f4f6</code></td>
+                <td rowspan="6">
+                    Поддерживаемые типы:<br/>
+                    <code>--button-primary-...</code><br/>
+                    <code>--button-success-...</code><br/>
+                    <code>--button-danger-...</code><br/>
+                    <code>--button-warning-...</code><br/>
+                    <code>--button-white-...</code><br/>
+                    <code>--button-black-...</code><br/>
+                </td>
+            </tr>
+            <tr>
+                <td><code>--button-color-hover</code></td>
+                <td><code>var(--button-color)</code></td>
+            </tr>
+            <tr>
+                <td><code>--button-color-active</code></td>
+                <td><code>var(--button-color)</code></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-color</code></td>
+                <td><code>#000</code></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-color-hover</code></td>
+                <td><code>var(--button-font-color)</code></td>
+            </tr>
+            <tr>
+                <td><code>--button-font-color-active</code></td>
+                <td><code>var(--button-font-color)</code></td>
+            </tr>
+        </table>
+        
+        <h3>Пример</h3>
+        <iframe height="600" style="width: 100%;" scrolling="no" title="Auto / Buttons" src="https://codepen.io/andreyshpigunov/embed/qBajZjb?height=800&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+    </div>
+    
+    
+    <div id="modalFlex" class="modal-content hash" data-window-class="max1000">
+        <h2>Flex</h2>
+        <p>Флексбокс.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="20%">Элемент</th>
+                <th width="20%">Модификатор</th>
+                <th width="20%">Адаптивность</th>
+                <th width="40%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>.flex</code></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.fr</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>flex-direction: row</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.fc</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>flex-direction: column</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.fw</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>flex-wrap: wrap</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.fnw</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>flex-wrap: nowrap</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.aic</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>align-items: stretch</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.aifc</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>align-items: flex-start</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.aic</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>align-items: center</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.aife</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>align-items: flex-end</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.jcfs</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>justify-content: flex-start</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.jcc</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>justify-content: center</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.jcfe</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>justify-content: flex-end</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.jcsb</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>justify-content: space-between</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.jcsa</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>justify-content: space-around</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.jcse</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>justify-content: space-evenly</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.f[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>flex: [0..10]</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.fb[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td>
+                    <code>flex: 0 0 [0..100]%;</code><br/>
+                    <code>max-width: [0..100]%</code>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.fg[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>flex-grow: [0..10]</code></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Переменная</th>
+                <th width="50%">Значение по умолчанию</th>
+            </tr>
+            <tr>
+                <td><code>--flex-gap</code></td>
+                <td><code>0</code></td>
+            </tr>
+        </table>
+    </div>
+    
+    
+    <div id="modalGrid" class="modal-content hash" data-window-class="max1000">
+        <h2>Grid</h2>
+        <p>Многоколоночная адаптивная сетка (1–12 колонок).</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="20%">Элемент</th>
+                <th width="20%">Модификатор</th>
+                <th width="20%">Адаптивность</th>
+                <th width="40%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>.grid</code></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.gap[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.gapx[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.gapy[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.g[1..12]</code></td>
+                <td><code>md: sm:</code></td>
+                <td>Количество колонок</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.c[1..12]</code></td>
+                <td><code>md: sm:</code></td>
+                <td>Ширина колонок</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.mtg</code></td>
+                <td></td>
+                <td><code>margin-top: var(--grid-gap)</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.mbg</code></td>
+                <td></td>
+                <td><code>margin-bottom: var(--grid-gap)</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.mlg</code></td>
+                <td></td>
+                <td><code>margin-left: var(--grid-gap)</code></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.mrg</code></td>
+                <td></td>
+                <td><code>margin-right: var(--grid-gap)</code></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="50%">Переменная</th>
+                <th width="50%">Значение по умолчанию</th>
+            </tr>
+            <tr>
+                <td><code>--grid-gap</code></td>
+                <td><code>1rem</code></td>
+            </tr>
+        </table>
+        
+        <h3>Пример</h3>
+        <iframe height="1000" style="width: 100%;" scrolling="no" title="Auto / Grid" src="https://codepen.io/andreyshpigunov/embed/MWjmmKx?height=800&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+    </div>
+    
+    
+    <div id="modalFlow" class="modal-content hash" data-window-class="max1000">
+        <h2>Flow</h2>
+        <p>Вертикальный поток элементов с одинаковым расстоянием между ними.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="20%">Элемент</th>
+                <th width="20%">Модификатор</th>
+                <th width="20%">Адаптивность</th>
+                <th width="40%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>.flow</code></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><code>.s[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-top: var(--space-[0..10])</code></td>
+            </tr>
+        </table>
+    </div>
+    
+    
+    
+    
+    <div id="modalHelpers" class="modal-content hash" data-window-class="max1000">
+        <h2>Helpers</h2>
+        <p>Вспомогательные классы.</p>
+        
+        <table class="dataTable">
+            <tr>
+                <th width="30%">Элемент</th>
+                <th width="30%">Адаптивность</th>
+                <th width="40%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>.container</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.unselectable</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.unclickable</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.clear</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.uppercase</code></td>
+                <td></td>
+                <td><code>text-transform: lowercase</code></td>
+            </tr>
+            <tr>
+                <td><code>.lowercase</code></td>
+                <td></td>
+                <td><code>text-transform: lowercase</code></td>
+            </tr>
+            <tr>
+                <td><code>.nowrap</code></td>
+                <td></td>
+                <td><code>white-space: nowrap</code></td>
+            </tr>
+            <tr>
+                <td><code>.wrap</code></td>
+                <td></td>
+                <td><code>white-space: normal</code></td>
+            </tr>
+            <tr>
+                <td><code>.hyphens</code></td>
+                <td></td>
+                <td><code>hyphens: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.pointer</code></td>
+                <td></td>
+                <td><code>cursor: pointer</code></td>
+            </tr>
+            <tr>
+                <td><code>.oh</code></td>
+                <td></td>
+                <td><code>overflow: hidden</code></td>
+            </tr>
+            <tr>
+                <td><code>.toe</code></td>
+                <td></td>
+                <td><code>text-overflow: ellipsis</code></td>
+            </tr>
+            <tr>
+                <td><code>.rel</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>position: relative</code></td>
+            </tr>
+            <tr>
+                <td><code>.abs</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>position: absolute</code></td>
+            </tr>
+            <tr>
+                <td><code>.fix</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>position: fix</code></td>
+            </tr>
+            <tr>
+                <td><code>.fit-none</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>отменяет вписывание в область</code></td>
+            </tr>
+            <tr>
+                <td><code>.fit-cover</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>вписывает объект в область с object-fit: cover</code></td>
+            </tr>
+            <tr>
+                <td><code>.fit-contain</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>вписывает объект в область с object-fit: contain</code></td>
+            </tr>
+            <tr>
+                <td><code>.sticky</code></td>
+                <td></td>
+                <td><code>position: sticky</code></td>
+            </tr>
+            <tr>
+                <td><code>.t[0..10]</code></td>
+                <td><code>lg: md: sm:</code></td>
+                <td><code>top: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.z[0..10]</code></td>
+                <td><code>lg: md: sm:</code></td>
+                <td><code>z-index: [0..10]</code></td>
+            </tr>
+            <tr>
+                <td><code>.op[0..10]</code></td>
+                <td><code>lg: md: sm:</code></td>
+                <td><code>opacity: [0..1]</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio</code></td>
+                <td></td>
+                <td rowspan="14">
+                    Пропорционально масштабирует:<br/>
+                    <code>iframe</code><br/>
+                    <code>object</code><br/>
+                    <code>embed</code><br/>
+                    <code>img</code><br/>
+                    <code>a</code>
+                </td>
+            </tr>
+            <tr>
+                <td><code>.ratio1x1</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio2x1</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio3x1</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio4x1</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio3x2</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio4x3</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio16x9</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio1x2</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio1x3</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio1x4</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio2x3</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio3x4</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.ratio9x16</code></td>
+                <td><code>md: sm:</code></td>
+            </tr>
+            <tr>
+                <td><code>.breakWord</code></td>
+                <td></td>
+                <td><code>word-break: break-word</code></td>
+            </tr>
+            <tr>
+                <td><code>.visuallyHidden</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.noBorder</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.invisible</code></td>
+                <td></td>
+                <td><code>visibility: hidden</code></td>
+            </tr>
+            <tr>
+                <td><code>.scrollResponsive</code></td>
+                <td></td>
+                <td><code>overflow-x: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.tableResponsive</code></td>
+                <td></td>
+                <td><code>overflow-x: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.hidden</code></td>
+                <td><code>lg: md: sm:</code></td>
+                <td><code>display: none</code></td>
+            </tr>
+            <tr>
+                <td><code>.hiddenNext</code></td>
+                <td><code>lg: md: sm:</code></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td><code>.w100</code></td>
+                <td></td>
+                <td><code>width: 100%</code></td>
+            </tr>
+            <tr>
+                <td><code>.h100</code></td>
+                <td></td>
+                <td><code>height: 100%</code></td>
+            </tr>
+            <tr>
+                <td><code>.max</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>width: 100%</code></td>
+            </tr>
+            <tr>
+                <td><code>.max10</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 10px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max20</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 20px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max30</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 30px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max40</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 40px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max50</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 50px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max60</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 60px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max70</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 70px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max80</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 80px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max90</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 90px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max100</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 100px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max110</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 110px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max120</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 120px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max140</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 140px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max160</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 160px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max180</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 180px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max200</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 200px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max300</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 300px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max400</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 400px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max500</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 500px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max600</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 600px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max700</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 700px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max800</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 800px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max900</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 900px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1000</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1000px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1100</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1100px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1200</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1200px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1300</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1300px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1400</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1400px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1500</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1500px</code></td>
+            </tr>
+            <tr>
+                <td><code>.max1600</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>max-width: 1600px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min10</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 10px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min20</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 20px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min30</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 30px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min40</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 40px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min50</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 50px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min60</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 60px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min70</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 70px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min80</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 80px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min90</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 90px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min100</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 100px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min110</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 110px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min120</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 120px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min140</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 140px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min160</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 160px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min180</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 180px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min200</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 200px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min300</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 300px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min400</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 400px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min500</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 500px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min600</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 600px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min700</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 700px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min800</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 800px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min900</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 900px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1000</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1000px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1100</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1100px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1200</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1200px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1300</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1300px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1400</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1400px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1500</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1500px</code></td>
+            </tr>
+            <tr>
+                <td><code>.min1600</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>min-width: 1600px</code></td>
+            </tr>
+            <tr>
+                <td><code>.block</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>display: block</code></td>
+            </tr>
+            <tr>
+                <td><code>.inline</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>display: inline</code></td>
+            </tr>
+            <tr>
+                <td><code>.inlineBlock</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>display: inline-block</code></td>
+            </tr>
+            <tr>
+                <td><code>.al</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>text-align: left</code></td>
+            </tr>
+            <tr>
+                <td><code>.ar</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>text-align: right</code></td>
+            </tr>
+            <tr>
+                <td><code>.ac</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>text-align: center</code></td>
+            </tr>
+            <tr>
+                <td><code>.aj</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>text-align: justify</code></td>
+            </tr>
+            <tr>
+                <td><code>.fl</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>float: left</code></td>
+            </tr>
+            <tr>
+                <td><code>.fr</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>float: right</code></td>
+            </tr>
+            <tr>
+                <td><code>.m[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.ma</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.mx[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-left: var(--space-[0..10]);<br/>margin-right: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.mxa</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-left: auto;<br/>margin-right: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.my[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-top: var(--space-[0..10]);<br/>margin-bottom: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.mya</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-top: auto;<br/>margin-bottom: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.mt[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-top: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.mta</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-top: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.mb[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-bottom: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.mba</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-bottom: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.ml[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-left: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.mla</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-left: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.mr[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-right: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.mra</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>margin-right: auto</code></td>
+            </tr>
+            <tr>
+                <td><code>.p[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.px[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding-left: var(--space-[0..10]);<br/>padding-right: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.py[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding-top: var(--space-[0..10]);<br/>padding-bottom: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.pt[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding-top: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.pb[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding-bottom: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.pl[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding-left: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.pr[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>padding-right: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.gap[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>gap: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.gapx[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>column-gap: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.gapy[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>row-gap: var(--space-[0..10])</code></td>
+            </tr>
+            <tr>
+                <td><code>.r[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>border-radius: [0..32]px</code></td>
+            </tr>
+            <tr>
+                <td><code>.r100</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>border-radius: 100%</code></td>
+            </tr>
+            <tr>
+                <td><code>.sh[0..4]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>box-shadow: ...</code></td>
+            </tr>
+            <tr>
+                <td><code>.o[0..10]</code></td>
+                <td><code>md: sm:</code></td>
+                <td><code>order: [0..10]</code></td>
+            </tr>
+            <tr>
+                <td><code>.noPrint</code></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+        <br/>
+        <br/>
+        <table class="dataTable">
+            <tr>
+                <th width="30%">Переменная</th>
+                <th width="30%">Значение по умолчанию</th>
+                <th width="40%">Комментарий</th>
+            </tr>
+            <tr>
+                <td><code>--container-max-width</code></td>
+                <td><code>1600px</code></td>
+                <td>Максимальная ширина контейнера</td>
+            </tr>
+        </table>
+        
+        <h3>Пример</h3>
+        <iframe height="1280" style="width: 100%;" scrolling="no" title="Auto / Helpers" src="https://codepen.io/andreyshpigunov/embed/WNGjRBG?height=1280&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="modalModal" class="modal-content hash" data-window-class="max1000">
+        <h2>Modals</h2>
+        
+        <nav class="modalNavigation unselectable">
+            <div class="modalNavigation-inner">
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalEvents", "offset": 100}'>События</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalCss", "offset": 100}'>CSS</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalExamples", "offset": 100}'>Примеры</a>
+            </div>
+        </nav>
+        
+        <div id="modalModalMain">
+            <p>Универсальные модальные окна.</p>
+            <p>Вызов модального окна:</p>
+            <div class="codeBlock">
+                <code>&lt;a data-modal="myModal"&gt;Open modal&lt;/a&gt;</code>
+            </div>
+            <p>Шаблон модального окна:</p>
+            <div class="codeBlock">
+                <code>&lt;div id="myModal" class="modal-content [custom-classes]"</code>
+                <code>                  data-window-class="[modal-window-classes]"&gt;</code>
+                <code>    &lt;p&gt;Hello modal!&lt;/p&gt;</code>
+                <code>    &lt;p&gt;&lt;a class="button modal-close"&gt;Close&lt;/a&gt;&lt;/p&gt; — optional</code>
+                <code>&lt;/div&gt;</code>
+            </div>
+            <p>
+                <code>[custom-classes]</code> — классы, которые будут добавлены элементу .modal после генерации модального окна на основе шаблона.<br/>
+                <code>[modal-window-classes]</code> — классы, которые будут добавлены элементу .modal-window после генерации модального окна на основе шаблона.<br/>
+                <code>.uniq</code> — класс, закрывающий все открытые окна при открытии данного окна, добавляется в <code>[custom-classes]</code>.<br/>
+                <code>.hash</code> — если класс добавлен в <code>[custom-classes]</code>, окна, открываясь, будут добавлять хэш в конец адресной строки. Также при загрузке страницы с хэшем модального окна, оно автоматически будет открываться.
+            </p>
+            <p>Эффекты в <code>[custom-classes]</code>:</p>
+            <div class="codeBlock">
+                <code>.effectIn</code>
+                <code>.effectOut</code>
+                <code>.effectUp</code>
+                <code>.effectDown</code>
+                <code>.effectLeft</code>
+                <code>.effectRight</code>
+            </div>
+            <p>
+                После инициализации, шаблон модального окна преобразуется в готовый код, который добавляется в конце страницы перед <code>&lt;/body&gt;</code>. Если это поведение необходимо изменить, добавьте класс <code>.modal-here</code> элементу, в который вы хотите инициализировать модальные окна.
+            </p>
+            <p>Код инициализированного модального окна:</p>
+            <div class="codeBlock">
+                <code>&lt;div id="myModal" class="modal [custom-classes]"&gt;</code>
+                <code>    &lt;div class="modal-overlay">&lt;/div&gt;</code>
+                <code>    &lt;div class="modal-outer"&gt;</code>
+                <code>        &lt;div class="modal-inner"&gt;</code>
+                <code>            &lt;div class="modal-window [modal-window-classes]"&gt;</code>
+                <code>                ...</code>
+                <code>                Содержимое, которое было внутри</code>
+                <code>                тега с классом .modal-content</code>
+                <code>                ...</code>
+                <code>                &lt;div class="modal-rail"&gt;</code>
+                <code>                    &lt;a role="button" class="modal-close"&gt;&lt;/a&gt;</code>
+                <code>                &lt;/div&gt;</code>
+                <code>            &lt;/div&gt;</code>
+                <code>        &lt;/div&gt;</code>
+                <code>    &lt;/div&gt;</code>
+                <code>&lt;/div&gt;</code>
+            </div>
+        </div>
+        
+        <div id="modalModalApi" class="mt5">
+            <h3>API</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="40%">Метод</th>
+                    <th width="60%">Описание</th>
+                </tr>
+                <tr>
+                    <td><code>auto.modal.show(id)</code></td>
+                    <td>Показывает модальное окно</td>
+                </tr>
+                <tr>
+                    <td><code>auto.modal.hide(id)</code></td>
+                    <td>Скрывает модальное окно</td>
+                </tr>
+                <tr>
+                    <td><code>auto.modal.hideAll()</code></td>
+                    <td>Скрывает все модальные окна</td>
+                </tr>
+                <tr>
+                    <td><code>auto.modal.isActive(id)</code></td>
+                    <td>Проверяет активность модального окна</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="modalModalEvents" class="mt5">
+            <h3>События</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="40%">Событие</th>
+                    <th width="60%">Описание</th>
+                </tr>
+                <tr>
+                    <td><code>modal:ready</code></td>
+                    <td>Модальное окно открыто, но еще не показано</td>
+                </tr>
+                <tr>
+                    <td><code>modal:open</code></td>
+                    <td>Модальное окно открыто и показано</td>
+                </tr>
+                <tr>
+                    <td><code>modal:close</code></td>
+                    <td>Модальное окно закрыть</td>
+                </tr>
+            </table>
+            
+            <p>Пример обработки:</p>
+            <div class="codeBlock">
+                <code>let modal = document.getElementById('modal-test')</code>
+                <code>modal.addEventListener('modal:ready', (event) => { ... })</code>
+                <code>modal.addEventListener('modal:open', (event) => { ... })</code>
+                <code>modal.addEventListener('modal:close', (event) => { ... })</code>
+            </div>
+        </div>
+        
+        <div id="modalModalCss" class="mt5">
+            <h3>CSS</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="40%">Переменная</th>
+                    <th width="60%">Значение по умолчанию</th>
+                </tr>
+                <tr>
+                    <td><code>--modal-padding</code></td>
+                    <td><code>50px</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-padding-small</code></td>
+                    <td><code>40px 6vw</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-background</code></td>
+                    <td><code>#fff</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-box-shadow</code></td>
+                    <td><code>0 10px 40px rgba(0,0,0,.25)</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-border-radius</code></td>
+                    <td><code>10px</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-closer-area</code></td>
+                    <td><code>40px</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-closer-size</code></td>
+                    <td><code>26px</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-closer-width</code></td>
+                    <td><code>2px</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-closer-color</code></td>
+                    <td><code>#ccc</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-closer-color-hover</code></td>
+                    <td><code>#f00</code></td>
+                </tr>
+                <tr>
+                    <td><code>--modal-overlay-background-color</code></td>
+                    <td><code>rgba(0,0,0,.5)</code></td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="modalModalExamples" class="mt5">
+            <h3>Примеры</h3>
+            <p class="flex gap3">
+                <a role="button" class="button" data-modal="modalTest">Тестовое окошко</a>
+                <a role="button" class="button" onclick="auto.modal.show('modalTest')"><code>auto.modal.show('modalTest')</code></a>
+                <a role="button" class="button" data-modal="modalUniq">Уникальное окно</a>
+            </p>
+            
+            <iframe height="720" style="width: 100%;" scrolling="no" title="Auto / Modal init" src="https://codepen.io/andreyshpigunov/embed/vYXZGpm?height=700&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+            <br/>
+            <br/>
+            <iframe height="800" style="width: 100%;" scrolling="no" title="Auto / Modals examples" src="https://codepen.io/andreyshpigunov/embed/KKgqzBE?height=800&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+        </div>
+    </div>
+    
+    <div id="modalTest" class="modal-content">
+        <h2>Тестовое окошко</h2>
+        <p>Вот так просто оно выглядит. Данная страница тоже показана в модальном окне.</p>
+    </div>
+    
+    <div id="modalUniq" class="modal-content uniq">
+        <h2>Уникальное окно</h2>
+        <p>Открыв это окно, вы закрыли все остальные окна на странице. Включая окно со страницей документации.</p>
+    </div>
+    
+    
+    <div id="modalScroll" class="modal-content hash" data-window-class="max1000">
+        <h2>Scroll</h2>
+        
+        <nav class="modalNavigation unselectable">
+            <div class="modalNavigation-inner">
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollParams", "offset": 100}'>Параметры</a>
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollExamples", "offset": 100}'>Примеры</a>
+            </div>
+        </nav>
+        
+        <div id="modalScrollMain">
+            <p>Прокрутка страницы к указанному элементу.</p>
+            <p>Краткий вызов:</p>
+            <div class="codeBlock">
+                <code>&lt;div id="top" class="top"&gt;&lt;/div&gt;</code>
+                <code>&lt;a data-scrollto="top"&gt;Наверх&lt;/a&gt;</code>
+                <code>&lt;a data-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
+            </div>
+            <p>Вызов с <a class="link pseudo" data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollParams"}'>параметрами</a> в формате JSON:</p>
+            <div class="codeBlock">
+                <code>&lt;a data-scrollto='{</code>
+                <code>    "parent": window,</code>
+                <code>    "target": "top",</code>
+                <code>    "duration": 400,</code>
+                <code>    "offset": 0,</code>
+                <code>    "classActive": "active",</code>
+                <code>    "hash": false</code>
+                <code>}'&gt;Наверх&lt;/a&gt;</code>
+            </div>
+        </div>
+        
+        <div id="modalScrollApi" class="mt5">
+            <h3>API</h3>
+            <p>Варианты вызовов:</p>
+            <div class="codeBlock">
+                <code>auto.scroll.to('top')</code>
+                <code>auto.scroll.to('#top')</code>
+                <code>let top = document.getElementById('top')</code>
+                <code>auto.scroll.to(top)</code>
+                <code>auto.scroll.to({</code>
+                <code>    parent: window,</code>
+                <code>    target: "top",</code>
+                <code>    duration: 400,</code>
+                <code>    offset: 0,</code>
+                <code>    classActive: "active",</code>
+                <code>    hash: false</code>
+                <code>})</code>
+            </div>
+            <p>Метод поддерживает асинхронный вызов:</p>
+            <div class="codeBlock">
+                <code>auto.scroll.to(element).then((e) => { alert('Готово!') })</code>
+            </div>
+        </div>
+        
+        <div id="modalScrollParams" class="mt5">
+            <h3>Параметры вызова</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="20%">Параметр</th>
+                    <th width="20%">Формат</th>
+                    <th width="20%">По умолчанию</th>
+                    <th width="40%">Описание</th>
+                </tr>
+                <tr>
+                    <td><code>parent</code></td>
+                    <td><code>string, element</code></td>
+                    <td><code>window</code></td>
+                    <td><code>id</code>, селектор или элемент.</td>
+                </tr>
+                <tr>
+                    <td><code>target</code></td>
+                    <td><code>string, element</code></td>
+                    <td><code></code></td>
+                    <td>
+                        <code>id</code>, селектор или элемент, к которому нужно совершить прокрутку.<br/>
+                        <b>Обязательный</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>duration</code></td>
+                    <td><code>int</code></td>
+                    <td><code>400</code></td>
+                    <td>Продолжительность в мс.</td>
+                </tr>
+                <tr>
+                    <td><code>offset</code></td>
+                    <td><code>int</code></td>
+                    <td><code>0</code></td>
+                    <td>Отступ от верха окна при окончании прокрутки в px.</td>
+                </tr>
+                <tr>
+                    <td><code>classActive</code></td>
+                    <td><code>string</code></td>
+                    <td><code>"active"</code></td>
+                    <td>Класс, добавляемый к элементу, когда цель прокрутки находится в зоне видимости.</td>
+                </tr>
+                <tr>
+                    <td><code>hash</code></td>
+                    <td><code>bool</code></td>
+                    <td><code>false</code></td>
+                    <td>Добавлять хэш в адресной строке после прокрутки или нет.</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="modalScrollExamples" class="mt5">
+            <h3>Примеры</h3>
+            <iframe height="265" style="width: 100%;" scrolling="no" title="Auto / Scroller" src="https://codepen.io/andreyshpigunov/embed/qBajNxp?height=350&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+        </div>
+    </div>
+    
+    <div id="modalAnimate" class="modal-content hash" data-window-class="max1000">
+        <h2>Animate</h2>
+        
+        <nav class="modalNavigation unselectable">
+            <div class="modalNavigation-inner">
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "modalAnimateMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "modalAnimateParams", "offset": 100}'>Параметры</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "modalAnimateExamples", "offset": 100}'>Примеры</a>
+            </div>
+        </nav>
+        
+        <div id="modalAnimateMain">
+            <p>Анимирование элементов при прокрутке страницы.</p>
+            <p>Пример использования с триггером:</p>
+            <div class="codeBlock">
+                <code>&lt;div id="trigger"&gt;&lt;/div&gt;</code>
+                <code>&lt;div class="element" data-animate='{</code>
+                <!-- <code>    "parent": window,</code> -->
+                <code>    "triggerId": "trigger",</code>
+                <code>    "start": "120vh",</code>
+                <code>    "end": "0vh",</code>
+                <code>    "functionName": "coverOut",</code>
+                <code>    "class": "fixed",</code>
+                <code>    "classRemove": true</code>
+                <code>}'&gt;...&lt;/div&gt;</code>
+            </div>
+        </div>
+        
+        <div id="modalAnimateParams" class="mt5">
+            <h3>Параметры вызова</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="20%">Параметр</th>
+                    <th width="20%">Формат</th>
+                    <th width="20%">По умолчанию</th>
+                    <th width="40%">Описание</th>
+                </tr>
+                <!-- <tr>
+                    <td><code>parent</code></td>
+                    <td><code>string, element</code></td>
+                    <td><code>window</code></td>
+                    <td><code>id</code>, селектор или элемент.</td>
+                </tr> -->
+                <tr>
+                    <td><code>triggerId</code></td>
+                    <td><code>string</code></td>
+                    <td></td>
+                    <td>Указывает <code>id</code> элемента, позицию которого мы отслеживаем при прокрутке. При отсутствии <code>triggerId</code> триггером является сам анимированный элемент.</td>
+                </tr>
+                <tr>
+                    <td><code>start</code></td>
+                    <td><code>string</code></td>
+                    <td></td>
+                    <td>
+                        Точка начала анимации (расстояние от верха окна в px, vh или %).<br/>
+                        <b>Обязательный</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>end</code></td>
+                    <td><code>string</code></td>
+                    <td></td>
+                    <td>
+                        Точка окончания анимации (расстояние от верха окна в px, vh или %).<br/>
+                        <b>Обязательный</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>functionName</code></td>
+                    <td><code>string</code></td>
+                    <td></td>
+                    <td>
+                        Название глобальной функции, которая выполняется при перемещении отлеживаемого элемента между точками начала и окончания анимации. Функция получает объект с параметром <code>progress</code>, который изменяется от 0 до 1.<br/>
+                        <b>Обязательный</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>class</code></td>
+                    <td><code>string</code></td>
+                    <td></td>
+                    <td>Класс, добавляемый к анимированному элементу, когда он находится в процессе анимации.</td>
+                </tr>
+                <tr>
+                    <td><code>classRemove</code></td>
+                    <td><code>bool</code></td>
+                    <td><code>false</code></td>
+                    <td>Удалять или нет класс, установленный предыдущим параметром после окончания анимации.</td>
+                </tr>
+            </table>
+            <p>Если анимация производится в отдельном прокручиваемом элементе, нужно добавить этому элементу класс <code>.animate-scrollarea</code>.</p>
+        </div>
+        
+        <div id="modalAnimateExamples" class="mt5">
+            <h3>Примеры</h3>
+            <iframe height="400" style="width: 100%;" scrolling="no" title="Auto / Animation example" src="https://codepen.io/andreyshpigunov/embed/jOMwrGE?height=400&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+        </div>
+    </div>
+    
+    <div id="modalSheets" class="modal-content hash" data-window-class="max1000">
+        <h2>Sheets</h2>
+        
+        <nav class="modalNavigation unselectable">
+            <div class="modalNavigation-inner">
+                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "modalSheetsMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "modalSheetsApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "modalSheetsExamples", "offset": 100}'>Примеры</a>
+            </div>
+        </nav>
+        
+        <div id="modalSheetsMain">
+            <p>Создает табы с содержимым.</p>
+            <p>Шаблон:</p>
+            <div class="codeBlock">
+                <code>&lt;div class="sheets"&gt;</code>
+                <code>    &lt;a class="sheets-tab active" data-sheet="sheetA"&gt;Таб A&lt;/a&gt;</code>
+                <code>    &lt;a class="sheets-tab" data-sheet="sheetB"&gt;Таб B&lt;/a&gt;</code>
+                <code>    &lt;div id="sheetA" class="sheets-body active"&gt;</code>
+                <code>        Содержимое таба A</code>
+                <code>    &lt;/div&gt;</code>
+                <code>    &lt;div id="sheetB" class="sheets-body"&gt;</code>
+                <code>        Содержимое таба B</code>
+                <code>    &lt;/div&gt;</code>
+                <code>&lt;/div&gt;</code>
+            </div>
+            <p>Первый таб в шаблоне активен по умолчанию, для этого добавлен класс <code>.active</code>.</p>
+            <p>Табы и их содержимое можно свободно вкладывать в другие теги в пределах <code>.sheets</code>.</p>
+        </div>
+        
+        <div id="modalSheetsApi" class="mt5">
+            <h3>API</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="40%">Метод</th>
+                    <th width="60%">Описание</th>
+                </tr>
+                <tr>
+                    <td><code>auto.sheets.show(id)</code></td>
+                    <td>Показывает нужный таб</td>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="modalSheetsExamples" class="mt5">
+            <h3>Примеры</h3>
+            <iframe height="300" style="width: 100%;" scrolling="no" title="Auto / Tab sheets" src="https://codepen.io/andreyshpigunov/embed/qBpJaeO?theme-id=dark&default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
+            <br/>
+            <br/>
+            <div class="sheets">
+                <div>
+                    <a role="button" class="sheets-tab button" data-sheet="sheet1">Tab 1</a>
+                    <a role="button" class="sheets-tab button" data-sheet="sheet2">Tab 2</a>
+                    <a role="button" class="sheets-tab button" data-sheet="sheet3">Tab 3</a>
+                </div>
+                <div class="p2">
+                    <div id="sheet1" class="sheets-body">Body 1</div>
+                    <div id="sheet2" class="sheets-body">Body 2</div>
+                    <div id="sheet3" class="sheets-body">Body 3</div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <div id="modalLoadmore" class="modal-content hash" data-window-class="max1000">
+        <h2>Loadmore</h2>
+        
+        <nav class="modalNavigation unselectable">
+            <div class="modalNavigation-inner">
+                <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "modalLoadmoreMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "modalLoadmoreParams", "offset": 100}'>Параметры</a>
+            </div>
+        </nav>
+        
+        <div id="modalLoadmoreMain">
+            <p>Загрузка данных при прокрутке до элемента. Можно использовать как бесконечную прокрутку, добавив элемент в конце списка и подгружая в него данные, по мере его появления.</p>
+            <p>Пример использования с триггером:</p>
+            <div class="codeBlock">
+                <code>&lt;div data-loadmore='{</code>
+                <code>    "functionName": "load",</code>
+                <code>    "offset": 100</code>
+                <code>}'&gt;&lt;/div&gt;</code>
+                <code>&lt;script&gt;</code>
+                <code>    function load(page) { ... }</code>
+                <code>&lt;/script&gt;</code>
+            </div>
+            
+            <p>При появлении блока с data-loadmore в границах экрана, будет выполнена функция, имя который указано в functionName. Функции будет передан параметр page, значение которого увеличивается с каждым вызовом.</p>
+            
+            <p>Остановить выполнение функции можно методом:</p>
+            <div class="codeBlock">
+                <code>auto.loadmore.unwatch()</code>
+            </div>
+        </div>
+        
+        <div id="modalLoadmoreParams" class="mt5">
+            <h3>Параметры вызова</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="20%">Параметр</th>
+                    <th width="20%">Формат</th>
+                    <th width="20%">По умолчанию</th>
+                    <th width="40%">Описание</th>
+                </tr>
+                <tr>
+                    <td><code>functionName</code></td>
+                    <td><code>string</code></td>
+                    <td></td>
+                    <td>
+                        Имя функции, которую нужно выполнить.<br/>
+                        <b>Обязательный</b>
+                    </td>
+                </tr>
+                <tr>
+                    <td><code>offset</code></td>
+                    <td><code>int</code></td>
+                    <td><code>0</code></td>
+                    <td>Смещение выполнения за границу экрана. Например, если указать 100, то функция выполнится, когда до появления элемента на экране останется 100 и менее пикселей.</td>
+                </tr>
+            </table>
+            <p>Если анимация производится в отдельном прокручиваемом элементе, нужно добавить этому элементу класс <code>.animate-scrollarea</code>.</p>
+        </div>
+    </div>
+    
+    
+    <div id="modalLazyload" class="modal-content hash" data-window-class="max1000">
+        <h2>Lazyload</h2>
+        
+        <p>Отложенная загрузка изображений.</p>
+        
+        <p>В настоящее время большинство браузеров поддерживает нативную «ленивую загрузку» <code>loading="lazy"</code>, используйте данный плагин только в случае крайней необходимости. Например, иногда нужно отследить загрузилось ли изображение.</p>
+        
+        <p>Пример нативного кода:</p>
+        <div class="codeBlock">
+            <code>&lt;img src="image.jpg" data-srcset="..." alt="" loading="lazy"/&gt;</code>
+        </div>
+        
+        <p>Пример использования плагина:</p>
+        <div class="codeBlock">
+            <code>&lt;img class="lazyload" src="alpha.png" data-src="image.jpg" data-srcset="..." alt=""/&gt;</code>
+        </div>
+        
+        <p>После загрузки изображения с классом <code>.lazyload</code>, к нему добавится класс <code>.loaded</code>.</p>
+    </div>
+    
+    
+    <div id="modalAppear" class="modal-content hash" data-window-class="max1000">
+        <h2>Appear</h2>
+        
+        <p>Добавляет классы <code>.appeared</code> и <code>.visible</code> на элементе, появившемся в зоне видимости.</p>
+        
+        <p>Пример использования:</p>
+        <div class="codeBlock">
+            <code>&lt;div class="isAppeared"&gt;...&lt;/div&gt;</code>
+        </div>
+        
+        <p>Когда элемент появится в зоне видимости, к нему добавятся 2 класса, <code>.appeared</code> и <code>.visible</code>. Класс <code>.appeared</code> останется навсегда, а класс <code>.visible</code> удалится при исчезновении элемента из зоны видимости.</p>
+    </div>
+    
+    
+    <div id="modalHover" class="modal-content hash" data-window-class="max1000">
+        <h2>Hover</h2>
+        
+        <p>Синхронизирует наведение <code>.hover</code> у отдельно расположенных элементов, имеющих общую ссылку. Для активации элементам нужно добавить класс <code>.syncHover</code>.</p>
+        
+        <p>Пример использования:</p>
+        <div class="codeBlock">
+            <code>&lt;div class="product"&gt;</code>
+            <code>    &lt;div class="product-photo"&gt;</code>
+            <code>        &lt;a href="/product/" class="syncHover"&gt;</code>
+            <code>            &lt;img src="product.jpg" alt=""/&gt;</code>
+            <code>        &lt;/a&gt;</code>
+            <code>    &lt;div&gt;</code>
+            <code>    &lt;div class="product-title"&gt;</code>
+            <code>        &lt;a href="/product/" class="syncHover"&gt;Товар&lt;/a&gt;</code>
+            <code>    &lt;/div&gt;</code>
+            <code>&lt;/div&gt;</code>
+        </div>
+        
+        <p>В данном примере при наведении на фото или название товара, обоим элементам <code>&lt;a&gt;</code> добавится класс <code>.hover</code>, так как у них одинаковая ссылка. Данный метод часто позволяет избежать нарушений в семантике, не оборачивая весь блок в тег <code>&lt;a&gt;</code>.</p>
+    </div>
+    
+    
+    <div id="modalDevice" class="modal-content hash" data-window-class="max1000">
+        <h2>Device</h2>
+        
+        <p>Определяет устройство и браузер пользователя.</p>
+        
+        <p>Использование:</p>
+        <div class="codeBlock">
+            <code>if (auto.device.[name]) { ... }</code>
+        </div>
+        
+        <p>
+            <code>name</code> — значения для проверки.<br/>
+            Браузеры: <code>ie</code>, <code>firefox</code>, <code>safari</code>, <code>webkit</code>, <code>chrome</code>, <code>opera</code><br/>
+            ОС и устройства: <code>windows</code>, <code>macos</code>, <code>linux</code>, <code>ios</code>, <code>ipad</code>, <code>ipod</code>, <code>iphone</code>, <code>android</code><br/>
+            Мобильность: <code>mobile</code>, <code>desktop</code><br/>
+            Поддержка js: <code>js</code>
+        </p>
+        
+        <p>Примеры:</p>
+        <div class="codeBlock">
+            <code>if (auto.device.ie) { ... }</code>
+            <code>if (auto.device.windows) { ... }</code>
+            <code>if (auto.device.iphone) { ... }</code>
+            <code>if (auto.device.mobile) { ... }</code>
+            <code>if (auto.device.js) { ... }</code>
+        </div>
+        
+        <p>Определение размеров экрана:</p>
+        <div class="codeBlock">
+            <code>let width = auto.device.width</code>
+            <code>let height = auto.device.height</code>
+        </div>
+    </div>
+    
+    
+    <div id="modalLib" class="modal-content hash" data-window-class="max1000">
+        <h2>Lib</h2>
+        
+        <p>Набор полезных методов.</p>
+        
+        <h3>Шорткаты</h3>
+        
+        <div class="codeBlock">
+            <code>qs: (s, o = document) => o.querySelector(s)</code>
+            <code>qsa: (s, o = document) => o.querySelectorAll(s)</code>
+        </div>
+        
+        <p>Пример использования:</p>
+        <div class="codeBlock">
+            <code>auto.lib.qs('.product-name')</code>
+            <code>auto.lib.qsa('.product-item')</code>
+        </div>
+        
+        <h3>Функции</h3>
+        
+        <h4><code class="fs16">auto.lib.hide(element)</code></h4>
+        <p>
+            Скрывает элемент, добавляя класс <code>.hidden</code>.<br/>
+            <code>element</code> — селектор или элемент.
+        </p>
+        
+        <h4><code class="fs16">auto.lib.show(element)</code></h4>
+        <p>
+            Показывает элемент, убирая класс <code>.hidden</code>.<br/>
+            <code>element</code> — селектор или элемент.
+        </p>
+        
+        <h4><code class="fs16">auto.lib.reload()</code></h4>
+        <p>Перезагружает страницу.</p>
+        
+        <h4><code class="fs16">auto.lib.reloadWithHash(hash)</code></h4>
+        <p>Перезагружает страницу, добавляя к ней указанный хэш.</p>
+        
+        <h4><code class="fs16">auto.lib.redirectTo(url)</code></h4>
+        <p>Перенаправляет на URL.</p>
+        
+        <h4><code class="fs16">auto.lib.updateURL(url, title)</code></h4>
+        <p>
+            Обновляет title и URL страницы без перезагрузки.<br/>
+            Поддерживает добавлени хэша: <code>auto.lib.updateURL('#ok')</code>
+        </p>
+        
+        <h4><code class="fs16">auto.lib.random(a, b)</code></h4>
+        <p>Создает произвольное число, больше <code>a</code> и меньше <code>b</code>.</p>
+        
+        <h4><code class="fs16">auto.lib.price(price)</code></h4>
+        <p>Форматирует цену в вид: <code>9 999 999.99</code></p>
+        
+        <h4><code class="fs16">auto.lib.number(a)</code></h4>
+        <p>Форматирует число.</p>
+        
+        <h4><code class="fs16">auto.lib.numberDecline(a, b, c, d)</code></h4>
+        <p>Склонение числительных.</p>
+        
+        <p>Пример:</p>
+        <div class="codeBlock">
+            <code>auto.lib.numberDecline(10, 'час', 'часа', 'часов') -> 10 часов</code>
+        </div>
+        
+        <h4><code class="fs16">auto.lib.addClass(element, readyClass = 'ready', activeClass = 'active', delay = 50)
+        </code></h4>
+        <p>Последовательное добавление класса. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация.</p>
+        <p>Пример:</p>
+        <div class="codeBlock">
+            <code>auto.lib.addClass('.product-info', 'ready', 'show')</code>
+        </div>
+        <p>Добавляет элементу <code>.product-info</code> сначала класс <code>.ready</code>, а через 50 мс (по умолчанию) класс <code>.show</code>.</p>
+        
+        <h4><code class="fs16">auto.lib.removeClass(element, readyClass = 'ready', activeClass = 'active', delay = 200)
+        </code></h4>
+        <p>Последовательное удаление класса. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация.</p>
+        <p>Пример:</p>
+        <div class="codeBlock">
+            <code>auto.lib.removeClass('.product-info', 'ready', 'show')</code>
+        </div>
+        <p>У элемента <code>.product-info</code> сначала убирает класс <code>.show</code>, а через 50 мс (по умолчанию) класс <code>.ready</code>.</p>
+        
+        <h4><code class="fs16">auto.lib.toggleClass(element, readyClass, activeClass, delayAdd, delayRemove)
+        </code></h4>
+        <p>Последовательное переключение классов. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация. По очереди запускает <code>addClass</code> и <code>removeClass</code>.</p>
+        
+        <h4><code class="fs16">auto.lib.makePassword(length, selector)
+        </code></h4>
+        <p>Создает пароль указанной длины (по умолчанию — 8).</p>
+        <p>Если созданный пароль сразу нужно вставить в поле input или textarea, вы можете указать выражение для querySelector этого поля в переменной selector.</p>
+        <p><a class="button small" onclick="alert(auto.lib.makePassword())">Придумать пароль!</a></p>
+        
+        <h4><code class="fs16">auto.lib.loadScript(path, callback, type = 'async|defer')</code></h4>
+        <p>Загружает скрипт и добавляет его в конец перед <code>&lt;/body&gt;</code>. После успешной загрузки выполняется <code>callback</code>.</p>
+        <p>Пример:</p>
+        <div class="codeBlock">
+            <code>auto.lib.loadScript(</code>
+            <code>    '/path/to/file.js',</code>
+            <code>    () => { Callback function... },</code>
+            <code>    'async'</code>
+            <code>)</code>
+        </div>
+        
+        <h4><code class="fs16">auto.lib.deffered(code, delay = 10000)</code></h4>
+        <p>Отложенное выполнение кода. Анонимная функция с кодом <code>() => { code }</code> будет запущена через время <code>delay</code> (по умолчанию 10 с), либо по наступлении одного из событий: <code>scroll</code>, <code>resize</code>, <code>click</code>, <code>keydown</code>, <code>mouseover</code>, <code>touchmove</code>.</p>
+        <p>Пример:</p>
+        <div class="codeBlock">
+            <code>auto.lib.deffered(</code>
+            <code>    () => { Code... },</code>
+            <code>    10000</code>
+            <code>)</code>
+        </div>
+        
+        <h4><code class="fs16">auto.lib.runOnAppear(selector, callback, options)</code></h4>
+        <p>Выполнение кода при его появлении во Viewport (по умолчанию ближе чем за 100px за Viewport). Анонимная функция с кодом <code>() => { code }</code> будет запущена при приближении указанного блока к Viewport.</p>
+        <p>Пример:</p>
+        <div class="codeBlock">
+            <code>auto.lib.runOnAppear(</code>
+            <code>    '.css_selector',</code>
+            <code>    () => { Code... },</code>
+            <code>    options (не обязательно)</code>
+            <code>)</code>
+        </div>
+        
+        <h4><code class="fs16">auto.lib.isEmail(email)</code></h4>
+        <p>Определяет валидность адреса электропочты.</p>
+        
+        <h4><code class="fs16">auto.lib.alertErrors(data)</code></h4>
+        <p>
+            Показывает алерт с ошибками.<br/>
+            <code>data</code> — объект (ключ: значение), массив или строка.<br/>
+            Каждая ошибка будет выведена с новой строки (разделены <code>\n</code>).
+        </p>
+        
+        <h4><code class="fs16">auto.lib.printErrors(data)</code></h4>
+        <p>
+            Печатает ошибки.<br/>
+            <code>data</code> — объект (ключ: значение), массив или строка.<br/>
+            Каждая ошибка будет выведена с новой строки (разделены <code>&lt;br/&gt;</code>).
+        </p>
+    </div>
+    
+    
+    <div id="modalForm" class="modal-content hash" data-window-class="max1000">
+        <h2>Form</h2>
+        
+        <nav class="modalNavigation unselectable">
+            <div class="modalNavigation-inner">
+                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "modalFormMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "modalFormApi", "offset": 100}'>API</a>
+            </div>
+        </nav>
+        
+        <div id="modalFormMain">
+            <p>Полезные утилиты для интерактивности форм.</p>
+            <p>Добавляют возможность устанавливать значения полей input, textarea и select, вызывая события, которые далее можно обработать. Таким образом можно связывать поля форм необходимыми функциями. Например динамический расчет суммы, введенной в поля и другие.</p>
+        </div>
+        
+        <div id="modalFormApi" class="mt5">
+            <h3>API</h3>
+            <table class="dataTable">
+                <tr>
+                    <th width="50%">Метод</th>
+                    <th width="50%">Описание</th>
+                </tr>
+                <tr>
+                    <td><code>auto.form.setChecked(element, checked = false)</code></td>
+                    <td>Аналог element.checked = bool</td>
+                </tr>
+                <tr>
+                    <td><code>auto.form.setValue(element, value)</code></td>
+                    <td>Аналог element.value = string</td>
+                </tr>
+                <tr>
+                    <td><code>auto.form.onUpdate(el1, el2, ..., elN, callback)</code></td>
+                    <td>Слушатель событий на элементах el1, el2 и т. д.</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    
+    
+    <footer class="p6 ac fs14">
+        <a href="mailto:andrey@shpigunov.ru">andrey@shpigunov.ru</a>
+        <div class="mt1">2024</div>
+    </footer>
+    
+    
+    <script src="dist/app.js"></script>
+    <script>
+        // auto.init();
+        
+        // function element1(params) {
+        //     let rotate = params.progress * -360;
+        //     params.element.style.transform = "rotate(" + rotate +  "deg)";
+        // }
+        //
+        // function element2(params) {
+        //     let rotate = params.progress * 180;
+        //     params.element.style.transform = "rotate(" + rotate +  "deg)";
+        // }
+        //
+        // function element3(params) {
+        //     let rotate = params.progress * 120;
+        //     params.element.style.transform = "rotate(" + rotate +  "deg)";
+        // }
+        //
+        // function headerAnimation(params) {
+        //     let height = 120 - params.progress * 60;
+        //     qs('.header').style.height = height + 'px';
+        //     qs('.header-logo img').style.height = height + 'px';
+        // }
+    </script>
+</body>
+</html>

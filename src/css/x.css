@@ -1,0 +1,22 @@
+/*---------------------------
+auto.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+
+@import "../components/x/global.css";
+@import "../components/x/reset.css";
+@import "../components/x/links.css";
+@import "../components/x/helpers.css";
+@import "../components/x/typo.css";
+@import "../components/x/grid.css";
+@import "../components/x/flex.css";
+@import "../components/x/flow.css";
+@import "../components/x/forms.css";
+@import "../components/x/buttons.css";
+@import "../components/x/sheets.css";
+@import "../components/x/modal.css";
+@import "../components/x/debug.css";
+@import "../components/x/scroll.css";

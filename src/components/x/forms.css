@@ -1,0 +1,124 @@
+/*---------------------------
+forms.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+/* Default form elements styles */
+
+:root {
+    --forms-width: 400px;
+    --forms-padding: .5rem .6rem;
+    
+    --forms-font-size: var(--font-size);
+    --forms-font-color: #000;
+    --forms-font-color-readonly: #000;
+    --forms-font-color-disabled: #666;
+    --forms-font-color-placeholder: #ccc;
+    
+    --forms-border-width: 1px;
+    --forms-border-radius: 4px;
+    --forms-border-color: #ddd;
+    --forms-border-color-focused: #8cf;
+    --forms-border-color-error: #f00;
+    --forms-border-color-readonly: #ddd;
+    --forms-border-color-disabled: #ddd;
+    
+    --forms-background-color: #fff;
+    --forms-background-color-readonly: #f8f8f8;
+    --forms-background-color-disabled: #f6f6f6;
+}
+
+input, textarea,
+select, button {
+    max-width: 100%;
+    font-family: inherit;
+    box-sizing: border-box;
+    box-shadow: none;
+}
+
+input[type=color],
+input[type=date],
+input[type=datetime],
+input[type=tel],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=text],
+input[type=time],
+input[type=url],
+input[type=week],
+textarea {
+    position: relative;
+    width: var(--forms-width);
+    margin: 0;
+    padding: var(--forms-padding);
+    font-size: var(--forms-font-size);
+    color: var(--forms-font-color);
+    outline: none;
+    border-width: var(--forms-border-width);
+    border-style: solid;
+    border-color: var(--forms-border-color);
+    border-radius: var(--forms-border-radius);
+    appearance: none;
+    
+    &:focus {
+        border-color: var(--forms-border-color-focused);
+        box-shadow: 0 0 0 1px var(--forms-border-color-focused);
+    }
+    &.error {
+        border-color: var(--forms-border-color-error);
+    }
+    &:focus.error {
+        border-color: var(--forms-border-color-error);
+        box-shadow: 0 0 0 1px var(--forms-border-color-error);
+    }
+}
+
+input[type=color],
+input[type=date],
+input[type=datetime],
+input[type=tel],
+input[type=email],
+input[type=month],
+input[type=number],
+input[type=password],
+input[type=search],
+input[type=text],
+input[type=time],
+input[type=url],
+input[type=week],
+textarea,
+select {
+    background-color: var(--forms-background-color);
+    
+    &[readonly],
+    &[readonly]:focus {
+        color: var(--forms-font-color-readonly);
+        border-color: var(--forms-border-color-readonly);
+        background-color: var(--forms-background-color-readonly);
+        box-shadow: none;
+    }
+    &[disabled],
+    &[disabled]:focus {
+        color: var(--forms-font-color-disabled);
+        border-color: var(--forms-border-color-disabled);
+        background-color: var(--forms-background-color-disabled);
+        cursor: not-allowed !important;
+        box-shadow: none;
+    }
+}
+
+::placeholder {
+    color: var(--forms-font-color-placeholder);
+}
+
+input[placeholder],
+input::-moz-placeholder,
+input:-moz-placeholder,
+input:-ms-input-placeholder {
+    text-overflow: ellipsis;
+}

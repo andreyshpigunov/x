@@ -1,0 +1,414 @@
+/*---------------------------
+docs.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+
+@import "./x.css";
+
+
+:root {
+    /* x */
+    --font-color: #000;
+    --background-color: #fff;
+    /* --link-color: #000000; */
+    /* --link-border-color: #00000022; */
+    /* --link-color-hover: #000000; */
+    --link-transition: all .15s ease-out;
+    --modal-closer-size: 30px;
+    --modal-closer-width: 1px;
+    --modal-closer-color: #666;
+    --modal-closer-color-hover: #000;
+    --table-padding: 2px 6px;
+    --code-font-color: #000;
+    --code-background-color: #f8f8f8;
+}
+
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --font-color: #ddd;
+        --background-color: #1a1a1a;
+        --link-color: #8bcdff;
+        --link-color-hover: #8bcdff;
+        --link-color-visited: #8bcdff;
+        --link-border-color: #8bcdff44;
+        --modal-background: #111;
+        --code-font-color: #eee;
+        --code-background-color: #333;
+        --table-border-color: #666;
+    }
+    
+    hr {
+        background-color: #333;
+    }
+}
+
+
+h2 {
+    font-size: 3rem;
+    font-weight: 700;
+
+    @media (max-width: 639px) {
+        & {
+            font-size: 2.4rem;
+        }
+    }
+}
+
+
+.header {
+    z-index: 100;
+    height: 120px;
+    padding: 0 var(--space-6);
+}
+.header_compact {
+    
+}
+.header-version {
+    width: 40px;
+    font-weight: 700;
+}
+.header-logo {
+    transform-origin: top;
+    
+    & a {
+        display: block;
+    }
+    & img {
+        display: block;
+        width: auto;
+        height: 120px;
+    }
+}
+.header-github {
+    
+    & a {
+        display: block;
+        width: 40px;
+        height: 40px;
+        background-image: url('../assets/github-mark.png');
+        background-position: center;
+        background-size: cover;
+        
+        @media (prefers-color-scheme: dark) {
+            background-image: url('../assets/github-mark-white.png');
+        }
+    }
+}
+
+.modalNavigation {
+    display: flex;
+    position: sticky;
+    top: -30px;
+    z-index: 10;
+}
+.modalNavigation-inner {
+    display: flex;
+    gap: 10px;
+    margin-left: -10px;
+    padding: 10px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .2);
+    border-radius: 100px;
+}
+.modalNavigation a {
+    cursor: pointer;
+    padding: 4px 14px;
+    color: #000;
+    background: #fff;
+    border: solid 1px #000;
+    border-radius: 100px;
+    
+    &.active {
+        color: #fff;
+        background: #000;
+    }
+    
+    @media (prefers-color-scheme: dark) {
+        color: #eee;
+        background: #222;
+        border: solid 1px #222;
+        
+        &.active {
+            color: #000;
+            background: #fff;
+        }
+    }
+}
+
+
+code {
+    padding: 2px;
+    font-size: 14px;
+    color: var(--code-font-color);
+    background: var(--code-background-color);
+}
+.codeBlock {
+    position: relative;
+    padding: 16px 20px 16px 10px;
+    background: var(--code-background-color);
+    counter-reset: row 0;
+    
+    &:before {
+        content: '</>';
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        letter-spacing: 1px;
+        line-height: 1;
+        font-weight: 500;
+        font-size: 18px;
+        font-family: var(--font-family-mono);
+        color: #e4e4e4;
+    }
+    
+    & code {
+        display: flex;
+        counter-increment: row 1;
+        line-height: 1.4;
+        
+        &:before {
+            content: counter(row);
+            user-select: none;
+            width: 30px;
+            margin-right: 20px;
+            color: #ccc;
+            text-align: right;
+        }
+    }
+}
+
+.button code {
+    color: inherit;
+    background: inherit;
+}
+
+
+.dataTable {
+    width: 100%;
+    
+    & code {
+        padding: 0;
+        font-size: 14px;
+        background: none;
+    }
+}
+
+
+.section-plugins {
+    
+    & ul {
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 4px;
+        width: 300px;
+        
+        & li {
+            width: 150px;
+            font-size: 18px;
+        }
+    }
+}
+
+
+.plugins-item {
+    width: 100%;
+    color: #fff;
+    background: #000;
+}
+.plugins-inner {
+    padding: var(--space-4);
+}
+.plugins-title {
+    font-size: 24px;
+    font-weight: 600;
+}
+.plugins-description {
+    margin-top: 4px;
+    font-size: 14px;
+}
+.plugins-item:nth-child(2n) {
+    color: #000;
+    background: #fff;
+}
+
+
+.ruler {
+    position: fixed;
+    z-index: 100;
+    bottom: 20px;
+    right: 20px;
+    padding: 0 10px;
+    line-height: 26px;
+    font-size: .8rem;
+    color: #fff;
+    background: #222;
+    border-radius: 6px;
+}
+
+
+.headerMenu {
+    height: 60px;
+    margin-bottom: 30px;
+
+    & ul {
+        display: flex;
+        align-items: center;
+        height: 60px;
+        list-style: none;
+        padding: 0;
+
+        & li {
+            margin-right: 20px;
+
+            &.active {
+                font-weight: 700;
+            }
+            & a {
+                transition: all .15s;
+            }
+        }
+    }
+
+    @media (max-width: 639px) {
+        & {
+            display: none;
+        }
+    }
+}
+
+
+
+
+.element1 {
+    position: absolute;
+    z-index: -1;
+    left: 10vw;
+    width: 120px;
+    height: 120px;
+    opacity: 0;
+    transform-origin: center;
+    transition: opacity 1s ease-out,
+                transform .2s ease-out;
+    
+    &.active {
+        opacity: 1;
+    }
+}
+.element1-figure {
+    position: absolute;
+    inset: 0;
+    border: solid 1px #666;
+    animation: move linear 40s;
+    animation-iteration-count: infinite;
+}
+
+.element2 {
+    position: absolute;
+    z-index: -1;
+    right: 10vw;
+    width: 180px;
+    height: 1px;
+    margin-top: 200px;
+    opacity: 0;
+    transition: opacity 1s ease-out,
+                transform .2s ease-out;
+    
+    &.active {
+        opacity: 1;
+    }
+}
+.element2-figure {
+    position: absolute;
+    inset: 0;
+    background: #666;
+    animation: move linear 40s;
+    animation-iteration-count: infinite;
+    animation-delay: 2s;
+}
+
+.element3 {
+    position: absolute;
+    z-index: -1;
+    left: 10vw;
+    width: 140px;
+    height: 140px;
+    margin-top: 30px;
+    opacity: 0;
+    transition: opacity 1s ease-out,
+                transform .2s ease-out;
+    
+    &.active {
+        opacity: 1;
+    }
+}
+.element3-figure {
+    position: absolute;
+    inset: 0;
+    animation: move linear 40s;
+    animation-iteration-count: infinite;
+    animation-delay: 4s;
+    
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 70px;
+        width: 140px;
+        height: 1px;
+        background: #666;
+    }
+    &:after {
+        transform: rotate(90deg);
+    }
+}
+
+
+@keyframes move {
+    0% {
+        transform:translate(0, 0) rotate(0)
+    }
+
+    10% {
+        transform:translate(-20px, -30px) rotate(-10deg)
+    }
+
+    20% {
+        transform:translate(-30px, -10px) rotate(0)
+    }
+
+    31% {
+        transform:translate(-20px, 20px) rotate(-10deg)
+    }
+
+    40% {
+        transform:translate(-10px, 0) rotate(10deg)
+    }
+
+    50% {
+        transform:translate(-10px, -20px)
+    }
+
+    60% {
+        transform:translate(0, 0) rotate(0)
+    }
+
+    70% {
+        transform:translate(20px, 20px) rotate(-10deg)
+    }
+
+    80% {
+        transform:translate(30px, 0) rotate(0)
+    }
+
+    90% {
+        transform:translate(20px, -30px) rotate(10deg)
+    }
+
+    100% {
+        transform:translate(0, 0) rotate(0)
+    }
+}

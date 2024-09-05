@@ -1,0 +1,401 @@
+/*---------------------------
+typo.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+/* Typo */
+
+:root {
+    --headers-margin-top: 2.2rem;
+    --headers-margin-bottom: 1.8rem;
+    --headers-font-family: var(--font-family);
+    --headers-font-weight: 700;
+    --headers-font-color: #000;
+    --h1-font-size: calc(var(--font-size) + 30px);
+    --h2-font-size: calc(var(--font-size) + 22px);
+    --h3-font-size: calc(var(--font-size) + 16px);
+    --h4-font-size: calc(var(--font-size) + 10px);
+    --h5-font-size: calc(var(--font-size) + 4px);
+    --h6-font-size: var(--font-size);
+    --h1-line-height: 1.2;
+    --h2-line-height: 1.3;
+    --h3-line-height: 1.4;
+    --paragraph-margin: var(--space-4);
+    --figcaption-font-size: 14px;
+    --figcaption-color: #999;
+    --table-padding: 6px 10px;
+    --table-border-color: #ccc;
+    --table-header-weight: 700;
+}
+
+input,
+textarea,
+select,
+button {
+    font-family: inherit;
+    font-size: var(--font-size);
+}
+
+.antialiased {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, .h1,
+h2, .h2,
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+    margin-top: 0;
+    margin-bottom: var(--headers-margin-bottom);
+    font-family: var(--headers-font-family);
+    font-weight: var(--headers-font-weight);
+}
+/* * + h1, * + .h1, */
+* + h2, * + .h2,
+* + h3, * + .h3,
+* + h4, * + .h4,
+* + h5, * + .h5,
+* + h6, * + .h6 {
+    margin-top: var(--headers-margin-top);
+}
+
+h1, .h1 {
+    font-size: var(--h1-font-size);
+    line-height: var(--h1-line-height);
+    margin-bottom: calc(var(--headers-margin-bottom) * 1.25);
+}
+h2, .h2 {
+    font-size: var(--h2-font-size);
+    line-height: var(--h2-line-height);
+}
+h3, .h3 {
+    font-size: var(--h3-font-size);
+    line-height: var(--h3-line-height);
+    margin-bottom: calc(var(--headers-margin-bottom) * .8);
+}
+h4, .h4 {
+    font-size: var(--h4-font-size);
+    margin-bottom: calc(var(--headers-margin-bottom) * .6);
+}
+h5, .h5 {
+    font-size: var(--h5-font-size);
+    margin-bottom: calc(var(--headers-margin-bottom) * .4);
+}
+h6, .h6 {
+    font-size: var(--h6-font-size);
+    margin-bottom: calc(var(--headers-margin-bottom) * .4);
+}
+
+p {
+    margin: var(--paragraph-margin) 0;
+    font-style: inherit;
+    
+    &:first-child {
+        margin-top: 0;
+    }
+    &:last-child {
+        margin-bottom: 0;
+    }
+}
+
+figure {
+    margin: calc(var(--paragraph-margin) * 1.5) auto;
+
+    & figcaption {
+        font-size: var(--figcaption-font-size);
+        color: var(--figcaption-color);
+    }
+}
+
+blockquote {
+    margin: calc(var(--paragraph-margin) * 1.5) 0;
+    padding: 1rem 1.6rem;
+    background: #fafafa;
+    font-style: italic;
+    hyphens: auto;
+}
+
+pre {
+    margin: var(--paragraph-margin) 0;
+    font-family: inherit;
+}
+
+ul, ol, dl {
+    margin: var(--paragraph-margin) 0;
+    padding-left: 2rem;
+    
+    & ul, & ol, & dl, & li {
+        margin: .25rem 0;
+    }
+}
+dl {
+    
+    & dt, & dd { margin: .25rem 0 }
+    & dt { font-weight: bold }
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    & caption {
+        margin-bottom: 4px;
+        padding: 0 10px;
+        font-weight: 700;
+        text-align: left;
+    }
+    & tr th,
+    & tr td {
+        padding: var(--table-padding);
+        border: 1px solid var(--table-border-color);
+        text-align: left;
+        vertical-align: top;
+    }
+    & tr th {
+        font-weight: var(--table-header-weight);
+    }
+}
+
+.italic { font-style: italic }
+
+.fsxxl { font-size: 1.5rem !important }
+.fsxl { font-size: 1.3rem !important }
+.fsl { font-size: 1.15rem !important }
+.fsn { font-size: var(--font-size) !important }
+.fss { font-size: .9rem !important }
+.fsxs { font-size: .8rem !important }
+.fsxxs { font-size: .7rem !important }
+
+.fs8 { font-size: 8px !important }
+.fs9 { font-size: 9px !important }
+.fs10 { font-size: 10px !important }
+.fs11 { font-size: 11px !important }
+.fs12 { font-size: 12px !important }
+.fs13 { font-size: 13px !important }
+.fs14 { font-size: 14px !important }
+.fs15 { font-size: 15px !important }
+.fs16 { font-size: 16px !important }
+.fs17 { font-size: 17px !important }
+.fs18 { font-size: 18px !important }
+.fs19 { font-size: 19px !important }
+.fs20 { font-size: 20px !important }
+.fs22 { font-size: 22px !important }
+.fs24 { font-size: 24px !important }
+.fs26 { font-size: 26px !important }
+.fs28 { font-size: 28px !important }
+.fs30 { font-size: 30px !important }
+.fs32 { font-size: 32px !important }
+.fs34 { font-size: 34px !important }
+.fs36 { font-size: 36px !important }
+.fs38 { font-size: 38px !important }
+.fs40 { font-size: 40px !important }
+.fs44 { font-size: 44px !important }
+.fs48 { font-size: 48px !important }
+.fs52 { font-size: 52px !important }
+.fs56 { font-size: 56px !important }
+.fs60 { font-size: 60px !important }
+.fs64 { font-size: 64px !important }
+
+.fw100 { font-weight: 100 !important }
+.fw200 { font-weight: 200 !important }
+.fw300 { font-weight: 300 !important }
+.fw400 { font-weight: 400 !important }
+.fw500 { font-weight: 500 !important }
+.fw600 { font-weight: 600 !important }
+.fw700 { font-weight: 700 !important }
+.fw800 { font-weight: 800 !important }
+.fw900 { font-weight: 900 !important }
+
+.lh0{ line-height: 1 !important }
+.lh1{ line-height: 1.1 !important }
+.lh2{ line-height: 1.2 !important }
+.lh3{ line-height: 1.3 !important }
+.lh4{ line-height: 1.4 !important }
+.lh5{ line-height: 1.5 !important }
+.lh6{ line-height: 1.6 !important }
+.lh7{ line-height: 1.7 !important }
+.lh8{ line-height: 1.8 !important }
+.lh9{ line-height: 1.9 !important }
+.lh10{ line-height: 2 !important }
+
+@media (max-width: 1023px) {
+    .md\:fsxxl { font-size: 1.5rem !important }
+    .md\:fsxl { font-size: 1.3rem !important }
+    .md\:fsl { font-size: 1.15rem !important }
+    .md\:fsn { font-size: var(--font-size) !important }
+    .md\:fss { font-size: .9rem !important }
+    .md\:fsxs { font-size: .8rem !important }
+    .md\:fsxxs { font-size: .7rem !important }
+    
+    .md\:fs8 { font-size: 8px !important }
+    .md\:fs9 { font-size: 9px !important }
+    .md\:fs10 { font-size: 10px !important }
+    .md\:fs11 { font-size: 11px !important }
+    .md\:fs12 { font-size: 12px !important }
+    .md\:fs13 { font-size: 13px !important }
+    .md\:fs14 { font-size: 14px !important }
+    .md\:fs15 { font-size: 15px !important }
+    .md\:fs16 { font-size: 16px !important }
+    .md\:fs17 { font-size: 17px !important }
+    .md\:fs18 { font-size: 18px !important }
+    .md\:fs19 { font-size: 19px !important }
+    .md\:fs20 { font-size: 20px !important }
+    .md\:fs22 { font-size: 22px !important }
+    .md\:fs24 { font-size: 24px !important }
+    .md\:fs26 { font-size: 26px !important }
+    .md\:fs28 { font-size: 28px !important }
+    .md\:fs30 { font-size: 30px !important }
+    .md\:fs32 { font-size: 32px !important }
+    .md\:fs34 { font-size: 34px !important }
+    .md\:fs36 { font-size: 36px !important }
+    .md\:fs38 { font-size: 38px !important }
+    .md\:fs40 { font-size: 40px !important }
+    .md\:fs44 { font-size: 44px !important }
+    .md\:fs48 { font-size: 48px !important }
+    .md\:fs52 { font-size: 52px !important }
+    .md\:fs56 { font-size: 56px !important }
+    .md\:fs60 { font-size: 60px !important }
+    .md\:fs64 { font-size: 64px !important }
+    
+    .md\:fw100 { font-weight: 100 !important }
+    .md\:fw200 { font-weight: 200 !important }
+    .md\:fw300 { font-weight: 300 !important }
+    .md\:fw400 { font-weight: 400 !important }
+    .md\:fw500 { font-weight: 500 !important }
+    .md\:fw600 { font-weight: 600 !important }
+    .md\:fw700 { font-weight: 700 !important }
+    .md\:fw800 { font-weight: 800 !important }
+    .md\:fw900 { font-weight: 900 !important }
+    
+    .md\:lh0{ line-height: 1 !important }
+    .md\:lh1{ line-height: 1.1 !important }
+    .md\:lh2{ line-height: 1.2 !important }
+    .md\:lh3{ line-height: 1.3 !important }
+    .md\:lh4{ line-height: 1.4 !important }
+    .md\:lh5{ line-height: 1.5 !important }
+    .md\:lh6{ line-height: 1.6 !important }
+    .md\:lh7{ line-height: 1.7 !important }
+    .md\:lh8{ line-height: 1.8 !important }
+    .md\:lh9{ line-height: 1.9 !important }
+    .md\:lh10{ line-height: 2 !important }
+}
+
+@media (max-width: 639px) {
+    .sm\:fsxxl { font-size: 1.5rem !important }
+    .sm\:fsxl { font-size: 1.3rem !important }
+    .sm\:fsl { font-size: 1.15rem !important }
+    .sm\:fsn { font-size: var(--font-size) !important }
+    .sm\:fss { font-size: .9rem !important }
+    .sm\:fsxs { font-size: .8rem !important }
+    .sm\:fsxxs { font-size: .7rem !important }
+    
+    .sm\:fs8 { font-size: 8px !important }
+    .sm\:fs9 { font-size: 9px !important }
+    .sm\:fs10 { font-size: 10px !important }
+    .sm\:fs11 { font-size: 11px !important }
+    .sm\:fs12 { font-size: 12px !important }
+    .sm\:fs13 { font-size: 13px !important }
+    .sm\:fs14 { font-size: 14px !important }
+    .sm\:fs15 { font-size: 15px !important }
+    .sm\:fs16 { font-size: 16px !important }
+    .sm\:fs17 { font-size: 17px !important }
+    .sm\:fs18 { font-size: 18px !important }
+    .sm\:fs19 { font-size: 19px !important }
+    .sm\:fs20 { font-size: 20px !important }
+    .sm\:fs22 { font-size: 22px !important }
+    .sm\:fs24 { font-size: 24px !important }
+    .sm\:fs26 { font-size: 26px !important }
+    .sm\:fs28 { font-size: 28px !important }
+    .sm\:fs30 { font-size: 30px !important }
+    .sm\:fs32 { font-size: 32px !important }
+    .sm\:fs34 { font-size: 34px !important }
+    .sm\:fs36 { font-size: 36px !important }
+    .sm\:fs38 { font-size: 38px !important }
+    .sm\:fs40 { font-size: 40px !important }
+    .sm\:fs44 { font-size: 44px !important }
+    .sm\:fs48 { font-size: 48px !important }
+    .sm\:fs52 { font-size: 52px !important }
+    .sm\:fs56 { font-size: 56px !important }
+    .sm\:fs60 { font-size: 60px !important }
+    .sm\:fs64 { font-size: 64px !important }
+    
+    .sm\:fw100 { font-weight: 100 !important }
+    .sm\:fw200 { font-weight: 200 !important }
+    .sm\:fw300 { font-weight: 300 !important }
+    .sm\:fw400 { font-weight: 400 !important }
+    .sm\:fw500 { font-weight: 500 !important }
+    .sm\:fw600 { font-weight: 600 !important }
+    .sm\:fw700 { font-weight: 700 !important }
+    .sm\:fw800 { font-weight: 800 !important }
+    .sm\:fw900 { font-weight: 900 !important }
+    
+    .sm\:lh0{ line-height: 1 !important }
+    .sm\:lh1{ line-height: 1.1 !important }
+    .sm\:lh2{ line-height: 1.2 !important }
+    .sm\:lh3{ line-height: 1.3 !important }
+    .sm\:lh4{ line-height: 1.4 !important }
+    .sm\:lh5{ line-height: 1.5 !important }
+    .sm\:lh6{ line-height: 1.6 !important }
+    .sm\:lh7{ line-height: 1.7 !important }
+    .sm\:lh8{ line-height: 1.8 !important }
+    .sm\:lh9{ line-height: 1.9 !important }
+    .sm\:lh10{ line-height: 2 !important }
+}
+
+/* Letter spacing */
+.ls0 { letter-spacing: 0 !important }
+.ls1 { letter-spacing: .5px !important }
+.ls2 { letter-spacing: 1px !important }
+.ls3 { letter-spacing: 1.5px !important }
+.ls4 { letter-spacing: 2px !important }
+.ls5 { letter-spacing: 3px !important }
+.ls6 { letter-spacing: 4px !important }
+.ls7 { letter-spacing: 5px !important }
+.ls8 { letter-spacing: 6px !important }
+.ls9 { letter-spacing: 7px !important }
+.ls10 { letter-spacing: 8px !important }
+
+@media (min-width: 1024px) {
+    .lg\:ls0 { letter-spacing: 0 !important }
+    .lg\:ls1 { letter-spacing: .5px !important }
+    .lg\:ls2 { letter-spacing: 1px !important }
+    .lg\:ls3 { letter-spacing: 1.5px !important }
+    .lg\:ls4 { letter-spacing: 2px !important }
+    .lg\:ls5 { letter-spacing: 3px !important }
+    .lg\:ls6 { letter-spacing: 4px !important }
+    .lg\:ls7 { letter-spacing: 5px !important }
+    .lg\:ls8 { letter-spacing: 6px !important }
+    .lg\:ls9 { letter-spacing: 7px !important }
+    .lg\:ls10 { letter-spacing: 8px !important }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+    .md\:ls0 { letter-spacing: 0 !important }
+    .md\:ls1 { letter-spacing: .5px !important }
+    .md\:ls2 { letter-spacing: 1px !important }
+    .md\:ls3 { letter-spacing: 1.5px !important }
+    .md\:ls4 { letter-spacing: 2px !important }
+    .md\:ls5 { letter-spacing: 3px !important }
+    .md\:ls6 { letter-spacing: 4px !important }
+    .md\:ls7 { letter-spacing: 5px !important }
+    .md\:ls8 { letter-spacing: 6px !important }
+    .md\:ls9 { letter-spacing: 7px !important }
+    .md\:ls10 { letter-spacing: 8px !important }
+}
+@media (max-width: 639px) {
+    .sm\:ls0 { letter-spacing: 0 !important }
+    .sm\:ls1 { letter-spacing: .5px !important }
+    .sm\:ls2 { letter-spacing: 1px !important }
+    .sm\:ls3 { letter-spacing: 1.5px !important }
+    .sm\:ls4 { letter-spacing: 2px !important }
+    .sm\:ls5 { letter-spacing: 3px !important }
+    .sm\:ls6 { letter-spacing: 4px !important }
+    .sm\:ls7 { letter-spacing: 5px !important }
+    .sm\:ls8 { letter-spacing: 6px !important }
+    .sm\:ls9 { letter-spacing: 7px !important }
+    .sm\:ls10 { letter-spacing: px !important }
+}

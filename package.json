@@ -1,0 +1,37 @@
+{
+	"name": "@andreyshpigunov/x",
+	"version": "1.0.0",
+	"devDependencies": {
+		"@parcel/logger": "*",
+		"autoprefixer": "^10.1.0",
+		"cssnano": "^5.0.2",
+		"parcel": "^2.0.1",
+		"postcss": "^8.2.1",
+		"postcss-cli": "^8.3.0",
+		"postcss-custom-media": "^11.0.1",
+		"postcss-custom-selectors": "^8.0.1",
+		"postcss-extend": "^1.0.5",
+		"postcss-for": "^2.1.1",
+		"postcss-import": "^14.0.2",
+		"postcss-nesting": "^10.2.0"
+	},
+	"scripts": {
+		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u autoprefixer -u cssnano --no-map -d dist/",
+		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
+		"build": "npm run build-css && npm run build-js",
+		"test": "exit 0"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/andreyshpigunov/x.git"
+	},
+	"author": "Andrey Shpigunov",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/andreyshpigunov/x/issues"
+	},
+	"homepage": "https://andreyshpigunov.github.io/x/",
+	"browserslist": [
+		"defaults"
+	]
+}

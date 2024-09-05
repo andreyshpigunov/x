@@ -1,0 +1,60 @@
+/*---------------------------
+debug.css
+auto
+
+Created by andreyshpigunov on 25.05.2021.
+---------------------------*/
+
+
+/* CMS debugger styles */
+
+.debug-info {
+    position: fixed;
+    z-index: 999999999999;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 4vw;
+    background: rgba(0,0,0,.9);
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    overscroll-behavior: contain;
+    
+    & * {
+        font-family: var(--font-family-mono, monospace);
+        font-size: .8rem;
+        color: #fff;
+    }
+    
+    & .sql-log {
+        margin-top: 20px;
+        
+        & .sql-stat {
+            font-weight: 700;
+            color: #ff0;
+        }
+        
+        & .sql-queries {
+            margin-top: 20px;
+            padding-left: 20px;
+            list-style-type: decimal;
+            
+            & li {
+                margin-top: 10px !important;
+                margin-bottom: 10px !important;
+                
+                & .sql-log-query {
+                    word-break: break-all;
+                    background: none;
+                    border: none;
+                    
+                    & .sql {
+                        color: #ccc;
+                    }
+                }
+            }
+        }
+    }
+}
