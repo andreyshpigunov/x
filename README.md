@@ -17,4 +17,4 @@ Small and simple Javascript library with interesting features.
 
 And several CSS styles for fast prototyping or usage as base styles.
 
-[View details](https://andreyshpigunov.github.io/auto-x/)
+[View details](https://andreyshpigunov.github.io/x/)
