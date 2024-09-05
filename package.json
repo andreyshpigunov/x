@@ -21,7 +21,6 @@
     "build": "npm run build-css && npm run build-js",
     "test": "exit 0"
 	},
-  "main": "dist/x.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/andreyshpigunov/x.git"
