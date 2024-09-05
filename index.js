@@ -1,1 +1,2 @@
-export const { x } = require('./dist/x.js')
+import { x } from './dist/x.js';
+export { x };
