@@ -33,5 +33,8 @@
 	"homepage": "https://andreyshpigunov.github.io/x/",
 	"browserslist": [
 		"defaults"
-	]
+	],
+    "publishConfig": {
+        "@andreyshpigunov:registry": "https://npm.pkg.github.com"
+    }
 }
