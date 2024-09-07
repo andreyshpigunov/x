@@ -62,7 +62,7 @@ class X {
 };
 
 export const x = new X();
-window.x = x;
+// window.x = x;
 
 // Query selectors shorthands
 window.qs  = x.lib.qs;
