@@ -1,122 +1,59 @@
 /*---------------------------
 grid.css
-auto
+x
 
-Created by andreyshpigunov on 26.05.2021.
+Created by Andrey Shpigunov on 08.09.2024.
 ---------------------------*/
+
 
 /* Grid prototype */
 
-:root {
-    --grid-gap: 1rem;
-}
-
 .grid {
+    --grid-gap: 1rem;
+    
     display: grid;
     width: 100%;
     gap: var(--grid-gap);
     grid-template-columns: repeat(12, 1fr);
     
     @for $i from 0 to 10 {
-        & .gap$(i) {
-            gap: var(--space-$(i));
-        }
+        &.gap$(i)  { gap: var(--space-$(i)) }
+        &.gapx$(i) { column-gap: var(--space-$(i)) }
+        &.gapy$(i) { row-gap: var(--space-$(i)) }
     }
-    
-    @for $i from 0 to 10 {
-        & .gapx$(i) {
-            column-gap: var(--space-$(i));
-        }
-    }
-    
-    @for $i from 0 to 10 {
-        & .gapy$(i) {
-            row-gap: var(--space-$(i));
-        }
-    }
-    
     @for $i from 1 to 12 {
-        & .g$(i) {
-            grid-template-columns: repeat($(i), 1fr);
+        &.g$(i)  { grid-template-columns: repeat($(i), 1fr) }
+        & .c$(i) { grid-column: span $(i) }
+    }
+    
+    @media(--medium){
+        @for $i from 0 to 10 {
+            &.md\:gap$(i)  { gap: var(--space-$(i)) }
+            &.md\:gapx$(i) { column-gap: var(--space-$(i)) }
+            &.md\:gapy$(i) { row-gap: var(--space-$(i)) }
+        }
+        @for $i from 1 to 12 {
+            &.md\:.g$(i) { grid-template-columns: repeat($(i), 1fr) }
+            & .md\:c$(i) { grid-column: span $(i) }
         }
     }
     
-    @for $i from 1 to 12 {
-        & .c$(i) {
-            grid-column: span $(i);
-        }
-    }
-    
-    @media(max-width: 1023px){
-        
+    @media(--small){
         @for $i from 0 to 10 {
-            & .md\:gap$(i) {
-                gap: var(--space-$(i));
-            }
+            &.sm\:gap$(i)  { gap: var(--space-$(i)) }
+            &.sm\:gapx$(i) { column-gap: var(--space-$(i)) }
+            &.sm\:gapy$(i) { row-gap: var(--space-$(i)) }
         }
-        
-        @for $i from 0 to 10 {
-            & .md\:gapx$(i) {
-                column-gap: var(--space-$(i));
-            }
-        }
-        
-        @for $i from 0 to 10 {
-            & .md\:gapy$(i) {
-                row-gap: var(--space-$(i));
-            }
-        }
-        
         @for $i from 1 to 12 {
-            & .md\:g$(i) {
-                grid-template-columns: repeat($(i), 1fr);
-            }
-        }
-        
-        @for $i from 1 to 12 {
-            & .md\:c$(i) {
-                grid-column: span $(i);
-            }
-        }
-    }
-    
-    @media(max-width: 639px){
-        
-        @for $i from 0 to 10 {
-            & .sm\:gap$(i) {
-                gap: var(--space-$(i));
-            }
-        }
-        
-        @for $i from 0 to 10 {
-            & .sm\:gapx$(i) {
-                column-gap: var(--space-$(i));
-            }
-        }
-        
-        @for $i from 0 to 10 {
-            & .sm\:gapy$(i) {
-                row-gap: var(--space-$(i));
-            }
-        }
-        
-        @for $i from 1 to 12 {
-            & .sm\:g$(i) {
-                grid-template-columns: repeat($(i), 1fr);
-            }
-        }
-        
-        @for $i from 1 to 12 {
-            & .sm\:c$(i) {
-                grid-column: span $(i);
-            }
+            &.sm\:.g$(i) { grid-template-columns: repeat($(i), 1fr) }
+            & .sm\:c$(i) { grid-column: span $(i) }
         }
     }
 }
 
 /* Margins with grid gap size */
 
-.mtg { margin-top: var(--grid-gap) }
+.mtg { margin-top:    var(--grid-gap) }
 .mbg { margin-bottom: var(--grid-gap) }
-.mlg { margin-left: var(--grid-gap) }
-.mrg { margin-right: var(--grid-gap) }
+.mlg { margin-left:   var(--grid-gap) }
+.mrg { margin-right:  var(--grid-gap) }

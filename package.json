@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.0.18",
+	"version": "0.0.19",
 	"devDependencies": {
 		"@parcel/logger": "*",
 		"autoprefixer": "^10.1.0",
@@ -8,6 +8,7 @@
 		"parcel": "^2.0.1",
 		"postcss": "^8.2.1",
 		"postcss-cli": "^8.3.0",
+		"postcss-contrast": "^0.0.4",
 		"postcss-custom-media": "^11.0.1",
 		"postcss-custom-selectors": "^8.0.1",
 		"postcss-extend": "^1.0.5",
@@ -16,10 +17,10 @@
 		"postcss-nesting": "^10.2.0"
 	},
 	"scripts": {
-    "build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u autoprefixer -u cssnano --no-map -d dist/",
-    "build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
-    "build": "npm run build-css && npm run build-js",
-    "test": "exit 0"
+		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u postcss-contrast -u autoprefixer -u cssnano --no-map -d dist/",
+		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
+		"build": "npm run build-css && npm run build-js",
+		"test": "exit 0"
 	},
 	"repository": {
 		"type": "git",
@@ -34,7 +35,7 @@
 	"browserslist": [
 		"defaults"
 	],
-    "publishConfig": {
-      "@andreyshpigunov:registry": "https://npm.pkg.github.com"
-    }
+	"publishConfig": {
+		"@andreyshpigunov:registry": "https://npm.pkg.github.com"
+	}
 }

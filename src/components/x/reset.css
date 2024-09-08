@@ -18,20 +18,15 @@ Created by andreyshpigunov on 25.05.2021.
     --font-family-mono: SFMono-Regular, Consolas, Liberation Mono,
                         Menlo, monospace;
     --background-color: #fff;
-    
-    /* Spaces */
-    --space-0: 0;
-    --space-1: 0.25rem;
-    --space-2: 0.5rem;
-    --space-3: 1rem;
-    --space-4: 1.5rem;
-    --space-5: 2rem;
-    --space-6: 3rem;
-    --space-7: 4rem;
-    --space-8: 6rem;
-    --space-9: 8rem;
-    --space-10: 10rem;
 }
+
+/* PostCSS custom media */
+/* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
+@custom-media --xsmall (max-width: 430px);
+@custom-media --small  (max-width: 639px);
+@custom-media --medium (max-width: 1023px);
+@custom-media --large  (min-width: 1024px);
+@custom-media --xlarge (min-width: 1400px);
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

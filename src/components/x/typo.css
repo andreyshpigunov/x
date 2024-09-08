@@ -1,9 +1,10 @@
 /*---------------------------
 typo.css
-auto
+x
 
-Created by andreyshpigunov on 25.05.2021.
+Created by Andrey Shpigunov on 07.09.2024.
 ---------------------------*/
+
 
 /* Typo */
 
@@ -36,11 +37,6 @@ select,
 button {
     font-family: inherit;
     font-size: var(--font-size);
-}
-
-.antialiased {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, .h1,

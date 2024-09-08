@@ -1,2 +1,1 @@
-import { x } from './dist/x.js';
-export { x };
+import './dist/x.js';

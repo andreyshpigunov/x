@@ -1,12 +1,12 @@
 /*---------------------------
 helpers.css
-auto
+x
 
-Created by andreyshpigunov on 25.05.2021.
+Created by Andrey Shpigunov on 08.09.2024.
 ---------------------------*/
 
-/* Helpers
-   Small help for you code. */
+
+/* Helpers – small help for you code. */
 
 :root {
     --container-max-width: 1600px;
@@ -16,6 +16,7 @@ Created by andreyshpigunov on 25.05.2021.
     max-width: var(--container-max-width);
     margin: 0 auto;
 }
+
 .unselectable,
 .unselectable * {
     user-select: none;
@@ -62,12 +63,12 @@ Created by andreyshpigunov on 25.05.2021.
 .rel { position: relative }
 .abs { position: absolute }
 .fix { position: fixed }
-@media (max-width: 1023px) {
+@media (--medium) {
     .md\:rel { position: relative }
     .md\:abs { position: absolute }
     .md\:fix { position: fixed }
 }
-@media (max-width: 639px) {
+@media (--small) {
     .sm\:rel { position: relative }
     .sm\:abs { position: absolute }
     .sm\:fix { position: fixed }
@@ -97,204 +98,74 @@ Created by andreyshpigunov on 25.05.2021.
 }
 
 
-.sticky { position: sticky !important; top: -1px }
-.t0 { top: var(--space-0) !important }
-.t1 { top: var(--space-1) !important }
-.t2 { top: var(--space-2) !important }
-.t3 { top: var(--space-3) !important }
-.t4 { top: var(--space-4) !important }
-.t5 { top: var(--space-5) !important }
-.t6 { top: var(--space-6) !important }
-.t7 { top: var(--space-7) !important }
-.t8 { top: var(--space-8) !important }
-.t9 { top: var(--space-9) !important }
-.t10 { top: var(--space-10) !important }
-.b0 { bottom: var(--space-0) !important }
-.b1 { bottom: var(--space-1) !important }
-.b2 { bottom: var(--space-2) !important }
-.b3 { bottom: var(--space-3) !important }
-.b4 { bottom: var(--space-4) !important }
-.b5 { bottom: var(--space-5) !important }
-.b6 { bottom: var(--space-6) !important }
-.b7 { bottom: var(--space-7) !important }
-.b8 { bottom: var(--space-8) !important }
-.b9 { bottom: var(--space-9) !important }
-.b10 { bottom: var(--space-10) !important }
+.sticky {
+    position: sticky !important;
+    top: -1px;
+    margin-top: -1px;
+    padding-top: 1px;
+}
 
-.z0 { z-index: 0 !important }
-.z1 { z-index: 1 !important }
-.z2 { z-index: 2 !important }
-.z3 { z-index: 3 !important }
-.z4 { z-index: 4 !important }
-.z5 { z-index: 5 !important }
-.z6 { z-index: 6 !important }
-.z7 { z-index: 7 !important }
-.z8 { z-index: 8 !important }
-.z9 { z-index: 9 !important }
-.z10 { z-index: 10 !important }
+@for $i from 0 to 10 {
+    .t$(i) { top: var(--space-$(i)) !important; }
+    .b$(i) { bottom: var(--space-$(i)) !important; }
+    .l$(i) { left: var(--space-$(i)) !important; }
+    .r$(i) { right: var(--space-$(i)) !important; }
+    .z$(i) { z-index: var(--space-$(i)) !important; }
+}
 
-@media (min-width: 1024px) {
+
+@media (--large) {
     .lg\:sticky { position: sticky !important; top: -1px }
-    .lg\:t0 { top: var(--space-0) !important }
-    .lg\:t1 { top: var(--space-1) !important }
-    .lg\:t2 { top: var(--space-2) !important }
-    .lg\:t3 { top: var(--space-3) !important }
-    .lg\:t4 { top: var(--space-4) !important }
-    .lg\:t5 { top: var(--space-5) !important }
-    .lg\:t6 { top: var(--space-6) !important }
-    .lg\:t7 { top: var(--space-7) !important }
-    .lg\:t8 { top: var(--space-8) !important }
-    .lg\:t9 { top: var(--space-9) !important }
-    .lg\:t10 { top: var(--space-10) !important }
-    .lg\:b0 { bottom: var(--space-0) !important }
-    .lg\:b1 { bottom: var(--space-1) !important }
-    .lg\:b2 { bottom: var(--space-2) !important }
-    .lg\:b3 { bottom: var(--space-3) !important }
-    .lg\:b4 { bottom: var(--space-4) !important }
-    .lg\:b5 { bottom: var(--space-5) !important }
-    .lg\:b6 { bottom: var(--space-6) !important }
-    .lg\:b7 { bottom: var(--space-7) !important }
-    .lg\:b8 { bottom: var(--space-8) !important }
-    .lg\:b9 { bottom: var(--space-9) !important }
-    .lg\:b10 { bottom: var(--space-10) !important }
     
-    .lg\:z0 { z-index: 0 !important }
-    .lg\:z1 { z-index: 1 !important }
-    .lg\:z2 { z-index: 2 !important }
-    .lg\:z3 { z-index: 3 !important }
-    .lg\:z4 { z-index: 4 !important }
-    .lg\:z5 { z-index: 5 !important }
-    .lg\:z6 { z-index: 6 !important }
-    .lg\:z7 { z-index: 7 !important }
-    .lg\:z8 { z-index: 8 !important }
-    .lg\:z9 { z-index: 9 !important }
-    .lg\:z10 { z-index: 10 !important }
+    @for $i from 0 to 10 {
+        .lg\:t$(i) { top: var(--space-$(i)) !important; }
+        .lg\:b$(i) { bottom: var(--space-$(i)) !important; }
+        .lg\:l$(i) { left: var(--space-$(i)) !important; }
+        .lg\:r$(i) { right: var(--space-$(i)) !important; }
+        .lg\:z$(i) { z-index: var(--space-$(i)) !important; }
+    }
 }
 @media (min-width: 640px) and (max-width: 1023px) {
     .md\:sticky { position: sticky !important; top: -1px }
-    .md\:t0 { top: var(--space-0) !important }
-    .md\:t1 { top: var(--space-1) !important }
-    .md\:t2 { top: var(--space-2) !important }
-    .md\:t3 { top: var(--space-3) !important }
-    .md\:t4 { top: var(--space-4) !important }
-    .md\:t5 { top: var(--space-5) !important }
-    .md\:t6 { top: var(--space-6) !important }
-    .md\:t7 { top: var(--space-7) !important }
-    .md\:t8 { top: var(--space-8) !important }
-    .md\:t9 { top: var(--space-9) !important }
-    .md\:t10 { top: var(--space-10) !important }
-    .md\:b0 { bottom: var(--space-0) !important }
-    .md\:b1 { bottom: var(--space-1) !important }
-    .md\:b2 { bottom: var(--space-2) !important }
-    .md\:b3 { bottom: var(--space-3) !important }
-    .md\:b4 { bottom: var(--space-4) !important }
-    .md\:b5 { bottom: var(--space-5) !important }
-    .md\:b6 { bottom: var(--space-6) !important }
-    .md\:b7 { bottom: var(--space-7) !important }
-    .md\:b8 { bottom: var(--space-8) !important }
-    .md\:b9 { bottom: var(--space-9) !important }
-    .md\:b10 { bottom: var(--space-10) !important }
     
-    .md\:z0 { z-index: 0 !important }
-    .md\:z1 { z-index: 1 !important }
-    .md\:z2 { z-index: 2 !important }
-    .md\:z3 { z-index: 3 !important }
-    .md\:z4 { z-index: 4 !important }
-    .md\:z5 { z-index: 5 !important }
-    .md\:z6 { z-index: 6 !important }
-    .md\:z7 { z-index: 7 !important }
-    .md\:z8 { z-index: 8 !important }
-    .md\:z9 { z-index: 9 !important }
-    .md\:z10 { z-index: 10 !important }
+    @for $i from 0 to 10 {
+        .md\:t$(i) { top: var(--space-$(i)) !important; }
+        .md\:b$(i) { bottom: var(--space-$(i)) !important; }
+        .md\:l$(i) { left: var(--space-$(i)) !important; }
+        .md\:r$(i) { right: var(--space-$(i)) !important; }
+        .md\:z$(i) { z-index: var(--space-$(i)) !important; }
+    }
 }
 @media (max-width: 639px) {
     .sm\:sticky { position: sticky !important; top: 0 }
-    .sm\:t0 { top: var(--space-0) !important }
-    .sm\:t1 { top: var(--space-1) !important }
-    .sm\:t2 { top: var(--space-2) !important }
-    .sm\:t3 { top: var(--space-3) !important }
-    .sm\:t4 { top: var(--space-4) !important }
-    .sm\:t5 { top: var(--space-5) !important }
-    .sm\:t6 { top: var(--space-6) !important }
-    .sm\:t7 { top: var(--space-7) !important }
-    .sm\:t8 { top: var(--space-8) !important }
-    .sm\:t9 { top: var(--space-9) !important }
-    .sm\:t10 { top: var(--space-10) !important }
-    .sm\:b0 { bottom: var(--space-0) !important }
-    .sm\:b1 { bottom: var(--space-1) !important }
-    .sm\:b2 { bottom: var(--space-2) !important }
-    .sm\:b3 { bottom: var(--space-3) !important }
-    .sm\:b4 { bottom: var(--space-4) !important }
-    .sm\:b5 { bottom: var(--space-5) !important }
-    .sm\:b6 { bottom: var(--space-6) !important }
-    .sm\:b7 { bottom: var(--space-7) !important }
-    .sm\:b8 { bottom: var(--space-8) !important }
-    .sm\:b9 { bottom: var(--space-9) !important }
-    .sm\:b10 { bottom: var(--space-10) !important }
     
-    .sm\:z0 { z-index: 0 !important }
-    .sm\:z1 { z-index: 1 !important }
-    .sm\:z2 { z-index: 2 !important }
-    .sm\:z3 { z-index: 3 !important }
-    .sm\:z4 { z-index: 4 !important }
-    .sm\:z5 { z-index: 5 !important }
-    .sm\:z6 { z-index: 6 !important }
-    .sm\:z7 { z-index: 7 !important }
-    .sm\:z8 { z-index: 8 !important }
-    .sm\:z9 { z-index: 9 !important }
-    .sm\:z10 { z-index: 10 !important }
+    @for $i from 0 to 10 {
+        .sm\:t$(i) { top: var(--space-$(i)) !important; }
+        .sm\:b$(i) { bottom: var(--space-$(i)) !important; }
+        .sm\:l$(i) { left: var(--space-$(i)) !important; }
+        .sm\:r$(i) { right: var(--space-$(i)) !important; }
+        .sm\:z$(i) { z-index: var(--space-$(i)) !important; }
+    }
 }
 
 /* Opacity */
-.op0 { opacity: 0 !important }
-.op1 { opacity: .1 !important }
-.op2 { opacity: .2 !important }
-.op3 { opacity: .3 !important }
-.op4 { opacity: .4 !important }
-.op5 { opacity: .5 !important }
-.op6 { opacity: .6 !important }
-.op7 { opacity: .7 !important }
-.op8 { opacity: .8 !important }
-.op9 { opacity: .9 !important }
-.op10 { opacity: 1 !important }
-@media (min-width: 1024px) {
-    .lg\:op0 { opacity: 0 !important }
-    .lg\:op1 { opacity: .1 !important }
-    .lg\:op2 { opacity: .2 !important }
-    .lg\:op3 { opacity: .3 !important }
-    .lg\:op4 { opacity: .4 !important }
-    .lg\:op5 { opacity: .5 !important }
-    .lg\:op6 { opacity: .6 !important }
-    .lg\:op7 { opacity: .7 !important }
-    .lg\:op8 { opacity: .8 !important }
-    .lg\:op9 { opacity: .9 !important }
-    .lg\:op10 { opacity: 1 !important }
+@for $i from 0 to 10 {
+    .op$(i) { opacity: calc($(i) / 10) !important }
 }
-@media (min-width: 640px) and (max-width: 1023px) {
-    .md\:op0 { opacity: 0 !important }
-    .md\:op1 { opacity: .1 !important }
-    .md\:op2 { opacity: .2 !important }
-    .md\:op3 { opacity: .3 !important }
-    .md\:op4 { opacity: .4 !important }
-    .md\:op5 { opacity: .5 !important }
-    .md\:op6 { opacity: .6 !important }
-    .md\:op7 { opacity: .7 !important }
-    .md\:op8 { opacity: .8 !important }
-    .md\:op9 { opacity: .9 !important }
-    .md\:op10 { opacity: 1 !important }
+@media (--large) {
+    @for $i from 0 to 10 {
+        .lg\:op$(i) { opacity: calc($(i) / 10) !important }
+    }
 }
-@media (max-width: 639px) {
-    .sm\:op0 { opacity: 0 !important }
-    .sm\:op1 { opacity: .1 !important }
-    .sm\:op2 { opacity: .2 !important }
-    .sm\:op3 { opacity: .3 !important }
-    .sm\:op4 { opacity: .4 !important }
-    .sm\:op5 { opacity: .5 !important }
-    .sm\:op6 { opacity: .6 !important }
-    .sm\:op7 { opacity: .7 !important }
-    .sm\:op8 { opacity: .8 !important }
-    .sm\:op9 { opacity: .9 !important }
-    .sm\:op10 { opacity: 1 !important }
+@media (--medium) {
+    @for $i from 0 to 10 {
+        .md\:op$(i) { opacity: calc($(i) / 10) !important }
+    }
+}
+@media (--small) {
+    @for $i from 0 to 10 {
+        .sm\:op$(i) { opacity: calc($(i) / 10) !important }
+    }
 }
 
 .ratio,
