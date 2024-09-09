@@ -38,6 +38,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     position: relative;
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     width: auto;
     min-height: var(--button-height);
     padding: 0 var(--button-side-padding);
