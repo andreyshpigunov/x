@@ -58,7 +58,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     overflow: hidden;
     border: none;
     border-radius: var(--button-border-radius);
-    background: var(--button-color);
+    background-color: var(--button-color);
     transition: var(--button-transition);
     transform: var(--button-transform);
     transform-origin: var(--button-transform-origin);
@@ -70,7 +70,7 @@ Created by Andrey Shpigunov on 08.09.2024.
         &.hover {
             text-decoration: none;
             color: var(--button-font-color-hover);
-            background: var(--button-color-hover);
+            background-color: var(--button-color-hover);
             transform: var(--button-transform-hover);
         }
     }
@@ -79,7 +79,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     &.active {
         text-decoration: none;
         color: var(--button-font-color-active);
-        background: var(--button-color-active);
+        background-color: var(--button-color-active);
         transform: var(--button-transform-active);
     }
     
@@ -87,7 +87,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     &:visited {
         text-decoration: none;
         color: var(--button-font-color);
-        background: var(--button-color);
+        background-color: var(--button-color);
         transform: var(--button-transform);
     }
 
