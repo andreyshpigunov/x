@@ -47,80 +47,88 @@ class Lib {
     // Add class to element(s)
     // delay - if > 0, add class 'ready' before className, then delay in ms
     addClass(element, className, delay = 0) {
-        let item = typeof element == 'string' ? this.qsa(element) : element;
-        if (item) {
-            if (item instanceof NodeList) {
-                if (delay > 0) {
-                    item.forEach(i => { i.classList.add('ready') });
-                    setTimeout(() => {
-                        item.forEach(i => { i.classList.add(className) })
-                    }, delay)
+        return new Promise(resolve => {
+            let item = typeof element == 'string' ? this.qsa(element) : element;
+            if (item) {
+                if (item instanceof NodeList) {
+                    if (delay > 0) {
+                        item.forEach(i => { i.classList.add('ready') });
+                        setTimeout(() => {
+                            item.forEach(i => { i.classList.add(className) })
+                        }, delay)
+                    } else {
+                        item.forEach(i => {
+                            i.classList.add(className)
+                        })
+                    }
                 } else {
-                    item.forEach(i => {
-                        i.classList.add(className)
-                    })
-                }
-            } else {
-                if (delay > 0) {
-                    item.classList.add('ready');
-                    setTimeout(() => { item.classList.add(className) }, delay)
-                } else {
-                    item.classList.add(className)
+                    if (delay > 0) {
+                        item.classList.add('ready');
+                        setTimeout(() => { item.classList.add(className) }, delay)
+                    } else {
+                        item.classList.add(className)
+                    }
                 }
             }
-        }
+        })
     }
     
     // Remove class to element(s)
     // delay - if > 0, remove class 'ready' after className, then delay in ms
     removeClass(element, className, delay = 0) {
-        let item = typeof element == 'string' ? this.qsa(element) : element;
-        if (item) {
-            if (item instanceof NodeList) {
-                if (delay > 0) {
-                    item.forEach(i => { i.classList.remove(className) })
-                    setTimeout(() => {
-                        item.forEach(i => { i.classList.remove('ready') });
-                    }, delay * 4)
+        return new Promise(resolve => {
+            let item = typeof element == 'string' ? this.qsa(element) : element;
+            if (item) {
+                if (item instanceof NodeList) {
+                    if (delay > 0) {
+                        item.forEach(i => { i.classList.remove(className) })
+                        setTimeout(() => {
+                            item.forEach(i => { i.classList.remove('ready') });
+                        }, delay * 4)
+                    } else {
+                        item.forEach(i => {
+                            i.classList.remove(className)
+                        })
+                    }
                 } else {
-                    item.forEach(i => {
-                        i.classList.remove(className)
-                    })
-                }
-            } else {
-                if (delay > 0) {
-                    item.classList.remove(className);
-                    setTimeout(() => { item.classList.remove('ready') }, delay * 4)
-                } else {
-                    item.classList.remove(className)
+                    if (delay > 0) {
+                        item.classList.remove(className);
+                        setTimeout(() => { item.classList.remove('ready') }, delay * 4)
+                    } else {
+                        item.classList.remove(className)
+                    }
                 }
             }
-        }
+        })
     }
     
     // Toggle class on element(s)
     toggleClass(element, className, delay = 0) {
-        let item = typeof element == 'string' ? this.qsa(element)[0] : element;
-        if (item) {
-            if (item.classList.contains(className)) {
-                this.removeClass(element, className, delay)
-            } else {
-                this.addClass(element, className, delay)
+        return new Promise(resolve => {
+            let item = typeof element == 'string' ? this.qsa(element)[0] : element;
+            if (item) {
+                if (item.classList.contains(className)) {
+                    this.removeClass(element, className, delay)
+                } else {
+                    this.addClass(element, className, delay)
+                }
             }
-        }
+        })
     }
     
     // Switch class by condition
     // If condition is true -> add className, if false -> remove className
     switchClass(element, condition, className, delay = 0) {
-        let item = typeof element == 'string' ? this.qsa(element)[0] : element;
-        if (item) {
-            if (condition) {
-                this.addClass(element, className, delay)
-            } else {
-                this.removeClass(element, className, delay)
+        return new Promise(resolve => {
+            let item = typeof element == 'string' ? this.qsa(element)[0] : element;
+            if (item) {
+                if (condition) {
+                    this.addClass(element, className, delay)
+                } else {
+                    this.removeClass(element, className, delay)
+                }
             }
-        }
+        })
     }
     
     
