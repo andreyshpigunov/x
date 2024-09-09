@@ -65,6 +65,14 @@ Created by Andrey Shpigunov on 08.09.2024.
     user-select: none;
     appearance: none;
     
+    &:link,
+    &:visited {
+        text-decoration: none;
+        color: var(--button-font-color);
+        background-color: var(--button-color);
+        transform: var(--button-transform);
+    }
+    
     @media (hover: hover) {
         &:hover,
         &.hover {
@@ -81,14 +89,6 @@ Created by Andrey Shpigunov on 08.09.2024.
         color: var(--button-font-color-active);
         background-color: var(--button-color-active);
         transform: var(--button-transform-active);
-    }
-    
-    &:link,
-    &:visited {
-        text-decoration: none;
-        color: var(--button-font-color);
-        background-color: var(--button-color);
-        transform: var(--button-transform);
     }
 
     &[disabled],
