@@ -69,6 +69,9 @@ class Lib {
                         item.classList.add(className)
                     }
                 }
+                resolve()
+            } else {
+                return
             }
         })
     }
@@ -98,6 +101,9 @@ class Lib {
                         item.classList.remove(className)
                     }
                 }
+                resolve()
+            } else {
+                return
             }
         })
     }
@@ -112,6 +118,9 @@ class Lib {
                 } else {
                     this.addClass(element, className, delay)
                 }
+                resolve()
+            } else {
+                return
             }
         })
     }
@@ -127,6 +136,9 @@ class Lib {
                 } else {
                     this.removeClass(element, className, delay)
                 }
+                resolve()
+            } else {
+                return
             }
         })
     }
