@@ -82,6 +82,7 @@ Created by Andrey Shpigunov on 08.09.2024.
         transform: var(--button-transform-active);
     }
     
+    &:link,
     &:visited {
         text-decoration: none;
         color: var(--button-font-color);
