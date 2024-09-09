@@ -166,35 +166,12 @@ table {
 .fsxs { font-size: .8rem !important }
 .fsxxs { font-size: .7rem !important }
 
-.fs8 { font-size: 8px !important }
-.fs9 { font-size: 9px !important }
-.fs10 { font-size: 10px !important }
-.fs11 { font-size: 11px !important }
-.fs12 { font-size: 12px !important }
-.fs13 { font-size: 13px !important }
-.fs14 { font-size: 14px !important }
-.fs15 { font-size: 15px !important }
-.fs16 { font-size: 16px !important }
-.fs17 { font-size: 17px !important }
-.fs18 { font-size: 18px !important }
-.fs19 { font-size: 19px !important }
-.fs20 { font-size: 20px !important }
-.fs22 { font-size: 22px !important }
-.fs24 { font-size: 24px !important }
-.fs26 { font-size: 26px !important }
-.fs28 { font-size: 28px !important }
-.fs30 { font-size: 30px !important }
-.fs32 { font-size: 32px !important }
-.fs34 { font-size: 34px !important }
-.fs36 { font-size: 36px !important }
-.fs38 { font-size: 38px !important }
-.fs40 { font-size: 40px !important }
-.fs44 { font-size: 44px !important }
-.fs48 { font-size: 48px !important }
-.fs52 { font-size: 52px !important }
-.fs56 { font-size: 56px !important }
-.fs60 { font-size: 60px !important }
-.fs64 { font-size: 64px !important }
+@for $i from 8 to 19 {
+    .fs$(i) { font-size: $(i)px !important }
+}
+@for $i from 20 to 80 by 2 {
+    .fs$(i) { font-size: $(i)px !important }
+}
 
 .fw100 { font-weight: 100 !important }
 .fw200 { font-weight: 200 !important }
@@ -227,35 +204,12 @@ table {
     .md\:fsxs { font-size: .8rem !important }
     .md\:fsxxs { font-size: .7rem !important }
     
-    .md\:fs8 { font-size: 8px !important }
-    .md\:fs9 { font-size: 9px !important }
-    .md\:fs10 { font-size: 10px !important }
-    .md\:fs11 { font-size: 11px !important }
-    .md\:fs12 { font-size: 12px !important }
-    .md\:fs13 { font-size: 13px !important }
-    .md\:fs14 { font-size: 14px !important }
-    .md\:fs15 { font-size: 15px !important }
-    .md\:fs16 { font-size: 16px !important }
-    .md\:fs17 { font-size: 17px !important }
-    .md\:fs18 { font-size: 18px !important }
-    .md\:fs19 { font-size: 19px !important }
-    .md\:fs20 { font-size: 20px !important }
-    .md\:fs22 { font-size: 22px !important }
-    .md\:fs24 { font-size: 24px !important }
-    .md\:fs26 { font-size: 26px !important }
-    .md\:fs28 { font-size: 28px !important }
-    .md\:fs30 { font-size: 30px !important }
-    .md\:fs32 { font-size: 32px !important }
-    .md\:fs34 { font-size: 34px !important }
-    .md\:fs36 { font-size: 36px !important }
-    .md\:fs38 { font-size: 38px !important }
-    .md\:fs40 { font-size: 40px !important }
-    .md\:fs44 { font-size: 44px !important }
-    .md\:fs48 { font-size: 48px !important }
-    .md\:fs52 { font-size: 52px !important }
-    .md\:fs56 { font-size: 56px !important }
-    .md\:fs60 { font-size: 60px !important }
-    .md\:fs64 { font-size: 64px !important }
+    @for $i from 8 to 19 {
+        .md\:fs$(i) { font-size: $(i)px !important }
+    }
+    @for $i from 20 to 80 by 2 {
+        .md\:fs$(i) { font-size: $(i)px !important }
+    }
     
     .md\:fw100 { font-weight: 100 !important }
     .md\:fw200 { font-weight: 200 !important }
@@ -289,35 +243,12 @@ table {
     .sm\:fsxs { font-size: .8rem !important }
     .sm\:fsxxs { font-size: .7rem !important }
     
-    .sm\:fs8 { font-size: 8px !important }
-    .sm\:fs9 { font-size: 9px !important }
-    .sm\:fs10 { font-size: 10px !important }
-    .sm\:fs11 { font-size: 11px !important }
-    .sm\:fs12 { font-size: 12px !important }
-    .sm\:fs13 { font-size: 13px !important }
-    .sm\:fs14 { font-size: 14px !important }
-    .sm\:fs15 { font-size: 15px !important }
-    .sm\:fs16 { font-size: 16px !important }
-    .sm\:fs17 { font-size: 17px !important }
-    .sm\:fs18 { font-size: 18px !important }
-    .sm\:fs19 { font-size: 19px !important }
-    .sm\:fs20 { font-size: 20px !important }
-    .sm\:fs22 { font-size: 22px !important }
-    .sm\:fs24 { font-size: 24px !important }
-    .sm\:fs26 { font-size: 26px !important }
-    .sm\:fs28 { font-size: 28px !important }
-    .sm\:fs30 { font-size: 30px !important }
-    .sm\:fs32 { font-size: 32px !important }
-    .sm\:fs34 { font-size: 34px !important }
-    .sm\:fs36 { font-size: 36px !important }
-    .sm\:fs38 { font-size: 38px !important }
-    .sm\:fs40 { font-size: 40px !important }
-    .sm\:fs44 { font-size: 44px !important }
-    .sm\:fs48 { font-size: 48px !important }
-    .sm\:fs52 { font-size: 52px !important }
-    .sm\:fs56 { font-size: 56px !important }
-    .sm\:fs60 { font-size: 60px !important }
-    .sm\:fs64 { font-size: 64px !important }
+    @for $i from 8 to 19 {
+        .sm\:fs$(i) { font-size: $(i)px !important }
+    }
+    @for $i from 20 to 80 by 2 {
+        .sm\:fs$(i) { font-size: $(i)px !important }
+    }
     
     .sm\:fw100 { font-weight: 100 !important }
     .sm\:fw200 { font-weight: 200 !important }
