@@ -15,7 +15,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     --button-font-family: var(--font-family);
     --button-font-size: var(--font-size);
     --button-font-weight: 400;
-    --button-border-radius: 8px;
+    --button-border-radius: 10px;
     --button-transition: all .1s ease-out;
     --button-disabled-opacity: .5;
     
