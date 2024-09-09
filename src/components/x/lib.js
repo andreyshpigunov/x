@@ -87,7 +87,7 @@ class Lib {
                         item.forEach(i => { i.classList.remove(className) })
                         setTimeout(() => {
                             item.forEach(i => { i.classList.remove('ready') });
-                        }, delay * 4)
+                        }, delay)
                     } else {
                         item.forEach(i => {
                             i.classList.remove(className)
@@ -96,7 +96,7 @@ class Lib {
                 } else {
                     if (delay > 0) {
                         item.classList.remove(className);
-                        setTimeout(() => { item.classList.remove('ready') }, delay * 4)
+                        setTimeout(() => { item.classList.remove('ready') }, delay)
                     } else {
                         item.classList.remove(className)
                     }
