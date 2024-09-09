@@ -82,6 +82,13 @@ button, [type=submit] {
         background: var(--button-color-active);
         transform: var(--button-transform-active);
     }
+    
+    &:visited {
+        text-decoration: none;
+        color: var(--button-font-color);
+        background: var(--button-color);
+        transform: var(--button-transform);
+    }
 
     &[disabled],
     &.disabled {
