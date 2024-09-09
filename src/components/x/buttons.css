@@ -37,7 +37,8 @@ Created by Andrey Shpigunov on 08.09.2024.
 .button, a.button,
 button, [type=submit] {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
     width: auto;
     min-height: var(--button-height);
     padding: 0 var(--button-side-padding);
