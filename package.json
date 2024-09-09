@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.0.31",
+	"version": "0.0.32",
 	"devDependencies": {
 		"@parcel/logger": "*",
 		"autoprefixer": "^10.1.0",
