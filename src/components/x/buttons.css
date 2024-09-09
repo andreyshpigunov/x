@@ -26,7 +26,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     --button-transform-origin: center;
     
     /* Colors */
-    --button-color: #eaebec;
+    --button-color: #f0f2f4;
     --button-color-hover: var(--button-color);
     --button-color-active: var(--button-color);
     --button-font-color: #000;
@@ -48,7 +48,6 @@ Created by Andrey Shpigunov on 08.09.2024.
     font-weight: var(--button-font-weight);
     vertical-align: bottom;
     white-space: nowrap;
-    /* line-height: var(--button-line-height); */
     text-align: center;
     text-shadow: none;
     text-transform: none;
@@ -111,6 +110,7 @@ Created by Andrey Shpigunov on 08.09.2024.
 @define-extend button_large  {
     --button-height: 48px;
     --button-side-padding: 26px;
+    --button-font-size: calc(var(--font-size) + 4px);
 }
 
 .button_small  { @extend button_small }
