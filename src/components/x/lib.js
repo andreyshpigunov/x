@@ -52,7 +52,7 @@ class Lib {
             if (item) {
                 if (item instanceof NodeList) {
                     if (delay > 0) {
-                        item.forEach(i => { i.classList.add('ready') });
+                        item.forEach(i => { i.classList.add(className + '_ready') });
                         setTimeout(() => {
                             item.forEach(i => { i.classList.add(className) })
                         }, delay)
@@ -63,7 +63,7 @@ class Lib {
                     }
                 } else {
                     if (delay > 0) {
-                        item.classList.add('ready');
+                        item.classList.add(className + '_ready');
                         setTimeout(() => { item.classList.add(className) }, delay)
                     } else {
                         item.classList.add(className)
@@ -86,7 +86,7 @@ class Lib {
                     if (delay > 0) {
                         item.forEach(i => { i.classList.remove(className) })
                         setTimeout(() => {
-                            item.forEach(i => { i.classList.remove('ready') });
+                            item.forEach(i => { i.classList.remove(className + '_ready') });
                         }, delay)
                     } else {
                         item.forEach(i => {
@@ -96,7 +96,7 @@ class Lib {
                 } else {
                     if (delay > 0) {
                         item.classList.remove(className);
-                        setTimeout(() => { item.classList.remove('ready') }, delay)
+                        setTimeout(() => { item.classList.remove(className + '_ready') }, delay)
                     } else {
                         item.classList.remove(className)
                     }
