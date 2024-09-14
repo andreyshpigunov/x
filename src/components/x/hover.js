@@ -1,15 +1,17 @@
 //
 //	hover.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 03.09.2024.
+//	Created by Andrey Shpigunov on 11.09.2024.
+//
+// hover() - sync .hover class on elements with class '.syncHover' and same href
 //
 
 
 import { lib } from './lib';
 
 
-// Sunc .hover class on elements with class '.syncHover' and same href
+// Sync .hover class on elements with class '.syncHover' and same href
 export function hover() {
     let hovers = lib.qsa('.syncHover');
     if (hovers.length) {
@@ -23,16 +25,14 @@ export function hover() {
 
 function _listener(event, elem) {
     elem.addEventListener(event, () => {
-        let items = qsa('[href="' + elem.getAttribute("href") + '"]');
+        let items = lib.qsa('[href="' + elem.getAttribute("href") + '"]');
         if (items.length) {
             items.forEach((item) => {
                 // Add .hover class on mouser over
                 // Remove .hover class on mouse out
                 if (event === 'mouseover') {
-                    // item.classList.add("hover");
                     lib.addClass(item, 'hover')
                 } else {
-                    // item.classList.remove("hover");
                     lib.removeClass(item, 'hover')
                 }
             });

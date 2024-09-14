@@ -29,13 +29,12 @@ class Loadmore {
     }
 
     init() {
-        const blocks = lib.qsa('[data-loadmore]');
         let item;
-        
+        let blocks = lib.qsa('[data-loadmore]');
         if (blocks.length) {
             blocks.forEach((e, index) => {
                 try {
-                    if (this._isValidJSON(e.dataset.loadmore)) {
+                    if (lib.isValidJSON(e.dataset.loadmore)) {
                         let json = JSON.parse(e.dataset.loadmore);
                         
                         if (json.hasOwnProperty('functionName')) {
@@ -94,15 +93,6 @@ class Loadmore {
                 this.watch = true;
             }
         });
-    }
-    
-    _isValidJSON(str) {
-        try {
-            JSON.parse(str);
-            return true;
-        } catch (err) {
-            return false;
-        }
     }
     
     unwatch(id) {

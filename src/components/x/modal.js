@@ -23,7 +23,7 @@
 
 
 import { lib } from './lib';
-import { device } from './device';
+// import { device } from './device';
 
 
 class Modal {
@@ -44,9 +44,8 @@ class Modal {
     init() {
         let modalContents = lib.qsa('.modal-content');
         if (modalContents.length) {
-            modalContents.forEach((e, index) => {
-                let html,
-                    here = lib.qs('.modal-here'),
+            modalContents.forEach(e => {
+                let here = lib.qs('.modal-here'),
                     placeholder = lib.qs('body'),
                     
                     id = e.getAttribute('id'),
@@ -111,7 +110,7 @@ class Modal {
         document.addEventListener('keydown', event => {
             let modalsActive = lib.qsa('.modal.active');
             let modalActive = modalsActive[modalsActive.length - 1];
-            if (modalActive && event.keyCode == 27) {
+            if (modalActive && event.key == 'Escape') {
                 event.preventDefault();
                 this.hide(modalActive.getAttribute('id'));
             }

@@ -1,13 +1,18 @@
 //
 //	appear.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 03.09.2024.
-//
+//	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  Set the 'appeared class for elements that have appeared at least once
 //  in the viewport. And the 'visible' class for elements in the viewport.
 //
+//  init() - initialize appear observer
+//  update() - update observers if DOM changed
+//
+
+
+import { lib } from './lib';
 
 
 class Appear {
@@ -24,7 +29,7 @@ class Appear {
     }
     
     init() {
-        this.items = document.querySelectorAll('.' + this.classIsAppeared);
+        this.items = lib.qsa('.' + this.classIsAppeared);
         if (this.items.length) {
             
             // Remove initial class 'classIsAppeared' on elements
@@ -65,6 +70,7 @@ class Appear {
     update() {
         this.items.forEach(item => this.observer.observe(item));
     }
+    
 }
 
 export const appear = new Appear();

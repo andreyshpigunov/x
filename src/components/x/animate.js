@@ -1,9 +1,8 @@
 //
 //	animate.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 03.09.2024.
-//
+//	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  On scroll animations
 //
@@ -26,6 +25,9 @@
 //  class         class, added to a reference when "target" is between "start" and "end"
 //  classRemove   whether to delete the "class" from the element after it leaves
 //                the animation zone, by default false
+//
+//  init() - init animations
+//
 
 
 import { lib } from './lib';
@@ -100,8 +102,8 @@ class Animate {
                 // scrollable <div> with animated elements
                 if (lib.qs('.animate-scrollarea')) {
                     lib.qs('.animate-scrollarea').addEventListener('scroll', () => {
-                            this._scroll(animationsHash);
-                        }, { passive: true });
+                        this._scroll(animationsHash);
+                    }, { passive: true });
                 }
             }
         }
@@ -145,7 +147,6 @@ class Animate {
                         item.progress = 0;
                         window[item.functionName](item);
                     }
-                    
                     if (offset.top < end) {
                         item.progress = 1;
                         window[item.functionName](item);

@@ -1,17 +1,23 @@
 //
-//  form.js
+//	form.js
+//	x
+//
+//	Created by Andrey Shpigunov on 11.09.2024.
+//
 //  Additional form elements functions
 //
-//  Created by Andrey Shpigunov on 30.08.2024.
+//  setChecked(element, checked = false) - set checkbox and radio as checked with dispatchEvent
+//  setValue(element, value) - set input, textarea and select values with dispatchEvent
+//  onUpdate(...args) - callback function after updating fields with setChecked, setValue and internal
+//  update(element) - dispatch 'update' event manually
 //
-//
-//  setChecked — set checkbox and radio as checked with dispatchEvent
-//  setValue — set input, textarea and select values with dispatchEvent
-//  onUpdate — callback function after updating fields with setChecked, setValue and internal
-//
+
+
+import { lib } from './lib';
 
 
 class Form {
+    
     constructor() {
         // Events
         this.change = new Event('change');
@@ -24,14 +30,14 @@ class Form {
     
     // Alternative to element.checked = bool with event callback
     setChecked(element, checked = false) {
-        let el = this._el(element);
+        let el = lib.qs(element);
         el.checked = checked;
         el.dispatchEvent(this.input);
     }
     
     // Alternative to element.value = string with event callback
     setValue(element, value) {
-        let el = this._el(element);
+        let el = lib.qs(element);
         let tagName = el.tagName.toLowerCase();
         switch (tagName) {
             case 'input':
@@ -55,7 +61,7 @@ class Form {
     onUpdate(...args) {
         let callback = args.at(-1);
         for (let i = 0; i < args.length - 1; i++) {
-            let el = this._el(args[i]);
+            let el = lib.qs(args[i]);
             let uid = this._uid(el);
             let tagName = el.tagName.toLowerCase();
             switch (tagName) {
@@ -81,7 +87,7 @@ class Form {
     
     // Dispatch update event
     update(element) {
-        let el = this._el(element);
+        let el = lib.qs(element);
         let tagName = el.tagName.toLowerCase();
         switch (tagName) {
             case 'input':
@@ -98,13 +104,10 @@ class Form {
     }
     
     _uid(element) {
-        let el = this._el(element);
+        let el = lib.qs(element);
         return [el.id, el.name].join('-');
     }
     
-    _el(element) {
-       return typeof element == 'string' ? qs(element) : element;
-    }
 }
 
 export const form = new Form();

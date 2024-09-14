@@ -1,12 +1,13 @@
 //
 //	lazyload.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 03.09.2024.
-//
+//	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  Loading images when they appearing in viewport.
 //  If IntersectionObserver is not supported, triggered fallback.
+//
+//  init() - initialize layloading
 //
 
 
@@ -14,6 +15,7 @@ import { lib } from './lib';
 
 
 class Lazyload {
+    
     constructor() {
         this.options = {
             root: null,
@@ -25,7 +27,7 @@ class Lazyload {
     init() {
         if ('IntersectionObserver' in window) {
             const images = lib.qsa('.lazyload:not(.loaded)');
-            if (images) {
+            if (images.length) {
                 const observer = new IntersectionObserver(
                     (entries, observer) => {
                         if (entries) {
@@ -50,7 +52,7 @@ class Lazyload {
     
     _fallback() {
         const images = lib.qsa('.lazyload:not(.loaded)');
-        if (images) {
+        if (images.length) {
             images.forEach((img) => {
                 const srcset = img.dataset.srcset;
                 const src = img.dataset.src;
@@ -92,6 +94,7 @@ class Lazyload {
                 return false;
             });
     }
+    
 }
 
 export const lazyload = new Lazyload();

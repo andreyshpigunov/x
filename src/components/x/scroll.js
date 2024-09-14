@@ -14,7 +14,7 @@
 //    {
 //      "parent": "#id or .class selector", — default "window"
 //      "target": "top",
-//      "duration": 400,
+//      "duration": 200,
 //      "offset": 0,
 //      "classActive": "active",
 //      "hash": false
@@ -41,23 +41,24 @@
 //
 //  scrollTo support async methods:
 //  auto.scroll.to(element).then((e) => { alert('Here!') })
+//
+
+
+import { lib } from './lib';
 
 
 class Scroll {
     
     constructor() {
         this.parent = window;
-        this.duration = 400;
+        this.duration = 200;
         this.offset = 0;
         this.classActive = 'active';
         this.hash = false;
-        // Link to new method
-        this.to = this.scrollTo;
     }
     
     init() {
-        let links = document.querySelectorAll('[data-scrollto]');
-        
+        let links = lib.qsa('[data-scrollto]');
         if (links.length) {
             let linksHash = {};
             
@@ -65,14 +66,14 @@ class Scroll {
                 try {
                     let item = {};
                     
-                    if (this._isValidJSON(e.dataset.scrollto)) {
+                    if (lib.isValidJSON(e.dataset.scrollto)) {
                         let json = JSON.parse(e.dataset.scrollto);
                         if (
-                            json.hasOwnProperty('target') && this._getElement(json.target)
+                            json.hasOwnProperty('target') && lib.qs(json.target)
                         ) {
                             item.link = e;
                             item.parent = json.parent || this.parent;
-                            item.target = this._getElement(json.target);
+                            item.target = lib.qs(json.target);
                             item.duration = json.duration || this.duration;
                             item.offset = json.offset || this.offset;
                             item.classActive = json.classActive || this.classActive;
@@ -84,11 +85,11 @@ class Scroll {
                         }
                     } else {
                         if (
-                            this._getElement(e.dataset.scrollto)
+                            lib.qs(e.dataset.scrollto)
                         ) {
                             item.link = e;
                             item.parent = this.parent;
-                            item.target = this._getElement(e.dataset.scrollto);
+                            item.target = lib.qs(e.dataset.scrollto);
                             item.duration = this.duration;
                             item.offset = this.offset;
                             item.classActive = this.classActive;
@@ -134,7 +135,7 @@ class Scroll {
                 };
                 
                 for (let p in parents) {
-                    let el = this._getElement(parents[p]);
+                    let el = lib.qs(parents[p]);
                     el.addEventListener('scroll', () => {
                         this._scrollObserve(linksHash);
                     }, { passive: true });
@@ -143,7 +144,7 @@ class Scroll {
         }
     }
     
-    scrollTo(params) {
+    async scrollTo(params) {
     // params — string (id, selector) or element node
     // or object with fields:
     // {
@@ -155,16 +156,16 @@ class Scroll {
     //     hash: false
     //  }
         return new Promise(resolve => {
-            let parent = this._getElement(params.parent) || this.parent,
+            let parent = lib.qs(params.parent) || this.parent,
                 target,
                 duration = params.duration || this.duration,
                 offset = params.offset || this.offset,
                 hash = params.hash || this.hash;
             
             if (typeof params === 'object') {
-                target = this._getElement(params.target);
+                target = lib.qs(params.target);
             } else {
-                target = this._getElement(params);
+                target = lib.qs(params);
             }
             if (!target) {
                 console.error('Target ' + target + ' not found');
@@ -191,16 +192,6 @@ class Scroll {
                 diff = elementY - startingY - offset;
             }
             
-            let easeInOutCubic = t => {
-                return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
-            };
-            let easeOutCubic = t => {
-                return 1 - Math.pow(1 - t, 3);
-            };
-            let easeOutQuint = t => {
-                return 1 - Math.pow(1 - x, 5);
-            };
-            
             let start;
             if (!diff) return;
             
@@ -209,7 +200,7 @@ class Scroll {
                 let time = timestamp - start;
                 // Scroll progress (0..1)
                 let progress = duration > 0 ? Math.min(time / duration, 1) : 1;
-                progress = easeOutQuint(progress);
+                progress = 1 - Math.pow(1 - progress, 5);
                 parent.scrollTo(0, startingY + diff * progress);
                 if (time < duration) {
                     window.requestAnimationFrame(step);
@@ -250,29 +241,6 @@ class Scroll {
                 }
             }
         });
-    }
-    
-    _isValidJSON(str) {
-        try {
-            JSON.parse(str);
-            return true;
-        } catch (err) {
-            return false;
-        }
-    }
-    
-    _getElement(element) {
-        if (element instanceof Window) {
-            return element;
-        } else if (element && element.nodeType === Node.ELEMENT_NODE) {
-            return element;
-        } else if (document.getElementById(element)) {
-            return document.getElementById(element);
-        } else if (document.querySelector(element)) {
-            return document.querySelector(element);
-        } else {
-            console.error('Element ' + element + ' not found');
-        }
     }
 }
 

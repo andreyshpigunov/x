@@ -8,19 +8,19 @@
 //
 
 
-import { hover }     from "../components/x/hover";
+import { hover    }  from "../components/x/hover";
 import { lazyload }  from "../components/x/lazyload";
-import { animate }   from "../components/x/animate";
-import { appear }    from "../components/x/appear";
+import { animate  }  from "../components/x/animate";
+import { appear   }  from "../components/x/appear";
 import { loadmore }  from "../components/x/loadmore";
-import { device }    from "../components/x/device";
-import { modal }     from "../components/x/modal";
-import { sheets }    from "../components/x/sheets";
-import { scroll }    from "../components/x/scroll";
-import { lib }       from "../components/x/lib";
-import { form }      from "../components/x/form";
-import { slider }    from "../components/x/slider";
-import { sticky }    from "../components/x/sticky";
+import { device   }  from "../components/x/device";
+import { modal    }  from "../components/x/modal";
+import { sheets   }  from "../components/x/sheets";
+import { scroll   }  from "../components/x/scroll";
+import { lib      }  from "../components/x/lib";
+import { form     }  from "../components/x/form";
+import { slider   }  from "../components/x/slider";
+import { sticky   }  from "../components/x/sticky";
 
 
 class X {
@@ -45,6 +45,8 @@ class X {
     
     init() {
         if (!this.initialized) {
+            device();
+            hover();
             this.modal.init();
             this.animate.init();
             this.appear.init();
@@ -54,7 +56,6 @@ class X {
             this.scroll.init();
             this.sticky.init();
             this.slider.init();
-            hover();
             
             this.initialized = true;
         }
@@ -67,3 +68,4 @@ window.x = x;
 // Query selectors shorthands
 window.qs  = x.lib.qs;
 window.qsa = x.lib.qsa;
+window.qse = x.lib.qse;

@@ -1,10 +1,12 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.0.40",
+	"version": "0.0.41",
 	"devDependencies": {
+		"@jest/globals": "^29.7.0",
 		"@parcel/logger": "*",
 		"autoprefixer": "^10.1.0",
 		"cssnano": "^5.0.2",
+		"jest": "^29.7.0",
 		"parcel": "^2.0.1",
 		"postcss": "^8.2.1",
 		"postcss-cli": "^8.3.0",
@@ -16,10 +18,10 @@
 		"postcss-nesting": "^10.2.0"
 	},
 	"scripts": {
-		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u postcss-contrast -u autoprefixer -u cssnano --no-map -d dist/",
+		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u autoprefixer -u cssnano --no-map -d dist/",
 		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
 		"build": "npm run build-css && npm run build-js",
-		"test": "exit 0"
+		"test": "jest"
 	},
 	"repository": {
 		"type": "git",

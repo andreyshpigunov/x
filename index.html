@@ -18,9 +18,9 @@
 }'>
 
     <header class="header flex aic sticky">
-        <div class="header-version nowrap">0.0.39</div>
+        <div class="header-version nowrap">0.0.41</div>
         <div class="header-logo mxa">
-            <a role="button" data-scrollto="top">
+            <a role="button" data-scrollto="#top">
                 <img src="assets/logo.png" alt="x"/>
             </a>
         </div>
@@ -731,9 +731,6 @@
                 <td><code>var(--button-font-color)</code></td>
             </tr>
         </table>
-        
-        <h3>Пример</h3>
-        <iframe height="600" style="width: 100%;" scrolling="no" title="Auto / Buttons" src="https://codepen.io/andreyshpigunov/embed/qBajZjb?height=800&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
     </div>
     
     
@@ -959,9 +956,6 @@
                 <td><code>1rem</code></td>
             </tr>
         </table>
-        
-        <h3>Пример</h3>
-        <iframe height="1000" style="width: 100%;" scrolling="no" title="Auto / Grid" src="https://codepen.io/andreyshpigunov/embed/MWjmmKx?height=800&theme-id=dark&default-tab=html,result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
     </div>
     
     
@@ -1738,9 +1732,6 @@
                 <td>Максимальная ширина контейнера</td>
             </tr>
         </table>
-        
-        <h3>Пример</h3>
-        <iframe height="1280" style="width: 100%;" scrolling="no" title="Auto / Helpers" src="https://codepen.io/andreyshpigunov/embed/WNGjRBG?height=1280&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
     </div>
     
     
@@ -1760,11 +1751,11 @@
         
         <nav class="modalNavigation unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalApi", "offset": 100}'>API</a>
-                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalEvents", "offset": 100}'>События</a>
-                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalCss", "offset": 100}'>CSS</a>
-                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "modalModalExamples", "offset": 100}'>Примеры</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalEvents", "offset": 100}'>События</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalCss", "offset": 100}'>CSS</a>
+                <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalExamples", "offset": 100}'>Примеры</a>
             </div>
         </nav>
         
@@ -1829,19 +1820,19 @@
                     <th width="60%">Описание</th>
                 </tr>
                 <tr>
-                    <td><code>auto.modal.show(id)</code></td>
+                    <td><code>x.modal.show(id)</code></td>
                     <td>Показывает модальное окно</td>
                 </tr>
                 <tr>
-                    <td><code>auto.modal.hide(id)</code></td>
+                    <td><code>x.modal.hide(id)</code></td>
                     <td>Скрывает модальное окно</td>
                 </tr>
                 <tr>
-                    <td><code>auto.modal.hideAll()</code></td>
+                    <td><code>x.modal.hideAll()</code></td>
                     <td>Скрывает все модальные окна</td>
                 </tr>
                 <tr>
-                    <td><code>auto.modal.isActive(id)</code></td>
+                    <td><code>x.modal.isActive(id)</code></td>
                     <td>Проверяет активность модального окна</td>
                 </tr>
             </table>
@@ -1935,7 +1926,7 @@
             <h3>Примеры</h3>
             <p class="flex gap3">
                 <a role="button" class="button" data-modal="modalTest">Тестовое окошко</a>
-                <a role="button" class="button" onclick="auto.modal.show('modalTest')"><code>auto.modal.show('modalTest')</code></a>
+                <a role="button" class="button" onclick="x.modal.show('modalTest')"><code>x.modal.show('modalTest')</code></a>
                 <a role="button" class="button" data-modal="modalUniq">Уникальное окно</a>
             </p>
             
@@ -1962,10 +1953,9 @@
         
         <nav class="modalNavigation unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollApi", "offset": 100}'>API</a>
-                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollParams", "offset": 100}'>Параметры</a>
-                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollExamples", "offset": 100}'>Примеры</a>
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams", "offset": 100}'>Параметры</a>
             </div>
         </nav>
         
@@ -1977,7 +1967,7 @@
                 <code>&lt;a data-scrollto="top"&gt;Наверх&lt;/a&gt;</code>
                 <code>&lt;a data-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
             </div>
-            <p>Вызов с <a class="link pseudo" data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "modalScrollParams"}'>параметрами</a> в формате JSON:</p>
+            <p>Вызов с <a class="link pseudo" data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
             <div class="codeBlock">
                 <code>&lt;a data-scrollto='{</code>
                 <code>    "parent": window,</code>
@@ -1994,11 +1984,11 @@
             <h3>API</h3>
             <p>Варианты вызовов:</p>
             <div class="codeBlock">
-                <code>auto.scroll.to('top')</code>
-                <code>auto.scroll.to('#top')</code>
+                <code>x.scroll.to('top')</code>
+                <code>x.scroll.to('#top')</code>
                 <code>let top = document.getElementById('top')</code>
-                <code>auto.scroll.to(top)</code>
-                <code>auto.scroll.to({</code>
+                <code>x.scroll.to(top)</code>
+                <code>x.scroll.to({</code>
                 <code>    parent: window,</code>
                 <code>    target: "top",</code>
                 <code>    duration: 400,</code>
@@ -2009,7 +1999,7 @@
             </div>
             <p>Метод поддерживает асинхронный вызов:</p>
             <div class="codeBlock">
-                <code>auto.scroll.to(element).then((e) => { alert('Готово!') })</code>
+                <code>x.scroll.to(element).then((e) => { alert('Готово!') })</code>
             </div>
         </div>
         
@@ -2063,11 +2053,6 @@
                 </tr>
             </table>
         </div>
-        
-        <div id="modalScrollExamples" class="mt5">
-            <h3>Примеры</h3>
-            <iframe height="265" style="width: 100%;" scrolling="no" title="Auto / Scroller" src="https://codepen.io/andreyshpigunov/embed/qBajNxp?height=350&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
-        </div>
     </div>
     
     <div id="modalAnimate" class="modal-content hash" data-window-class="max1000">
@@ -2075,9 +2060,9 @@
         
         <nav class="modalNavigation unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "modalAnimateMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "modalAnimateParams", "offset": 100}'>Параметры</a>
-                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "modalAnimateExamples", "offset": 100}'>Примеры</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateParams", "offset": 100}'>Параметры</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateExamples", "offset": 100}'>Примеры</a>
             </div>
         </nav>
         
@@ -2173,9 +2158,9 @@
         
         <nav class="modalNavigation unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "modalSheetsMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "modalSheetsApi", "offset": 100}'>API</a>
-                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "modalSheetsExamples", "offset": 100}'>Примеры</a>
+                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsExamples", "offset": 100}'>Примеры</a>
             </div>
         </nav>
         
@@ -2206,7 +2191,7 @@
                     <th width="60%">Описание</th>
                 </tr>
                 <tr>
-                    <td><code>auto.sheets.show(id)</code></td>
+                    <td><code>x.sheets.show(id)</code></td>
                     <td>Показывает нужный таб</td>
                 </tr>
             </table>
@@ -2238,8 +2223,8 @@
         
         <nav class="modalNavigation unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "modalLoadmoreMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "modalLoadmoreParams", "offset": 100}'>Параметры</a>
+                <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreParams", "offset": 100}'>Параметры</a>
             </div>
         </nav>
         
@@ -2260,7 +2245,7 @@
             
             <p>Остановить выполнение функции можно методом:</p>
             <div class="codeBlock">
-                <code>auto.loadmore.unwatch()</code>
+                <code>x.loadmore.unwatch()</code>
             </div>
         </div>
         
@@ -2359,7 +2344,7 @@
         
         <p>Использование:</p>
         <div class="codeBlock">
-            <code>if (auto.device.[name]) { ... }</code>
+            <code>if (x.device.[name]) { ... }</code>
         </div>
         
         <p>
@@ -2372,17 +2357,17 @@
         
         <p>Примеры:</p>
         <div class="codeBlock">
-            <code>if (auto.device.ie) { ... }</code>
-            <code>if (auto.device.windows) { ... }</code>
-            <code>if (auto.device.iphone) { ... }</code>
-            <code>if (auto.device.mobile) { ... }</code>
-            <code>if (auto.device.js) { ... }</code>
+            <code>if (x.device.ie) { ... }</code>
+            <code>if (x.device.windows) { ... }</code>
+            <code>if (x.device.iphone) { ... }</code>
+            <code>if (x.device.mobile) { ... }</code>
+            <code>if (x.device.js) { ... }</code>
         </div>
         
         <p>Определение размеров экрана:</p>
         <div class="codeBlock">
-            <code>let width = auto.device.width</code>
-            <code>let height = auto.device.height</code>
+            <code>let width = x.device.width</code>
+            <code>let height = x.device.height</code>
         </div>
     </div>
     
@@ -2401,127 +2386,127 @@
         
         <p>Пример использования:</p>
         <div class="codeBlock">
-            <code>auto.lib.qs('.product-name')</code>
-            <code>auto.lib.qsa('.product-item')</code>
+            <code>x.lib.qs('.product-name')</code>
+            <code>x.lib.qsa('.product-item')</code>
         </div>
         
         <h3>Функции</h3>
         
-        <h4><code class="fs16">auto.lib.hide(element)</code></h4>
+        <h4><code class="fs16">x.lib.hide(element)</code></h4>
         <p>
             Скрывает элемент, добавляя класс <code>.hidden</code>.<br/>
             <code>element</code> — селектор или элемент.
         </p>
         
-        <h4><code class="fs16">auto.lib.show(element)</code></h4>
+        <h4><code class="fs16">x.lib.show(element)</code></h4>
         <p>
             Показывает элемент, убирая класс <code>.hidden</code>.<br/>
             <code>element</code> — селектор или элемент.
         </p>
         
-        <h4><code class="fs16">auto.lib.reload()</code></h4>
+        <h4><code class="fs16">x.lib.reload()</code></h4>
         <p>Перезагружает страницу.</p>
         
-        <h4><code class="fs16">auto.lib.reloadWithHash(hash)</code></h4>
+        <h4><code class="fs16">x.lib.reloadWithHash(hash)</code></h4>
         <p>Перезагружает страницу, добавляя к ней указанный хэш.</p>
         
-        <h4><code class="fs16">auto.lib.redirectTo(url)</code></h4>
+        <h4><code class="fs16">x.lib.redirectTo(url)</code></h4>
         <p>Перенаправляет на URL.</p>
         
-        <h4><code class="fs16">auto.lib.updateURL(url, title)</code></h4>
+        <h4><code class="fs16">x.lib.updateURL(url, title)</code></h4>
         <p>
             Обновляет title и URL страницы без перезагрузки.<br/>
-            Поддерживает добавлени хэша: <code>auto.lib.updateURL('#ok')</code>
+            Поддерживает добавлени хэша: <code>x.lib.updateURL('#ok')</code>
         </p>
         
-        <h4><code class="fs16">auto.lib.random(a, b)</code></h4>
+        <h4><code class="fs16">x.lib.random(a, b)</code></h4>
         <p>Создает произвольное число, больше <code>a</code> и меньше <code>b</code>.</p>
         
-        <h4><code class="fs16">auto.lib.price(price)</code></h4>
+        <h4><code class="fs16">x.lib.price(price)</code></h4>
         <p>Форматирует цену в вид: <code>9 999 999.99</code></p>
         
-        <h4><code class="fs16">auto.lib.number(a)</code></h4>
+        <h4><code class="fs16">x.lib.number(a)</code></h4>
         <p>Форматирует число.</p>
         
-        <h4><code class="fs16">auto.lib.numberDecline(a, b, c, d)</code></h4>
+        <h4><code class="fs16">x.lib.numberDecline(a, b, c, d)</code></h4>
         <p>Склонение числительных.</p>
         
         <p>Пример:</p>
         <div class="codeBlock">
-            <code>auto.lib.numberDecline(10, 'час', 'часа', 'часов') -> 10 часов</code>
+            <code>x.lib.numberDecline(10, 'час', 'часа', 'часов') -> 10 часов</code>
         </div>
         
-        <h4><code class="fs16">auto.lib.addClass(element, readyClass = 'ready', activeClass = 'active', delay = 50)
+        <h4><code class="fs16">x.lib.addClass(element, readyClass = 'ready', activeClass = 'active', delay = 50)
         </code></h4>
         <p>Последовательное добавление класса. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация.</p>
         <p>Пример:</p>
         <div class="codeBlock">
-            <code>auto.lib.addClass('.product-info', 'ready', 'show')</code>
+            <code>x.lib.addClass('.product-info', 'ready', 'show')</code>
         </div>
         <p>Добавляет элементу <code>.product-info</code> сначала класс <code>.ready</code>, а через 50 мс (по умолчанию) класс <code>.show</code>.</p>
         
-        <h4><code class="fs16">auto.lib.removeClass(element, readyClass = 'ready', activeClass = 'active', delay = 200)
+        <h4><code class="fs16">x.lib.removeClass(element, readyClass = 'ready', activeClass = 'active', delay = 200)
         </code></h4>
         <p>Последовательное удаление класса. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация.</p>
         <p>Пример:</p>
         <div class="codeBlock">
-            <code>auto.lib.removeClass('.product-info', 'ready', 'show')</code>
+            <code>x.lib.removeClass('.product-info', 'ready', 'show')</code>
         </div>
         <p>У элемента <code>.product-info</code> сначала убирает класс <code>.show</code>, а через 50 мс (по умолчанию) класс <code>.ready</code>.</p>
         
-        <h4><code class="fs16">auto.lib.toggleClass(element, readyClass, activeClass, delayAdd, delayRemove)
+        <h4><code class="fs16">x.lib.toggleClass(element, readyClass, activeClass, delayAdd, delayRemove)
         </code></h4>
         <p>Последовательное переключение классов. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация. По очереди запускает <code>addClass</code> и <code>removeClass</code>.</p>
         
-        <h4><code class="fs16">auto.lib.makePassword(length, selector)
+        <h4><code class="fs16">x.lib.makePassword(length, selector)
         </code></h4>
         <p>Создает пароль указанной длины (по умолчанию — 8).</p>
         <p>Если созданный пароль сразу нужно вставить в поле input или textarea, вы можете указать выражение для querySelector этого поля в переменной selector.</p>
-        <p><a class="button small" onclick="alert(auto.lib.makePassword())">Придумать пароль!</a></p>
+        <p><a class="button small" onclick="alert(x.lib.makePassword())">Придумать пароль!</a></p>
         
-        <h4><code class="fs16">auto.lib.loadScript(path, callback, type = 'async|defer')</code></h4>
+        <h4><code class="fs16">x.lib.loadScript(path, callback, type = 'async|defer')</code></h4>
         <p>Загружает скрипт и добавляет его в конец перед <code>&lt;/body&gt;</code>. После успешной загрузки выполняется <code>callback</code>.</p>
         <p>Пример:</p>
         <div class="codeBlock">
-            <code>auto.lib.loadScript(</code>
+            <code>x.lib.loadScript(</code>
             <code>    '/path/to/file.js',</code>
             <code>    () => { Callback function... },</code>
             <code>    'async'</code>
             <code>)</code>
         </div>
         
-        <h4><code class="fs16">auto.lib.deffered(code, delay = 10000)</code></h4>
+        <h4><code class="fs16">x.lib.deffered(code, delay = 10000)</code></h4>
         <p>Отложенное выполнение кода. Анонимная функция с кодом <code>() => { code }</code> будет запущена через время <code>delay</code> (по умолчанию 10 с), либо по наступлении одного из событий: <code>scroll</code>, <code>resize</code>, <code>click</code>, <code>keydown</code>, <code>mouseover</code>, <code>touchmove</code>.</p>
         <p>Пример:</p>
         <div class="codeBlock">
-            <code>auto.lib.deffered(</code>
+            <code>x.lib.deffered(</code>
             <code>    () => { Code... },</code>
             <code>    10000</code>
             <code>)</code>
         </div>
         
-        <h4><code class="fs16">auto.lib.runOnAppear(selector, callback, options)</code></h4>
+        <h4><code class="fs16">x.lib.runOnAppear(selector, callback, options)</code></h4>
         <p>Выполнение кода при его появлении во Viewport (по умолчанию ближе чем за 100px за Viewport). Анонимная функция с кодом <code>() => { code }</code> будет запущена при приближении указанного блока к Viewport.</p>
         <p>Пример:</p>
         <div class="codeBlock">
-            <code>auto.lib.runOnAppear(</code>
+            <code>x.lib.runOnAppear(</code>
             <code>    '.css_selector',</code>
             <code>    () => { Code... },</code>
             <code>    options (не обязательно)</code>
             <code>)</code>
         </div>
         
-        <h4><code class="fs16">auto.lib.isEmail(email)</code></h4>
+        <h4><code class="fs16">x.lib.isEmail(email)</code></h4>
         <p>Определяет валидность адреса электропочты.</p>
         
-        <h4><code class="fs16">auto.lib.alertErrors(data)</code></h4>
+        <h4><code class="fs16">x.lib.alertErrors(data)</code></h4>
         <p>
             Показывает алерт с ошибками.<br/>
             <code>data</code> — объект (ключ: значение), массив или строка.<br/>
             Каждая ошибка будет выведена с новой строки (разделены <code>\n</code>).
         </p>
         
-        <h4><code class="fs16">auto.lib.printErrors(data)</code></h4>
+        <h4><code class="fs16">x.lib.printErrors(data)</code></h4>
         <p>
             Печатает ошибки.<br/>
             <code>data</code> — объект (ключ: значение), массив или строка.<br/>
@@ -2535,8 +2520,8 @@
         
         <nav class="modalNavigation unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "modalFormMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "modalFormApi", "offset": 100}'>API</a>
+                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "#modalFormMain", "offset": 100}'>Описание</a>
+                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "#modalFormApi", "offset": 100}'>API</a>
             </div>
         </nav>
         
@@ -2553,15 +2538,15 @@
                     <th width="50%">Описание</th>
                 </tr>
                 <tr>
-                    <td><code>auto.form.setChecked(element, checked = false)</code></td>
+                    <td><code>x.form.setChecked(element, checked = false)</code></td>
                     <td>Аналог element.checked = bool</td>
                 </tr>
                 <tr>
-                    <td><code>auto.form.setValue(element, value)</code></td>
+                    <td><code>x.form.setValue(element, value)</code></td>
                     <td>Аналог element.value = string</td>
                 </tr>
                 <tr>
-                    <td><code>auto.form.onUpdate(el1, el2, ..., elN, callback)</code></td>
+                    <td><code>x.form.onUpdate(el1, el2, ..., elN, callback)</code></td>
                     <td>Слушатель событий на элементах el1, el2 и т. д.</td>
                 </tr>
             </table>
@@ -2577,7 +2562,7 @@
     
     <script src="dist/app.js"></script>
     <script>
-        // auto.init();
+        // x.init();
         
         // function element1(params) {
         //     let rotate = params.progress * -360;
