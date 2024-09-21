@@ -34,7 +34,7 @@ class X {
         this.sheets   = sheets;
         this.scroll   = scroll;
         this.hover    = hover;
-        this.device   = device;
+        this.device   = device();
         this.lib      = lib;
         this.form     = form;
         this.sticky   = sticky;
@@ -45,7 +45,7 @@ class X {
     
     init() {
         if (!this.initialized) {
-            device();
+            // device();
             hover();
             this.modal.init();
             this.animate.init();

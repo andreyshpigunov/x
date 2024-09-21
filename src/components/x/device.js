@@ -90,17 +90,22 @@ export function device() {
         classes.push('android');
     }
     
+    // Detect touch device
+    if (matchMedia('(pointer: coarse)').matches) {
+        classes.push('touch');
+    }
+    
     // Set classes
     html.className = classes.join(' ');
     
     // Create object with classes keys
-    let classesHash = {};
+    let classesObject = {};
     
-    for (let i = 0, len = classes.length; i < len; i++) {
-        classesHash[classes[i]] = true;
+    for (let i = 0; i < classes.length; i++) {
+        classesObject[classes[i]] = true;
     }
     
-    classesHash.width = window.innerWidth;
-    classesHash.height = window.innerHeight;
-    return classesHash;
+    classesObject.width = window.innerWidth;
+    classesObject.height = window.innerHeight;
+    return classesObject;
 }
