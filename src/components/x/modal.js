@@ -1,14 +1,13 @@
 //
 //	modal.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 04.09.2024.
-//
+//	Created by Andrey Shpigunov on 18.09.2024.
 //
 //  Usage:
-//  <a data-modal="my-modal">Open modal</a>
+//  <a data-modal="modal">Open modal</a>
 //
-//  <div id="my-modal" class="modal-content [custom-classes]" data-window-class="[window-classes]">
+//  <div id="modal" class="modal-content [custom-classes]" data-window-class="[window-classes]">
 //      <p>Hello modal!</p>
 //      <p><a class="button modal-close">Close</a></p> — optional
 //  </div>
@@ -23,37 +22,35 @@
 
 
 import { lib } from './lib';
-// import { device } from './device';
 
 
 class Modal {
     
     constructor() {
+        // Modal level (z-index)
         this.modalLevel = 0;
-        this.scrollPosition = 0;
-        this.cp = {};
-        
+        // Modal events
         this.eventReady = new CustomEvent('modal:ready');
         this.eventOpen  = new CustomEvent('modal:open');
         this.eventClose = new CustomEvent('modal:close');
-        
+        // Lock from collizions when show/hide
         this.lock = false;
     }
     
     // Init windows
     init() {
-        let modalContents = lib.qsa('.modal-content');
-        if (modalContents.length) {
-            modalContents.forEach(e => {
+        
+        // Modals content
+        let content = lib.qsa('[x-modal]');
+        if (content.length) {
+            for (let item of content) {
                 let here = lib.qs('.modal-here'),
-                    placeholder = lib.qs('body'),
+                    placeholder = here ? here : lib.qs('body'),
                     
-                    id = e.getAttribute('id'),
-                    classes = e.getAttribute('class').replace('modal-content', ''),
-                    windowClasses = e.dataset.windowClass || '',
-                    content = e.innerHTML;
-                    
-                if (here) placeholder = here;
+                    id = item.getAttribute('id'),
+                    classes = item.getAttribute('class'),
+                    windowClasses = item.dataset.windowClass || '',
+                    content = item.innerHTML;
                 
                 placeholder.insertAdjacentHTML('beforeend', `
                     <div id="${id}" class="modal ${classes}">
@@ -70,55 +67,59 @@ class Modal {
                         </div>
                     </div>
                 `);
-                e.remove();
-            });
+                item.remove();
+            }
         }
         
-        let modalLinks = lib.qsa('[data-modal]');
-        if (modalLinks.length) {
-            modalLinks.forEach(e => {
-                e.addEventListener('click', event => {
-                    event.preventDefault();
-                    this.show(e.dataset.modal);
+        // Links on modals
+        let links = lib.qsa('[x-modal-open]');
+        if (links.length) {
+            for (let link of links) {
+                let id = link.getAttribute('x-modal-open');
+                // Add event listener on link
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    this.show(id);
                 });
-                
-                if (window.location.hash == '#' + e.dataset.modal) {
-                    let modal = document.getElementById(e.dataset.modal);
-                    if (modal.classList.contains('hash')) {
-                        this.show(e.dataset.modal);
+                // Show modal if hash defined in URL
+                if (window.location.hash == '#' + id) {
+                    let modal = lib.qs('#' + id);
+                    if (modal.classList.contains('modal_hash')) {
+                        this.show(id);
                     }
                 }
-            });
+            }
         }
         
-        document.addEventListener('click', event => {
-            let modalActive = lib.qs('.modal.active');
+        // Hide modal on click outside
+        document.addEventListener('click', e => {
+            let modalActive = lib.qs('.modal.modal_active');
             if (
                 modalActive &&
-                event.target.matches('.modal.active, .modal.active *') &&
+                e.target.matches('.modal.modal_active, .modal.modal_active *') &&
                 (
-                    event.target.classList.contains('modal-close') ||
-                    !event.target.matches('.modal-window, .modal-window *')
+                    e.target.classList.contains('modal-close') ||
+                    !e.target.matches('.modal-window, .modal-window *')
                 )
             ) {
-                event.preventDefault();
-                this.hide(event.target.closest('.modal').getAttribute('id'));
+                e.preventDefault();
+                this.hide(e.target.closest('.modal').getAttribute('id'));
             }
         });
         
         // Listen ESC button press, when modal active
-        document.addEventListener('keydown', event => {
-            let modalsActive = lib.qsa('.modal.active');
+        document.addEventListener('keydown', e => {
+            let modalsActive = lib.qsa('.modal_active');
             let modalActive = modalsActive[modalsActive.length - 1];
-            if (modalActive && event.key == 'Escape') {
-                event.preventDefault();
+            if (modalActive && e.key == 'Escape') {
+                e.preventDefault();
                 this.hide(modalActive.getAttribute('id'));
             }
         });
     }
     
     // Show window
-    show(id) {
+    async show(id) {
         if (this.isActive(id)) {
             this.hide(id);
             return false;
@@ -127,94 +128,75 @@ class Modal {
         let modal = document.getElementById(id);
         if (!this.lock && modal) {
             
-            if (modal.classList.contains('uniq')) {
+            if (modal.classList.contains('modal_uniq')) {
                 this.hideAll();
             }
             
             this.lock = true;
             
-            let html = document.documentElement;
+            modal.dispatchEvent(this.eventReady);
             
-            html.classList.add('modal-active');
-            html.classList.add(id + '-active');
-            
-            if (modal.classList.contains('hash')) {
+            if (modal.classList.contains('modal_hash')) {
                 window.location.hash = id;
             }
             
-            setTimeout(() => {
-                modal.dispatchEvent(this.eventReady);
-                this.modalLevel++;
-                modal.classList.add('top', 'active', 'level' + this.modalLevel);
-                setTimeout(() => {
-                    modal.dispatchEvent(this.eventOpen);
-                    this.lock = false;
-                }, 400);
-                
-            }, 0);
+            let html = lib.qs('html');
+            lib.addClass(html, 'modal_active');
+            lib.addClass(html, id + '_active');
             
-            // if (device.iphone || device.ipad || device.android) {
-            //     this.scrollPosition = window.pageYOffset;
-            //     document.body.style.position = 'fixed';
-            //     document.body.style.top = '-' + this.scrollPosition + 'px';
-            //     document.body.style.width = window.innerWidth + 'px';
-            // }
+            this.modalLevel++;
+            lib.addClass(modal, 'modal_z' + this.modalLevel);
+            await lib.addClass(modal, 'modal_active', 10);
+            
+            setTimeout(() => {
+                modal.dispatchEvent(this.eventOpen);
+                this.lock = false;
+            }, 200);
         }
     }
     
     // Hide window
-    hide(id) {
-        let modal = document.getElementById(id);
-        if (!this.lock && modal) {
+    async hide(id) {
+        let modal = lib.qs('#' + id);
+        if (modal && !this.lock) {
             this.lock = true;
             
-            let html = document.documentElement;
-            
-            window.removeEventListener('resize', this.cp);
-            modal.classList.remove('active');
-            
-            html.classList.remove(id + '-active');
-            this.modalLevel--;
-            if (this.modalLevel == 0) {
-                html.classList.remove('modal-active');
-            }
-            
             if (
-                modal.classList.contains('hash') &&
+                modal.classList.contains('modal_hash') &&
                 window.location.hash == '#' + id
             ) {
-                history.replaceState({}, document.title, window.location.href.split('#')[0]);
+                history.replaceState(null, document.title, window.location.href.split('#')[0])
             }
             
-            setTimeout(() => {
-                modal.classList.remove('top', 'level' + this.modalLevel);
-                modal.querySelector('.modal-outer').scrollTo(0, 0);
-                modal.dispatchEvent(this.eventClose);
-                this.lock = false;
-            }, 400);
+            await lib.removeClass(modal, 'modal_active', 200);
+            lib.removeClass(modal, 'modal_z' + this.modalLevel);
+            lib.qs('.modal-outer', modal).scrollTo(0, 0);
+            modal.dispatchEvent(this.eventClose);
             
-            // if (device.iphone || device.ipad || device.android) {
-            //     document.body.style.position = null;
-            //     document.body.style.top = null;
-            //     document.body.style.width = null;
-            //     window.scrollTo(0, this.scrollPosition);
-            // }
+            let html = lib.qs('html');
+            lib.removeClass(html, id + '_active');
+            this.modalLevel--;
+            if (this.modalLevel == 0) {
+                lib.removeClass(html, 'modal_active');
+            }
+            
+            this.lock = false;
         }
     }
     
     // Hide all active modals
     hideAll() {
-        let activeModals = lib.qsa('.modal.active');
-        if (activeModals) {
-            activeModals.forEach(item => {
-                this.hide(item.getAttribute('id'));
-            })
+        let activeModals = lib.qsa('.modal_active');
+        if (activeModals.length) {
+            for (let item of activeModals) {
+                this.hide(item.getAttribute('id'))
+            }
         }
     }
     
     // Check modal activity
     isActive(id) {
-        return lib.qs('#' + id + '.active');
+        return lib.qs('#' + id + ' .modal_active')
     }
 }
 

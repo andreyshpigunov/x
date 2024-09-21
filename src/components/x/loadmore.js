@@ -1,14 +1,13 @@
 //
 //	loadmore.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 03.09.2024.
-//
+//	Created by Andrey Shpigunov on 19.09.2024.
 //
 //  Appeared element callback
 //  Load callback when element appeared in viewport from bottom.
 //
-//  <div data-loadmore='{"functionName": "load", "offset": "100"}'>...</div>
+//  <div x-loadmore='{"functionName": "load", "offset": "100"}'>...</div>
 //  Callback function has paramenter "page":
 //  function load(page) { ... }
 //
@@ -21,6 +20,7 @@ import { lib } from './lib';
 
 
 class Loadmore {
+    
     constructor() {
         this.page = 1;
         this.offset = 0;
@@ -30,12 +30,12 @@ class Loadmore {
 
     init() {
         let item;
-        let blocks = lib.qsa('[data-loadmore]');
+        let blocks = lib.qsa('[x-loadmore]');
         if (blocks.length) {
             blocks.forEach((e, index) => {
                 try {
-                    if (lib.isValidJSON(e.dataset.loadmore)) {
-                        let json = JSON.parse(e.dataset.loadmore);
+                    if (lib.isValidJSON(e.getAttribute('x-loadmore'))) {
+                        let json = JSON.parse(e.getAttribute('x-loadmore'));
                         
                         if (json.hasOwnProperty('functionName')) {
                             item = {};
@@ -46,15 +46,13 @@ class Loadmore {
                             console.log('functionName required in JSON ' + json);
                         }
                     } else {
-                        console.log('Invalid JSON in data-loadmore');
+                        console.log('Invalid JSON in x-loadmore');
                     }
                     
                     if (item) {
-                        let name = e.hasAttribute('id')
-                            ? e.getAttribute('id')
-                            : index;
+                        let name = e.hasAttribute('id') ? e.getAttribute('id') : index;
                         this.blocksHash[name] = item;
-                        e.removeAttribute('data-loadmore');
+                        e.removeAttribute('x-loadmore');
                     }
                 } catch (err) {
                     console.error(err);
@@ -73,7 +71,6 @@ class Loadmore {
     _scrollObserve(blocksHash) {
         Object.keys(blocksHash).forEach(i => {
             let item = blocksHash[i];
-            let functionName = item.functionName;
             let scrollPosition = parseInt(
                 window.scrollY + document.documentElement.clientHeight
             );

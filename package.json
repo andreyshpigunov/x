@@ -38,5 +38,8 @@
 	],
 	"publishConfig": {
 		"@andreyshpigunov:registry": "https://npm.pkg.github.com"
+	},
+	"dependencies": {
+		"alpinejs": "^3.14.1"
 	}
 }

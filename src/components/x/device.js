@@ -21,85 +21,77 @@
 
 
 export function device() {
-    let htmlElement_ = document.documentElement,
-        userAgent_ = window.navigator.userAgent.toLowerCase(),
-        platform_ = window.navigator.platform.toLowerCase(),
+    
+    let html = document.documentElement,
+        userAgent = window.navigator.userAgent.toLowerCase(),
         classes = [];
         
-    // Save <html> tag classes
-    let classAttr = htmlElement_.className;
+    // Save current <html> tag classes
+    let classAttr = html.className;
     if (classAttr !== '') classes = classAttr.split(/\s+/);
+    
+    // Add js/no-js class
+    classes.push('js');
     
     // Detect browser classes
     let versionMatch;
     if (
-        (/msie/.test(userAgent_) || /trident/.test(userAgent_)) &&
-        !/opera/.test(userAgent_)
+        (/msie/.test(userAgent) || /trident/.test(userAgent)) &&
+        !/opera/.test(userAgent)
     ) {
         classes.push('ie');
-        versionMatch = userAgent_.match(/msie ([0-9.]+)/);
+        versionMatch = userAgent.match(/msie ([0-9.]+)/);
         if (versionMatch) {
             let version = parseInt(versionMatch[1], 10);
             classes.push('ie' + version);
             if (version === 7 || version === 8) classes.push('ie7-8');
         }
     } else if (
-        /mozilla/.test(userAgent_) &&
-        !/(compatible|webkit)/.test(userAgent_)
+        /mozilla/.test(userAgent) &&
+        !/(compatible|webkit)/.test(userAgent)
     ) {
         classes.push('firefox');
-    } else if (/safari/.test(userAgent_) && !/chrome/.test(userAgent_)) {
+    } else if (/safari/.test(userAgent) && !/chrome/.test(userAgent)) {
         classes.push('safari', 'webkit');
-        versionMatch = userAgent_.match(/version\/([0-9.]+)/);
-        if (versionMatch) {
-            classes.push('safari' + parseInt(versionMatch[1], 10));
-        }
-    } else if (/chrome/.test(userAgent_)) {
+        versionMatch = userAgent.match(/version\/([0-9.]+)/);
+        if (versionMatch) classes.push('safari' + parseInt(versionMatch[1], 10));
+    } else if (/chrome/.test(userAgent)) {
         classes.push('chrome', 'webkit');
-    } else if (/opera/.test(userAgent_)) {
+    } else if (/opera/.test(userAgent)) {
         classes.push('opera');
     }
     
     // Detect OS classes
-    if (/win/.test(platform_)) {
+    if (/win/.test(userAgent)) {
         classes.push('windows');
-    } else if (/mac/.test(platform_)) {
+    } else if (/mac/.test(userAgent)) {
         classes.push('macos');
-    } else if (/linux/.test(platform_)) {
+    } else if (/linux/.test(userAgent)) {
         classes.push('linux');
-    } else if (/iphone|ipad|ipod/.test(userAgent_)) {
+    } else if (/iphone|ipad|ipod/.test(userAgent)) {
         classes.push('ios');
     }
     
     // Detect device type classes
-    if (/mobile/.test(userAgent_)) {
+    if (/mobile/.test(userAgent)) {
         classes.push('mobile');
     } else {
         classes.push('desktop');
     }
     
     // Detect mobile device classes
-    if (/ipad/.test(userAgent_)) {
+    if (/ipad/.test(userAgent)) {
         classes.push('ipad');
-    } else if (/ipod/.test(userAgent_)) {
+    } else if (/ipod/.test(userAgent)) {
         classes.push('ipod');
-    } else if (/iphone/.test(userAgent_)) {
+    } else if (/iphone/.test(userAgent)) {
         classes.push('iphone');
-    } else if (/android/.test(userAgent_)) {
+    } else if (/android/.test(userAgent)) {
         classes.push('android');
     }
     
-    // Add js/no-js class
-    classes.push('js');
-    for (let i = 0, len = classes.length; i < len; i++) {
-        if (classes[i] === 'no-js') {
-            classes.splice(i, 1);
-            break;
-        }
-    }
-    
     // Set classes
-    htmlElement_.className = classes.join(' ');
+    html.className = classes.join(' ');
     
     // Create object with classes keys
     let classesHash = {};

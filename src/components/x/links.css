@@ -1,9 +1,10 @@
 /*---------------------------
 links.css
-auto
+x
 
-Created by andreyshpigunov on 25.05.2021.
+Created by Andrey Shpigunov on 19.09.2024.
 ---------------------------*/
+
 
 /* Links styles */
 
@@ -29,7 +30,8 @@ a {
     &[role=button] {
         cursor: pointer;
     }
-    &:link, &.link {
+    &:link,
+    &.link {
         outline: none;
         cursor: pointer;
         color: var(--link-color);
@@ -45,12 +47,14 @@ a {
         text-decoration-color: var(--link-border-color-visited);
     }
     @media (hover: hover) {
-        &:hover, &.hover {
+        &:hover,
+        &.hover {
             color: var(--link-color-hover);
             text-decoration-color: var(--link-border-color-hover);
         }
     }
-    &:active, &.active {
+    &:active,
+    &.active {
         color: var(--link-color-hover);
         text-decoration-color: var(--link-border-color-hover);
     }
@@ -63,10 +67,10 @@ a {
 
 /* Remove underline from phones */
 
-a[href^="tel"],
-a[href^="tel"]:hover,
-a[href^="tel"]:active {
+/* a[href^="tel"], */
+/* a[href^="tel"]:hover, */
+/* a[href^="tel"]:active { */
     /* color: inherit !important; */
     /* text-decoration: inherit !important; */
     /* border: inherit !important; */
-}
+/* } */

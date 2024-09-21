@@ -6,9 +6,9 @@
 //
 //  On scroll animations
 //
-//  <div class="element" data-animate='
+//  <div x-animate='
 //    {
-//      "trigger": "element or selector",
+//      "trigger": "selector (default — this)",
 //      "start": "120vh",
 //      "end": "0vh",
 //      "functionName": "coverOut",
@@ -18,8 +18,8 @@
 //  '>...</div>
 //
 //  trigger       selector of trigger element that we are tracking the position
-//  start         animation start point (height from the top in px or vh)
-//  end           animation end point (height from the top in px or vh)
+//  start         animation start point (height from the top in px, % or vh)
+//  end           animation end point (height from the top in px, % or vh)
 //  functionName  name of the function that starts executing when the element
 //                moves between "start" and "end"
 //  class         class, added to a reference when "target" is between "start" and "end"
@@ -36,75 +36,48 @@ import { lib } from './lib';
 class Animate {
     
     init() {
-        let animations = lib.qsa('[data-animate]');
+        let animations = lib.qsa('[x-animate]');
         if (animations.length) {
             let animationsHash = {};
             
             animations.forEach((e, index) => {
-                try {
-                    let json = JSON.parse(e.dataset.animate);
-                    if (json.hasOwnProperty('start')) {
-                        let item = {};
-                        
-                        if (
-                            json.hasOwnProperty('trigger') &&
-                            lib.qs(json.trigger)
-                        ) {
-                            item.trigger = lib.qs(json.trigger);
-                        } else {
-                            item.trigger = e;
-                        }
-                        
-                        item.element = e;
-                        item.start = json.start;
-                        item.end = json.end;
-                        item.class = json.class;
-                        item.classRemove = json.classRemove;
-                        item.functionName = json.functionName;
-                        
-                        animationsHash[index] = item;
-                    } else {
-                        Object.keys(json).forEach(i => {
-                            let item = {};
-                            
-                            if (
-                                json[i].hasOwnProperty('trigger') &&
-                                lib.qs(json[i].trigger)
-                            ) {
-                                item.trigger = lib.qs(json[i].trigger)
-                            } else {
-                                item.trigger = e;
-                            }
-                            
-                            item.element = e;
-                            item.start = json[i].start;
-                            item.end = json[i].end;
-                            item.class = json[i].class;
-                            item.classRemove = json[i].classRemove;
-                            item.functionName = json[i].functionName;
-                            
-                            animationsHash[index + i] = item;
-                        });
-                    }
-                    
-                    e.removeAttribute('data-animate');
-                } catch (err) {
-                    console.log('Error', err);
+                let json = JSON.parse(e.getAttribute('x-animate'));
+                let item = {};
+                if (
+                    json.hasOwnProperty('trigger') &&
+                    lib.qs(json.trigger).length
+                ) {
+                    item.trigger = lib.qs(json.trigger)
+                } else {
+                    item.trigger = e
                 }
+                item.element = e;
+                item.start = json.start;
+                item.end = json.end;
+                item.class = json.class;
+                item.classRemove = json.classRemove;
+                item.functionName = json.functionName;
+                animationsHash[index] = item;
+                e.removeAttribute('x-animate')
             });
             
             if (Object.keys(animationsHash).length) {
-                this._scroll(animationsHash);
                 document.addEventListener('scroll', () => {
                     this._scroll(animationsHash);
                 }, { passive: true });
-                // If animated not in body scroll, for example —
-                // scrollable <div> with animated elements
-                if (lib.qs('.animate-scrollarea')) {
-                    lib.qs('.animate-scrollarea').addEventListener('scroll', () => {
-                        this._scroll(animationsHash);
-                    }, { passive: true });
+                // If element in scrollarea <div class="animate-scrollarea">
+                let animateScrollarea = lib.qsa('.animate-scrollarea');
+                if (animateScrollarea.length) {
+                    animateScrollarea.forEach(item => {
+                        item.addEventListener('scroll', () => {
+                            this._scroll(animationsHash)
+                        }, { passive: true })
+                    })
                 }
+                // First init elements positions
+                document.addEventListener('DOMContentLoaded', () => {
+                    this._scroll(animationsHash)
+                })
             }
         }
     }
@@ -113,28 +86,26 @@ class Animate {
         Object.keys(animationsHash).forEach(i => {
             let item = animationsHash[i],
                 offset = item.trigger.getBoundingClientRect(),
-                start,
-                end;
-            
-            if (item.start.match(/px/)) start = item.start.replace('px', '');
-            if (item.start.match(/vh/)) start = this._vh2px(item.start.replace('vh', ''));
-            if (item.start.match(/%/)) start = this._vh2px(item.start.replace('%', ''));
-            if (item.end.match(/px/)) end = item.end.replace('px', '');
-            if (item.end.match(/vh/)) end = this._vh2px(item.end.replace('vh', ''));
-            if (item.end.match(/%/)) end = this._vh2px(item.end.replace('%', ''));
+                start = this._2px(item.start),
+                end = this._2px(item.end);
             
             item.duration = start - end;
             
             if (offset.top <= start && offset.top >= end) {
+                // Element inside of animation area --- > E < ---
+                // Add active class
                 if (item.class != null) {
                     item.element.classList.add(item.class);
                 }
+                // Animation progress
                 if (typeof window[item.functionName] === 'function') {
                     item.progress = (start - offset.top) / item.duration;
                     item.progress = item.progress.toFixed(4);
                     window[item.functionName](item);
                 }
             } else {
+                // Element outside of animation area --- E --- > ... < --- E ---
+                // Remove active class
                 if (
                     item.class != null &&
                     item.classRemove == true &&
@@ -142,29 +113,35 @@ class Animate {
                 ) {
                     item.element.classList.remove(item.class);
                 }
+                // Animation progress
                 if (typeof window[item.functionName] === 'function') {
                     if (offset.top > start) {
                         item.progress = 0;
-                        window[item.functionName](item);
+                        window[item.functionName](item)
                     }
                     if (offset.top < end) {
                         item.progress = 1;
-                        window[item.functionName](item);
+                        window[item.functionName](item)
                     }
                 }
             }
         })
     }
     
-    _vh2px(value) {
-        let w = window,
-            d = document,
-            e = d.documentElement,
-            g = d.getElementsByTagName('body')[0],
-            // x = w.innerWidth || e.clientWidth || g.clientWidth,
-            y = w.innerHeight || e.clientHeight || g.clientHeight,
-            result = (y * value) / 100;
-        return result;
+    _2px(value) {
+        if (/(%|vh)/.test(value)) {
+            let html = lib.qs('html');
+            let body = lib.qs('body');
+            // Get offset
+            // let x = window.innerWidth || html.clientWidth || body.clientWidth;
+            let y = window.innerHeight || html.clientHeight || body.clientHeight;
+            // Remove 'vh' and '%' from value
+            value = value.replace(/(vh|%)/, '');
+            return (y * parseFloat(value)) / 100
+        } else {
+            // Remove all chars from value
+            return parseFloat(value)
+        }
     }
     
 }

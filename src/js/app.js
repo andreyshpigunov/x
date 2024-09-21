@@ -7,6 +7,11 @@
 
 
 import './x.js';
+import Alpine from 'alpinejs'
+ 
+ 
+window.Alpine = Alpine;
+Alpine.start();
 
 x.init();
 
@@ -32,3 +37,13 @@ window.headerAnimation = (params) => {
     headerLogo.style.transform = 'scale(' + scale +  ')';
     x.lib.switchClass(header, params.progress == 1, 'header_compact');
 }
+
+window.animateExample = (params) => {
+    let el = qs('.jsAnimateExample');
+    let progress = qs('#progress');
+    el.innerHTML = 'Progress: ' + params.progress + ' (' + Math.round(params.progress * 100) + '%)';
+    progress.value = params.progress;
+}
+
+
+qs('.jsDeviceExample').innerHTML = JSON.stringify(x.device)

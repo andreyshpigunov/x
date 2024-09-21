@@ -18,8 +18,7 @@ import { lib } from './lib';
 class Appear {
     
     constructor() {
-        this.items = null;
-        this.classIsAppeared = 'isAppeared';
+        this.items = [];
         this.classAppeared = 'appeared';
         this.classVisible = 'visible';
         this.observer = null;
@@ -29,17 +28,15 @@ class Appear {
     }
     
     init() {
-        this.items = lib.qsa('.' + this.classIsAppeared);
+        this.items = lib.qsa('[x-appear]');
         if (this.items.length) {
-            
-            // Remove initial class 'classIsAppeared' on elements
-            this.items.forEach(item => {
-                item.classList.remove(this.classIsAppeared);
-            });
-            
+            // Remove attribute
+            for (let item of this.items) {
+                item.removeAttribute('x-appear')
+            }
             // Observe items
             let observerCallback = entries => {
-                entries.forEach(entry => {
+                for (let entry of entries) {
                     if (entry.isIntersecting) {
                         if (
                             this.classAppeared != null &&
@@ -60,7 +57,7 @@ class Appear {
                             entry.target.dispatchEvent(this.eventInvisible);
                         }
                     }
-                });
+                }
             }
             this.observer = new IntersectionObserver(observerCallback);
             this.items.forEach(item => this.observer.observe(item));

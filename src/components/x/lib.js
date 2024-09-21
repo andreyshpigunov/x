@@ -2,7 +2,7 @@
 //	lib.js
 //	x
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
+//	Created by Andrey Shpigunov on 19.09.2024.
 //
 //  Library
 //
@@ -90,7 +90,7 @@ class Lib {
         let items = this.qsa(selector);
         if (items.length) {
             if (delay > 0) {
-                for (let i of items) i.classList.add(className + '_ready');
+                for (let i of items) i.classList.add(className.split('_')[0] + '_ready');
                 await new Promise(resolve =>  {
                     setTimeout(() => {
                         for (let i of items) i.classList.add(className);
@@ -113,7 +113,7 @@ class Lib {
                 for (let i of items) i.classList.remove(className);
                 await new Promise(resolve =>  {
                     setTimeout(() => {
-                        for (let i of items) i.classList.remove(className + '_ready');
+                        for (let i of items) i.classList.remove(className.split('_')[0] + '_ready');
                         resolve()
                     }, delay);
                 })
@@ -378,12 +378,12 @@ class Lib {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         callback(entry.target);
-                        observer.unobserve(entry.target)
+                        observer.unobserve(entry.target);
                     }
                 })
             }
             let observer = new IntersectionObserver(observerCallback, params);
-            for (let el of elements) observer.observe(el)
+            for (let el of elements) observer.observe(el);
         }
     }
     

@@ -11,12 +11,12 @@
     <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/x/assets/apple-touch-icon.png"/>
     <link rel="stylesheet" href="dist/app.css"/>
 </head>
-<body id="top" data-animate='{
+<body id="top" x-animate='{
     "start": "0px",
     "end": "-50vh",
     "functionName": "headerAnimation"
 }'>
-
+    
     <header class="header flex aic sticky">
         <div class="header-version nowrap">0.0.42</div>
         <div class="header-logo mxa">
@@ -29,16 +29,7 @@
         </div>
     </header>
     
-    <!-- <div id="headerTrigger" class="header-trigger"></div> -->
-    <!--
-    <div class="headerAnimation" data-animate='{
-        "start": "100px",
-        "end": "0px",
-        "functionName": "headerAnimation"
-    }'></div>
-    -->
-    
-    <div class="element3" data-animate='{
+    <div class="element3" x-animate='{
         "start": "50vh",
         "end": "-100px",
         "functionName": "element3",
@@ -48,11 +39,11 @@
         <div class="element3-figure"></div>
     </div>
     
-    <section class="section-header mt8">
+    <section class="section-header mt8" x-appear>
         <h1 class="mxa ac max800">Small and simple Javascript library with interesting features</h1>
     </section>
     
-    <div class="element2" data-animate='{
+    <div class="element2" x-animate='{
         "start": "70vh",
         "end": "-100px",
         "functionName": "element1",
@@ -62,37 +53,107 @@
         <div class="element2-figure"></div>
     </div>
     
+    
+    
+    
+    <section class="section-header mt8">
+        <h2 class="ac">Examples</h2>
+    </section>
+    
+    <section class="section-content mt7">
+        <div class="container max1200">
+            <div class="grid g4 gap6">
+                <div class="c1">
+                    <h5>Animate</h5>
+                    <div x-animate='{
+                        "trigger": ".jsAnimateExample",
+                        "start": "80vh",
+                        "end": "20vh",
+                        "functionName": "animateExample",
+                        "class": "active",
+                        "classRemove": true
+                    }'>
+                    </div>
+                    <div class="jsAnimateExample breakWord"></div>
+                    <progress id="progress" value="0" max="1"></progress>
+                </div>
+                <div class="c1">
+                    <h5>Device</h5>
+                    <div class="jsDeviceExample breakWord"></div>
+                </div>
+                <div class="c1">
+                    <h5>Slides</h5>
+                    <div class="max600">
+                        <div class="ratio4x3" x-slides='[
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0420.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0451.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0482.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0485.jpg"
+                        ]'>
+                            <img class="r5"
+                                src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg" width="800" height="600" />
+                        </div>
+                    </div>
+                    <div class="mt2">Move cursor on photo.</div>
+                </div>
+                <div class="c1">
+                    <h5>Sheets</h5>
+                    <div x-sheets>
+                        <div class="flex gap2">
+                            <a class="button sheet-tab active" x-sheet="sheetA">Bird</a>
+                            <a class="button sheet-tab" x-sheet="sheetB">Sea</a>
+                        </div>
+                        <div class="mt3">
+                            <div id="sheetA" class="sheet-body">Once I saw a little bird outside my window. It was chirping happily and looking for food. I put some seeds on the windowsill, and it ate them right away.</div>
+                            <div id="sheetB" class="sheet-body">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
     <section class="section-plugins mt7">
         <div class="container max700">
-            <div class="-grid -g3 flex jcsb">
+            <div class="-grid -g3 flex jcsb sm:fc">
                 <div class="c1">
                     <h2>CSS</h2>
                     <ul class="reset">
-                        <li><a class="link" data-modal="modalReset">Reset</a></li>
-                        <li><a class="link" data-modal="modalLinks">Links</a></li>
-                        <li><a class="link" data-modal="modalTypo">Typo</a></li>
-                        <li><a class="link" data-modal="modalForms">Forms</a></li>
-                        <li><a class="link" data-modal="modalHelpers">Helpers</a></li>
-                        <li><a class="link" data-modal="modalButtons">Buttons</a></li>
-                        <li><a class="link" data-modal="modalGrid">Grid</a></li>
-                        <li><a class="link" data-modal="modalFlex">Flex</a></li>
-                        <li><a class="link" data-modal="modalFlow">Flow</a></li>
+                        <li><a class="link" x-modal-open="modalReset">Reset</a></li>
+                        <li><a class="link" x-modal-open="modalLinks">Links</a></li>
+                        <li><a class="link" x-modal-open="modalTypo">Typo</a></li>
+                        <li><a class="link" x-modal-open="modalForms">Forms</a></li>
+                        <li><a class="link" x-modal-open="modalHelpers">Helpers</a></li>
+                        <li><a class="link" x-modal-open="modalButtons">Buttons</a></li>
+                        <li><a class="link" x-modal-open="modalGrid">Grid</a></li>
+                        <li><a class="link" x-modal-open="modalFlex">Flex</a></li>
+                        <li><a class="link" x-modal-open="modalFlow">Flow</a></li>
                     </ul>
                 </div>
                 <div class="c1">
                     <h2>JS</h2>
                     <ul class="reset" style="column-count:2">
-                        <li><a class="link" data-modal="modalModal">Modal</a></li>
-                        <li><a class="link" data-modal="modalScroll">Scroll</a></li>
-                        <li><a class="link" data-modal="modalAnimate">Animate</a></li>
-                        <li><a class="link" data-modal="modalSheets">Sheets</a></li>
-                        <li><a class="link" data-modal="modalLoadmore">Loadmore</a></li>
-                        <li><a class="link" data-modal="modalLazyload">Lazyload</a></li>
-                        <li><a class="link" data-modal="modalAppear">Appear</a></li>
-                        <li><a class="link" data-modal="modalHover">Hover</a></li>
-                        <li><a class="link" data-modal="modalDevice">Device</a></li>
-                        <li><a class="link" data-modal="modalLib">Lib</a></li>
-                        <li><a class="link" data-modal="modalForm">Form</a></li>
+                        <li><a class="link" x-modal-open="modalAnimate">Animate</a></li>
+                        <li><a class="link" x-modal-open="modalAppear">Appear</a></li>
+                        <li><a class="link" x-modal-open="modalDevice">Device</a></li>
+                        <li><a class="link" x-modal-open="modalForm">Form</a></li>
+                        <li><a class="link" x-modal-open="modalHover">Hover</a></li>
+                        <li><a class="link" x-modal-open="modalLazyload">Lazyload</a></li>
+                        <li><a class="link" x-modal-open="modalLib">Lib</a></li>
+                        <li><a class="link" x-modal-open="modalLoadmore">Loadmore</a></li>
+                        <li><a class="link" x-modal-open="modalModal">Modal</a></li>
+                        <li><a class="link" x-modal-open="modalScroll">Scroll</a></li>
+                        <li><a class="link" x-modal-open="modalSheets">Sheets</a></li>
+                        <li><a class="link" x-modal-open="modalSlider">Slider</a></li>
+                        <li><a class="link" x-modal-open="modalSticky">Sticky</a></li>
                     </ul>
                 </div>
             </div>
@@ -103,7 +164,7 @@
         <h2 class="ac">Start usage</h2>
     </section>
     
-    <div class="element1" data-animate='{
+    <div class="element1" x-animate='{
         "start": "100vh",
         "end": "-100px",
         "functionName": "element1",
@@ -165,8 +226,7 @@
     </section>
     
     
-    
-    <div id="modalReset" class="modal-content hash" data-window-class="max1000">
+    <div id="modalReset" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Reset</h2>
         <p>Глобальный сброс стилей и базовые переменные.</p>
         <table class="dataTable">
@@ -212,7 +272,7 @@
     </div>
     
     
-    <div id="modalLinks" class="modal-content hash" data-window-class="max1000">
+    <div id="modalLinks" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Links</h2>
         <p>Стилизация ссылок.</p>
         
@@ -293,7 +353,7 @@
     </div>
     
     
-    <div id="modalTypo" class="modal-content hash" data-window-class="max1000">
+    <div id="modalTypo" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Typo</h2>
         <p>Типографика.</p>
         
@@ -488,7 +548,7 @@
     </div>
     
     
-    <div id="modalForms" class="modal-content hash" data-window-class="max1000">
+    <div id="modalForms" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Forms</h2>
         <p>Элементы формы.</p>
         
@@ -589,7 +649,7 @@
     
     
     
-    <div id="modalButtons" class="modal-content hash" data-window-class="max1000">
+    <div id="modalButtons" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Buttons</h2>
         <p>Стили оформления кнопок.</p>
         
@@ -734,7 +794,7 @@
     </div>
     
     
-    <div id="modalFlex" class="modal-content hash" data-window-class="max1000">
+    <div id="modalFlex" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Flex</h2>
         <p>Флексбокс.</p>
         
@@ -872,7 +932,7 @@
     </div>
     
     
-    <div id="modalGrid" class="modal-content hash" data-window-class="max1000">
+    <div id="modalGrid" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Grid</h2>
         <p>Многоколоночная адаптивная сетка (1–12 колонок).</p>
         
@@ -959,7 +1019,7 @@
     </div>
     
     
-    <div id="modalFlow" class="modal-content hash" data-window-class="max1000">
+    <div id="modalFlow" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Flow</h2>
         <p>Вертикальный поток элементов с одинаковым расстоянием между ними.</p>
         
@@ -988,7 +1048,7 @@
     
     
     
-    <div id="modalHelpers" class="modal-content hash" data-window-class="max1000">
+    <div id="modalHelpers" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Helpers</h2>
         <p>Вспомогательные классы.</p>
         
@@ -1746,10 +1806,10 @@
     
     
     
-    <div id="modalModal" class="modal-content hash" data-window-class="max1000">
+    <div id="modalModal" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Modals</h2>
         
-        <nav class="modalNavigation unselectable">
+        <nav class="modalNavigation sticky unselectable">
             <div class="modalNavigation-inner">
                 <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalMain", "offset": 100}'>Описание</a>
                 <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalApi", "offset": 100}'>API</a>
@@ -1763,11 +1823,11 @@
             <p>Универсальные модальные окна.</p>
             <p>Вызов модального окна:</p>
             <div class="codeBlock">
-                <code>&lt;a data-modal="myModal"&gt;Open modal&lt;/a&gt;</code>
+                <code>&lt;a x-modal-open="myModal"&gt;Open modal&lt;/a&gt;</code>
             </div>
             <p>Шаблон модального окна:</p>
             <div class="codeBlock">
-                <code>&lt;div id="myModal" class="modal-content [custom-classes]"</code>
+                <code>&lt;div id="myModal" x-modal class="[custom-classes]"</code>
                 <code>                  data-window-class="[modal-window-classes]"&gt;</code>
                 <code>    &lt;p&gt;Hello modal!&lt;/p&gt;</code>
                 <code>    &lt;p&gt;&lt;a class="button modal-close"&gt;Close&lt;/a&gt;&lt;/p&gt; — optional</code>
@@ -1925,9 +1985,9 @@
         <div id="modalModalExamples" class="mt5">
             <h3>Примеры</h3>
             <p class="flex gap3">
-                <a role="button" class="button" data-modal="modalTest">Тестовое окошко</a>
+                <a role="button" class="button" x-modal-open="modalTest">Тестовое окошко</a>
                 <a role="button" class="button" onclick="x.modal.show('modalTest')"><code>x.modal.show('modalTest')</code></a>
-                <a role="button" class="button" data-modal="modalUniq">Уникальное окно</a>
+                <a role="button" class="button" x-modal-open="modalUniq">Уникальное окно</a>
             </p>
             
             <iframe height="720" style="width: 100%;" scrolling="no" title="Auto / Modal init" src="https://codepen.io/andreyshpigunov/embed/vYXZGpm?height=700&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
@@ -1937,21 +1997,22 @@
         </div>
     </div>
     
-    <div id="modalTest" class="modal-content">
+    <div id="modalTest" x-modal class="">
         <h2>Тестовое окошко</h2>
         <p>Вот так просто оно выглядит. Данная страница тоже показана в модальном окне.</p>
+        <a class="button modal-close">Закрыть</a>
     </div>
     
-    <div id="modalUniq" class="modal-content uniq">
+    <div id="modalUniq" x-modal class="modal_uniq">
         <h2>Уникальное окно</h2>
         <p>Открыв это окно, вы закрыли все остальные окна на странице. Включая окно со страницей документации.</p>
     </div>
     
     
-    <div id="modalScroll" class="modal-content hash" data-window-class="max1000">
+    <div id="modalScroll" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Scroll</h2>
         
-        <nav class="modalNavigation unselectable">
+        <nav class="modalNavigation sticky unselectable">
             <div class="modalNavigation-inner">
                 <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollMain", "offset": 100}'>Описание</a>
                 <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollApi", "offset": 100}'>API</a>
@@ -2055,25 +2116,25 @@
         </div>
     </div>
     
-    <div id="modalAnimate" class="modal-content hash" data-window-class="max1000">
+    <div id="modalAnimate" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Animate</h2>
         
-        <nav class="modalNavigation unselectable">
+        <nav class="modalNavigation sticky unselectable">
             <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateParams", "offset": 100}'>Параметры</a>
-                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateExamples", "offset": 100}'>Примеры</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateMain", "offset": 100}'>About</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateParams", "offset": 100}'>Params</a>
+                <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateExamples", "offset": 100}'>Example</a>
             </div>
         </nav>
         
-        <div id="modalAnimateMain">
-            <p>Анимирование элементов при прокрутке страницы.</p>
-            <p>Пример использования с триггером:</p>
+        <div id="modalAnimateMain" class="mt5">
+            <p>Animating elements when scrolling the page.</p>
+            <p>Example of use with a trigger:</p>
             <div class="codeBlock">
                 <code>&lt;div id="trigger"&gt;&lt;/div&gt;</code>
-                <code>&lt;div class="element" data-animate='{</code>
+                <code>&lt;div class="element" x-animate='{</code>
                 <!-- <code>    "parent": window,</code> -->
-                <code>    "triggerId": "trigger",</code>
+                <code>    "trigger": "#trigger",</code>
                 <code>    "start": "120vh",</code>
                 <code>    "end": "0vh",</code>
                 <code>    "functionName": "coverOut",</code>
@@ -2084,13 +2145,12 @@
         </div>
         
         <div id="modalAnimateParams" class="mt5">
-            <h3>Параметры вызова</h3>
+            <h3>Params</h3>
             <table class="dataTable">
                 <tr>
-                    <th width="20%">Параметр</th>
-                    <th width="20%">Формат</th>
-                    <th width="20%">По умолчанию</th>
-                    <th width="40%">Описание</th>
+                    <th width="25%">Param</th>
+                    <th width="25%">Type</th>
+                    <th width="50%">Description</th>
                 </tr>
                 <!-- <tr>
                     <td><code>parent</code></td>
@@ -2099,64 +2159,58 @@
                     <td><code>id</code>, селектор или элемент.</td>
                 </tr> -->
                 <tr>
-                    <td><code>triggerId</code></td>
+                    <td><code>trigger</code></td>
                     <td><code>string</code></td>
-                    <td></td>
-                    <td>Указывает <code>id</code> элемента, позицию которого мы отслеживаем при прокрутке. При отсутствии <code>triggerId</code> триггером является сам анимированный элемент.</td>
+                    <td>The element selector, whose position we are tracking when scrolling. If there is no <code>trigger</code>, the trigger is the animated element itself.</td>
                 </tr>
                 <tr>
                     <td><code>start</code></td>
                     <td><code>string</code></td>
-                    <td></td>
                     <td>
-                        Точка начала анимации (расстояние от верха окна в px, vh или %).<br/>
-                        <b>Обязательный</b>
+                        The starting point of the animation (the distance from the top of the window in px, vh or %).<br/>
+                        <b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>end</code></td>
                     <td><code>string</code></td>
-                    <td></td>
                     <td>
-                        Точка окончания анимации (расстояние от верха окна в px, vh или %).<br/>
-                        <b>Обязательный</b>
+                        Animation end point (distance from the top of the window in px, vh or %).<br/>
+                        <b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>functionName</code></td>
                     <td><code>string</code></td>
-                    <td></td>
                     <td>
-                        Название глобальной функции, которая выполняется при перемещении отлеживаемого элемента между точками начала и окончания анимации. Функция получает объект с параметром <code>progress</code>, который изменяется от 0 до 1.<br/>
-                        <b>Обязательный</b>
+                        The name of the global function that is performed when the tracked element is moved between the start and end points of the animation. The function receives an object with the <code>progress</code> parameter, which varies from 0 to 1.<br/>
+                        <b>Required</b>
                     </td>
                 </tr>
                 <tr>
                     <td><code>class</code></td>
                     <td><code>string</code></td>
-                    <td></td>
-                    <td>Класс, добавляемый к анимированному элементу, когда он находится в процессе анимации.</td>
+                    <td>A class that is added to an animated element when it is in the process of being animated.</td>
                 </tr>
                 <tr>
                     <td><code>classRemove</code></td>
-                    <td><code>bool</code></td>
-                    <td><code>false</code></td>
-                    <td>Удалять или нет класс, установленный предыдущим параметром после окончания анимации.</td>
+                    <td><code>bool = false</code></td>
+                    <td>To delete or not the class set by the previous parameter after the end of the animation.</td>
                 </tr>
             </table>
-            <p>Если анимация производится в отдельном прокручиваемом элементе, нужно добавить этому элементу класс <code>.animate-scrollarea</code>.</p>
+            <p>If the animation is performed in a separate scrollable element, you need to add the <code>.animate-scrollarea</code> class to this element.</p>
         </div>
         
         <div id="modalAnimateExamples" class="mt5">
-            <h3>Примеры</h3>
+            <h3>Example</h3>
             <iframe height="400" style="width: 100%;" scrolling="no" title="Auto / Animation example" src="https://codepen.io/andreyshpigunov/embed/jOMwrGE?height=400&theme-id=dark&default-tab=result" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
         </div>
     </div>
     
-    <div id="modalSheets" class="modal-content hash" data-window-class="max1000">
+    <div id="modalSheets" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Sheets</h2>
         
-        <nav class="modalNavigation unselectable">
+        <nav class="modalNavigation sticky unselectable">
             <div class="modalNavigation-inner">
                 <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsMain", "offset": 100}'>Описание</a>
                 <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsApi", "offset": 100}'>API</a>
@@ -2218,10 +2272,10 @@
         
     </div>
     
-    <div id="modalLoadmore" class="modal-content hash" data-window-class="max1000">
+    <div id="modalLoadmore" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Loadmore</h2>
         
-        <nav class="modalNavigation unselectable">
+        <nav class="modalNavigation sticky unselectable">
             <div class="modalNavigation-inner">
                 <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreMain", "offset": 100}'>Описание</a>
                 <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreParams", "offset": 100}'>Параметры</a>
@@ -2279,7 +2333,7 @@
     </div>
     
     
-    <div id="modalLazyload" class="modal-content hash" data-window-class="max1000">
+    <div id="modalLazyload" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Lazyload</h2>
         
         <p>Отложенная загрузка изображений.</p>
@@ -2300,21 +2354,21 @@
     </div>
     
     
-    <div id="modalAppear" class="modal-content hash" data-window-class="max1000">
+    <div id="modalAppear" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Appear</h2>
         
         <p>Добавляет классы <code>.appeared</code> и <code>.visible</code> на элементе, появившемся в зоне видимости.</p>
         
         <p>Пример использования:</p>
         <div class="codeBlock">
-            <code>&lt;div class="isAppeared"&gt;...&lt;/div&gt;</code>
+            <code>&lt;div x-appear&gt;...&lt;/div&gt;</code>
         </div>
         
         <p>Когда элемент появится в зоне видимости, к нему добавятся 2 класса, <code>.appeared</code> и <code>.visible</code>. Класс <code>.appeared</code> останется навсегда, а класс <code>.visible</code> удалится при исчезновении элемента из зоны видимости.</p>
     </div>
     
     
-    <div id="modalHover" class="modal-content hash" data-window-class="max1000">
+    <div id="modalHover" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Hover</h2>
         
         <p>Синхронизирует наведение <code>.hover</code> у отдельно расположенных элементов, имеющих общую ссылку. Для активации элементам нужно добавить класс <code>.syncHover</code>.</p>
@@ -2337,7 +2391,7 @@
     </div>
     
     
-    <div id="modalDevice" class="modal-content hash" data-window-class="max1000">
+    <div id="modalDevice" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Device</h2>
         
         <p>Определяет устройство и браузер пользователя.</p>
@@ -2372,7 +2426,7 @@
     </div>
     
     
-    <div id="modalLib" class="modal-content hash" data-window-class="max1000">
+    <div id="modalLib" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Lib</h2>
         
         <p>Набор полезных методов.</p>
@@ -2515,10 +2569,10 @@
     </div>
     
     
-    <div id="modalForm" class="modal-content hash" data-window-class="max1000">
+    <div id="modalForm" x-modal class="modal_hash" data-window-class="max1000">
         <h2>Form</h2>
         
-        <nav class="modalNavigation unselectable">
+        <nav class="modalNavigation sticky unselectable">
             <div class="modalNavigation-inner">
                 <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "#modalFormMain", "offset": 100}'>Описание</a>
                 <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "#modalFormApi", "offset": 100}'>API</a>

@@ -100,17 +100,12 @@ h2 {
 }
 
 .modalNavigation {
-    display: flex;
-    position: sticky;
-    top: -30px;
     z-index: 10;
 }
 .modalNavigation-inner {
     display: flex;
     gap: 10px;
-    margin-left: -10px;
-    padding: 10px;
-    border-radius: 100px;
+    padding: 10px 0;
 }
 .modalNavigation a {
     cursor: pointer;
@@ -289,11 +284,11 @@ code {
     height: 120px;
     opacity: 0;
     transform-origin: center;
-    transition: opacity 1s ease-out,
-                transform .2s ease-out;
     
     &.active {
         opacity: 1;
+        transition: opacity 1s ease-out,
+                    transform .2s ease-out;
     }
 }
 .element1-figure {
@@ -312,11 +307,11 @@ code {
     height: 1px;
     margin-top: 200px;
     opacity: 0;
-    transition: opacity 1s ease-out,
-                transform .2s ease-out;
     
     &.active {
         opacity: 1;
+        transition: opacity 1s ease-out,
+                    transform .2s ease-out;
     }
 }
 .element2-figure {
@@ -336,11 +331,11 @@ code {
     height: 140px;
     margin-top: 30px;
     opacity: 0;
-    transition: opacity 1s ease-out,
-                transform .2s ease-out;
     
     &.active {
         opacity: 1;
+        transition: opacity 1s ease-out,
+                    transform .2s ease-out;
     }
 }
 .element3-figure {

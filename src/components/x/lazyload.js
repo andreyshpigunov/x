@@ -26,24 +26,22 @@ class Lazyload {
     
     init() {
         if ('IntersectionObserver' in window) {
-            const images = lib.qsa('.lazyload:not(.loaded)');
+            const images = lib.qsa('[x-lazyload]:not(.loaded)');
             if (images.length) {
                 const observer = new IntersectionObserver(
                     (entries, observer) => {
                         if (entries) {
-                            entries.forEach(entry => {
+                            for (let entry of entries) {
                                 if (entry.intersectionRatio > 0) {
                                     this._loadImage(entry.target);
                                     observer.unobserve(entry.target);
                                 }
-                            });
+                            }
                         }
                     },
                     this.options
                 );
-                images.forEach(img => {
-                    observer.observe(img);
-                });
+                for (let img of images) observer.observe(img);
             }
         } else {
             this._fallback();
@@ -51,48 +49,42 @@ class Lazyload {
     }
     
     _fallback() {
-        const images = lib.qsa('.lazyload:not(.loaded)');
+        const images = lib.qsa('[x-lazyload]:not(.loaded)');
         if (images.length) {
-            images.forEach((img) => {
+            for (let img of images) {
                 const srcset = img.dataset.srcset;
                 const src = img.dataset.src;
                 if (srcset) img.srcset = srcset;
                 if (src) img.src = src;
-                img.classList.add('loaded');
-            });
+                lib.addClass(img, 'loaded');
+            }
         }
     }
     
-    _fetchImage(src, srcset) {
-        return new Promise((resolve, reject) => {
-            const image = new Image();
-            if (srcset) image.srcset = srcset;
-            if (src) image.src = src;
-            image.onload = resolve;
-            image.onerror = reject;
-        });
+    async _fetchImage(src, srcset) {
+        const image = new Image();
+        image.srcset = srcset ? srcset : '';
+        image.src = src ? src : '';
+        image.onload = () => Promise.resolve();
+        image.onerror = () => Promise.reject();
     }
 
-    _loadImage(img) {
+    async _loadImage(img) {
         const srcset = img.dataset.srcset;
         const src = img.dataset.src;
-        this._fetchImage(src, srcset)
-            .then(() => {
-                if (srcset) {
-                    img.srcset = srcset;
-                    img.removeAttribute('data-srcset');
-                }
-                if (src) {
-                    img.src = src;
-                    img.removeAttribute('data-src');
-                }
-                if (srcset || src) {
-                    img.classList.add('loaded');
-                }
-            })
-            .catch(() => {
-                return false;
-            });
+        await this._fetchImage(src, srcset);
+        if (srcset) {
+            img.srcset = srcset;
+            img.removeAttribute('data-srcset');
+        }
+        if (src) {
+            img.src = src;
+            img.removeAttribute('data-src');
+        }
+        if (srcset || src) {
+            lib.addClass(img, 'loaded');
+        }
+        return
     }
     
 }

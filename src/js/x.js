@@ -19,7 +19,7 @@ import { sheets   }  from "../components/x/sheets";
 import { scroll   }  from "../components/x/scroll";
 import { lib      }  from "../components/x/lib";
 import { form     }  from "../components/x/form";
-import { slider   }  from "../components/x/slider";
+import { slides   }  from "../components/x/slides";
 import { sticky   }  from "../components/x/sticky";
 
 
@@ -38,7 +38,7 @@ class X {
         this.lib      = lib;
         this.form     = form;
         this.sticky   = sticky;
-        this.slider   = slider;
+        this.slides   = slides;
         
         this.initialized = false;
     }
@@ -55,7 +55,7 @@ class X {
             this.sheets.init();
             this.scroll.init();
             this.sticky.init();
-            this.slider.init();
+            this.slides.init();
             
             this.initialized = true;
         }

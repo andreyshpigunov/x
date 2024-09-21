@@ -1,17 +1,17 @@
 //
 //	sheets.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 04.09.2024.
-//
+//	Created by Andrey Shpigunov on 21.09.2024.
 //
 //  Tab sheets
-//  <div class="sheets">
-//    <a class="sheets-tab active" data-sheet="sheetA">Sheet</a> — active tab
-//    <a class="sheets-tab" data-sheet="sheetB">Sheet</a>
-//    <div id="sheetA" class="sheets-body active">Sheet content</div> — active sheet
-//    <div id="sheetB" class="sheets-body">Sheet content</div>
+//  <div x-sheets>
+//    <a class="sheet-tab active" x-sheet="sheetA">Sheet</a>
+//    <a class="sheet-tab" x-sheet="sheetB">Sheet</a>
+//    <div id="sheetA" class="sheet-body active">Sheet content</div>
+//    <div id="sheetB" class="sheet-body">Sheet content</div>
 //  </div>
+//
 //  No limits for wrapping tabs and sheets in another tags.
 //
 //  API call:
@@ -25,55 +25,48 @@ import { lib } from './lib';
 class Sheets {
     
     init() {
-        let sheets = lib.qsa('.sheets');
-        if (sheets) {
-            sheets.forEach(e => {
-                // try {
-                    let tabs = lib.qsa('.sheets-tab', e);
-                    if (tabs) {
-                        tabs.forEach(tab => {
-                            tab.addEventListener('click', (event) => {
-                                event.preventDefault();
-                                this.show(tab.dataset.sheet)
-                            })
+        // Get sheets
+        let sheets = lib.qsa('[x-sheets]');
+        if (sheets.length) {
+            for (let sheet of sheets) {
+                
+                // Get sheet tabs
+                let tabs = lib.qsa('[x-sheet]', sheet);
+                if (tabs.length) {
+                    for (let tab of tabs) {
+                        tab.addEventListener('click', e => {
+                            e.preventDefault();
+                            this.show(e.target.getAttribute('x-sheet'))
                         })
                     }
-                    let activeTab = lib.qs('.sheets-tab.active', e);
-                    if (activeTab) {
-                        this.show(activeTab.dataset.sheet)
-                    } else {
-                        let bodies = lib.qsa('.sheets-body', e);
-                        if (bodies) {
-                            let i = 1;
-                            bodies.forEach(body => {
-                                if (i == 1) {
-                                    this.show(body.getAttribute('id'));
-                                    i++
-                                }
-                            })
-                        }
-                    }
-                // } catch (err) {
-                    // console.error(err);
-                // }
-            })
+                }
+                
+                // Set active tab
+                let active = lib.qs('.sheet-tab.active', sheet);
+                if (!active) active = lib.qs('.sheet-tab', sheet);
+                this.show(active.getAttribute('x-sheet'))
+                
+            }
         }
     }
     
     show(sheetId) {
-        let tab = lib.qsa('[data-sheet=" + sheetId + "]')[0];
-        let body = document.getElementById(sheetId);
-        let sheets = body.closest('.sheets');
+        // Get parent '.sheets' element (context)
+        let sheets = lib.qs('#' + sheetId).closest('[x-sheets]');
         
-        // Remove class 'active' from tabs and bodies
-        let tabs = lib.qsa('.sheets-tab', sheets);
-        if (tabs) { tabs.forEach(tab => { tab.classList.remove('active') }) }
-        let bodies = lib.qsa('.sheets-body', sheets);
-        if (bodies) { bodies.forEach(body => { body.classList.remove('active') }) }
+        // Remove class 'active' from tabs
+        let tabs = lib.qsa('.sheet-tab', sheets);
+        lib.removeClass(tabs, 'active');
+        
+        // Remove class 'active' from bodies
+        let bodies = lib.qsa('.sheet-body', sheets);
+        lib.removeClass(bodies, 'active');
         
         // Add class 'active' to selected tab and body
-        if (tab) tab.classList.add('active');
-        if (body) body.classList.add('active');
+        let selectedTab  = lib.qs('[x-sheet=' + sheetId + ']');
+        let selectedBody = lib.qs('#' + sheetId);
+        lib.addClass(selectedTab, 'active');
+        lib.addClass(selectedBody, 'active');
     }
 }
 
