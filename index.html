@@ -104,7 +104,15 @@
                 </div>
                 <div class="c1">
                     <h5>Sheets</h5>
-                    <div x-sheets>
+                    <style>
+                        .sheets-example .button {
+                            opacity: .5
+                        }
+                        .sheets-example .button.active {
+                            opacity: 1
+                        }
+                    </style>
+                    <div x-sheets class="sheets-example">
                         <div class="flex gap2">
                             <a class="button sheet-tab active" x-sheet="sheetA">Bird</a>
                             <a class="button sheet-tab" x-sheet="sheetB">Sea</a>
@@ -112,6 +120,16 @@
                         <div class="mt3">
                             <div id="sheetA" class="sheet-body">Once I saw a little bird outside my window. It was chirping happily and looking for food. I put some seeds on the windowsill, and it ate them right away.</div>
                             <div id="sheetB" class="sheet-body">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.</div>
+                        </div>
+                    </div>
+                    <div x-sheets class="mt3 flex aic gap2 sheets-example">
+                        <div class="flex gap2">
+                            <a class="button sheet-tab active" x-sheet="sheetHappy">Happy</a>
+                            <a class="button sheet-tab" x-sheet="sheetSad">Sad</a>
+                        </div>
+                        <div class="fs30">
+                            <div id="sheetHappy" class="sheet-body">🙂</div>
+                            <div id="sheetSad" class="sheet-body">😕</div>
                         </div>
                     </div>
                 </div>

@@ -25,12 +25,35 @@ export function device() {
     let html = document.documentElement,
         userAgent = window.navigator.userAgent.toLowerCase(),
         classes = [];
+    
+    let fields = {
+        js: false,
+        ie: false,
+        firefox: false,
+        safari: false,
+        webkit: false,
+        chrome: false,
+        opera: false,
+        windows: false,
+        macos: false,
+        linux: false,
+        ios: false,
+        mobile: false,
+        desktop: false,
+        ipad: false,
+        ipod: false,
+        iphone: false,
+        android: false,
+        touch: false,
+        width: 0,
+        height: 0
+    }
         
     // Save current <html> tag classes
     let classAttr = html.className;
     if (classAttr !== '') classes = classAttr.split(/\s+/);
     
-    // Add js/no-js class
+    // Add class 'js'
     classes.push('js');
     
     // Detect browser classes
@@ -95,17 +118,15 @@ export function device() {
         classes.push('touch');
     }
     
-    // Set classes
+    // Set classes to <html> element
     html.className = classes.join(' ');
     
-    // Create object with classes keys
-    let classesObject = {};
-    
-    for (let i = 0; i < classes.length; i++) {
-        classesObject[classes[i]] = true;
+    // Update fields object
+    for (let field in fields) {
+        fields[field] = classes.includes(field)
     }
     
-    classesObject.width = window.innerWidth;
-    classesObject.height = window.innerHeight;
-    return classesObject;
+    fields.width = window.innerWidth;
+    fields.height = window.innerHeight;
+    return fields;
 }
