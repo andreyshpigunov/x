@@ -46,4 +46,4 @@ window.animateExample = (params) => {
 }
 
 
-qs('.jsDeviceExample').innerHTML = JSON.stringify(x.device)
+qs('.jsDeviceExample').innerHTML = JSON.stringify(x.device, null, '\t')

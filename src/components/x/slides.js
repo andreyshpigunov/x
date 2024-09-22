@@ -10,6 +10,7 @@
 //  </div>
 
 
+import { device } from './device';
 import { lib } from './lib';
 
 
@@ -20,45 +21,51 @@ class Slides {
     }
     
     init() {
+        
         let sliders = lib.qsa('[x-slides]');
         if (sliders.length) {
-            let slidersHash = {};
-            
-            sliders.forEach((e, index) => {
-                // Get array images
-                let slides = JSON.parse(e.getAttribute('x-slides'));
-                // Get cover
-                let img = lib.qs('img', e);
-                let cover = img.getAttribute('src');
-                // Add cover to the start of array
-                slides.unshift(cover);
-                // Create array without duplicates
-                let array = [...new Set(slides)]
-                let count = array.length;
-                
-                // Add data to object
-                slidersHash[index] = {
-                    element: e,
-                    rect: e.getBoundingClientRect(),
-                    img: img,
-                    array: array,
-                    count: count
-                };
-                
-                // Remove 'x-slides' attribute
+            if (device.touch) {
+                // Touch device, remove 'x-slides' attribute
                 e.removeAttribute('x-slides');
-            });
-            
-            // Add event listeners
-            if (Object.values(slidersHash).length) {
-                for (let item of Object.values(slidersHash)) {
-                    if (item.array.length) {
-                        item.element.addEventListener('mousemove', event => {
-                            this._update(event, item);
-                        });
-                        item.element.addEventListener('mouseout', event => {
-                            this._reset(event, item);
-                        });
+            } else {
+                let slidersObject = {};
+                
+                sliders.forEach((e, index) => {
+                    // Get array images
+                    let slides = JSON.parse(e.getAttribute('x-slides'));
+                    // Get cover
+                    let img = lib.qs('img', e);
+                    let cover = img.getAttribute('src');
+                    // Add cover to the start of array
+                    slides.unshift(cover);
+                    // Create array without duplicates
+                    let array = [...new Set(slides)]
+                    let count = array.length;
+                    
+                    // Add data to object
+                    slidersObject[index] = {
+                        element: e,
+                        rect: e.getBoundingClientRect(),
+                        img: img,
+                        array: array,
+                        count: count
+                    };
+                    
+                    // Remove 'x-slides' attribute
+                    e.removeAttribute('x-slides');
+                });
+                
+                // Add event listeners
+                if (Object.values(slidersObject).length) {
+                    for (let item of Object.values(slidersObject)) {
+                        if (item.array.length) {
+                            item.element.addEventListener('mousemove', event => {
+                                this._update(event, item);
+                            });
+                            item.element.addEventListener('mouseout', event => {
+                                this._reset(event, item);
+                            });
+                        }
                     }
                 }
             }
