@@ -26,7 +26,7 @@ class Slides {
         if (sliders.length) {
             if (device.touch) {
                 // Touch device, remove 'x-slides' attribute
-                e.removeAttribute('x-slides');
+                for (let slider of sliders) slider.removeAttribute('x-slides');
             } else {
                 let slidersObject = {};
                 
