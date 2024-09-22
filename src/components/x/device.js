@@ -47,12 +47,12 @@ export const device = (function () {
     // Detect OS
     if (/win/.test(userAgent)) {
         fields.os = 'windows';
-    } else if (/mac/.test(userAgent)) {
-        fields.os = 'macos';
     } else if (/linux/.test(userAgent)) {
         fields.os = 'linux';
     } else if (/iphone|ipad|ipod/.test(userAgent)) {
         fields.os = 'ios';
+    } else if (/mac/.test(userAgent)) {
+        fields.os = 'macos';
     }
     classes.push(fields.os);
     
@@ -76,14 +76,14 @@ export const device = (function () {
     classes.push(fields.browser);
     
     // Detect device
-    if (/mac/.test(userAgent)) {
-        fields.device = 'mac';
-    } else if (/ipad/.test(userAgent)) {
+    if (/ipad/.test(userAgent)) {
         fields.device = 'ipad';
     } else if (/iphone/.test(userAgent)) {
         fields.device = 'iphone';
     } else if (/android/.test(userAgent)) {
         fields.device = 'android';
+    } else if (/mac/.test(userAgent)) {
+        fields.device = 'mac';
     }
     classes.push(fields.device);
     
