@@ -16,10 +16,6 @@
     "end": "-50vh",
     "functionName": "headerAnimation"
 }'>
-    <div id="a"></div>
-    <script>
-        document.getElementById('a').innerHTML = window.navigator.userAgent
-    </script>
     
     <header class="header flex aic sticky">
         <div class="header-version nowrap">0.0.42</div>
@@ -80,6 +76,37 @@
                     </div>
                     <div class="jsAnimateExample breakWord"></div>
                     <progress id="progress" value="0" max="1"></progress>
+                    <canvas id="canvas" width="200" height="200"></canvas>
+                    
+                    <script>
+                        let canvas = document.querySelector('#canvas');
+                        let context = canvas.getContext('2d');
+                        let centerx = context.canvas.width / 2;
+                        let centery = context.canvas.height / 2;
+                        
+                        function animateExample(params) {
+                            let el = document.querySelector('.jsAnimateExample');
+                            let progress = document.querySelector('#progress');
+                            el.innerHTML = 'Progress: ' + params.progress + ' (' + Math.round(params.progress * 100) + '%)';
+                            progress.value = params.progress;
+                            
+                            let a = 2;
+                            let b = 1.1;
+                            let deg = params.progress * 720;
+                            
+                            context.clearRect(0, 0, 200, 200);
+                            context.moveTo(centerx, centery);
+                            context.beginPath();
+                            for (i = 0; i < deg; i++) {
+                                let angle = 0.1 * i;
+                                let x = centerx + (a + b * angle) * Math.cos(angle);
+                                let y = centery + (a + b * angle) * Math.sin(angle);
+                                context.lineTo(x, y);
+                            }
+                            context.strokeStyle = '#aaa';
+                            context.stroke();
+                        }
+                    </script>
                 </div>
                 <div class="c1">
                     <h5>Device</h5>
