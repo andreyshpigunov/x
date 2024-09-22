@@ -23,14 +23,14 @@ Created by Andrey Shpigunov on 08.09.2024.
     
     @media(--medium){
         @for $i from 1 to 12 {
-            &.md\:.g$(i) { grid-template-columns: repeat($(i), 1fr) }
+            &.md\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .md\:c$(i) { grid-column: span $(i) }
         }
     }
     
     @media(--small){
         @for $i from 1 to 12 {
-            &.sm\:.g$(i) { grid-template-columns: repeat($(i), 1fr) }
+            &.sm\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .sm\:c$(i) { grid-column: span $(i) }
         }
     }
