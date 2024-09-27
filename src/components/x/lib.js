@@ -27,7 +27,7 @@
 //  makePassword(length, selector)
 //  loadScript(path, callback, type = 'async')
 //  deffered(callback, delay = 10000)
-//  onAppear(selector, callback, options)
+//  onAppear(selector, appearCallback, disappearCallback, options)
 //  alertErrors(data)
 //  printErrors(data)
 //
@@ -40,7 +40,7 @@ class Lib {
     }
     
     
-    // ---------- Query selectors ----------
+    // !---------- Query selectors ----------
     
     
     // querySelector -> return element
@@ -67,7 +67,7 @@ class Lib {
     }
     
     
-    // ---------- Hide/show element (s) ----------
+    // !---------- Hide/show element (s) ----------
     
     
     // Hide element(s) (add class .hidden)
@@ -81,7 +81,7 @@ class Lib {
     }
     
     
-    // ---------- Work with classes ----------
+    // !---------- Work with classes ----------
     
     
     // Add class to element(s)
@@ -156,7 +156,7 @@ class Lib {
     }
     
     
-    // ---------- Page events and URL ----------
+    // !---------- Page events and URL ----------
     
     
     // Reload page
@@ -187,7 +187,7 @@ class Lib {
     }
     
     
-    //  ---------- Numbers ----------
+    //  !---------- Numbers ----------
     
     
     // Random number
@@ -257,7 +257,7 @@ class Lib {
     }
     
     
-    // ---------- Validate ----------
+    // !---------- Validate ----------
     
     
     // Email validation
@@ -277,7 +277,7 @@ class Lib {
     }
     
     
-    // ---------- Utils ----------
+    // !---------- Utils ----------
     
     
     // Make password with length (default — 8)
@@ -360,12 +360,13 @@ class Lib {
         timer = setTimeout(run, delay);
     }
     
-    // Run callback(e) once on element appear in viewport
+    // Run callback(e) on element appear/disappear in viewport
     // selector — trigger element(s)
-    // callback — callback function on element appeared
+    // appearCallback — callback function on element appeared
+    // disappearCallback — callback function on element disappeared
     // options — IntersectionObserver options
-    // lib.onAppear('.loading', e => { Code... })
-    onAppear(selector, callback, options) {
+    // lib.onAppeared('.picture', e => { Appear code... }, e => { Disappear code... })
+    onAppear(selector, appearCallback, disappearCallback = null, options) {
         let elements = this.qsa(selector);
         if (elements.length) {
             let params = {
@@ -377,8 +378,10 @@ class Lib {
             let observerCallback = (entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        callback(entry.target);
-                        observer.unobserve(entry.target);
+                        appearCallback(entry.target);
+                        if (disappearCallback == null) observer.unobserve(entry.target);
+                    } else {
+                        if (disappearCallback != null) disappearCallback(entry.target);
                     }
                 })
             }
@@ -388,7 +391,7 @@ class Lib {
     }
     
     
-    // ---------- Work with errors ----------
+    // !---------- Work with errors ----------
     
     
     // Show alert window with errors
@@ -424,6 +427,28 @@ class Lib {
             }
         }
     }
+    
+    
+    // !---------- DOM ----------
+    
+    
+    // Render data
+    async render(selector, data, placement = null) {
+        let items = this.qsa(selector);
+        if (items.length) {
+            for (let i of items) {
+                if (placement == null) {
+                    i.innerHTML = data
+                } else {
+                    i.insertAdjacentHTML(placement, data)
+                }
+            }
+        }
+        return
+    }
 }
 
 export const lib = new Lib();
+
+
+

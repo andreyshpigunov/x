@@ -31,9 +31,9 @@ class Appear {
         this.items = lib.qsa('[x-appear]');
         if (this.items.length) {
             // Remove attribute
-            for (let item of this.items) {
-                item.removeAttribute('x-appear')
-            }
+            // for (let item of this.items) {
+                // item.removeAttribute('x-appear')
+            // }
             // Observe items
             let observerCallback = entries => {
                 for (let entry of entries) {

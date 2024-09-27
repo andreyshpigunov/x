@@ -1,0 +1,24 @@
+/*---------------------------
+sticky.css
+x
+
+Created by Andrey Shpigunov on 27.09.2024.
+---------------------------*/
+
+
+/* Sticky */
+
+
+.sticky {
+    position: sticky !important;
+    top: 0;
+}
+@media (--large) {
+    .lg\:sticky { position: sticky !important; top: 0 }
+}
+@media (min-width: 640px) and (--medium) {
+    .md\:sticky { position: sticky !important; top: 0 }
+}
+@media (--small) {
+    .sm\:sticky { position: sticky !important; top: 0 }
+}

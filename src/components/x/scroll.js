@@ -1,9 +1,8 @@
 //
 //	scroll.js
-//	auto-x
+//	x
 //
-//	Created by Andrey Shpigunov on 04.09.2024.
-//
+//	Created by Andrey Shpigunov on 27.09.2024.
 //
 //  Scroll page to element id.
 //  Automatically works on element with data-scroll:
@@ -21,16 +20,15 @@
 //    }
 //  '>Up</a>
 //
-//  API call:
-//  this.scrollTo() — old method
+//  API call for simple scroll:
 //
-//  For simple scroll:
-//  this.to('element id, selector or element item')
+//  Simple scroll:
+//  this.scrollTo('element id, selector or element item')
 //  or
-//  this.to(element)
+//  this.scrollTo(element)
 //
 //  With params:
-//  this.to({
+//  this.scrollTo({
 //    parent: "element selector", — default value = window
 //    target: "element id, selector or element item",
 //    duration: 400, — scroll duration in ms
@@ -40,7 +38,7 @@
 //  })
 //
 //  scrollTo support async methods:
-//  auto.scroll.to(element).then((e) => { alert('Here!') })
+//  x.scroll.to(element).then(e => { alert('Here!') })
 //
 
 

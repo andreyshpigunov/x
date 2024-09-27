@@ -10,15 +10,25 @@
     <link rel="icon" href="https://andreyshpigunov.github.io/x/favicon.svg" type="image/svg+xml"/>
     <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/x/assets/apple-touch-icon.png"/>
     <link rel="stylesheet" href="dist/app.css"/>
+    
+    <style>
+        .appear_effect-fadeIn {
+            opacity: 0;
+        }
+        .appear_effect-fadeIn.appeared {
+            will-change: opacity;
+            transition: opacity 1s ease-out;
+            opacity: 1
+        }
+    </style>
 </head>
 <body id="top" x-animate='{
     "start": "0px",
     "end": "-50vh",
     "functionName": "headerAnimation"
 }'>
-    
-    <header class="header flex aic sticky">
-        <div class="header-version nowrap">0.0.42</div>
+    <header class="header flex aic sticky px5">
+        <div class="header-version nowrap">0.0.43</div>
         <div class="header-logo mxa">
             <a role="button" data-scrollto="#top">
                 <img src="assets/logo.png" alt="x"/>
@@ -40,7 +50,7 @@
     </div>
     
     <section class="section-header mt8" x-appear>
-        <h1 class="mxa ac max800">Small and simple Javascript library with interesting features</h1>
+        <h1 class="mxa ac max800 sm:fs40">Small and simple Javascript library with interesting features</h1>
     </section>
     
     <div class="element2" x-animate='{
@@ -56,15 +66,15 @@
     
     
     
-    <section class="section-header mt8">
+    <section class="section-header mt8 px5">
         <h2 class="ac">Examples</h2>
     </section>
     
-    <section class="section-content mt7">
+    <section class="section-content mt7 px5">
         <div class="container max1200">
             <div class="grid g4 md:g2 sm:g1 gap6">
                 <div class="c1">
-                    <h5>Animate</h5>
+                    <h5 class="pointer" x-modal-open="modalAnimate">Animate</h5>
                     <div x-animate='{
                         "trigger": ".jsAnimateExample",
                         "start": "80vh",
@@ -91,8 +101,8 @@
                             progress.value = params.progress;
                             
                             let a = 2;
-                            let b = 1.1;
-                            let deg = params.progress * 720;
+                            let b = 2;
+                            let deg = params.progress * 360;
                             
                             context.clearRect(0, 0, 200, 200);
                             context.moveTo(centerx, centery);
@@ -109,32 +119,203 @@
                     </script>
                 </div>
                 <div class="c1">
-                    <h5>Device</h5>
-                    <pre class="jsDeviceExample breakWord"></pre>
+                    <h5 class="pointer" x-modal-open="modalAppear">Appear</h5>
+                    <style>
+                        .exampleAppear1,
+                        .exampleAppear2 {
+                            opacity: 0;
+                            will-change: opacity;
+                            transition: opacity 1s ease-out;
+                            transition-delay: .4s;
+                        }
+                        .exampleAppear2 {
+                            transition-delay: 1s;
+                        }
+                        .exampleAppear1.appeared {
+                            opacity: 1;
+                            background: #cccccc55;
+                        }
+                        .exampleAppear2.visible {
+                            opacity: 1;
+                            background: #cccccc55;
+                        }
+                    </style>
+                    <div class="exampleAppear1 flex jcc py5 r3" x-appear>Appeared</div>
+                    <div class="exampleAppear2 flex jcc py5 mt2 r3" x-appear>Visible</div>
                 </div>
                 <div class="c1">
-                    <h5>Slides</h5>
-                    <div class="max600">
-                        <div class="ratio4x3" x-slides='[
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0420.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0451.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0482.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0485.jpg"
-                        ]'>
-                            <img class="r5"
-                                src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg" width="800" height="600" />
+                    <h5 class="pointer" x-modal-open="modalDevice">Device</h5>
+                    <div class="jsDeviceExample breakWord"></div>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            if (x.device) {
+                                let content = '';
+                                Object.keys(x.device).forEach(key => {
+                                    content += key + ': ' + x.device[key] + '<br/>'
+                                })
+                                x.lib.render('.jsDeviceExample', content)
+                            }
+                        })
+                    </script>
+                </div>
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalForm">Form</h5>
+                    <p>Form fields binding.</p>
+                    <input type="text" name="exampleText" placeholder="Type something"/>
+                    <p class="jsExampleTextValue">...</p>
+                    <input class="max100" name="exampleVal1" type="text" value="2"/> +
+                    <input class="max100" name="exampleVal2" type="text" value="2"/>
+                    <p>Sum: <span class="jsExampleSum">...</span></p>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            x.form.onUpdate(['[name=exampleText]'], () => {
+                                let val = qs('[name=exampleText]').value;
+                                !val ? val = '...' : '';
+                                x.lib.render('.jsExampleTextValue', val)
+                            });
+                            
+                            let fields = ['[name=exampleVal1]', '[name=exampleVal2]']
+                            x.form.onUpdate(fields, calc);
+                            
+                            function calc() {
+                                let val1 = qs('[name=exampleVal1]').value || 0;
+                                let val2 = qs('[name=exampleVal2]').value || 0;
+                                let sum = parseInt(val1) + parseInt(val2);
+                                x.lib.render('.jsExampleSum', sum)
+                            }
+                            calc();
+                        })
+                    </script>
+                    
+                    <div id="modalForm" x-modal class="modal_hash" data-window-class="max1000">
+                        <h2>Form</h2>
+                        
+                        <p>Useful utilities for forms interactivity.</p>
+                        <p>They add the ability to set the values of the input, textarea and select fields, triggering events that can then be processed. In this way, you can link form fields with the necessary functions. For example, the dynamic calculation of the amount entered in the fields and others.</p>
+                        
+                        <h3>Methods</h3>
+                        <div class="scroll">
+                            <table class="dataTable">
+                                <tr>
+                                    <th width="50%">Method</th>
+                                    <th width="50%">Desdription</th>
+                                </tr>
+                                <tr>
+                                    <td><code>x.form.setChecked(element, checked = false)</code></td>
+                                    <td>Analog for element.checked = bool</td>
+                                </tr>
+                                <tr>
+                                    <td><code>x.form.setValue(element, value)</code></td>
+                                    <td>Analog for element.value = string</td>
+                                </tr>
+                                <tr>
+                                    <td><code>x.form.onUpdate([elements], callback)</code></td>
+                                    <td>
+                                        Listen events on elements from array.<br/>
+                                        <code>[elements]</code> — selectors array<br/>
+                                        <code>callback</code> — callback function
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><code>x.form.update([elements], callback)</code></td>
+                                    <td>
+                                        Manually dispatch update event for elements from array.<br/>
+                                        <code>[elements]</code> — selectors array<br/>
+                                        <code>callback</code> — callback function
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
                     </div>
-                    <div class="mt2">Move cursor on photo.</div>
                 </div>
                 <div class="c1">
-                    <h5>Sheets</h5>
+                    <h5 class="pointer" x-modal-open="modalHover">Hover</h5>
+                    <div>
+                        <a href="#1" onclick="return false" x-hover>Link</a>
+                        <a href="#1" onclick="return false" x-hover>Link</a>
+                        <a href="#1" onclick="return false" x-hover>Link</a>
+                        ...
+                        <a href="#1" onclick="return false" x-hover>Link</a>
+                    </div>
+                    <div class="mt2">
+                        <a href="#2" onclick="return false" x-hover>
+                            <img class="r3"
+                                src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg"
+                                width="800" height="600"/>
+                        </a>
+                        <a href="#2" onclick="return false" x-hover>Photo link</a>
+                    </div>
+                </div>
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalLib">Lib</h5>
+                    <div class="jsLibExample">
+                        lib.random(1000, 100000) → <span class="jsLibRandom"></span><br/>
+                        lib.number(<span class="jsLibRandom"></span>) → <span class="jsLibNumber"></span><br/>
+                        lib.numberDecline(<span class="jsLibRandom"></span>, 'item', 'items', 'items') →
+                        <span class="jsLibNumberDecline"></span><br/>
+                        lib.isEmail('hello@mail.dev') → <span class="jsLibIsEmailTrue"></span><br/>
+                        lib.isEmail('hello@mail') → <span class="jsLibIsEmailFalse"></span><br/>
+                        makePassword(8) → <code class="jsLibMakePassword"></code><br/>
+                    </div>
+                    <div class="flex gap3 aic mt1">
+                        <span class="jsLibExampleUpdate pointer unselectable">↺</span>
+                        <a class="link pseudo fs14" x-modal-open="modalLib">Show all methods</a>
+                    </div>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            
+                            function libExample() {
+                                let random = x.lib.random(1000, 100000);
+                                x.lib.render('.jsLibRandom', random);
+                                x.lib.render('.jsLibNumber', x.lib.number(random));
+                                x.lib.render('.jsLibNumberDecline', random + ' ' + x.lib.numberDecline(random, 'item', 'items', 'items'));
+                                x.lib.render('.jsLibIsEmailTrue', x.lib.isEmail('hello@mail.dev') ? 'true' : 'false');
+                                x.lib.render('.jsLibIsEmailFalse', x.lib.isEmail('hello@mail') ? 'true' : 'false');
+                                x.lib.render('.jsLibMakePassword', x.lib.makePassword(8))
+                            }
+                            
+                            libExample();
+                            qs('.jsLibExampleUpdate').addEventListener('click', libExample);
+                        })
+                    </script>
+                </div>
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalModal">Modal</h5>
+                    
+                    <div class="flex gap3">
+                        <a role="button" class="button" x-modal-open="modalExampleTest">Test modal</a>
+                        <a role="button" class="button" x-modal-open="modalExampleUniq">Unique modal</a>
+                    </div>
+                    <h6>API call:</h6>
+                    <a class="link pseudo" onclick="x.modal.show('modalExampleTest')">x.modal.show('modalExampleTest')</a>
+                    
+                    <div id="modalExampleTest" x-modal>
+                        <h2>Test modal</h2>
+                        <p>John was a young man who lived in a small town. He had always dreamed of traveling the world and seeing new places. One day, he decided to pack his bags and go on a journey.</p>
+                        <p>He first went to Europe, where he visited many countries. He saw the Eiffel Tower in Paris, the Coliseum in Rome, and the canals of Venice. He also tried local food and drinks, which were very delicious.</p>
+                        <p>After Europe, John went to Asia. There he explored the temples of India, the Great Wall of China, and the rice fields of Japan. He learned about different cultures and religions, which made him more open-minded.</p>
+                        <p>Finally, John came back home, but he knew that he would soon go on another adventure. His travels had given him a lot of new experiences and knowledge, and he was ready for more.</p>
+                        <div class="flex gap3">
+                            <a role="button" class="button modal-close">Close</a>
+                            <a role="button" class="button" x-modal-open="modalExampleInModal">Modal in modal</a>
+                            <a role="button" class="button" x-modal-open="modalExampleUniq">Unique modal</a>
+                        </div>
+                    </div>
+                    
+                    <div id="modalExampleInModal" x-modal>
+                        <h2>Modal in modal</h2>
+                        <p>Opening this window, you are not closed all the other windows on the page.</p>
+                    </div>
+                    
+                    <div id="modalExampleUniq" x-modal class="modal_uniq">
+                        <h2>Unique modal</h2>
+                        <p>Opening this window, you are closed all the other windows on the page.</p>
+                    </div>
+                </div>
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalSheets">Sheets</h5>
                     <style>
                         .sheets-example .button {
                             opacity: .5
@@ -164,13 +345,42 @@
                         </div>
                     </div>
                 </div>
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalSlides">Slides</h5>
+                    <div class="max600">
+                        <div class="ratio4x3" x-slides='[
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0420.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0451.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0482.jpg",
+                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0485.jpg"
+                        ]'>
+                            <img class="r3"
+                                src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg"
+                                width="800" height="600"/>
+                        </div>
+                    </div>
+                    <div class="mt2 touch-hide">Move cursor on photo.</div>
+                    <div class="mt2 touch-show">Not working on mobile :)</div>
+                    
+                    <div id="modalSlides" x-modal>
+                        <div class="h1">Slides</div>
+                        <p>Hover and mouseover photos slider.</p>
+                        <p>Working only on desktops.</p>
+                        <p><code>✍🏻 Documentation in progress</code></p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
     
     
-    
-    <section class="section-plugins mt7">
+    <section class="section-plugins mt7 px5">
         <div class="container max700">
             <div class="-grid -g3 flex jcsb sm:fc">
                 <div class="c1">
@@ -201,7 +411,7 @@
                         <li><a class="link" x-modal-open="modalModal">Modal</a></li>
                         <li><a class="link" x-modal-open="modalScroll">Scroll</a></li>
                         <li><a class="link" x-modal-open="modalSheets">Sheets</a></li>
-                        <li><a class="link" x-modal-open="modalSlider">Slider</a></li>
+                        <li><a class="link" x-modal-open="modalSlides">Slider</a></li>
                         <li><a class="link" x-modal-open="modalSticky">Sticky</a></li>
                     </ul>
                 </div>
@@ -209,7 +419,7 @@
         </div>
     </section>
     
-    <section class="section-header mt8">
+    <section class="section-header mt8 px5">
         <h2 class="ac">Start usage</h2>
     </section>
     
@@ -223,7 +433,7 @@
         <div class="element1-figure"></div>
     </div>
     
-    <section class="section-content mt7">
+    <section class="section-content mt7 px5">
         <div class="container max700">
         
             <h3>HTML</h3>
@@ -2618,43 +2828,7 @@
     </div>
     
     
-    <div id="modalForm" x-modal class="modal_hash" data-window-class="max1000">
-        <h2>Form</h2>
-        
-        <nav class="modalNavigation sticky unselectable">
-            <div class="modalNavigation-inner">
-                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "#modalFormMain", "offset": 100}'>Описание</a>
-                <a data-scrollto='{"parent": "#modalForm .modal-outer", "target": "#modalFormApi", "offset": 100}'>API</a>
-            </div>
-        </nav>
-        
-        <div id="modalFormMain">
-            <p>Полезные утилиты для интерактивности форм.</p>
-            <p>Добавляют возможность устанавливать значения полей input, textarea и select, вызывая события, которые далее можно обработать. Таким образом можно связывать поля форм необходимыми функциями. Например динамический расчет суммы, введенной в поля и другие.</p>
-        </div>
-        
-        <div id="modalFormApi" class="mt5">
-            <h3>API</h3>
-            <table class="dataTable">
-                <tr>
-                    <th width="50%">Метод</th>
-                    <th width="50%">Описание</th>
-                </tr>
-                <tr>
-                    <td><code>x.form.setChecked(element, checked = false)</code></td>
-                    <td>Аналог element.checked = bool</td>
-                </tr>
-                <tr>
-                    <td><code>x.form.setValue(element, value)</code></td>
-                    <td>Аналог element.value = string</td>
-                </tr>
-                <tr>
-                    <td><code>x.form.onUpdate(el1, el2, ..., elN, callback)</code></td>
-                    <td>Слушатель событий на элементах el1, el2 и т. д.</td>
-                </tr>
-            </table>
-        </div>
-    </div>
+    
     
     
     <footer class="p6 ac fs14">

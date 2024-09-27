@@ -18,8 +18,7 @@ class Sticky {
             for (let item of stickies) {
                 const observer = new IntersectionObserver(
                     ([e]) => lib.switchClass(e.target, e.intersectionRatio < 1, 'sticky_on'),
-                    // ([e]) => e.target.classList.toggle('sticky_on', e.intersectionRatio < 1),
-                    { threshold: [1] }
+                    { threshold: 1, rootMargin: '-1px 0px 0px 0px', root: document }
                 );
                 observer.observe(item);
             }

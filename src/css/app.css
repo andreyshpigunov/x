@@ -47,22 +47,14 @@ Created by andreyshpigunov on 25.05.2021.
 }
 
 
-h2 {
-    font-size: 3rem;
-    font-weight: 700;
-
-    @media (max-width: 639px) {
-        & {
-            font-size: 2.4rem;
-        }
-    }
-}
-
 
 .header {
     z-index: 100;
     height: 120px;
-    padding: 0 var(--space-6);
+    
+    @media (--small) {
+        height: 100px;
+    }
 }
 .header_compact {
     
@@ -81,6 +73,10 @@ h2 {
         display: block;
         width: auto;
         height: 120px;
+        
+        @media (--small) {
+            height: 100px;
+        }
     }
 }
 .header-github {
@@ -135,7 +131,7 @@ h2 {
 
 code {
     padding: 2px;
-    font-size: 14px;
+    /* font-size: 14px; */
     color: var(--code-font-color);
     background: var(--code-background-color);
 }
@@ -286,7 +282,7 @@ code {
     transform-origin: center;
     
     &.active {
-        opacity: 1;
+        opacity: .5;
         transition: opacity 1s ease-out,
                     transform .2s ease-out;
     }
@@ -309,7 +305,7 @@ code {
     opacity: 0;
     
     &.active {
-        opacity: 1;
+        opacity: .5;
         transition: opacity 1s ease-out,
                     transform .2s ease-out;
     }
@@ -333,7 +329,7 @@ code {
     opacity: 0;
     
     &.active {
-        opacity: 1;
+        opacity: .5;
         transition: opacity 1s ease-out,
                     transform .2s ease-out;
     }

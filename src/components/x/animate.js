@@ -35,6 +35,10 @@ import { lib } from './lib';
 
 class Animate {
     
+    constructor() {
+        this.functionLock = false;
+    }
+    
     init() {
         let animations = lib.qsa('[x-animate]');
         if (animations.length) {
@@ -93,6 +97,8 @@ class Animate {
             
             if (offset.top <= start && offset.top >= end) {
                 // Element inside of animation area --- > E < ---
+                // Unlock function if locked
+                this.functionLock = false;
                 // Add active class
                 if (item.class != null) {
                     item.element.classList.add(item.class);
@@ -101,7 +107,7 @@ class Animate {
                 if (typeof window[item.functionName] === 'function') {
                     item.progress = (start - offset.top) / item.duration;
                     item.progress = item.progress.toFixed(4);
-                    window[item.functionName](item);
+                    window[item.functionName](item)
                 }
             } else {
                 // Element outside of animation area --- E --- > ... < --- E ---
@@ -114,14 +120,16 @@ class Animate {
                     item.element.classList.remove(item.class);
                 }
                 // Animation progress
-                if (typeof window[item.functionName] === 'function') {
+                if (!this.functionLock && typeof window[item.functionName] === 'function') {
                     if (offset.top > start) {
                         item.progress = 0;
-                        window[item.functionName](item)
+                        window[item.functionName](item);
+                        this.functionLock = true
                     }
                     if (offset.top < end) {
                         item.progress = 1;
-                        window[item.functionName](item)
+                        window[item.functionName](item);
+                        this.functionLock = true
                     }
                 }
             }

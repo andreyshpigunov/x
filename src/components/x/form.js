@@ -57,49 +57,54 @@ class Form {
     
     // Callback for events on elements
     // Supports input, textarea and select
-    // Arguments: onUpdate(el1, el2, ..., elN, callback)
-    onUpdate(...args) {
-        let callback = args.at(-1);
-        for (let i = 0; i < args.length - 1; i++) {
-            let el = lib.qs(args[i]);
-            let uid = this._uid(el);
-            let tagName = el.tagName.toLowerCase();
-            switch (tagName) {
-                case 'input':
-                case 'textarea':
-                    if (!this.listen.update.includes(uid)) {
-                        el.addEventListener('input', callback);
-                        this.listen.update.push(uid);
-                    }
-                    break
-                case 'select':
-                    if (!this.listen.update.includes(uid)) {
-                        el.addEventListener('change', callback);
-                        this.listen.update.push(uid);
-                    }
-                    break
-                default:
-                    console.log('Error', 'Unsupported element: ' + tagName)
-                    break
+    // Arguments: onUpdate([el1, el2, ..., elN], callback)
+    onUpdate(elements, callback) {
+        if (elements.length) {
+            for (let element of elements) {
+                let el = lib.qs(element);
+                let uid = this._uid(el);
+                let tagName = el.tagName.toLowerCase();
+                switch (tagName) {
+                    case 'input':
+                    case 'textarea':
+                        if (!this.listen.update.includes(uid)) {
+                            el.addEventListener('input', callback);
+                            this.listen.update.push(uid);
+                        }
+                        break
+                    case 'select':
+                        if (!this.listen.update.includes(uid)) {
+                            el.addEventListener('change', callback);
+                            this.listen.update.push(uid);
+                        }
+                        break
+                    default:
+                        console.log('Error', 'Unsupported element: ' + tagName)
+                        break
+                }
             }
         }
     }
     
     // Dispatch update event
-    update(element) {
-        let el = lib.qs(element);
-        let tagName = el.tagName.toLowerCase();
-        switch (tagName) {
-            case 'input':
-            case 'textarea':
-                el.dispatchEvent(this.input);
-                break
-            case 'select':
-                el.dispatchEvent(this.change);
-                break
-            default:
-                console.log('Error', 'Unsupported element: ' + tagName)
-                break
+    update(elements) {
+        if (elements.length) {
+            for (let element of elements) {
+                let el = lib.qs(element);
+                let tagName = el.tagName.toLowerCase();
+                switch (tagName) {
+                    case 'input':
+                    case 'textarea':
+                        el.dispatchEvent(this.input);
+                        break
+                    case 'select':
+                        el.dispatchEvent(this.change);
+                        break
+                    default:
+                        console.log('Error', 'Unsupported element: ' + tagName)
+                        break
+                }
+            }
         }
     }
     

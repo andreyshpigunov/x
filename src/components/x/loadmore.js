@@ -33,29 +33,25 @@ class Loadmore {
         let blocks = lib.qsa('[x-loadmore]');
         if (blocks.length) {
             blocks.forEach((e, index) => {
-                try {
-                    if (lib.isValidJSON(e.getAttribute('x-loadmore'))) {
-                        let json = JSON.parse(e.getAttribute('x-loadmore'));
-                        
-                        if (json.hasOwnProperty('functionName')) {
-                            item = {};
-                            item.block = e;
-                            item.offset = json.offset || this.offset;
-                            item.functionName = json.functionName;
-                        } else {
-                            console.log('functionName required in JSON ' + json);
-                        }
-                    } else {
-                        console.log('Invalid JSON in x-loadmore');
-                    }
+                if (lib.isValidJSON(e.getAttribute('x-loadmore'))) {
+                    let json = JSON.parse(e.getAttribute('x-loadmore'));
                     
-                    if (item) {
-                        let name = e.hasAttribute('id') ? e.getAttribute('id') : index;
-                        this.blocksHash[name] = item;
-                        e.removeAttribute('x-loadmore');
+                    if (json.hasOwnProperty('functionName')) {
+                        item = {};
+                        item.block = e;
+                        item.offset = json.offset || this.offset;
+                        item.functionName = json.functionName;
+                    } else {
+                        console.log('functionName required in JSON ' + json);
                     }
-                } catch (err) {
-                    console.error(err);
+                } else {
+                    console.log('Invalid JSON in x-loadmore');
+                }
+                
+                if (item) {
+                    let name = e.hasAttribute('id') ? e.getAttribute('id') : index;
+                    this.blocksHash[name] = item;
+                    e.removeAttribute('x-loadmore');
                 }
             });
             

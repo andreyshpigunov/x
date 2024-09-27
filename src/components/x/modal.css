@@ -15,7 +15,7 @@ Created by Andrey Shpigunov on 18.09.2024.
     --modal-padding-small: 40px 6vw;
     --modal-background: #fff;
     --modal-box-shadow: 0 10px 40px #00000044;
-    --modal-border-radius: 10px;
+    --modal-border-radius: 12px;
     --modal-closer-area: 40px;
     --modal-closer-size: 26px;
     --modal-closer-width: 2px;
@@ -24,8 +24,7 @@ Created by Andrey Shpigunov on 18.09.2024.
     --modal-overlay-background-color: #00000088;
 }
 
-html_modal-active body,
-html_modal-active body {
+html.modal_active body {
     overflow: hidden;
 }
 

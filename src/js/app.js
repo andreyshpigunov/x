@@ -29,13 +29,13 @@ window.element3 = (params) => {
     params.element.style.transform = 'rotate(' + rotate +  'deg)';
 }
 window.headerAnimation = (params) => {
+    let _height = x.device.width <= 639 ? 100 : 120;
     let header = qs('.header');
     let headerLogo = qs('.header-logo img');
-    let height = 120 - params.progress * 60;
+    let height = _height - params.progress * _height / 2;
     let scale = 1 - params.progress * 0.5;
     header.style.height = height + 'px';
     headerLogo.style.transform = 'scale(' + scale +  ')';
     x.lib.switchClass(header, params.progress == 1, 'header_compact');
 }
 
-qs('.jsDeviceExample').innerHTML = JSON.stringify(x.device, null, '\t')

@@ -5,18 +5,7 @@
 //	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  Device, OS and browser detection
-//
-//  All variables, if matched, return true:
-//  device.[
-//    ie|firefox|safari|webkit|chrome|opera|
-//    windows|macos|linux|ios|
-//    ipad|ipod|iphone|android|
-//    mobile|desktop|js
-//  ]
-//
-//  Also returns device screen size:
-//  device.width
-//  device.height
+//  Return object with fields ('fields' variable in code).
 //
 
 
