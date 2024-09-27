@@ -34,7 +34,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     --button-font-color-active: var(--button-font-color);
 }
 
-.button, button, [type=submit] {
+.button, [type=submit] {
     position: relative;
     display: inline-flex;
     align-items: center;
