@@ -21,7 +21,7 @@ Created by Andrey Shpigunov on 18.09.2024.
     --modal-closer-width: 2px;
     --modal-closer-color: #ccc;
     --modal-closer-color-hover: #f00;
-    --modal-overlay-background-color: #00000088;
+    --modal-overlay-background-color: #00000066;
 }
 
 html.modal_active body {

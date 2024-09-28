@@ -48,7 +48,7 @@ class Modal {
                     placeholder = here ? here : lib.qs('body'),
                     
                     id = item.getAttribute('id'),
-                    classes = item.getAttribute('class'),
+                    classes = item.getAttribute('class') || '',
                     windowClasses = item.dataset.windowClass || '',
                     content = item.innerHTML;
                 
@@ -147,6 +147,7 @@ class Modal {
             this.modalLevel++;
             lib.addClass(modal, 'modal_z' + this.modalLevel);
             await lib.addClass(modal, 'modal_active', 10);
+            lib.qs('.modal-outer', modal).scrollTo(0,1);
             
             setTimeout(() => {
                 modal.dispatchEvent(this.eventOpen);
@@ -170,7 +171,6 @@ class Modal {
             
             await lib.removeClass(modal, 'modal_active', 200);
             lib.removeClass(modal, 'modal_z' + this.modalLevel);
-            lib.qs('.modal-outer', modal).scrollTo(0, 0);
             modal.dispatchEvent(this.eventClose);
             
             let html = lib.qs('html');

@@ -17,10 +17,10 @@ Created by andreyshpigunov on 25.05.2021.
     /* --link-border-color: #00000022; */
     /* --link-color-hover: #000000; */
     --link-transition: all .15s ease-out;
-    --modal-closer-size: 30px;
-    --modal-closer-width: 1px;
-    --modal-closer-color: #666;
-    --modal-closer-color-hover: #000;
+    /* --modal-closer-size: 30px; */
+    /* --modal-closer-width: 1px; */
+    /* --modal-closer-color: #666; */
+    /* --modal-closer-color-hover: #000; */
     --table-padding: 2px 6px;
     --code-font-color: #000;
     --code-background-color: #f8f8f8;
