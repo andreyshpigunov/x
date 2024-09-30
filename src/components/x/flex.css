@@ -41,34 +41,34 @@ Created by Andrey Shpigunov on 19.09.2024.
         }
     }
     
-    @media(--xlarge){
+    @media(--large){
         
-        &.xl\:fr  { flex-direction: row }
-        &.xl\:fc  { flex-direction: column }
-        &.xl\:fw  { flex-wrap: wrap }
-        &.xl\:fnw { flex-wrap: nowrap }
+        &.lg\:fr  { flex-direction: row }
+        &.lg\:fc  { flex-direction: column }
+        &.lg\:fw  { flex-wrap: wrap }
+        &.lg\:fnw { flex-wrap: nowrap }
         
-        &.xl\:ais  { align-items: stretch }
-        &.xl\:aifs { align-items: flex-start }
-        &.xl\:aic  { align-items: center }
-        &.xl\:aife { align-items: flex-end }
+        &.lg\:ais  { align-items: stretch }
+        &.lg\:aifs { align-items: flex-start }
+        &.lg\:aic  { align-items: center }
+        &.lg\:aife { align-items: flex-end }
         
-        &.xl\:jcfs { justify-content: flex-start }
-        &.xl\:jcc  { justify-content: center }
-        &.xl\:jcfe { justify-content: flex-end }
-        &.xl\:jcsb { justify-content: space-between }
-        &.xl\:jcsa { justify-content: space-around }
-        &.xl\:jcse { justify-content: space-evenly }
+        &.lg\:jcfs { justify-content: flex-start }
+        &.lg\:jcc  { justify-content: center }
+        &.lg\:jcfe { justify-content: flex-end }
+        &.lg\:jcsb { justify-content: space-between }
+        &.lg\:jcsa { justify-content: space-around }
+        &.lg\:jcse { justify-content: space-evenly }
         
         @for $i from 0 to 10 {
-            & .xl\:f$(i) {
+            & .lg\:f$(i) {
                 flex: $(i);
             }
-            & .xl\:fb$(i) {
+            & .lg\:fb$(i) {
                 flex: 0 0 calc($(i) * 10%);
                 max-width: calc($(i) * 10%);
             }
-            & .xl\:fg$(i) {
+            & .lg\:fg$(i) {
                 flex-grow: $(i);
             }
         }

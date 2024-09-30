@@ -103,10 +103,10 @@ html.touch .touch-hide { display: none }
 .fit-none { object-fit: none }
 .fit-cover { object-fit: cover }
 .fit-contain { object-fit: contain }
-@media (--xlarge) {
-    .xl\:fit-none { object-fit: none }
-    .xl\:fit-cover { object-fit: cover }
-    .xl\:fit-contain { object-fit: contain }
+@media (--large) {
+    .lg\:fit-none { object-fit: none }
+    .lg\:fit-cover { object-fit: cover }
+    .lg\:fit-contain { object-fit: contain }
 }
 @media (--medium) {
     .md\:fit-none { object-fit: none }
@@ -131,11 +131,11 @@ html.touch .touch-hide { display: none }
     .b$(i) { bottom: var(--space-$(i)) !important; }
     .z$(i) { z-index: var(--space-$(i)) !important; }
 }
-@media (--xlarge) {
+@media (--large) {
     @for $i from 0 to 10 {
-        .xl\:t$(i) { top: var(--space-$(i)) !important; }
-        .xl\:b$(i) { bottom: var(--space-$(i)) !important; }
-        .xl\:z$(i) { z-index: var(--space-$(i)) !important; }
+        .lg\:t$(i) { top: var(--space-$(i)) !important; }
+        .lg\:b$(i) { bottom: var(--space-$(i)) !important; }
+        .lg\:z$(i) { z-index: var(--space-$(i)) !important; }
     }
 }
 @media (--medium) {
@@ -164,9 +164,9 @@ html.touch .touch-hide { display: none }
 @for $i from 0 to 10 {
     .op$(i) { opacity: calc($(i) / 10) !important }
 }
-@media (--xlarge) {
+@media (--large) {
     @for $i from 0 to 10 {
-        .xl\:op$(i) { opacity: calc($(i) / 10) !important }
+        .lg\:op$(i) { opacity: calc($(i) / 10) !important }
     }
 }
 @media (--medium) {
@@ -238,6 +238,25 @@ html.touch .touch-hide { display: none }
 .ratio2x3 { padding-bottom: 150% !important }
 .ratio3x4 { padding-bottom: 133.33% !important }
 .ratio9x16 { padding-bottom: 177.77% !important }
+
+@media (--large) {
+    /* Square */
+    .lg\:ratio1x1 { padding-bottom: 100% !important }
+    /* Landscape */
+    .lg\:ratio2x1 { padding-bottom: 50% !important }
+    .lg\:ratio3x1 { padding-bottom: 33.33% !important }
+    .lg\:ratio4x1 { padding-bottom: 25% !important }
+    .lg\:ratio3x2 { padding-bottom: 66.67% !important }
+    .lg\:ratio4x3 { padding-bottom: 75% !important }
+    .lg\:ratio16x9 { padding-bottom: 56.25% !important }
+    /* Portrait */
+    .lg\:ratio1x2 { padding-bottom: 200% !important }
+    .lg\:ratio1x3 { padding-bottom: 300% !important }
+    .lg\:ratio1x4 { padding-bottom: 400% !important }
+    .lg\:ratio2x3 { padding-bottom: 150% !important }
+    .lg\:ratio3x4 { padding-bottom: 133.33% !important }
+    .lg\:ratio9x16 { padding-bottom: 177.77% !important }
+}
 
 @media (--medium) {
     /* Square */
@@ -364,6 +383,28 @@ html.touch .touch-hide { display: none }
     .min$(i) { min-width: $(i)px !important }
 }
 
+@media (--large) {
+    .lg\:w100 { width: 100% }
+    .lg\:h100 { height: 100% }
+    .lg\:max {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    @for $i from 10 to 190 by 10 {
+        .lg\:max$(i) { max-width: $(i)px !important }
+        .lg\:min$(i) { min-width: $(i)px !important }
+    }
+    @for $i from 200 to 380 by 20 {
+        .lg\:max$(i) { max-width: $(i)px !important }
+        .lg\:min$(i) { min-width: $(i)px !important }
+    }
+    @for $i from 400 to 1600 by 100 {
+        .lg\:max$(i) { max-width: $(i)px !important }
+        .lg\:min$(i) { min-width: $(i)px !important }
+    }
+}
+
 @media (--medium) {
     .md\:w100 { width: 100% }
     .md\:h100 { height: 100% }
@@ -436,6 +477,12 @@ html.touch .touch-hide { display: none }
 .inline { display: inline }
 .inlineBlock { display: inline-block }
 
+@media (--large) {
+    .lg\:block { display: block }
+    .lg\:inline { display: inline }
+    .lg\:inlineBlock { display: inline-block }
+}
+
 @media (--medium) {
     .md\:block { display: block }
     .md\:inline { display: inline }
@@ -454,6 +501,13 @@ html.touch .touch-hide { display: none }
 .ar { text-align: right !important }
 .ac { text-align: center !important }
 .aj { text-align: justify !important }
+
+@media (--large) {
+    .lg\:al { text-align: left !important }
+    .lg\:ar { text-align: right !important }
+    .lg\:ac { text-align: center !important }
+    .lg\:aj { text-align: justify !important }
+}
 
 @media (--medium) {
     .md\:al { text-align: left !important }
@@ -480,6 +534,11 @@ html.touch .touch-hide { display: none }
 /* !- Float */
 .fl { float: left }
 .fr { float: right }
+
+@media (--large) {
+    .lg\:fl { float: left }
+    .lg\:fr { float: right }
+}
 
 @media (--medium) {
     .md\:fl { float: left }
@@ -509,6 +568,25 @@ html.touch .touch-hide { display: none }
 .mba { margin-bottom: auto !important }
 .mla { margin-left: auto !important }
 .mra { margin-right: auto !important }
+
+@media (--large) {
+    @for $i from 0 to 10 {
+        .lg\:m$(i)  { margin: var(--space-$(i)) !important }
+        .lg\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
+        .lg\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
+        .lg\:mt$(i) { margin-top: var(--space-$(i)) !important }
+        .lg\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
+        .lg\:ml$(i) { margin-left: var(--space-$(i)) !important }
+        .lg\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    }
+    .lg\:ma  { margin: auto !important }
+    .lg\:mxa { margin-left: auto !important; margin-right: auto !important }
+    .lg\:mya { margin-top: auto !important; margin-bottom: auto !important }
+    .lg\:mta { margin-top: auto !important }
+    .lg\:mba { margin-bottom: auto !important }
+    .lg\:mla { margin-left: auto !important }
+    .lg\:mra { margin-right: auto !important }
+}
 
 @media (--medium) {
     @for $i from 0 to 10 {
@@ -579,6 +657,18 @@ html.touch .touch-hide { display: none }
     .pr$(i) { padding-right: var(--space-$(i)) !important }
 }
 
+@media (--large) {
+    @for $i from 0 to 10 {
+        .lg\:p$(i)  { padding: var(--space-$(i)) !important }
+        .lg\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
+        .lg\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
+        .lg\:pt$(i) { padding-top: var(--space-$(i)) !important }
+        .lg\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
+        .lg\:pl$(i) { padding-left: var(--space-$(i)) !important }
+        .lg\:pr$(i) { padding-right: var(--space-$(i)) !important }
+    }
+}
+
 @media (--medium) {
     @for $i from 0 to 10 {
         .md\:p$(i)  { padding: var(--space-$(i)) !important }
@@ -622,11 +712,11 @@ html.touch .touch-hide { display: none }
     .gapy$(i) { row-gap: var(--space-$(i)) !important }
 }
 
-@media (--xlarge) {
+@media (--large) {
     @for $i from 0 to 10 {
-        .xl\:gap$(i) { gap: var(--space-$(i)) !important }
-        .xl\:gapx$(i) { column-gap: var(--space-$(i)) !important }
-        .xl\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+        .lg\:gap$(i) { gap: var(--space-$(i)) !important }
+        .lg\:gapx$(i) { column-gap: var(--space-$(i)) !important }
+        .lg\:gapy$(i) { row-gap: var(--space-$(i)) !important }
     }
 }
 
@@ -660,11 +750,11 @@ html.touch .touch-hide { display: none }
 }
 .r100 { border-radius: 100% !important }
 
-@media (--xlarge) {
+@media (--large) {
     @for $i from 0 to 10 {
-        .xl\:r$(i) { border-radius: var(--space-$(i)) !important }
+        .lg\:r$(i) { border-radius: var(--space-$(i)) !important }
     }
-    .xl\:r100 { border-radius: 100% !important }
+    .lg\:r100 { border-radius: 100% !important }
 }
 
 @media (--medium) {
@@ -696,6 +786,14 @@ html.touch .touch-hide { display: none }
 .sh3 { box-shadow: 4px 4px 20px rgba(0,0,0,.15) }
 .sh4 { box-shadow: 4px 4px 20px rgba(0,0,0,.2) }
 
+@media (--large) {
+    .lg\:sh0 { box-shadow: none }
+    .lg\:sh1 { box-shadow: 4px 4px 20px rgba(0,0,0,.05) }
+    .lg\:sh2 { box-shadow: 4px 4px 20px rgba(0,0,0,.1) }
+    .lg\:sh3 { box-shadow: 4px 4px 20px rgba(0,0,0,.15) }
+    .lg\:sh4 { box-shadow: 4px 4px 20px rgba(0,0,0,.2) }
+}
+
 @media (--medium) {
     .md\:sh0 { box-shadow: none }
     .md\:sh1 { box-shadow: 4px 4px 20px rgba(0,0,0,.05) }
@@ -724,6 +822,11 @@ html.touch .touch-hide { display: none }
 /* !- Opacity */
 @for $i from 0 to 10 {
     .o$(i) { order: $(i) }
+}
+@media (--large) {
+    @for $i from 0 to 10 {
+        .lg\:o$(i) { order: $(i) }
+    }
 }
 @media (--media) {
     @for $i from 0 to 10 {

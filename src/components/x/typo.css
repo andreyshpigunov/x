@@ -195,6 +195,45 @@ table {
 .lh9{ line-height: 1.9 !important }
 .lh10{ line-height: 2 !important }
 
+@media (--large) {
+    .lg\:fsxxl { font-size: 1.5rem !important }
+    .lg\:fsxl { font-size: 1.3rem !important }
+    .lg\:fsl { font-size: 1.15rem !important }
+    .lg\:fsn { font-size: var(--font-size) !important }
+    .lg\:fss { font-size: .9rem !important }
+    .lg\:fsxs { font-size: .8rem !important }
+    .lg\:fsxxs { font-size: .7rem !important }
+    
+    @for $i from 8 to 19 {
+        .lg\:fs$(i) { font-size: $(i)px !important }
+    }
+    @for $i from 20 to 80 by 2 {
+        .lg\:fs$(i) { font-size: $(i)px !important }
+    }
+    
+    .lg\:fw100 { font-weight: 100 !important }
+    .lg\:fw200 { font-weight: 200 !important }
+    .lg\:fw300 { font-weight: 300 !important }
+    .lg\:fw400 { font-weight: 400 !important }
+    .lg\:fw500 { font-weight: 500 !important }
+    .lg\:fw600 { font-weight: 600 !important }
+    .lg\:fw700 { font-weight: 700 !important }
+    .lg\:fw800 { font-weight: 800 !important }
+    .lg\:fw900 { font-weight: 900 !important }
+    
+    .lg\:lh0 { line-height: 1 !important }
+    .lg\:lh1 { line-height: 1.1 !important }
+    .lg\:lh2 { line-height: 1.2 !important }
+    .lg\:lh3 { line-height: 1.3 !important }
+    .lg\:lh4 { line-height: 1.4 !important }
+    .lg\:lh5 { line-height: 1.5 !important }
+    .lg\:lh6 { line-height: 1.6 !important }
+    .lg\:lh7 { line-height: 1.7 !important }
+    .lg\:lh8 { line-height: 1.8 !important }
+    .lg\:lh9 { line-height: 1.9 !important }
+    .lg\:lh10 { line-height: 2 !important }
+}
+
 @media (--medium) {
     .md\:fsxxl { font-size: 1.5rem !important }
     .md\:fsxl { font-size: 1.3rem !important }
@@ -221,17 +260,17 @@ table {
     .md\:fw800 { font-weight: 800 !important }
     .md\:fw900 { font-weight: 900 !important }
     
-    .md\:lh0{ line-height: 1 !important }
-    .md\:lh1{ line-height: 1.1 !important }
-    .md\:lh2{ line-height: 1.2 !important }
-    .md\:lh3{ line-height: 1.3 !important }
-    .md\:lh4{ line-height: 1.4 !important }
-    .md\:lh5{ line-height: 1.5 !important }
-    .md\:lh6{ line-height: 1.6 !important }
-    .md\:lh7{ line-height: 1.7 !important }
-    .md\:lh8{ line-height: 1.8 !important }
-    .md\:lh9{ line-height: 1.9 !important }
-    .md\:lh10{ line-height: 2 !important }
+    .md\:lh0 { line-height: 1 !important }
+    .md\:lh1 { line-height: 1.1 !important }
+    .md\:lh2 { line-height: 1.2 !important }
+    .md\:lh3 { line-height: 1.3 !important }
+    .md\:lh4 { line-height: 1.4 !important }
+    .md\:lh5 { line-height: 1.5 !important }
+    .md\:lh6 { line-height: 1.6 !important }
+    .md\:lh7 { line-height: 1.7 !important }
+    .md\:lh8 { line-height: 1.8 !important }
+    .md\:lh9 { line-height: 1.9 !important }
+    .md\:lh10 { line-height: 2 !important }
 }
 
 @media (--small) {
@@ -260,17 +299,17 @@ table {
     .sm\:fw800 { font-weight: 800 !important }
     .sm\:fw900 { font-weight: 900 !important }
     
-    .sm\:lh0{ line-height: 1 !important }
-    .sm\:lh1{ line-height: 1.1 !important }
-    .sm\:lh2{ line-height: 1.2 !important }
-    .sm\:lh3{ line-height: 1.3 !important }
-    .sm\:lh4{ line-height: 1.4 !important }
-    .sm\:lh5{ line-height: 1.5 !important }
-    .sm\:lh6{ line-height: 1.6 !important }
-    .sm\:lh7{ line-height: 1.7 !important }
-    .sm\:lh8{ line-height: 1.8 !important }
-    .sm\:lh9{ line-height: 1.9 !important }
-    .sm\:lh10{ line-height: 2 !important }
+    .sm\:lh0 { line-height: 1 !important }
+    .sm\:lh1 { line-height: 1.1 !important }
+    .sm\:lh2 { line-height: 1.2 !important }
+    .sm\:lh3 { line-height: 1.3 !important }
+    .sm\:lh4 { line-height: 1.4 !important }
+    .sm\:lh5 { line-height: 1.5 !important }
+    .sm\:lh6 { line-height: 1.6 !important }
+    .sm\:lh7 { line-height: 1.7 !important }
+    .sm\:lh8 { line-height: 1.8 !important }
+    .sm\:lh9 { line-height: 1.9 !important }
+    .sm\:lh10 { line-height: 2 !important }
 }
 
 /* Letter spacing */
@@ -286,18 +325,18 @@ table {
 .ls9 { letter-spacing: 7px !important }
 .ls10 { letter-spacing: 8px !important }
 
-@media (--xlarge) {
-    .xl\:ls0 { letter-spacing: 0 !important }
-    .xl\:ls1 { letter-spacing: .5px !important }
-    .xl\:ls2 { letter-spacing: 1px !important }
-    .xl\:ls3 { letter-spacing: 1.5px !important }
-    .xl\:ls4 { letter-spacing: 2px !important }
-    .xl\:ls5 { letter-spacing: 3px !important }
-    .xl\:ls6 { letter-spacing: 4px !important }
-    .xl\:ls7 { letter-spacing: 5px !important }
-    .xl\:ls8 { letter-spacing: 6px !important }
-    .xl\:ls9 { letter-spacing: 7px !important }
-    .xl\:ls10 { letter-spacing: 8px !important }
+@media (--large) {
+    lgl\:ls0 { letter-spacing: 0 !important }
+    .lg\:ls1 { letter-spacing: .5px !important }
+    .lg\:ls2 { letter-spacing: 1px !important }
+    .lg\:ls3 { letter-spacing: 1.5px !important }
+    .lg\:ls4 { letter-spacing: 2px !important }
+    .lg\:ls5 { letter-spacing: 3px !important }
+    .lg\:ls6 { letter-spacing: 4px !important }
+    .lg\:ls7 { letter-spacing: 5px !important }
+    .lg\:ls8 { letter-spacing: 6px !important }
+    .lg\:ls9 { letter-spacing: 7px !important }
+    .lg\:ls10 { letter-spacing: 8px !important }
 }
 
 @media (--medium) {
