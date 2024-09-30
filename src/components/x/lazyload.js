@@ -19,7 +19,7 @@ class Lazyload {
     constructor() {
         this.options = {
             root: null,
-            rootMargin: '100px',
+            rootMargin: '200px',
             threshold: 0
         }
     }

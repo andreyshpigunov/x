@@ -18,6 +18,13 @@ Created by Andrey Shpigunov on 08.09.2024.
         & .c$(i) { grid-column: span $(i) }
     }
     
+    @media(--xlarge){
+        @for $i from 1 to 12 {
+            &.xl\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
+            & .xl\:c$(i) { grid-column: span $(i) }
+        }
+    }
+    
     @media(--medium){
         @for $i from 1 to 12 {
             &.md\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
@@ -29,6 +36,13 @@ Created by Andrey Shpigunov on 08.09.2024.
         @for $i from 1 to 12 {
             &.sm\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .sm\:c$(i) { grid-column: span $(i) }
+        }
+    }
+    
+    @media(--xsmall){
+        @for $i from 1 to 12 {
+            &.xs\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
+            & .xs\:c$(i) { grid-column: span $(i) }
         }
     }
 }

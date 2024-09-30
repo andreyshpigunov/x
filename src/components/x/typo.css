@@ -195,7 +195,7 @@ table {
 .lh9{ line-height: 1.9 !important }
 .lh10{ line-height: 2 !important }
 
-@media (max-width: 1023px) {
+@media (--medium) {
     .md\:fsxxl { font-size: 1.5rem !important }
     .md\:fsxl { font-size: 1.3rem !important }
     .md\:fsl { font-size: 1.15rem !important }
@@ -234,7 +234,7 @@ table {
     .md\:lh10{ line-height: 2 !important }
 }
 
-@media (max-width: 639px) {
+@media (--small) {
     .sm\:fsxxl { font-size: 1.5rem !important }
     .sm\:fsxl { font-size: 1.3rem !important }
     .sm\:fsl { font-size: 1.15rem !important }
@@ -286,21 +286,21 @@ table {
 .ls9 { letter-spacing: 7px !important }
 .ls10 { letter-spacing: 8px !important }
 
-@media (min-width: 1024px) {
-    .lg\:ls0 { letter-spacing: 0 !important }
-    .lg\:ls1 { letter-spacing: .5px !important }
-    .lg\:ls2 { letter-spacing: 1px !important }
-    .lg\:ls3 { letter-spacing: 1.5px !important }
-    .lg\:ls4 { letter-spacing: 2px !important }
-    .lg\:ls5 { letter-spacing: 3px !important }
-    .lg\:ls6 { letter-spacing: 4px !important }
-    .lg\:ls7 { letter-spacing: 5px !important }
-    .lg\:ls8 { letter-spacing: 6px !important }
-    .lg\:ls9 { letter-spacing: 7px !important }
-    .lg\:ls10 { letter-spacing: 8px !important }
+@media (--xlarge) {
+    .xl\:ls0 { letter-spacing: 0 !important }
+    .xl\:ls1 { letter-spacing: .5px !important }
+    .xl\:ls2 { letter-spacing: 1px !important }
+    .xl\:ls3 { letter-spacing: 1.5px !important }
+    .xl\:ls4 { letter-spacing: 2px !important }
+    .xl\:ls5 { letter-spacing: 3px !important }
+    .xl\:ls6 { letter-spacing: 4px !important }
+    .xl\:ls7 { letter-spacing: 5px !important }
+    .xl\:ls8 { letter-spacing: 6px !important }
+    .xl\:ls9 { letter-spacing: 7px !important }
+    .xl\:ls10 { letter-spacing: 8px !important }
 }
 
-@media (min-width: 640px) and (max-width: 1023px) {
+@media (--medium) {
     .md\:ls0 { letter-spacing: 0 !important }
     .md\:ls1 { letter-spacing: .5px !important }
     .md\:ls2 { letter-spacing: 1px !important }
@@ -313,7 +313,7 @@ table {
     .md\:ls9 { letter-spacing: 7px !important }
     .md\:ls10 { letter-spacing: 8px !important }
 }
-@media (max-width: 639px) {
+@media (--small) {
     .sm\:ls0 { letter-spacing: 0 !important }
     .sm\:ls1 { letter-spacing: .5px !important }
     .sm\:ls2 { letter-spacing: 1px !important }

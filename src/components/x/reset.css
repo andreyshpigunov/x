@@ -22,11 +22,12 @@ Created by andreyshpigunov on 25.05.2021.
 
 /* PostCSS custom media */
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
-@custom-media --xsmall (max-width: 430px);
-@custom-media --small  (max-width: 639px);
-@custom-media --medium (max-width: 1023px);
-@custom-media --large  (min-width: 1024px);
-@custom-media --xlarge (min-width: 1400px);
+@custom-media --xsmall (max-width: 480px);
+@custom-media --small  (max-width: 768px);
+@custom-media --medium (max-width: 1279px);
+@custom-media --large  (min-width: 1280px);
+@custom-media --large  (min-width: 1280px);
+@custom-media --xlarge (min-width: 1440px);
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

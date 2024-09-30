@@ -62,8 +62,8 @@ class Slides {
                             item.element.addEventListener('mousemove', event => {
                                 this._update(event, item);
                             });
-                            item.element.addEventListener('mouseout', event => {
-                                this._reset(event, item);
+                            item.element.addEventListener('mouseout', () => {
+                                this._reset(item);
                             });
                         }
                     }
@@ -79,7 +79,7 @@ class Slides {
         item.img.src = item.array[slide];
     }
     
-    _reset(event, item) {
+    _reset(item) {
         item.img.src = item.array[0];
     }
     

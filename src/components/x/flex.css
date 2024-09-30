@@ -41,6 +41,39 @@ Created by Andrey Shpigunov on 19.09.2024.
         }
     }
     
+    @media(--xlarge){
+        
+        &.xl\:fr  { flex-direction: row }
+        &.xl\:fc  { flex-direction: column }
+        &.xl\:fw  { flex-wrap: wrap }
+        &.xl\:fnw { flex-wrap: nowrap }
+        
+        &.xl\:ais  { align-items: stretch }
+        &.xl\:aifs { align-items: flex-start }
+        &.xl\:aic  { align-items: center }
+        &.xl\:aife { align-items: flex-end }
+        
+        &.xl\:jcfs { justify-content: flex-start }
+        &.xl\:jcc  { justify-content: center }
+        &.xl\:jcfe { justify-content: flex-end }
+        &.xl\:jcsb { justify-content: space-between }
+        &.xl\:jcsa { justify-content: space-around }
+        &.xl\:jcse { justify-content: space-evenly }
+        
+        @for $i from 0 to 10 {
+            & .xl\:f$(i) {
+                flex: $(i);
+            }
+            & .xl\:fb$(i) {
+                flex: 0 0 calc($(i) * 10%);
+                max-width: calc($(i) * 10%);
+            }
+            & .xl\:fg$(i) {
+                flex-grow: $(i);
+            }
+        }
+    }
+    
     @media(--medium){
         
         &.md\:fr  { flex-direction: row }
@@ -102,6 +135,39 @@ Created by Andrey Shpigunov on 19.09.2024.
                 max-width: calc($(i) * 10%);
             }
             & .sm\:fg$(i) {
+                flex-grow: $(i);
+            }
+        }
+    }
+    
+    @media(--xsmall){
+        
+        &.xs\:fr  { flex-direction: row }
+        &.xs\:fc  { flex-direction: column }
+        &.xs\:fw  { flex-wrap: wrap }
+        &.xs\:fnw { flex-wrap: nowrap }
+        
+        &.xs\:ais  { align-items: stretch }
+        &.xs\:aifs { align-items: flex-start }
+        &.xs\:aic  { align-items: center }
+        &.xs\:aife { align-items: flex-end }
+        
+        &.xs\:jcfs { justify-content: flex-start }
+        &.xs\:jcc  { justify-content: center }
+        &.xs\:jcfe { justify-content: flex-end }
+        &.xs\:jcsb { justify-content: space-between }
+        &.xs\:jcsa { justify-content: space-around }
+        &.xs\:jcse { justify-content: space-evenly }
+        
+        @for $i from 0 to 10 {
+            & .xs\:f$(i) {
+                flex: $(i);
+            }
+            & .xs\:fb$(i) {
+                flex: 0 0 calc($(i) * 10%);
+                max-width: calc($(i) * 10%);
+            }
+            & .xs\:fg$(i) {
                 flex-grow: $(i);
             }
         }

@@ -76,7 +76,7 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Position */
-.rel { position: relative }
+/* .rel { position: relative }
 .abs { position: absolute }
 .fix { position: fixed }
 @media (--medium) {
@@ -88,7 +88,7 @@ html.touch .touch-hide { display: none }
     .sm\:rel { position: relative }
     .sm\:abs { position: absolute }
     .sm\:fix { position: fixed }
-}
+} */
 
 
 /* !- Object fit */
@@ -103,6 +103,11 @@ html.touch .touch-hide { display: none }
 .fit-none { object-fit: none }
 .fit-cover { object-fit: cover }
 .fit-contain { object-fit: contain }
+@media (--xlarge) {
+    .xl\:fit-none { object-fit: none }
+    .xl\:fit-cover { object-fit: cover }
+    .xl\:fit-contain { object-fit: contain }
+}
 @media (--medium) {
     .md\:fit-none { object-fit: none }
     .md\:fit-cover { object-fit: cover }
@@ -113,6 +118,11 @@ html.touch .touch-hide { display: none }
     .sm\:fit-cover { object-fit: cover }
     .sm\:fit-contain { object-fit: contain }
 }
+@media (--xsmall) {
+    .xs\:fit-none { object-fit: none }
+    .xs\:fit-cover { object-fit: cover }
+    .xs\:fit-contain { object-fit: contain }
+}
 
 
 /* !- Top, bottom, z-index */
@@ -121,14 +131,14 @@ html.touch .touch-hide { display: none }
     .b$(i) { bottom: var(--space-$(i)) !important; }
     .z$(i) { z-index: var(--space-$(i)) !important; }
 }
-@media (--large) {
+@media (--xlarge) {
     @for $i from 0 to 10 {
-        .lg\:t$(i) { top: var(--space-$(i)) !important; }
-        .lg\:b$(i) { bottom: var(--space-$(i)) !important; }
-        .lg\:z$(i) { z-index: var(--space-$(i)) !important; }
+        .xl\:t$(i) { top: var(--space-$(i)) !important; }
+        .xl\:b$(i) { bottom: var(--space-$(i)) !important; }
+        .xl\:z$(i) { z-index: var(--space-$(i)) !important; }
     }
 }
-@media (min-width: 640px) and (--medium) {
+@media (--medium) {
     @for $i from 0 to 10 {
         .md\:t$(i) { top: var(--space-$(i)) !important; }
         .md\:b$(i) { bottom: var(--space-$(i)) !important; }
@@ -142,14 +152,21 @@ html.touch .touch-hide { display: none }
         .sm\:z$(i) { z-index: var(--space-$(i)) !important; }
     }
 }
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:t$(i) { top: var(--space-$(i)) !important; }
+        .xs\:b$(i) { bottom: var(--space-$(i)) !important; }
+        .xs\:z$(i) { z-index: var(--space-$(i)) !important; }
+    }
+}
 
 /* !- Opacity */
 @for $i from 0 to 10 {
     .op$(i) { opacity: calc($(i) / 10) !important }
 }
-@media (--large) {
+@media (--xlarge) {
     @for $i from 0 to 10 {
-        .lg\:op$(i) { opacity: calc($(i) / 10) !important }
+        .xl\:op$(i) { opacity: calc($(i) / 10) !important }
     }
 }
 @media (--medium) {
@@ -160,6 +177,11 @@ html.touch .touch-hide { display: none }
 @media (--small) {
     @for $i from 0 to 10 {
         .sm\:op$(i) { opacity: calc($(i) / 10) !important }
+    }
+}
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:op$(i) { opacity: calc($(i) / 10) !important }
     }
 }
 
@@ -289,13 +311,13 @@ html.touch .touch-hide { display: none }
 .hiddenNext + * {
     display: none !important;
 }
-@media (min-width: 1024px) {
-    .lg\:hidden,
-    .lg\:hiddenNext + * {
+@media (--xlarge) {
+    .xl\:hidden,
+    .xl\:hiddenNext + * {
         display: none !important;
     }
 }
-@media (min-width: 640px) and (--medium) {
+@media (--medium) {
     .md\:hidden,
     .md\:hiddenNext + * {
         display: none !important;
@@ -304,6 +326,12 @@ html.touch .touch-hide { display: none }
 @media (--small) {
     .sm\:hidden,
     .sm\:hiddenNext + * {
+        display: none !important;
+    }
+}
+@media (--xsmall) {
+    .xs\:hidden,
+    .xs\:hiddenNext + * {
         display: none !important;
     }
 }
@@ -374,6 +402,28 @@ html.touch .touch-hide { display: none }
     }
 }
 
+@media (--xsmall) {
+    .xs\:w100 { width: 100% }
+    .xs\:h100 { height: 100% }
+    .xs\:max {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    @for $i from 10 to 190 by 10 {
+        .xs\:max$(i) { max-width: $(i)px !important }
+        .xs\:min$(i) { min-width: $(i)px !important }
+    }
+    @for $i from 200 to 380 by 20 {
+        .xs\:max$(i) { max-width: $(i)px !important }
+        .xs\:min$(i) { min-width: $(i)px !important }
+    }
+    @for $i from 400 to 1600 by 100 {
+        .xs\:max$(i) { max-width: $(i)px !important }
+        .xs\:min$(i) { min-width: $(i)px !important }
+    }
+}
+
 
 /* !- Block/Inline */
 .block { display: block }
@@ -406,11 +456,18 @@ html.touch .touch-hide { display: none }
     .md\:aj { text-align: justify !important }
 }
 
-@media (--medium) {
+@media (--small) {
     .sm\:al { text-align: left !important }
     .sm\:ar { text-align: right !important }
     .sm\:ac { text-align: center !important }
     .sm\:aj { text-align: justify !important }
+}
+
+@media (--xsmall) {
+    .xs\:al { text-align: left !important }
+    .xs\:ar { text-align: right !important }
+    .xs\:ac { text-align: center !important }
+    .xs\:aj { text-align: justify !important }
 }
 
 
@@ -485,6 +542,25 @@ html.touch .touch-hide { display: none }
     .sm\:mra { margin-right: auto !important }
 }
 
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:m$(i)  { margin: var(--space-$(i)) !important }
+        .xs\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
+        .xs\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
+        .xs\:mt$(i) { margin-top: var(--space-$(i)) !important }
+        .xs\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
+        .xs\:ml$(i) { margin-left: var(--space-$(i)) !important }
+        .xs\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    }
+    .xs\:ma  { margin: auto !important }
+    .xs\:mxa { margin-left: auto !important; margin-right: auto !important }
+    .xs\:mya { margin-top: auto !important; margin-bottom: auto !important }
+    .xs\:mta { margin-top: auto !important }
+    .xs\:mba { margin-bottom: auto !important }
+    .xs\:mla { margin-left: auto !important }
+    .xs\:mra { margin-right: auto !important }
+}
+
 
 /* !- Padding */
 @for $i from 0 to 10 {
@@ -509,7 +585,7 @@ html.touch .touch-hide { display: none }
     }
 }
 
-@media (max-width:639px) {
+@media (--small) {
     @for $i from 0 to 10 {
         .sm\:p$(i)  { padding: var(--space-$(i)) !important }
         .sm\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
@@ -521,11 +597,31 @@ html.touch .touch-hide { display: none }
     }
 }
 
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:p$(i)  { padding: var(--space-$(i)) !important }
+        .xs\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
+        .xs\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
+        .xs\:pt$(i) { padding-top: var(--space-$(i)) !important }
+        .xs\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
+        .xs\:pl$(i) { padding-left: var(--space-$(i)) !important }
+        .xs\:pr$(i) { padding-right: var(--space-$(i)) !important }
+    }
+}
+
 /* !- Gap */
 @for $i from 0 to 10 {
     .gap$(i) { gap: var(--space-$(i)) !important }
     .gapx$(i) { column-gap: var(--space-$(i)) !important }
     .gapy$(i) { row-gap: var(--space-$(i)) !important }
+}
+
+@media (--xlarge) {
+    @for $i from 0 to 10 {
+        .xl\:gap$(i) { gap: var(--space-$(i)) !important }
+        .xl\:gapx$(i) { column-gap: var(--space-$(i)) !important }
+        .xl\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+    }
 }
 
 @media (--medium) {
@@ -544,11 +640,26 @@ html.touch .touch-hide { display: none }
     }
 }
 
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:gap$(i) { gap: var(--space-$(i)) !important }
+        .xs\:gapx$(i) { column-gap: var(--space-$(i)) !important }
+        .xs\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+    }
+}
+
 /* !- Border radius */
 @for $i from 0 to 10 {
     .r$(i) { border-radius: var(--space-$(i)) !important }
 }
 .r100 { border-radius: 100% !important }
+
+@media (--xlarge) {
+    @for $i from 0 to 10 {
+        .xl\:r$(i) { border-radius: var(--space-$(i)) !important }
+    }
+    .xl\:r100 { border-radius: 100% !important }
+}
 
 @media (--medium) {
     @for $i from 0 to 10 {
@@ -562,6 +673,13 @@ html.touch .touch-hide { display: none }
         .sm\:r$(i) { border-radius: var(--space-$(i)) !important }
     }
     .sm\:r100 { border-radius: 100% !important }
+}
+
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:r$(i) { border-radius: var(--space-$(i)) !important }
+    }
+    .xs\:r100 { border-radius: 100% !important }
 }
 
 
@@ -588,6 +706,14 @@ html.touch .touch-hide { display: none }
     .sm\:sh4 { box-shadow: 4px 4px 20px rgba(0,0,0,.2) }
 }
 
+@media (--xsmall) {
+    .xs\:sh0 { box-shadow: none }
+    .xs\:sh1 { box-shadow: 4px 4px 20px rgba(0,0,0,.05) }
+    .xs\:sh2 { box-shadow: 4px 4px 20px rgba(0,0,0,.1) }
+    .xs\:sh3 { box-shadow: 4px 4px 20px rgba(0,0,0,.15) }
+    .xs\:sh4 { box-shadow: 4px 4px 20px rgba(0,0,0,.2) }
+}
+
 
 /* !- Opacity */
 @for $i from 0 to 10 {
@@ -601,6 +727,11 @@ html.touch .touch-hide { display: none }
 @media (--small) {
     @for $i from 0 to 10 {
         .sm\:o$(i) { order: $(i) }
+    }
+}
+@media (--xsmall) {
+    @for $i from 0 to 10 {
+        .xs\:o$(i) { order: $(i) }
     }
 }
 

@@ -16,6 +16,9 @@
 //
 
 
+// TODO Check and update code with IntersectionObserver like in lazyload.
+
+
 import { lib } from './lib';
 
 
