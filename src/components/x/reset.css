@@ -23,22 +23,22 @@ Created by andreyshpigunov on 25.05.2021.
 /* PostCSS custom media */
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
 @custom-media --xsmall-min (min-width: 0px);
-@custom-media --xsmall-max (max-width: 480px);
-@custom-media --small-min  (min-width: 481px);
-@custom-media --small-max  (max-width: 768px);
-@custom-media --medium-min (min-width: 769px);
-@custom-media --medium-max (max-width: 1279px);
-@custom-media --large-min  (min-width: 1280px);
-@custom-media --large-max  (max-width: 1439px);
-@custom-media --xlarge-min (min-width: 1440px);
+@custom-media --xsmall-max (max-width: 400px);
+@custom-media --small-min  (min-width: 401px);
+@custom-media --small-max  (max-width: 600px);
+@custom-media --medium-min (min-width: 601px);
+@custom-media --medium-max (max-width: 1200px);
+@custom-media --large-min  (min-width: 1201px);
+@custom-media --large-max  (max-width: 1400px);
+@custom-media --xlarge-min (min-width: 1401px);
 @custom-media --xlarge-max (max-width: 9999px);
 
 /* Shortcuts */
-@custom-media --xsmall (--xsmall-max);               /* XS < SM   MD   LG   XL */
-@custom-media --small  (--small-max);                /* XS   SM < MD   LG   XL */
-@custom-media --medium (--medium-max);               /* XS   SM   MD < LG   XL */
-@custom-media --large  (--large-min);                /* XS   SM < MD > LG   XL */
-@custom-media --xlarge (--xlarge-min);               /* XS   SM   MD   LG > XL */
+@custom-media --xsmall (max-width: 400px);         /* XS < SM   MD   LG   XL */
+@custom-media --small  (max-width: 600px);         /* XS   SM < MD   LG   XL */
+@custom-media --medium (max-width: 1200px);        /* XS   SM   MD < LG   XL */
+@custom-media --large  (min-width: 1201px);        /* XS   SM < MD > LG   XL */
+@custom-media --xlarge (min-width: 1401px);        /* XS   SM   MD   LG > XL */
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
