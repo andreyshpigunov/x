@@ -13,23 +13,18 @@ Created by Andrey Shpigunov on 27.09.2024.
     position: sticky !important;
     top: 0;
 }
-.noSticky {
-    position: relative !important;
-    top: auto;
-}
-@media (--xlarge) {
+@media (--xlarge-min) {
     .xl\:sticky { position: sticky !important; top: 0 }
-    .xl\:noSticky { position: relative !important; top: auto }
 }
-@media (--medium) {
+@media (--large-min) and (--large-max) {
+    .lg\:sticky { position: sticky !important; top: 0 }
+}
+@media (--medium-min) and (--medium-max) {
     .md\:sticky { position: sticky !important; top: 0 }
-    .md\:noSticky { position: relative !important; top: auto }
 }
-@media (--small) {
+@media (--small-min) and (--small-max) {
     .sm\:sticky { position: sticky !important; top: 0 }
-    .sm\:noSticky { position: relative !important; top: auto }
 }
-@media (--xsmall) {
+@media (--xsmall-max) {
     .xs\:sticky { position: sticky !important; top: 0 }
-    .xs\:noSticky { position: relative !important; top: auto }
 }
