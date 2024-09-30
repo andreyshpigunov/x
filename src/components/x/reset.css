@@ -18,6 +18,8 @@ Created by andreyshpigunov on 25.05.2021.
     --font-family-mono: SFMono-Regular, Consolas, Liberation Mono,
                         Menlo, monospace;
     --background-color: #fff;
+    
+    --small: 111px;
 }
 
 /* PostCSS custom media */
@@ -27,18 +29,27 @@ Created by andreyshpigunov on 25.05.2021.
 @custom-media --small-min  (min-width: 401px);
 @custom-media --small-max  (max-width: 600px);
 @custom-media --medium-min (min-width: 601px);
-@custom-media --medium-max (max-width: 1200px);
-@custom-media --large-min  (min-width: 1201px);
+@custom-media --medium-max (max-width: 1000px);
+@custom-media --large-min  (min-width: 1001px);
 @custom-media --large-max  (max-width: 1400px);
 @custom-media --xlarge-min (min-width: 1401px);
 @custom-media --xlarge-max (max-width: 9999px);
 
+
+/*
+iphone 320-440
+ipad 744-1024
+mac 1280+
+*/
+
+/* xs < 400 < sm < 600 < md < 1000 > lg > 1400 > xl */
+
 /* Shortcuts */
 @custom-media --xsmall (max-width: 400px);         /* XS < SM   MD   LG   XL */
 @custom-media --small  (max-width: 600px);         /* XS   SM < MD   LG   XL */
-@custom-media --medium (max-width: 1200px);        /* XS   SM   MD < LG   XL */
-@custom-media --large  (min-width: 1201px);        /* XS   SM < MD > LG   XL */
-@custom-media --xlarge (min-width: 1401px);        /* XS   SM   MD   LG > XL */
+@custom-media --medium (max-width: 1000px);        /* XS   SM   MD < LG   XL */
+@custom-media --large  (max-width: 1400px);        /* XS   SM   MD   LG < XL */
+@custom-media --xlarge (min-width: 1401px);        /* XS   SM   MD   LG   XL > */
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
