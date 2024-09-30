@@ -311,25 +311,31 @@ html.touch .touch-hide { display: none }
 .hiddenNext + * {
     display: none !important;
 }
-@media (--xlarge) {
+@media (--xlarge-min) {
     .xl\:hidden,
     .xl\:hiddenNext + * {
         display: none !important;
     }
 }
-@media (--medium) {
+@media (--large-min) and (--large-max) {
+    .lg\:hidden,
+    .lg\:hiddenNext + * {
+        display: none !important;
+    }
+}
+@media (--medium-min) and (--medium-max) {
     .md\:hidden,
     .md\:hiddenNext + * {
         display: none !important;
     }
 }
-@media (--small) {
+@media (--small-min) and (--small-max) {
     .sm\:hidden,
     .sm\:hiddenNext + * {
         display: none !important;
     }
 }
-@media (--xsmall) {
+@media (--xsmall-max) {
     .xs\:hidden,
     .xs\:hiddenNext + * {
         display: none !important;
