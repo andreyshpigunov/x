@@ -46,6 +46,7 @@ class Form {
                 el.dispatchEvent(this.input);
                 break
             case 'select':
+            case 'option':
                 el.value = value;
                 el.dispatchEvent(this.change);
                 break
@@ -73,6 +74,7 @@ class Form {
                         }
                         break
                     case 'select':
+                    case 'option':
                         if (!this.listen.update.includes(uid)) {
                             el.addEventListener('change', callback);
                             this.listen.update.push(uid);
@@ -98,6 +100,7 @@ class Form {
                         el.dispatchEvent(this.input);
                         break
                     case 'select':
+                    case 'option':
                         el.dispatchEvent(this.change);
                         break
                     default:

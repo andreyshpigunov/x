@@ -35,21 +35,12 @@ Created by andreyshpigunov on 25.05.2021.
 @custom-media --xlarge-min (min-width: 1401px);
 @custom-media --xlarge-max (max-width: 9999px);
 
-
-/*
-iphone 320-440
-ipad 744-1024
-mac 1280+
-*/
-
-/* xs < 400 < sm < 600 < md < 1000 > lg > 1400 > xl */
-
 /* Shortcuts */
-@custom-media --xsmall (max-width: 400px);         /* XS < SM   MD   LG   XL */
-@custom-media --small  (max-width: 600px);         /* XS   SM < MD   LG   XL */
-@custom-media --medium (max-width: 1000px);        /* XS   SM   MD < LG   XL */
-@custom-media --large  (max-width: 1400px);        /* XS   SM   MD   LG < XL */
-@custom-media --xlarge (min-width: 1401px);        /* XS   SM   MD   LG   XL > */
+@custom-media --xsmall (max-width: 400px);
+@custom-media --small  (max-width: 600px);
+@custom-media --medium (max-width: 1000px);
+@custom-media --large  (max-width: 1400px);
+@custom-media --xlarge (min-width: 1401px);
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

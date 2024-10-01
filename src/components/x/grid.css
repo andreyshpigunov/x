@@ -6,7 +6,7 @@ Created by Andrey Shpigunov on 08.09.2024.
 ---------------------------*/
 
 
-/* Grid prototype */
+/* !- Grid prototype */
 
 .grid {
     display: grid;
@@ -18,28 +18,28 @@ Created by Andrey Shpigunov on 08.09.2024.
         & .c$(i) { grid-column: span $(i) }
     }
     
-    @media(--large){
+    @media (--large) {
         @for $i from 1 to 12 {
             &.lg\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .lg\:c$(i) { grid-column: span $(i) }
         }
     }
     
-    @media(--medium){
+    @media (--medium) {
         @for $i from 1 to 12 {
             &.md\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .md\:c$(i) { grid-column: span $(i) }
         }
     }
     
-    @media(--small){
+    @media (--small) {
         @for $i from 1 to 12 {
             &.sm\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .sm\:c$(i) { grid-column: span $(i) }
         }
     }
     
-    @media(--xsmall){
+    @media (--xsmall) {
         @for $i from 1 to 12 {
             &.xs\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
             & .xs\:c$(i) { grid-column: span $(i) }
