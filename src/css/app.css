@@ -51,6 +51,7 @@ Created by andreyshpigunov on 25.05.2021.
 .header {
     z-index: 100;
     height: 120px;
+    will-change: height;
     
     @media (--small) {
         height: 100px;
@@ -73,6 +74,7 @@ Created by andreyshpigunov on 25.05.2021.
         display: block;
         width: auto;
         height: 120px;
+        will-change: transform;
         
         @media (--small) {
             height: 100px;

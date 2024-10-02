@@ -50,36 +50,41 @@ class Form {
                 el.dispatchEvent(this.change);
                 break
             default:
-                console.log('Error', 'Unsupported element: ' + tagName)
+                console.error(`Unsupported element: ${tagName}`);
                 break
         }
     }
     
     // Callback for events on elements
     // Supports input, textarea and select
-    // Arguments: onUpdate([el1, el2, ..., elN], callback)
+    // Usage 1: onUpdate(element, callback)
+    // Usage 2: onUpdate([el1, el2, ..., elN], callback)
     onUpdate(elements, callback) {
+        if (!Array.isArray(elements)) elements = [elements];
         if (elements.length) {
             for (let element of elements) {
                 let el = lib.qs(element);
-                let uid = this._uid(el);
                 let tagName = el.tagName.toLowerCase();
                 switch (tagName) {
                     case 'input':
                     case 'textarea':
-                        if (!this.listen.update.includes(uid)) {
-                            el.addEventListener('input', callback);
-                            this.listen.update.push(uid);
+                        if (!this.listen.update.includes(el)) {
+                            el.addEventListener('input', () => callback(el));
+                            this.listen.update.push(el)
+                        } else {
+                            console.log(el, 'Element always listening')
                         }
                         break
                     case 'select':
-                        if (!this.listen.update.includes(uid)) {
-                            el.addEventListener('change', callback);
-                            this.listen.update.push(uid);
+                        if (!this.listen.update.includes(el)) {
+                            el.addEventListener('change', () => callback(el));
+                            this.listen.update.push(el)
+                        } else {
+                            console.log(el, 'Element always listening')
                         }
                         break
                     default:
-                        console.log('Error', 'Unsupported element: ' + tagName)
+                        console.error(`Unsupported element: ${tagName}`);
                         break
                 }
             }
@@ -87,7 +92,10 @@ class Form {
     }
     
     // Dispatch update event
+    // Usage 1: update(element)
+    // Usage 2: update([el1, el2, ..., elN])
     update(elements) {
+        if (!Array.isArray(elements)) elements = [elements];
         if (elements.length) {
             for (let element of elements) {
                 let el = lib.qs(element);
@@ -101,16 +109,11 @@ class Form {
                         el.dispatchEvent(this.change);
                         break
                     default:
-                        console.log('Error', 'Unsupported element: ' + tagName)
+                        console.error('Unsupported element: ' + tagName);
                         break
                 }
             }
         }
-    }
-    
-    _uid(element) {
-        let el = lib.qs(element);
-        return [el.id, el.name].join('-');
     }
     
 }
