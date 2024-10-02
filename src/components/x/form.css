@@ -85,8 +85,8 @@ select {
     }
     &.error,
     &.error:focus,
-    &:invalid,
-    &:invalid:focus {
+    &[pattern]:invalid,
+    &[pattern]:invalid:focus {
         border-color: var(--forms-border-color-error);
         box-shadow: 0 0 0 1px var(--forms-border-color-error);
     }
