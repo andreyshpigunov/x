@@ -16,47 +16,35 @@ import { lib } from './lib';
 
 class Lazyload {
     
-    constructor() {
-        this.options = {
-            root: null,
-            rootMargin: '200px',
-            threshold: 0
-        }
-    }
-    
     init() {
-        if ('IntersectionObserver' in window) {
-            const images = lib.qsa('[x-lazyload]:not(.loaded)');
-            if (images.length) {
-                const observer = new IntersectionObserver(
-                    (entries, observer) => {
-                        if (entries) {
-                            for (let entry of entries) {
-                                if (entry.intersectionRatio > 0) {
-                                    this._loadImage(entry.target);
-                                    observer.unobserve(entry.target);
-                                }
-                            }
-                        }
-                    },
-                    this.options
-                );
-                for (let img of images) observer.observe(img);
-            }
-        } else {
-            this._fallback();
-        }
-    }
-    
-    _fallback() {
         const images = lib.qsa('[x-lazyload]:not(.loaded)');
         if (images.length) {
-            for (let img of images) {
-                const srcset = img.dataset.srcset;
-                const src = img.dataset.src;
-                if (srcset) img.srcset = srcset;
-                if (src) img.src = src;
-                lib.addClass(img, 'loaded');
+            if ('IntersectionObserver' in window) {
+                // IntersectionObserver
+                const callback = (entries, observer) => {
+                    for (let entry of entries) {
+                        if (entry.isIntersecting) {
+                            this._loadImage(entry.target);
+                            observer.unobserve(entry.target);
+                        }
+                    }
+                }
+                const options = {
+                    root: null,
+                    rootMargin: '200px',
+                    threshold: 0
+                }
+                const observer = new IntersectionObserver(callback, options);
+                for (let image of images) observer.observe(image);
+            } else {
+                // Fallback
+                for (let img of images) {
+                    const srcset = img.dataset.srcset;
+                    const src = img.dataset.src;
+                    if (srcset) img.srcset = srcset;
+                    if (src) img.src = src;
+                    lib.addClass(img, 'loaded');
+                }
             }
         }
     }

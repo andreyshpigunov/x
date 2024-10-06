@@ -8,13 +8,12 @@
 //
 //  qs(selector, context = document)
 //  qsa(selector, context = document)
-//  qse(element, context = document)
 //  hide(element)
 //  show(element)
-//  addClass(element, className, delay = 0)
-//  removeClass(element, className, delay = 0)
-//  toggleClass(element, className, delay = 0)
-//  switchClass(element, condition, className, delay = 0)
+//  async addClass(element, className, delay = 0)
+//  async removeClass(element, className, delay = 0)
+//  async toggleClass(element, className, delay = 0)
+//  async switchClass(element, condition, className, delay = 0)
 //  reload()
 //  reloadWithHash(hash)
 //  redirectTo(url)
@@ -24,12 +23,14 @@
 //  number(num)
 //  numberDecline(number, nominative, genitiveSingular, genetivePlural)
 //  isEmail(email)
+//  makeId()
 //  makePassword(length, selector)
 //  loadScript(path, callback, type = 'async')
 //  deffered(callback, delay = 10000)
 //  onAppear(selector, appearCallback, disappearCallback, options)
 //  alertErrors(data)
 //  printErrors(data)
+//  async render(selector, data, placement = null)
 //
 
 
@@ -280,6 +281,11 @@ class Lib {
     // !---------- Utils ----------
     
     
+    // Make unique id
+    makeId() {
+        return 'id' + this.random(100000,999999);
+    }
+    
     // Make password with length (default — 8)
     // selector — input or textarea field query selector
     makePassword(length, selector) {
@@ -436,13 +442,17 @@ class Lib {
     async render(selector, data, placement = null) {
         let items = this.qsa(selector);
         if (items.length) {
-            for (let i of items) {
-                if (placement == null) {
-                    i.innerHTML = data
-                } else {
-                    i.insertAdjacentHTML(placement, data)
+            await new Promise(resolve =>  {
+                data = typeof data === 'function' ? data() : data;
+                for (let i of items) {
+                    if (placement == null) {
+                        i.innerHTML = data
+                    } else {
+                        i.insertAdjacentHTML(placement, data)
+                    }
                 }
-            }
+                resolve()
+            });
         }
         return
     }

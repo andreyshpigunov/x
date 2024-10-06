@@ -2,21 +2,14 @@
 //	loadmore.js
 //	x
 //
-//	Created by Andrey Shpigunov on 19.09.2024.
+//	Created by Andrey Shpigunov on 06.10.2024.
 //
-//  Appeared element callback
 //  Load callback when element appeared in viewport from bottom.
 //
-//  <div x-loadmore='{"functionName": "load", "offset": "100"}'>...</div>
+//  <div x-loadmore='{"functionName": "load"}'>...</div>
 //  Callback function has paramenter "page":
 //  function load(page) { ... }
 //
-//  Stop watching:
-//  loadmore.unwatch()
-//
-
-
-// TODO Check and update code with IntersectionObserver like in lazyload.
 
 
 import { lib } from './lib';
@@ -25,74 +18,53 @@ import { lib } from './lib';
 class Loadmore {
     
     constructor() {
-        this.page = 1;
-        this.offset = 0;
-        this.watch = true;
-        this.blocksHash = {};
+        // Items with 'x-loadmore'
+        this.items = {};
+        // Lock repeat events, when current event in progress
+        this.locked = false;
     }
-
+    
     init() {
-        let item;
-        let blocks = lib.qsa('[x-loadmore]');
+        const blocks = lib.qsa('[x-loadmore]');
         if (blocks.length) {
-            blocks.forEach((e, index) => {
-                if (lib.isValidJSON(e.getAttribute('x-loadmore'))) {
-                    let json = JSON.parse(e.getAttribute('x-loadmore'));
-                    
-                    if (json.hasOwnProperty('functionName')) {
-                        item = {};
-                        item.block = e;
-                        item.offset = json.offset || this.offset;
-                        item.functionName = json.functionName;
-                    } else {
-                        console.log('functionName required in JSON ' + json);
+            const callback = async (entries, observer) => {
+                for (let entry of entries) {
+                    if (entry.isIntersecting && !this.locked) {
+                        this.locked = true;
+                        if (lib.isValidJSON(entry.target.getAttribute('x-loadmore'))) {
+                            let json = JSON.parse(entry.target.getAttribute('x-loadmore'));
+                            if (json.hasOwnProperty('functionName')) {
+                                let state = await window[json.functionName](this.items[entry.target.id].page);
+                                if (state) {
+                                    this.items[entry.target.id].page++;
+                                } else {
+                                    observer.unobserve(entry.target);
+                                }
+                            } else {
+                                console.log('functionName required in JSON ' + json);
+                            }
+                        } else {
+                            console.error('Invalid JSON in x-loadmore');
+                        }
+                        this.locked = false;
                     }
-                } else {
-                    console.log('Invalid JSON in x-loadmore');
                 }
-                
-                if (item) {
-                    let name = e.hasAttribute('id') ? e.getAttribute('id') : index;
-                    this.blocksHash[name] = item;
-                    e.removeAttribute('x-loadmore');
+            }
+            const options = {
+                rootMargin: '0px 0px 400px 0px',
+                threshold: 0
+            }
+            const observer = new IntersectionObserver(callback, options);
+            for (let block of blocks) {
+                let id = lib.makeId();
+                block.setAttribute('id', id);
+                this.items[id] = {
+                    el: block,
+                    page: 1
                 }
-            });
-            
-            if (Object.keys(this.blocksHash).length) {
-                this._scrollObserve(this.blocksHash);
-                document.addEventListener('scroll', () => {
-                    this._scrollObserve(this.blocksHash);
-                }, { passive: true });
+                observer.observe(block);
             }
         }
-    }
-    
-    _scrollObserve(blocksHash) {
-        Object.keys(blocksHash).forEach(i => {
-            let item = blocksHash[i];
-            let scrollPosition = parseInt(
-                window.scrollY + document.documentElement.clientHeight
-            );
-            let scrollTarget = parseInt(
-                item.block.offsetTop + item.block.clientHeight - item.offset
-            );
-            
-            if (scrollPosition >= scrollTarget) {
-                if (this.watch) {
-                    if (typeof window[item.functionName] === 'function') {
-                        window[item.functionName](this.page);
-                        this.page++;
-                    }
-                    this.watch = false;
-                }
-            } else {
-                this.watch = true;
-            }
-        });
-    }
-    
-    unwatch(id) {
-        delete this.blocksHash[id];
     }
 }
 

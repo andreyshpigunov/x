@@ -9,26 +9,31 @@ Created by Andrey Shpigunov on 07.09.2024.
 /* Typo */
 
 :root {
-    --headers-margin-top: 2.2rem;
-    --headers-margin-bottom: 1.8rem;
+    --headers-margin-top: calc(var(--space-6) + .25rem);
+    --headers-margin-bottom: calc(var(--space-6) - .25rem);
     --headers-font-family: var(--font-family);
     --headers-font-weight: 700;
     --headers-font-color: #000;
-    --h1-font-size: calc(var(--font-size) + 30px);
-    --h2-font-size: calc(var(--font-size) + 22px);
-    --h3-font-size: calc(var(--font-size) + 16px);
-    --h4-font-size: calc(var(--font-size) + 10px);
-    --h5-font-size: calc(var(--font-size) + 4px);
-    --h6-font-size: var(--font-size);
+
+    --h1-font-size: 2.5rem;
+    --h2-font-size: 2rem;
+    --h3-font-size: 1.75rem;
+    --h4-font-size: 1.5rem;
+    --h5-font-size: 1.25rem;
+    --h6-font-size: 1rem;
+
     --h1-line-height: 1.3;
     --h2-line-height: 1.4;
     --h3-line-height: 1.5;
+
     --paragraph-margin: var(--space-4);
-    --figcaption-font-size: 14px;
+
+    --figcaption-font-size: var(--font-size);
     --figcaption-color: #999;
-    --table-padding: 6px 10px;
+
+    --table-padding: var(--space-2) var(--space-3);
     --table-border-color: #ccc;
-    --table-header-weight: 700;
+    --table-header-font-weight: 700;
 }
 
 input,
@@ -50,7 +55,6 @@ h6, .h6 {
     font-family: var(--headers-font-family);
     font-weight: var(--headers-font-weight);
 }
-/* * + h1, * + .h1, */
 * + h2, * + .h2,
 * + h3, * + .h3,
 * + h4, * + .h4,
@@ -62,7 +66,7 @@ h6, .h6 {
 h1, .h1 {
     font-size: var(--h1-font-size);
     line-height: var(--h1-line-height);
-    margin-bottom: calc(var(--headers-margin-bottom) * 1.25);
+    margin-bottom: calc(var(--headers-margin-bottom) + .25rem);
 }
 h2, .h2 {
     font-size: var(--h2-font-size);
@@ -71,19 +75,19 @@ h2, .h2 {
 h3, .h3 {
     font-size: var(--h3-font-size);
     line-height: var(--h3-line-height);
-    margin-bottom: calc(var(--headers-margin-bottom) * .8);
+    margin-bottom: calc(var(--headers-margin-bottom) - .25rem);
 }
 h4, .h4 {
     font-size: var(--h4-font-size);
-    margin-bottom: calc(var(--headers-margin-bottom) * .6);
+    margin-bottom: calc(var(--headers-margin-bottom) - .5rem);
 }
 h5, .h5 {
     font-size: var(--h5-font-size);
-    margin-bottom: calc(var(--headers-margin-bottom) * .4);
+    margin-bottom: calc(var(--headers-margin-bottom) - .75rem);
 }
 h6, .h6 {
     font-size: var(--h6-font-size);
-    margin-bottom: calc(var(--headers-margin-bottom) * .4);
+    margin-bottom: calc(var(--headers-margin-bottom) - .75rem);
 }
 
 p {
@@ -99,7 +103,7 @@ p {
 }
 
 figure {
-    margin: calc(var(--paragraph-margin) * 1.5) auto;
+    margin: calc(var(--paragraph-margin) + .5rem) auto;
 
     & figcaption {
         font-size: var(--figcaption-font-size);
@@ -108,11 +112,11 @@ figure {
 }
 
 blockquote {
-    margin: calc(var(--paragraph-margin) * 1.5) 0;
-    padding: 1rem 1.6rem;
-    background: #fafafa;
+    margin: calc(var(--paragraph-margin) + .5rem) 0;
+    padding: var(--space-4) var(--space-5);
     font-style: italic;
     hyphens: auto;
+    border-left: solid 4px var(--font-color);
 }
 
 pre {
@@ -122,15 +126,16 @@ pre {
 
 ul, ol, dl {
     margin: var(--paragraph-margin) 0;
-    padding-left: 2rem;
+    padding-left: var(--space-6);
     
     & ul, & ol, & dl, & li {
-        margin: .25rem 0;
+        margin: var(--space-1) 0;
     }
 }
 dl {
+    padding-left: var(--space-0);
     
-    & dt, & dd { margin: .25rem 0 }
+    & dt, & dd { margin: var(--space-1) 0 }
     & dt { font-weight: bold }
 }
 
@@ -139,8 +144,8 @@ table {
     border-spacing: 0;
 
     & caption {
-        margin-bottom: 4px;
-        padding: 0 10px;
+        margin-bottom: var(--space-1);
+        padding: 0 var(--space-3);
         font-weight: 700;
         text-align: left;
     }
@@ -152,18 +157,18 @@ table {
         vertical-align: top;
     }
     & tr th {
-        font-weight: var(--table-header-weight);
+        font-weight: var(--table-header-font-weight);
     }
 }
 
 .italic { font-style: italic }
 
 .fsxxl { font-size: 1.5rem !important }
-.fsxl { font-size: 1.3rem !important }
-.fsl { font-size: 1.15rem !important }
-.fsn { font-size: var(--font-size) !important }
-.fss { font-size: .9rem !important }
-.fsxs { font-size: .8rem !important }
+.fsxl  { font-size: 1.3rem !important }
+.fsl   { font-size: 1.15rem !important }
+.fsn   { font-size: var(--font-size) !important }
+.fss   { font-size: .9rem !important }
+.fsxs  { font-size: .8rem !important }
 .fsxxs { font-size: .7rem !important }
 
 @for $i from 8 to 19 {
@@ -183,25 +188,25 @@ table {
 .fw800 { font-weight: 800 !important }
 .fw900 { font-weight: 900 !important }
 
-.lh0{ line-height: 1 !important }
-.lh1{ line-height: 1.1 !important }
-.lh2{ line-height: 1.2 !important }
-.lh3{ line-height: 1.3 !important }
-.lh4{ line-height: 1.4 !important }
-.lh5{ line-height: 1.5 !important }
-.lh6{ line-height: 1.6 !important }
-.lh7{ line-height: 1.7 !important }
-.lh8{ line-height: 1.8 !important }
-.lh9{ line-height: 1.9 !important }
-.lh10{ line-height: 2 !important }
+.lh0  { line-height: 1 !important }
+.lh1  { line-height: 1.1 !important }
+.lh2  { line-height: 1.2 !important }
+.lh3  { line-height: 1.3 !important }
+.lh4  { line-height: 1.4 !important }
+.lh5  { line-height: 1.5 !important }
+.lh6  { line-height: 1.6 !important }
+.lh7  { line-height: 1.7 !important }
+.lh8  { line-height: 1.8 !important }
+.lh9  { line-height: 1.9 !important }
+.lh10 { line-height: 2 !important }
 
 @media (--large) {
     .lg\:fsxxl { font-size: 1.5rem !important }
-    .lg\:fsxl { font-size: 1.3rem !important }
-    .lg\:fsl { font-size: 1.15rem !important }
-    .lg\:fsn { font-size: var(--font-size) !important }
-    .lg\:fss { font-size: .9rem !important }
-    .lg\:fsxs { font-size: .8rem !important }
+    .lg\:fsxl  { font-size: 1.3rem !important }
+    .lg\:fsl   { font-size: 1.15rem !important }
+    .lg\:fsn   { font-size: var(--font-size) !important }
+    .lg\:fss   { font-size: .9rem !important }
+    .lg\:fsxs  { font-size: .8rem !important }
     .lg\:fsxxs { font-size: .7rem !important }
     
     @for $i from 8 to 19 {
@@ -221,26 +226,26 @@ table {
     .lg\:fw800 { font-weight: 800 !important }
     .lg\:fw900 { font-weight: 900 !important }
     
-    .lg\:lh0 { line-height: 1 !important }
-    .lg\:lh1 { line-height: 1.1 !important }
-    .lg\:lh2 { line-height: 1.2 !important }
-    .lg\:lh3 { line-height: 1.3 !important }
-    .lg\:lh4 { line-height: 1.4 !important }
-    .lg\:lh5 { line-height: 1.5 !important }
-    .lg\:lh6 { line-height: 1.6 !important }
-    .lg\:lh7 { line-height: 1.7 !important }
-    .lg\:lh8 { line-height: 1.8 !important }
-    .lg\:lh9 { line-height: 1.9 !important }
+    .lg\:lh0  { line-height: 1 !important }
+    .lg\:lh1  { line-height: 1.1 !important }
+    .lg\:lh2  { line-height: 1.2 !important }
+    .lg\:lh3  { line-height: 1.3 !important }
+    .lg\:lh4  { line-height: 1.4 !important }
+    .lg\:lh5  { line-height: 1.5 !important }
+    .lg\:lh6  { line-height: 1.6 !important }
+    .lg\:lh7  { line-height: 1.7 !important }
+    .lg\:lh8  { line-height: 1.8 !important }
+    .lg\:lh9  { line-height: 1.9 !important }
     .lg\:lh10 { line-height: 2 !important }
 }
 
 @media (--medium) {
     .md\:fsxxl { font-size: 1.5rem !important }
-    .md\:fsxl { font-size: 1.3rem !important }
-    .md\:fsl { font-size: 1.15rem !important }
-    .md\:fsn { font-size: var(--font-size) !important }
-    .md\:fss { font-size: .9rem !important }
-    .md\:fsxs { font-size: .8rem !important }
+    .md\:fsxl  { font-size: 1.3rem !important }
+    .md\:fsl   { font-size: 1.15rem !important }
+    .md\:fsn   { font-size: var(--font-size) !important }
+    .md\:fss   { font-size: .9rem !important }
+    .md\:fsxs  { font-size: .8rem !important }
     .md\:fsxxs { font-size: .7rem !important }
     
     @for $i from 8 to 19 {
@@ -260,26 +265,26 @@ table {
     .md\:fw800 { font-weight: 800 !important }
     .md\:fw900 { font-weight: 900 !important }
     
-    .md\:lh0 { line-height: 1 !important }
-    .md\:lh1 { line-height: 1.1 !important }
-    .md\:lh2 { line-height: 1.2 !important }
-    .md\:lh3 { line-height: 1.3 !important }
-    .md\:lh4 { line-height: 1.4 !important }
-    .md\:lh5 { line-height: 1.5 !important }
-    .md\:lh6 { line-height: 1.6 !important }
-    .md\:lh7 { line-height: 1.7 !important }
-    .md\:lh8 { line-height: 1.8 !important }
-    .md\:lh9 { line-height: 1.9 !important }
+    .md\:lh0  { line-height: 1 !important }
+    .md\:lh1  { line-height: 1.1 !important }
+    .md\:lh2  { line-height: 1.2 !important }
+    .md\:lh3  { line-height: 1.3 !important }
+    .md\:lh4  { line-height: 1.4 !important }
+    .md\:lh5  { line-height: 1.5 !important }
+    .md\:lh6  { line-height: 1.6 !important }
+    .md\:lh7  { line-height: 1.7 !important }
+    .md\:lh8  { line-height: 1.8 !important }
+    .md\:lh9  { line-height: 1.9 !important }
     .md\:lh10 { line-height: 2 !important }
 }
 
 @media (--small) {
     .sm\:fsxxl { font-size: 1.5rem !important }
-    .sm\:fsxl { font-size: 1.3rem !important }
-    .sm\:fsl { font-size: 1.15rem !important }
-    .sm\:fsn { font-size: var(--font-size) !important }
-    .sm\:fss { font-size: .9rem !important }
-    .sm\:fsxs { font-size: .8rem !important }
+    .sm\:fsxl  { font-size: 1.3rem !important }
+    .sm\:fsl   { font-size: 1.15rem !important }
+    .sm\:fsn   { font-size: var(--font-size) !important }
+    .sm\:fss   { font-size: .9rem !important }
+    .sm\:fsxs  { font-size: .8rem !important }
     .sm\:fsxxs { font-size: .7rem !important }
     
     @for $i from 8 to 19 {
@@ -299,69 +304,69 @@ table {
     .sm\:fw800 { font-weight: 800 !important }
     .sm\:fw900 { font-weight: 900 !important }
     
-    .sm\:lh0 { line-height: 1 !important }
-    .sm\:lh1 { line-height: 1.1 !important }
-    .sm\:lh2 { line-height: 1.2 !important }
-    .sm\:lh3 { line-height: 1.3 !important }
-    .sm\:lh4 { line-height: 1.4 !important }
-    .sm\:lh5 { line-height: 1.5 !important }
-    .sm\:lh6 { line-height: 1.6 !important }
-    .sm\:lh7 { line-height: 1.7 !important }
-    .sm\:lh8 { line-height: 1.8 !important }
-    .sm\:lh9 { line-height: 1.9 !important }
+    .sm\:lh0  { line-height: 1 !important }
+    .sm\:lh1  { line-height: 1.1 !important }
+    .sm\:lh2  { line-height: 1.2 !important }
+    .sm\:lh3  { line-height: 1.3 !important }
+    .sm\:lh4  { line-height: 1.4 !important }
+    .sm\:lh5  { line-height: 1.5 !important }
+    .sm\:lh6  { line-height: 1.6 !important }
+    .sm\:lh7  { line-height: 1.7 !important }
+    .sm\:lh8  { line-height: 1.8 !important }
+    .sm\:lh9  { line-height: 1.9 !important }
     .sm\:lh10 { line-height: 2 !important }
 }
 
 /* Letter spacing */
-.ls0 { letter-spacing: 0 !important }
-.ls1 { letter-spacing: .5px !important }
-.ls2 { letter-spacing: 1px !important }
-.ls3 { letter-spacing: 1.5px !important }
-.ls4 { letter-spacing: 2px !important }
-.ls5 { letter-spacing: 3px !important }
-.ls6 { letter-spacing: 4px !important }
-.ls7 { letter-spacing: 5px !important }
-.ls8 { letter-spacing: 6px !important }
-.ls9 { letter-spacing: 7px !important }
+.ls0  { letter-spacing: 0 !important }
+.ls1  { letter-spacing: .5px !important }
+.ls2  { letter-spacing: 1px !important }
+.ls3  { letter-spacing: 1.5px !important }
+.ls4  { letter-spacing: 2px !important }
+.ls5  { letter-spacing: 3px !important }
+.ls6  { letter-spacing: 4px !important }
+.ls7  { letter-spacing: 5px !important }
+.ls8  { letter-spacing: 6px !important }
+.ls9  { letter-spacing: 7px !important }
 .ls10 { letter-spacing: 8px !important }
 
 @media (--large) {
-    lgl\:ls0 { letter-spacing: 0 !important }
-    .lg\:ls1 { letter-spacing: .5px !important }
-    .lg\:ls2 { letter-spacing: 1px !important }
-    .lg\:ls3 { letter-spacing: 1.5px !important }
-    .lg\:ls4 { letter-spacing: 2px !important }
-    .lg\:ls5 { letter-spacing: 3px !important }
-    .lg\:ls6 { letter-spacing: 4px !important }
-    .lg\:ls7 { letter-spacing: 5px !important }
-    .lg\:ls8 { letter-spacing: 6px !important }
-    .lg\:ls9 { letter-spacing: 7px !important }
+    lgl\:ls0  { letter-spacing: 0 !important }
+    .lg\:ls1  { letter-spacing: .5px !important }
+    .lg\:ls2  { letter-spacing: 1px !important }
+    .lg\:ls3  { letter-spacing: 1.5px !important }
+    .lg\:ls4  { letter-spacing: 2px !important }
+    .lg\:ls5  { letter-spacing: 3px !important }
+    .lg\:ls6  { letter-spacing: 4px !important }
+    .lg\:ls7  { letter-spacing: 5px !important }
+    .lg\:ls8  { letter-spacing: 6px !important }
+    .lg\:ls9  { letter-spacing: 7px !important }
     .lg\:ls10 { letter-spacing: 8px !important }
 }
 
 @media (--medium) {
-    .md\:ls0 { letter-spacing: 0 !important }
-    .md\:ls1 { letter-spacing: .5px !important }
-    .md\:ls2 { letter-spacing: 1px !important }
-    .md\:ls3 { letter-spacing: 1.5px !important }
-    .md\:ls4 { letter-spacing: 2px !important }
-    .md\:ls5 { letter-spacing: 3px !important }
-    .md\:ls6 { letter-spacing: 4px !important }
-    .md\:ls7 { letter-spacing: 5px !important }
-    .md\:ls8 { letter-spacing: 6px !important }
-    .md\:ls9 { letter-spacing: 7px !important }
+    .md\:ls0  { letter-spacing: 0 !important }
+    .md\:ls1  { letter-spacing: .5px !important }
+    .md\:ls2  { letter-spacing: 1px !important }
+    .md\:ls3  { letter-spacing: 1.5px !important }
+    .md\:ls4  { letter-spacing: 2px !important }
+    .md\:ls5  { letter-spacing: 3px !important }
+    .md\:ls6  { letter-spacing: 4px !important }
+    .md\:ls7  { letter-spacing: 5px !important }
+    .md\:ls8  { letter-spacing: 6px !important }
+    .md\:ls9  { letter-spacing: 7px !important }
     .md\:ls10 { letter-spacing: 8px !important }
 }
 @media (--small) {
-    .sm\:ls0 { letter-spacing: 0 !important }
-    .sm\:ls1 { letter-spacing: .5px !important }
-    .sm\:ls2 { letter-spacing: 1px !important }
-    .sm\:ls3 { letter-spacing: 1.5px !important }
-    .sm\:ls4 { letter-spacing: 2px !important }
-    .sm\:ls5 { letter-spacing: 3px !important }
-    .sm\:ls6 { letter-spacing: 4px !important }
-    .sm\:ls7 { letter-spacing: 5px !important }
-    .sm\:ls8 { letter-spacing: 6px !important }
-    .sm\:ls9 { letter-spacing: 7px !important }
-    .sm\:ls10 { letter-spacing: px !important }
+    .sm\:ls0  { letter-spacing: 0 !important }
+    .sm\:ls1  { letter-spacing: .5px !important }
+    .sm\:ls2  { letter-spacing: 1px !important }
+    .sm\:ls3  { letter-spacing: 1.5px !important }
+    .sm\:ls4  { letter-spacing: 2px !important }
+    .sm\:ls5  { letter-spacing: 3px !important }
+    .sm\:ls6  { letter-spacing: 4px !important }
+    .sm\:ls7  { letter-spacing: 5px !important }
+    .sm\:ls8  { letter-spacing: 6px !important }
+    .sm\:ls9  { letter-spacing: 7px !important }
+    .sm\:ls10 { letter-spacing: 8px !important }
 }

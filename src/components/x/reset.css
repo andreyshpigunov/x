@@ -9,7 +9,7 @@ Created by andreyshpigunov on 25.05.2021.
 
 :root {
     /* Base variables */
-    --line-height: 1.6;
+    --line-height: 1.625;
     --font-color: #000;
     --font-size: 16px;
     --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
@@ -18,8 +18,6 @@ Created by andreyshpigunov on 25.05.2021.
     --font-family-mono: SFMono-Regular, Consolas, Liberation Mono,
                         Menlo, monospace;
     --background-color: #fff;
-    
-    --small: 111px;
 }
 
 /* PostCSS custom media */

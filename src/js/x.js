@@ -1,26 +1,26 @@
 //
-//  _auto.js
-//  auto
+//	x.js
+//	x
 //
-//  Created by andreyshpigunov on 25.05.2021.
+//	Created by Andrey Shpigunov on 06.10.2024.
 //
-//  CSS & JS small library for using at the heart of the website
+//  Small and simple CSS & JavaScript library with interesting features
 //
 
 
-import { hover    }  from "../components/x/hover";
-import { lazyload }  from "../components/x/lazyload";
+import { modal    }  from "../components/x/modal";
 import { animate  }  from "../components/x/animate";
 import { appear   }  from "../components/x/appear";
+import { lazyload }  from "../components/x/lazyload";
 import { loadmore }  from "../components/x/loadmore";
-import { device   }  from "../components/x/device";
-import { modal    }  from "../components/x/modal";
 import { sheets   }  from "../components/x/sheets";
 import { scroll   }  from "../components/x/scroll";
+import { hover    }  from "../components/x/hover";
+import { device   }  from "../components/x/device";
 import { lib      }  from "../components/x/lib";
 import { form     }  from "../components/x/form";
-import { slides   }  from "../components/x/slides";
 import { sticky   }  from "../components/x/sticky";
+import { slides   }  from "../components/x/slides";
 
 
 class X {
@@ -36,6 +36,7 @@ class X {
         this.hover    = hover;
         this.device   = device;
         this.lib      = lib;
+        this.render   = lib.render.bind(lib);
         this.form     = form;
         this.sticky   = sticky;
         this.slides   = slides;
@@ -45,8 +46,6 @@ class X {
     
     init() {
         if (!this.initialized) {
-            // device();
-            hover();
             this.modal.init();
             this.animate.init();
             this.appear.init();
@@ -56,6 +55,7 @@ class X {
             this.scroll.init();
             this.sticky.init();
             this.slides.init();
+            hover();
             
             this.initialized = true;
         }
@@ -63,9 +63,10 @@ class X {
 };
 
 const x = new X();
+
+// Make 'x' as global variable
 window.x = x;
 
 // Query selectors shorthands
 window.qs  = x.lib.qs;
 window.qsa = x.lib.qsa;
-window.qse = x.lib.qse;

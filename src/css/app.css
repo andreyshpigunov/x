@@ -13,14 +13,7 @@ Created by andreyshpigunov on 25.05.2021.
     /* x */
     --font-color: #000;
     --background-color: #fff;
-    /* --link-color: #000000; */
-    /* --link-border-color: #00000022; */
-    /* --link-color-hover: #000000; */
     --link-transition: all .15s ease-out;
-    /* --modal-closer-size: 30px; */
-    /* --modal-closer-width: 1px; */
-    /* --modal-closer-color: #666; */
-    /* --modal-closer-color-hover: #000; */
     --table-padding: 2px 6px;
     --code-font-color: #000;
     --code-background-color: #f8f8f8;
@@ -293,7 +286,7 @@ code {
     position: absolute;
     inset: 0;
     border: solid 1px #666;
-    animation: move linear 40s;
+    animation: fly linear 40s;
     animation-iteration-count: infinite;
 }
 
@@ -316,7 +309,7 @@ code {
     position: absolute;
     inset: 0;
     background: #666;
-    animation: move linear 40s;
+    animation: fly linear 40s;
     animation-iteration-count: infinite;
     animation-delay: 2s;
 }
@@ -339,7 +332,7 @@ code {
 .element3-figure {
     position: absolute;
     inset: 0;
-    animation: move linear 40s;
+    animation: fly linear 40s;
     animation-iteration-count: infinite;
     animation-delay: 4s;
     
@@ -359,7 +352,7 @@ code {
 }
 
 
-@keyframes move {
+@keyframes fly {
     0% {
         transform:translate(0, 0) rotate(0)
     }

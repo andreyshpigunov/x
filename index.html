@@ -10,17 +10,6 @@
     <link rel="icon" href="https://andreyshpigunov.github.io/x/favicon.svg" type="image/svg+xml"/>
     <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/x/assets/apple-touch-icon.png"/>
     <link rel="stylesheet" href="dist/app.css"/>
-    
-    <style>
-        .appear_effect-fadeIn {
-            opacity: 0;
-        }
-        .appear_effect-fadeIn.appeared {
-            will-change: opacity;
-            transition: opacity 1s ease-out;
-            opacity: 1
-        }
-    </style>
 </head>
 <body id="top" x-animate='{
     "start": "0px",
@@ -28,7 +17,7 @@
     "functionName": "headerAnimation"
 }'>
     <header class="header flex aic sticky px5">
-        <div class="header-version nowrap">0.0.56</div>
+        <div class="header-version nowrap">0.0.57</div>
         <div class="header-logo mxa">
             <a role="button" data-scrollto="#top">
                 <img src="assets/logo.png" alt="x"/>
@@ -50,7 +39,7 @@
     </div>
     
     <section class="section-header mt8" x-appear>
-        <h1 class="mxa ac max800 sm:fs40">Small and simple Javascript library with interesting features</h1>
+        <h1 class="mxa ac max800 sm:fs40">Small and simple CSS & JavaScript library with interesting features</h1>
     </section>
     
     <div class="element2" x-animate='{
@@ -67,7 +56,7 @@
     
     
     <section class="section-header mt8 px5">
-        <h2 class="ac">Examples</h2>
+        <h2 class="ac">JS plugins</h2>
     </section>
     
     <section class="section-content mt7 px5">
@@ -118,6 +107,7 @@
                         }
                     </script>
                 </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalAppear">Appear</h5>
                     <style>
@@ -143,6 +133,7 @@
                     <div class="exampleAppear1 flex jcc py5 r3" x-appear>Appeared</div>
                     <div class="exampleAppear2 flex jcc py5 mt2 r3" x-appear>Visible</div>
                 </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalDevice">Device</h5>
                     <div class="jsDeviceExample breakWord"></div>
@@ -159,6 +150,7 @@
                         })
                     </script>
                 </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalForm">Form</h5>
                     <div>Form fields binding.</div>
@@ -276,6 +268,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalHover">Hover</h5>
                     <div>
@@ -300,8 +293,8 @@
                     <div>Image loaded lazy.</div>
                     <div class="mt2">
                         <img class="r3" x-lazyload
-                            data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg"
-                            data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg 1x"
+                            data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg"
+                            data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x"
                             width="800" height="600"/>
                     </div>
                 </div>
@@ -339,6 +332,55 @@
                         })
                     </script>
                 </div>
+                
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalLoadmore">Loadmore</h5>
+                    <div>Load new data on content scrolling.</div>
+                    <div class="flex fw gap3 mt2">
+                        <a role="button" class="button" x-modal-open="modalExampleLoadmore">Show example posts</a>
+                    </div>
+                    <div id="modalExampleLoadmore" x-modal>
+                        <div id="posts">
+                            <h2>Posts</h2>
+                        </div>
+                        <div id="postsLoader" class="py4 hidden">Loading...</div>
+                        <div x-loadmore='{"functionName": "loadPosts"}'></div>
+                    </div>
+                    
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            class Posts {
+                                constructor() {
+                                    this.all = false
+                                }
+                                async load(page) {
+                                    if (!this.all) {
+                                        x.lib.show('#postsLoader');
+                                        let skip = (page - 1) * 50;
+                                        let response = await fetch('https://dummyjson.com/posts/?limit=50&skip=' + skip);
+                                        let data = await response.json();
+                                        x.lib.hide('#postsLoader');
+                                        x.lib.render('#posts', () => {
+                                            let result = `<h4>Page ${page}</h4>`;
+                                            if (data.posts.length) {
+                                                for (let post of data.posts) {
+                                                    result += `<p>${post.title}</p>`
+                                                }
+                                            }
+                                            return result;
+                                        }, 'beforeend');
+                                        if (data.limit < 50) this.all = true
+                                        return true
+                                    } else {
+                                        return false
+                                    }
+                                }
+                            }
+                            window.loadPosts = new Posts().load;
+                        })
+                    </script>
+                </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalModal">Modal</h5>
                     
@@ -380,9 +422,14 @@
                         <p>As he approached the sea, Jack saw how vast and majestic it was. The waves were rolling in, creating a symphony of sound that filled the air. Jack felt a deep connection to the sea, as if it were calling him to come closer. He lowered his sails and let the boat drift towards the shore.</p>
                         <p>When he reached the beach, Jack stepped onto the sand and took a deep breath. The salty air filled his lungs, and he felt alive. He looked up at the sky and saw the sun shining brightly above him. It was a perfect day to begin his exploration.</p>
                         <p>Jack began walking along the shore, taking in the beauty of the sea. He watched the waves crashing against the rocks, creating a spray of water that shimmered in the sunlight. He listened to the seagulls flying overhead, their cries echoing across the horizon.</p>
+                        <figure>
+                            <img src="https://anapa-surfing.ru/data/articles/photos/412/24958842-1985911258085644-8924492843955900298-o.jpg" alt=""/>
+                            <figcaption>Ivan backloop</figcaption>
+                        </figure>
                         <p>After walking for some time, Jack came upon a small fishing village. The villagers were friendly and welcoming, and they invited Jack to stay for a while. Jack accepted their offer and spent several days learning about their way of life. He helped them with their fishing and learned about the local customs and traditions.</p>
                         <p>One day, while sitting on the dock, Jack noticed something strange in the distance. There was a dark cloud on the horizon, moving towards them. The villagers became worried, and Jack realized that a storm was approaching.</p>
                         <p>The storm hit the village with full force, bringing strong winds and heavy rain. Jack huddled in a corner, trying to stay dry. When the storm finally passed, Jack emerged from his hiding place and looked around.</p>
+                        <blockquote>Jack began walking along the shore, taking in the beauty of the sea. He watched the waves crashing against the rocks, creating a spray of water that shimmered in the sunlight. He listened to the seagulls flying overhead, their cries echoing across the horizon.</blockquote>
                         
                         <h2>Waves</h2>
                         <p>The waves were always there, crashing against the shore. They were a constant reminder of the power and beauty of nature. The waves came in all shapes and sizes, from gentle ripples to towering breakers.</p>
@@ -390,8 +437,59 @@
                         <p>One day, I decided to go to the beach and watch the waves. I sat on the sand and watched as they rolled in, one after another. I listened to their rhythmic sound and felt the spray of water on my face.</p>
                         <p>I watched as the sun set over the horizon, casting a golden glow over the waves. It was a beautiful sight, and I knew that I would never forget it.</p>
                         <p>As I walked back home, I thought about the waves and what they meant to me. They were more than just water moving up and down. They were symbols of life's ups and downs, of its beauty and its power.</p>
+                        
+                        <h2>Lists demo</h2>
+                        
+                        <h3>Unordered list</h3>
+                        <ul>
+                            <li>One</li>
+                            <li>Two</li>
+                            <ul>
+                                <li>One</li>
+                                <li>Two</li>
+                                <ul>
+                                    <li>One</li>
+                                    <li>Two</li>
+                                    <li>Three</li>
+                                </ul>
+                                <li>Three</li>
+                            </ul>
+                            <li>Three</li>
+                        </ul>
+                        
+                        <h3>Ordered list</h3>
+                        <ol>
+                            <li>One</li>
+                            <li>Two</li>
+                            <ol>
+                                <li>One</li>
+                                <li>Two</li>
+                                <ol>
+                                    <li>One</li>
+                                    <li>Two</li>
+                                    <li>Three</li>
+                                </ol>
+                                <li>Three</li>
+                            </ol>
+                            <li>Three</li>
+                        </ol>
+                        
+                        <h3>Definition list</h3>
+                        <dl>
+                            <dt>One</dt>
+                            <dd>The firts number</dd>
+                            <dt>Two</dt>
+                            <dd>The second number</dd>
+                            <dt>Three</dt>
+                            <dd>The third number</dd>
+                        </dl>
                     </div>
                 </div>
+                
+                <div class="c1">
+                    <h5 class="pointer" x-modal-open="modalScroll">Scroll</h5>
+                </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalSheets">Sheets</h5>
                     <style>
@@ -423,6 +521,7 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="c1">
                     <h5 class="pointer" x-modal-open="modalSlides">Slides</h5>
                     <div class="max600">
