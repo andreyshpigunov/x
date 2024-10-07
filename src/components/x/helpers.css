@@ -363,109 +363,124 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Width, height */
-.w100 { width: 100% }
-.h100 { height: 100% }
+.maxw { width: 100% }
+.maxh { height: 100% }
 .max {
     width: 100% !important;
     max-width: 100% !important;
 }
 
 @for $i from 10 to 190 by 10 {
+    .w$(i)   { width: $(i)px !important }
     .max$(i) { max-width: $(i)px !important }
     .min$(i) { min-width: $(i)px !important }
 }
 @for $i from 200 to 380 by 20 {
+    .w$(i)   { width: $(i)px !important }
     .max$(i) { max-width: $(i)px !important }
     .min$(i) { min-width: $(i)px !important }
 }
 @for $i from 400 to 1600 by 100 {
+    .w$(i)   { width: $(i)px !important }
     .max$(i) { max-width: $(i)px !important }
     .min$(i) { min-width: $(i)px !important }
 }
 
 @media (--large) {
-    .lg\:w100 { width: 100% }
-    .lg\:h100 { height: 100% }
+    .lg\:maxw { width: 100% }
+    .lg\:maxh { height: 100% }
     .lg\:max {
         width: 100% !important;
         max-width: 100% !important;
     }
     
     @for $i from 10 to 190 by 10 {
+        .lg\:w$(i)   { width: $(i)px !important }
         .lg\:max$(i) { max-width: $(i)px !important }
         .lg\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 200 to 380 by 20 {
+        .lg\:w$(i)   { width: $(i)px !important }
         .lg\:max$(i) { max-width: $(i)px !important }
         .lg\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 400 to 1600 by 100 {
+        .lg\:w$(i)   { width: $(i)px !important }
         .lg\:max$(i) { max-width: $(i)px !important }
         .lg\:min$(i) { min-width: $(i)px !important }
     }
 }
 
 @media (--medium) {
-    .md\:w100 { width: 100% }
-    .md\:h100 { height: 100% }
+    .md\:maxw { width: 100% }
+    .md\:maxh { height: 100% }
     .md\:max {
         width: 100% !important;
         max-width: 100% !important;
     }
     
     @for $i from 10 to 190 by 10 {
+        .md\:w$(i)   { width: $(i)px !important }
         .md\:max$(i) { max-width: $(i)px !important }
         .md\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 200 to 380 by 20 {
+        .md\:w$(i)   { width: $(i)px !important }
         .md\:max$(i) { max-width: $(i)px !important }
         .md\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 400 to 1600 by 100 {
+        .md\:w$(i)   { width: $(i)px !important }
         .md\:max$(i) { max-width: $(i)px !important }
         .md\:min$(i) { min-width: $(i)px !important }
     }
 }
 
 @media (--small) {
-    .sm\:w100 { width: 100% }
-    .sm\:h100 { height: 100% }
+    .sm\:maxw { width: 100% }
+    .sm\:maxh { height: 100% }
     .sm\:max {
         width: 100% !important;
         max-width: 100% !important;
     }
     
     @for $i from 10 to 190 by 10 {
+        .sm\:w$(i)   { width: $(i)px !important }
         .sm\:max$(i) { max-width: $(i)px !important }
         .sm\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 200 to 380 by 20 {
+        .sm\:w$(i)   { width: $(i)px !important }
         .sm\:max$(i) { max-width: $(i)px !important }
         .sm\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 400 to 1600 by 100 {
+        .sm\:w$(i)   { width: $(i)px !important }
         .sm\:max$(i) { max-width: $(i)px !important }
         .sm\:min$(i) { min-width: $(i)px !important }
     }
 }
 
 @media (--xsmall) {
-    .xs\:w100 { width: 100% }
-    .xs\:h100 { height: 100% }
+    .xs\:maxw { width: 100% }
+    .xs\:maxh { height: 100% }
     .xs\:max {
         width: 100% !important;
         max-width: 100% !important;
     }
     
     @for $i from 10 to 190 by 10 {
+        .xs\:w$(i)   { width: $(i)px !important }
         .xs\:max$(i) { max-width: $(i)px !important }
         .xs\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 200 to 380 by 20 {
+        .xs\:w$(i)   { width: $(i)px !important }
         .xs\:max$(i) { max-width: $(i)px !important }
         .xs\:min$(i) { min-width: $(i)px !important }
     }
     @for $i from 400 to 1600 by 100 {
+        .xs\:w$(i)   { width: $(i)px !important }
         .xs\:max$(i) { max-width: $(i)px !important }
         .xs\:min$(i) { min-width: $(i)px !important }
     }

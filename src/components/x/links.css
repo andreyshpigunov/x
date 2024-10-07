@@ -11,7 +11,8 @@ Created by Andrey Shpigunov on 19.09.2024.
 :root {
     --link-decoration: underline;
     --link-border-style: solid;
-    --link-underline-offset: .15em;
+    --link-underline-offset: .25em;
+    --link-underline-thickness: 1px;
     
     --link-color: #0060bb;
     --link-border-color: #0060bb44;
@@ -41,6 +42,7 @@ a {
         text-decoration-style: var(--link-border-style);
         text-decoration-color: var(--link-border-color);
         text-underline-offset: var(--link-underline-offset);
+        text-decoration-thickness: var(--link-underline-thickness);
     }
     &:visited {
         color: var(--link-color-visited);

@@ -114,6 +114,7 @@ input, textarea,
 select, button {
     max-width: var(--forms-width);
     font-family: inherit;
+    font-size: var(--font-size);
     box-sizing: border-box;
     box-shadow: none;
 }
