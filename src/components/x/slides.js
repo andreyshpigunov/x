@@ -42,17 +42,27 @@ class Slides {
                     let array = [...new Set(slides)]
                     let count = array.length;
                     
+                    let itemsId = lib.makeId();
+                    lib.render(e, `<div id="${itemsId}" class="slides-items"></div>`, 'beforeend');
+                    
+                    for (let index in array) {
+                        let div = `<div class="slides-item ${index == 0 ? 'active' : ''}"></div>`;
+                        lib.render('#' + itemsId, div, 'beforeend');
+                    }
+                    
                     // Add data to object
                     slidersObject[index] = {
                         element: e,
                         rect: e.getBoundingClientRect(),
                         img: img,
                         array: array,
-                        count: count
+                        count: count,
+                        items: lib.qs('#' + itemsId)
                     };
                     
                     // Remove 'x-slides' attribute
                     e.removeAttribute('x-slides');
+                    e.classList.add('slides')
                 });
                 
                 // Add event listeners
@@ -77,10 +87,20 @@ class Slides {
         if (x < 0) x = 0;
         let slide = Math.floor(x / (item.rect.width / item.count));
         item.img.src = item.array[slide];
+        
+        lib.removeClass(lib.qsa('div', item.items), 'active');
+        lib.addClass(lib.qsa('div', item.items)[slide], 'active');
+        
+        // item.img.dataset.slide = slide + 1;
+        // item.img.dataset.slides = item.array.length;
     }
     
     _reset(item) {
         item.img.src = item.array[0];
+        // item.img.dataset.slide = 1;
+        
+        lib.removeClass(lib.qsa('div', item.items), 'active');
+        lib.addClass(lib.qsa('div', item.items)[0], 'active');
     }
     
 }
