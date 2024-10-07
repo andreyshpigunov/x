@@ -13,7 +13,7 @@ Created by Andrey Shpigunov on 07.09.2024.
     --headers-margin-bottom: .5em;
     --headers-font-family: var(--font-family);
     --headers-font-weight: 700;
-    --headers-font-color: #000;
+    --headers-font-color: var(--font-color, #000);
 
     --h1-font-size: 2.5em;
     --h2-font-size: 2em;
