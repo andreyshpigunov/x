@@ -10,7 +10,7 @@ Created by Andrey Shpigunov on 07.09.2024.
 
 :root {
     --headers-margin-top: 1.125em;
-    --headers-margin-bottom: .5em;
+    --headers-margin-bottom: .625em;
     --headers-font-family: var(--font-family);
     --headers-font-weight: 700;
     --headers-font-color: var(--font-color, #000);
@@ -65,7 +65,7 @@ h6, .h6 {
 }
 
 h1, .h1 {
-    margin-bottom: calc(var(--headers-margin-bottom) * 1.5);
+    margin-bottom: var(--headers-margin-bottom);
     line-height: var(--h1-line-height);
     font-size: var(--h1-font-size);
 }
