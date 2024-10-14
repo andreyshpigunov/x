@@ -65,6 +65,7 @@ h6, .h6 {
 }
 
 h1, .h1 {
+    margin-bottom: calc(var(--headers-margin-bottom) * 1.5);
     line-height: var(--h1-line-height);
     font-size: var(--h1-font-size);
 }

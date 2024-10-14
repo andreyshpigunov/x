@@ -17,7 +17,7 @@
     "functionName": "headerAnimation"
 }'>
     <header class="header flex aic sticky px5">
-        <div class="header-version nowrap">0.0.60</div>
+        <div class="header-version nowrap">0.0.61</div>
         <div class="header-logo mxa">
             <a role="button" data-scrollto="#top">
                 <img src="assets/logo.png" alt="x"/>
@@ -343,7 +343,9 @@
                         <div id="posts">
                             <h2>Posts</h2>
                         </div>
-                        <div id="postsLoader" class="py4 hidden">Loading...</div>
+                        <div id="postsLoader" class="py4 -hidden">
+                            <img src="assets/loader.gif" alt="Loading..." class="max40"/>
+                        </div>
                         <div x-loadmore='{"functionName": "loadPosts"}'></div>
                     </div>
                     

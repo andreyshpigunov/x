@@ -12,8 +12,11 @@ Small and simple Javascript library with interesting features.
 - Lazyload
 - Lib
 - Loadmore
+- Modal
 - Scroll
 - Sheets
+- Slides
+- Sticky
 
 And several CSS styles for fast prototyping or usage as base styles.
 
