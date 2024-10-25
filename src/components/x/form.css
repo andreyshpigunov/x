@@ -9,27 +9,27 @@ Created by Andrey Shpigunov on 08.09.2024.
 /* Form default styles */
 
 :root {
-    --forms-width: 400px;
-    --forms-height: 38px;
-    --forms-side-padding: 10px;
-    
-    --forms-font-size: var(--font-size);
-    --forms-font-color: #000;
-    --forms-font-color-readonly: #000;
-    --forms-font-color-disabled: #666;
-    --forms-font-color-placeholder: #ccc;
-    
-    --forms-border-width: 1px;
-    --forms-border-radius: 8px;
-    --forms-border-color: #ddd;
-    --forms-border-color-focused: #8cf;
-    --forms-border-color-error: #f00;
-    --forms-border-color-readonly: #ddd;
-    --forms-border-color-disabled: #ddd;
-    
-    --forms-background-color: #fff;
-    --forms-background-color-readonly: #fafafa;
-    --forms-background-color-disabled: #f6f6f6;
+  --forms-width: 400px;
+  --forms-height: 38px;
+  --forms-side-padding: 10px;
+  
+  --forms-font-size: var(--font-size);
+  --forms-font-color: #000;
+  --forms-font-color-readonly: #000;
+  --forms-font-color-disabled: #666;
+  --forms-font-color-placeholder: #ccc;
+  
+  --forms-border-width: 1px;
+  --forms-border-radius: 8px;
+  --forms-border-color: #ddd;
+  --forms-border-color-focused: #8cf;
+  --forms-border-color-error: #f00;
+  --forms-border-color-readonly: #ddd;
+  --forms-border-color-disabled: #ddd;
+  
+  --forms-background-color: #fff;
+  --forms-background-color-readonly: #fafafa;
+  --forms-background-color-disabled: #f6f6f6;
 }
 
 input[type=color],
@@ -48,79 +48,79 @@ input[type=week],
 input:not([type]),
 textarea,
 select {
-    position: relative;
-    width: 100%;
-    height: var(--forms-height);
-    margin: 0;
-    padding: 0 var(--forms-side-padding);
-    font-size: var(--forms-font-size);
-    color: var(--forms-font-color);
-    outline: none;
-    border-width: var(--forms-border-width);
-    border-style: solid;
-    border-color: var(--forms-border-color);
-    border-radius: var(--forms-border-radius);
-    background-color: var(--forms-background-color);
-    appearance: none;
-    
-    &[readonly],
-    &[readonly]:focus {
-        color: var(--forms-font-color-readonly);
-        border-color: var(--forms-border-color-readonly);
-        background-color: var(--forms-background-color-readonly);
-        box-shadow: none;
-    }
-    &[disabled],
-    &[disabled]:focus {
-        color: var(--forms-font-color-disabled);
-        border-color: var(--forms-border-color-disabled);
-        background-color: var(--forms-background-color-disabled);
-        cursor: not-allowed !important;
-        box-shadow: none;
-    }
-    
-    &:focus {
-        border-color: var(--forms-border-color-focused);
-        box-shadow: 0 0 0 1px var(--forms-border-color-focused);
-    }
-    &.error,
-    &.error:focus,
-    &[pattern]:invalid,
-    &[pattern]:invalid:focus {
-        border-color: var(--forms-border-color-error);
-        box-shadow: 0 0 0 1px var(--forms-border-color-error);
-    }
+  position: relative;
+  width: 100%;
+  height: var(--forms-height);
+  margin: 0;
+  padding: 0 var(--forms-side-padding);
+  font-size: var(--forms-font-size);
+  color: var(--forms-font-color);
+  outline: none;
+  border-width: var(--forms-border-width);
+  border-style: solid;
+  border-color: var(--forms-border-color);
+  border-radius: var(--forms-border-radius);
+  background-color: var(--forms-background-color);
+  appearance: none;
+  
+  &[readonly],
+  &[readonly]:focus {
+    color: var(--forms-font-color-readonly);
+    border-color: var(--forms-border-color-readonly);
+    background-color: var(--forms-background-color-readonly);
+    box-shadow: none;
+  }
+  &[disabled],
+  &[disabled]:focus {
+    color: var(--forms-font-color-disabled);
+    border-color: var(--forms-border-color-disabled);
+    background-color: var(--forms-background-color-disabled);
+    cursor: not-allowed !important;
+    box-shadow: none;
+  }
+  
+  &:focus {
+    border-color: var(--forms-border-color-focused);
+    box-shadow: 0 0 0 1px var(--forms-border-color-focused);
+  }
+  &.error,
+  &.error:focus,
+  &[pattern]:invalid,
+  &[pattern]:invalid:focus {
+    border-color: var(--forms-border-color-error);
+    box-shadow: 0 0 0 1px var(--forms-border-color-error);
+  }
 }
 
 select {
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 8px top 52%, 0 0;
-    background-size: 10px;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right 8px top 52%, 0 0;
+  background-size: 10px;
 }
 
 ::placeholder {
-    color: var(--forms-font-color-placeholder);
+  color: var(--forms-font-color-placeholder);
 }
 
 input[placeholder],
 input::-moz-placeholder,
 input:-moz-placeholder,
 input:-ms-input-placeholder {
-    text-overflow: ellipsis;
+  text-overflow: ellipsis;
 }
 
 input, textarea,
 select, button {
-    max-width: var(--forms-width);
-    font-family: inherit;
-    font-size: var(--font-size);
-    box-sizing: border-box;
-    box-shadow: none;
+  max-width: var(--forms-width);
+  font-family: inherit;
+  font-size: var(--font-size);
+  box-sizing: border-box;
+  box-shadow: none;
 }
 
 textarea {
-    height: auto;
-    padding-top: calc(var(--forms-side-padding) / 2);
-    padding-bottom: calc(var(--forms-side-padding) / 2);
+  height: auto;
+  padding-top: calc(var(--forms-side-padding) / 2);
+  padding-bottom: calc(var(--forms-side-padding) / 2);
 }

@@ -9,36 +9,36 @@ Created by Andrey Shpigunov on 07.09.2024.
 /* Typo */
 
 :root {
-    --headers-margin-top: 1.125em;
-    --headers-margin-bottom: .625em;
-    --headers-font-family: var(--font-family);
-    --headers-font-weight: 700;
-    --headers-font-color: var(--font-color, #000);
+  --headers-margin-top: 1.125em;
+  --headers-margin-bottom: .625em;
+  --headers-font-family: var(--font-family);
+  --headers-font-weight: 700;
+  --headers-font-color: var(--font-color, #000);
 
-    --h1-font-size: 2.5em;
-    --h2-font-size: 2em;
-    --h3-font-size: 1.75em;
-    --h4-font-size: 1.5em;
-    --h5-font-size: 1.25em;
-    --h6-font-size: 1em;
+  --h1-font-size: 2.5em;
+  --h2-font-size: 2em;
+  --h3-font-size: 1.75em;
+  --h4-font-size: 1.5em;
+  --h5-font-size: 1.25em;
+  --h6-font-size: 1em;
 
-    --h1-line-height: 1.3em;
-    --h2-line-height: 1.4;
+  --h1-line-height: 1.3em;
+  --h2-line-height: 1.4;
 
-    --paragraph-margin: 1em;
+  --paragraph-margin: 1em;
 
-    --figure-margin: 2.5em auto 2em;
-    --figcaption-margin-top: .5em;
-    --figcaption-font-size: var(--font-size);
-    --figcaption-color: #999;
-    
-    --blockquote-margin: 2em 0;
-    --blockquote-padding: 1em 2em;
-    --blockquote-border: solid 4px var(--font-color);
+  --figure-margin: 2.5em auto 2em;
+  --figcaption-margin-top: .5em;
+  --figcaption-font-size: var(--font-size);
+  --figcaption-color: #999;
+  
+  --blockquote-margin: 2em 0;
+  --blockquote-padding: 1em 2em;
+  --blockquote-border: solid 4px var(--font-color);
 
-    --table-padding: .5em .75em;
-    --table-border: 1px solid #ccc;
-    --table-header-font-weight: 700;
+  --table-padding: .5em .75em;
+  --table-border: 1px solid #ccc;
+  --table-header-font-weight: 700;
 }
 
 
@@ -50,28 +50,28 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-    margin-top: 0;
-    margin-bottom: var(--headers-margin-bottom);
-    font-family: var(--headers-font-family);
-    font-weight: var(--headers-font-weight);
-    color: var(--headers-font-color);
+  margin-top: 0;
+  margin-bottom: var(--headers-margin-bottom);
+  font-family: var(--headers-font-family);
+  font-weight: var(--headers-font-weight);
+  color: var(--headers-font-color);
 }
 * + h2, * + .h2,
 * + h3, * + .h3,
 * + h4, * + .h4,
 * + h5, * + .h5,
 * + h6, * + .h6 {
-    margin-top: var(--headers-margin-top);
+  margin-top: var(--headers-margin-top);
 }
 
 h1, .h1 {
-    margin-bottom: var(--headers-margin-bottom);
-    line-height: var(--h1-line-height);
-    font-size: var(--h1-font-size);
+  margin-bottom: var(--headers-margin-bottom);
+  line-height: var(--h1-line-height);
+  font-size: var(--h1-font-size);
 }
 h2, .h2 {
-    line-height: var(--h2-line-height);
-    font-size: var(--h2-font-size);
+  line-height: var(--h2-line-height);
+  font-size: var(--h2-font-size);
 }
 h3, .h3 { font-size: var(--h3-font-size) }
 h4, .h4 { font-size: var(--h4-font-size) }
@@ -82,85 +82,85 @@ h6, .h6 { font-size: var(--h6-font-size) }
 /* !- Paragraph */
 
 p {
-    margin: var(--paragraph-margin) 0;
-    font-style: inherit;
-    
-    &:first-child { margin-top: 0 }
-    &:last-child  { margin-bottom: 0 }
+  margin: var(--paragraph-margin) 0;
+  font-style: inherit;
+  
+  &:first-child { margin-top: 0 }
+  &:last-child  { margin-bottom: 0 }
 }
 
 
 /* !- Figure  */
 
 figure {
-    margin: var(--figure-margin);
+  margin: var(--figure-margin);
 }
 figcaption {
-    margin-top: var(--figcaption-margin-top);
-    margin-bottom: calc(var(--figcaption-margin-top) * -1);
-    font-size: var(--figcaption-font-size);
-    color: var(--figcaption-color);
+  margin-top: var(--figcaption-margin-top);
+  margin-bottom: calc(var(--figcaption-margin-top) * -1);
+  font-size: var(--figcaption-font-size);
+  color: var(--figcaption-color);
 }
 
 /* !- Blockquote */
 
 blockquote {
-    margin: var(--blockquote-margin);
-    padding: var(--blockquote-padding);
-    font-style: italic;
-    hyphens: auto;
-    border-left: var(--blockquote-border);
+  margin: var(--blockquote-margin);
+  padding: var(--blockquote-padding);
+  font-style: italic;
+  hyphens: auto;
+  border-left: var(--blockquote-border);
 }
 
 
 /* !- Preformatted */
 
 pre {
-    margin: var(--paragraph-margin) 0;
-    font-family: inherit;
+  margin: var(--paragraph-margin) 0;
+  font-family: inherit;
 }
 
 
 /* !- Lists */
 
 ul, ol, dl {
-    margin: var(--paragraph-margin) 0;
-    padding-left: calc(var(--paragraph-margin) * 2);
-    
-    & ul, & ol, & dl, & li {
-        margin: var(--space-1) 0;
-    }
+  margin: var(--paragraph-margin) 0;
+  padding-left: calc(var(--paragraph-margin) * 2);
+  
+  & ul, & ol, & dl, & li {
+    margin: var(--space-1) 0;
+  }
 }
 dl {
-    padding-left: 0;
-    
-    & dt,
-    & dd { margin: var(--space-1) 0 }
-    & dt { font-weight: bold }
+  padding-left: 0;
+  
+  & dt,
+  & dd { margin: var(--space-1) 0 }
+  & dt { font-weight: bold }
 }
 
 
 /* !- Table */
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 
-    & caption {
-        margin-bottom: var(--space-1);
-        padding: 0 var(--space-3);
-        font-weight: 700;
-        text-align: left;
-    }
-    & tr th,
-    & tr td {
-        padding: var(--table-padding);
-        border: var(--table-border);
-        vertical-align: top;
-    }
-    & tr th {
-        font-weight: var(--table-header-font-weight);
-    }
+  & caption {
+    margin-bottom: var(--space-1);
+    padding: 0 var(--space-3);
+    font-weight: 700;
+    text-align: left;
+  }
+  & tr th,
+  & tr td {
+    padding: var(--table-padding);
+    border: var(--table-border);
+    vertical-align: top;
+  }
+  & tr th {
+    font-weight: var(--table-header-font-weight);
+  }
 }
 
 
@@ -169,10 +169,10 @@ table {
 .italic { font-style: italic }
 
 @for $i from 8 to 19 {
-    .fs$(i) { font-size: $(i)px !important }
+  .fs$(i) { font-size: $(i)px !important }
 }
 @for $i from 20 to 80 by 2 {
-    .fs$(i) { font-size: $(i)px !important }
+  .fs$(i) { font-size: $(i)px !important }
 }
 
 .fw100 { font-weight: 100 !important }
@@ -185,64 +185,84 @@ table {
 .fw800 { font-weight: 800 !important }
 .fw900 { font-weight: 900 !important }
 
-@media (--large) {
-    
-    @for $i from 8 to 19 {
-        .lg\:fs$(i) { font-size: $(i)px !important }
-    }
-    @for $i from 20 to 80 by 2 {
-        .lg\:fs$(i) { font-size: $(i)px !important }
-    }
-    
-    .lg\:fw100 { font-weight: 100 !important }
-    .lg\:fw200 { font-weight: 200 !important }
-    .lg\:fw300 { font-weight: 300 !important }
-    .lg\:fw400 { font-weight: 400 !important }
-    .lg\:fw500 { font-weight: 500 !important }
-    .lg\:fw600 { font-weight: 600 !important }
-    .lg\:fw700 { font-weight: 700 !important }
-    .lg\:fw800 { font-weight: 800 !important }
-    .lg\:fw900 { font-weight: 900 !important }
+@media (--small) {
+  
+  @for $i from 8 to 19 {
+    .s\:fs$(i) { font-size: $(i)px !important }
+  }
+  @for $i from 20 to 80 by 2 {
+    .s\:fs$(i) { font-size: $(i)px !important }
+  }
+  
+  .s\:fw100 { font-weight: 100 !important }
+  .s\:fw200 { font-weight: 200 !important }
+  .s\:fw300 { font-weight: 300 !important }
+  .s\:fw400 { font-weight: 400 !important }
+  .s\:fw500 { font-weight: 500 !important }
+  .s\:fw600 { font-weight: 600 !important }
+  .s\:fw700 { font-weight: 700 !important }
+  .s\:fw800 { font-weight: 800 !important }
+  .s\:fw900 { font-weight: 900 !important }
 }
 
 @media (--medium) {
-    
-    @for $i from 8 to 19 {
-        .md\:fs$(i) { font-size: $(i)px !important }
-    }
-    @for $i from 20 to 80 by 2 {
-        .md\:fs$(i) { font-size: $(i)px !important }
-    }
-    
-    .md\:fw100 { font-weight: 100 !important }
-    .md\:fw200 { font-weight: 200 !important }
-    .md\:fw300 { font-weight: 300 !important }
-    .md\:fw400 { font-weight: 400 !important }
-    .md\:fw500 { font-weight: 500 !important }
-    .md\:fw600 { font-weight: 600 !important }
-    .md\:fw700 { font-weight: 700 !important }
-    .md\:fw800 { font-weight: 800 !important }
-    .md\:fw900 { font-weight: 900 !important }
+  
+  @for $i from 8 to 19 {
+    .m\:fs$(i) { font-size: $(i)px !important }
+  }
+  @for $i from 20 to 80 by 2 {
+    .m\:fs$(i) { font-size: $(i)px !important }
+  }
+  
+  .m\:fw100 { font-weight: 100 !important }
+  .m\:fw200 { font-weight: 200 !important }
+  .m\:fw300 { font-weight: 300 !important }
+  .m\:fw400 { font-weight: 400 !important }
+  .m\:fw500 { font-weight: 500 !important }
+  .m\:fw600 { font-weight: 600 !important }
+  .m\:fw700 { font-weight: 700 !important }
+  .m\:fw800 { font-weight: 800 !important }
+  .m\:fw900 { font-weight: 900 !important }
 }
 
-@media (--small) {
-    
-    @for $i from 8 to 19 {
-        .sm\:fs$(i) { font-size: $(i)px !important }
-    }
-    @for $i from 20 to 80 by 2 {
-        .sm\:fs$(i) { font-size: $(i)px !important }
-    }
-    
-    .sm\:fw100 { font-weight: 100 !important }
-    .sm\:fw200 { font-weight: 200 !important }
-    .sm\:fw300 { font-weight: 300 !important }
-    .sm\:fw400 { font-weight: 400 !important }
-    .sm\:fw500 { font-weight: 500 !important }
-    .sm\:fw600 { font-weight: 600 !important }
-    .sm\:fw700 { font-weight: 700 !important }
-    .sm\:fw800 { font-weight: 800 !important }
-    .sm\:fw900 { font-weight: 900 !important }
+@media (--large) {
+  
+  @for $i from 8 to 19 {
+    .l\:fs$(i) { font-size: $(i)px !important }
+  }
+  @for $i from 20 to 80 by 2 {
+    .l\:fs$(i) { font-size: $(i)px !important }
+  }
+  
+  .l\:fw100 { font-weight: 100 !important }
+  .l\:fw200 { font-weight: 200 !important }
+  .l\:fw300 { font-weight: 300 !important }
+  .l\:fw400 { font-weight: 400 !important }
+  .l\:fw500 { font-weight: 500 !important }
+  .l\:fw600 { font-weight: 600 !important }
+  .l\:fw700 { font-weight: 700 !important }
+  .l\:fw800 { font-weight: 800 !important }
+  .l\:fw900 { font-weight: 900 !important }
+}
+
+@media (--xlarge) {
+  
+  @for $i from 8 to 19 {
+    .xl\:fs$(i) { font-size: $(i)px !important }
+  }
+  @for $i from 20 to 80 by 2 {
+    .xl\:fs$(i) { font-size: $(i)px !important }
+  }
+  
+  .xl\:fw100 { font-weight: 100 !important }
+  .xl\:fw200 { font-weight: 200 !important }
+  .xl\:fw300 { font-weight: 300 !important }
+  .xl\:fw400 { font-weight: 400 !important }
+  .xl\:fw500 { font-weight: 500 !important }
+  .xl\:fw600 { font-weight: 600 !important }
+  .xl\:fw700 { font-weight: 700 !important }
+  .xl\:fw800 { font-weight: 800 !important }
+  .xl\:fw900 { font-weight: 900 !important }
 }
 
 /* Letter spacing */
@@ -252,25 +272,26 @@ table {
 .ls3  { letter-spacing: 1.5px !important }
 .ls4  { letter-spacing: 2px !important }
 
-@media (--large) {
-    lgl\:ls0  { letter-spacing: 0 !important }
-    .lg\:ls1  { letter-spacing: .5px !important }
-    .lg\:ls2  { letter-spacing: 1px !important }
-    .lg\:ls3  { letter-spacing: 1.5px !important }
-    .lg\:ls4  { letter-spacing: 2px !important }
+@media (--small) {
+  .s\:ls0  { letter-spacing: 0 !important }
+  .s\:ls1  { letter-spacing: .5px !important }
+  .s\:ls2  { letter-spacing: 1px !important }
+  .s\:ls3  { letter-spacing: 1.5px !important }
+  .s\:ls4  { letter-spacing: 2px !important }
 }
 
 @media (--medium) {
-    .md\:ls0  { letter-spacing: 0 !important }
-    .md\:ls1  { letter-spacing: .5px !important }
-    .md\:ls2  { letter-spacing: 1px !important }
-    .md\:ls3  { letter-spacing: 1.5px !important }
-    .md\:ls4  { letter-spacing: 2px !important }
+  .m\:ls0  { letter-spacing: 0 !important }
+  .m\:ls1  { letter-spacing: .5px !important }
+  .m\:ls2  { letter-spacing: 1px !important }
+  .m\:ls3  { letter-spacing: 1.5px !important }
+  .m\:ls4  { letter-spacing: 2px !important }
 }
-@media (--small) {
-    .sm\:ls0  { letter-spacing: 0 !important }
-    .sm\:ls1  { letter-spacing: .5px !important }
-    .sm\:ls2  { letter-spacing: 1px !important }
-    .sm\:ls3  { letter-spacing: 1.5px !important }
-    .sm\:ls4  { letter-spacing: 2px !important }
+
+@media (--large) {
+  .l\:ls0  { letter-spacing: 0 !important }
+  .l\:ls1  { letter-spacing: .5px !important }
+  .l\:ls2  { letter-spacing: 1px !important }
+  .l\:ls3  { letter-spacing: 1.5px !important }
+  .l\:ls4  { letter-spacing: 2px !important }
 }

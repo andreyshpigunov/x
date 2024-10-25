@@ -9,46 +9,46 @@ Created by Andrey Shpigunov on 19.09.2024.
 /* Vertical flow of elements with margin-top space  */
 
 .flow {
-    
-    & > * { margin: 0 }
-    
+  
+  & > * { margin: 0 }
+  
+  @for $i from 0 to 10 {
+    &.s$(i) > * {
+      margin-top: var(--space-$(i));
+    }
+  }
+  
+  @media(--small){
     @for $i from 0 to 10 {
-        &.s$(i) > * {
-            margin-top: var(--space-$(i));
-        }
+      &.s\:s$(i) > * {
+        margin-top: var(--space-$(i));
+      }
     }
-    
-    @media(--large){
-        @for $i from 0 to 10 {
-            &.lg\:s$(i) > * {
-                margin-top: var(--space-$(i));
-            }
-        }
+  }
+  
+  @media(--medium){
+    @for $i from 0 to 10 {
+      &.m\:s$(i) > * {
+        margin-top: var(--space-$(i));
+      }
     }
-    
-    @media(--medium){
-        @for $i from 0 to 10 {
-            &.md\:s$(i) > * {
-                margin-top: var(--space-$(i));
-            }
-        }
+  }
+  
+  @media(--large){
+    @for $i from 0 to 10 {
+      &.l\:s$(i) > * {
+        margin-top: var(--space-$(i));
+      }
     }
-    
-    @media(--small){
-        @for $i from 0 to 10 {
-            &.sm\:s$(i) > * {
-                margin-top: var(--space-$(i));
-            }
-        }
+  }
+  
+  @media(--xlarge){
+    @for $i from 0 to 10 {
+      &.xl\:s$(i) > * {
+        margin-top: var(--space-$(i));
+      }
     }
-    
-    @media(--xsmall){
-        @for $i from 0 to 10 {
-            &.xs\:s$(i) > * {
-                margin-top: var(--space-$(i));
-            }
-        }
-    }
-    
-    & > *:first-child { margin-top: 0 }
+  }
+  
+  & > *:first-child { margin-top: 0 }
 }

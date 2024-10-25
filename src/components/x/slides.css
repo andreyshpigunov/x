@@ -7,42 +7,42 @@ Created by Andrey Shpigunov on 07.10.2024.
 
 
 :root {
-    --slides-point-color: #ffffff88;
-    --slides-point-color-active: #000000aa;
+  --slides-point-color: #ffffff88;
+  --slides-point-color-active: #000000aa;
 }
 
 
 .slides {
-    position: relative;
+  position: relative;
 }
 .slides-items {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    position: absolute;
-    z-index: 10;
-    bottom: 10px;
-    left: 0;
-    right: 0;
-    height: 5px;
-    opacity: 0;
-    
-    will-change: opacity;
-    transition: opacity .25s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  position: absolute;
+  z-index: 10;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  height: 5px;
+  opacity: 0;
+  
+  will-change: opacity;
+  transition: opacity .25s ease-out;
 }
 .slides-item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 5px;
-    height: 5px;
-    border-radius: 5px;
-    background: var(--slides-point-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5px;
+  height: 5px;
+  border-radius: 5px;
+  background: var(--slides-point-color);
 }
 .slides-item.active {
-    background: var(--slides-point-color-active);
+  background: var(--slides-point-color-active);
 }
 .slides:hover .slides-items {
-    opacity: 1;
+  opacity: 1;
 }

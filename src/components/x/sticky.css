@@ -10,21 +10,15 @@ Created by Andrey Shpigunov on 27.09.2024.
 
 
 .sticky {
-    position: sticky !important;
-    top: 0;
+  position: sticky !important;
+  top: 0;
 }
-@media (--xlarge-min) {
-    .xl\:sticky { position: sticky !important; top: 0 }
-}
-@media (--large-min) and (--large-max) {
-    .lg\:sticky { position: sticky !important; top: 0 }
+@media (--small-max) {
+  .s\:sticky { position: sticky !important; top: 0 }
 }
 @media (--medium-min) and (--medium-max) {
-    .md\:sticky { position: sticky !important; top: 0 }
+  .m\:sticky { position: sticky !important; top: 0 }
 }
-@media (--small-min) and (--small-max) {
-    .sm\:sticky { position: sticky !important; top: 0 }
-}
-@media (--xsmall-max) {
-    .xs\:sticky { position: sticky !important; top: 0 }
+@media (--large-min) {
+  .g\:sticky { position: sticky !important; top: 0 }
 }

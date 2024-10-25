@@ -9,177 +9,177 @@ Created by Andrey Shpigunov on 08.09.2024.
 /* Buttons */
 
 :root {
-    /* Base styles */
-    --button-height: 38px;
-    --button-side-padding: 20px;
-    --button-font-family: var(--font-family);
-    --button-font-size: var(--font-size);
-    --button-font-weight: 400;
-    --button-border-radius: 10px;
-    --button-transition: all .1s ease-out;
-    --button-disabled-opacity: .5;
-    
-    /* Transformations */
-    --button-transform: scale(1);
-    --button-transform-hover: scale(1);
-    --button-transform-active: scale(.98);
-    --button-transform-origin: center;
-    
-    /* Colors */
-    --button-color: #f0f2f4;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #000;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  /* Base styles */
+  --button-height: 38px;
+  --button-side-padding: 20px;
+  --button-font-family: var(--font-family);
+  --button-font-size: var(--font-size);
+  --button-font-weight: 400;
+  --button-border-radius: 10px;
+  --button-transition: all .1s ease-out;
+  --button-disabled-opacity: .5;
+  
+  /* Transformations */
+  --button-transform: scale(1);
+  --button-transform-hover: scale(1);
+  --button-transform-active: scale(.98);
+  --button-transform-origin: center;
+  
+  /* Colors */
+  --button-color: #f0f2f4;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #000;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }
 
 .button, [type=submit] {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: var(--button-height);
-    padding: 0 var(--button-side-padding);
-    color: var(--button-font-color);
-    font-family: var(--button-font-family);
-    font-size: var(--button-font-size);
-    font-weight: var(--button-font-weight);
-    vertical-align: bottom;
-    white-space: nowrap;
-    text-align: center;
-    text-shadow: none;
-    text-transform: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: var(--button-height);
+  padding: 0 var(--button-side-padding);
+  color: var(--button-font-color);
+  font-family: var(--button-font-family);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  vertical-align: bottom;
+  white-space: nowrap;
+  text-align: center;
+  text-shadow: none;
+  text-transform: none;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  overflow: hidden;
+  border: none;
+  border-radius: var(--button-border-radius);
+  background-color: var(--button-color);
+  transition: var(--button-transition);
+  transform: var(--button-transform);
+  transform-origin: var(--button-transform-origin);
+  user-select: none;
+  appearance: none;
+  
+  &:link,
+  &:visited {
     text-decoration: none;
-    outline: none;
-    cursor: pointer;
-    overflow: hidden;
-    border: none;
-    border-radius: var(--button-border-radius);
+    color: var(--button-font-color);
     background-color: var(--button-color);
-    transition: var(--button-transition);
     transform: var(--button-transform);
-    transform-origin: var(--button-transform-origin);
-    user-select: none;
-    appearance: none;
-    
-    &:link,
-    &:visited {
-        text-decoration: none;
-        color: var(--button-font-color);
-        background-color: var(--button-color);
-        transform: var(--button-transform);
+  }
+  
+  @media (hover: hover) {
+    &:hover,
+    &.hover {
+      text-decoration: none;
+      color: var(--button-font-color-hover);
+      background-color: var(--button-color-hover);
+      transform: var(--button-transform-hover);
     }
-    
-    @media (hover: hover) {
-        &:hover,
-        &.hover {
-            text-decoration: none;
-            color: var(--button-font-color-hover);
-            background-color: var(--button-color-hover);
-            transform: var(--button-transform-hover);
-        }
-    }
-    
-    &:active,
-    &.active {
-        text-decoration: none;
-        color: var(--button-font-color-active);
-        background-color: var(--button-color-active);
-        transform: var(--button-transform-active);
-    }
+  }
+  
+  &:active,
+  &.active {
+    text-decoration: none;
+    color: var(--button-font-color-active);
+    background-color: var(--button-color-active);
+    transform: var(--button-transform-active);
+  }
 
-    &[disabled],
-    &.disabled {
-        opacity: var(--button-disabled-opacity);
-        pointer-events: none;
-    }
+  &[disabled],
+  &.disabled {
+    opacity: var(--button-disabled-opacity);
+    pointer-events: none;
+  }
 }
 
 /* Predefined sizes */
 
 @define-extend button_small  {
-    --button-height: 28px;
-    --button-side-padding: 14px;
+  --button-height: 28px;
+  --button-side-padding: 14px;
 }
 @define-extend button_normal  {
-    --button-height: 38px;
-    --button-side-padding: 20px;
+  --button-height: 38px;
+  --button-side-padding: 20px;
 }
 @define-extend button_large  {
-    --button-height: 48px;
-    --button-side-padding: 26px;
-    --button-font-size: calc(var(--font-size) + 4px);
+  --button-height: 48px;
+  --button-side-padding: 26px;
+  --button-font-size: calc(var(--font-size) + 4px);
 }
 
 .button_small  { @extend button_small }
 .button_normal { @extend button_normal }
 .button_large  { @extend button_large }
 
-@media (--large) {
-    .lg\:button_small  { @extend button_small }
-    .lg\:button_normal { @extend button_normal }
-    .lg\:button_large  { @extend button_large }
+@media (--small) {
+  .s\:button_small  { @extend button_small }
+  .s\:button_normal { @extend button_normal }
+  .s\:button_large  { @extend button_large }
 }
 @media (--medium) {
-    .md\:button_small  { @extend button_small }
-    .md\:button_normal { @extend button_normal }
-    .md\:button_large  { @extend button_large }
+  .m\:button_small  { @extend button_small }
+  .m\:button_normal { @extend button_normal }
+  .m\:button_large  { @extend button_large }
 }
-@media (--small) {
-    .sm\:button_small  { @extend button_small }
-    .sm\:button_normal { @extend button_normal }
-    .sm\:button_large  { @extend button_large }
+@media (--large) {
+  .l\:button_small  { @extend button_small }
+  .l\:button_normal { @extend button_normal }
+  .l\:button_large  { @extend button_large }
 }
 
 /* Predefined styles */
 
 .button_primary {
-    --button-color: #08e;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #fff;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  --button-color: #08e;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #fff;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }
 .button_success {
-    --button-color: #3b3;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #fff;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  --button-color: #3b3;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #fff;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }
 .button_danger {
-    --button-color: #d33;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #fff;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  --button-color: #d33;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #fff;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }
 .button_warning {
-    --button-color: #f80;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #fff;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  --button-color: #f80;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #fff;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }
 .button_white {
-    --button-color: #fff;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #000;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  --button-color: #fff;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #000;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }
 .button_black {
-    --button-color: #000;
-    --button-color-hover: var(--button-color);
-    --button-color-active: var(--button-color);
-    --button-font-color: #fff;
-    --button-font-color-hover: var(--button-font-color);
-    --button-font-color-active: var(--button-font-color);
+  --button-color: #000;
+  --button-color-hover: var(--button-color);
+  --button-color-active: var(--button-color);
+  --button-font-color: #fff;
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
 }

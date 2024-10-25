@@ -9,70 +9,70 @@ Created by Andrey Shpigunov on 19.09.2024.
 /* Links styles */
 
 :root {
-    --link-decoration: underline;
-    --link-border-style: solid;
-    --link-underline-offset: .25em;
-    --link-underline-thickness: 1px;
-    
-    --link-color: #0060bb;
-    --link-border-color: #0060bb44;
-    
-    --link-color-hover: #f40000;
-    --link-border-color-hover: var(--link-color-hover);
-    
-    --link-color-visited: var(--link-color);
-    --link-border-color-visited: var(--link-border-color);
-    
-    --link-transition: none;
+  --link-decoration: underline;
+  --link-border-style: solid;
+  --link-underline-offset: .25em;
+  --link-underline-thickness: 1px;
+  
+  --link-color: #0060bb;
+  --link-border-color: #0060bb44;
+  
+  --link-color-hover: #f40000;
+  --link-border-color-hover: var(--link-color-hover);
+  
+  --link-color-visited: var(--link-color);
+  --link-border-color-visited: var(--link-border-color);
+  
+  --link-transition: none;
 }
 
 a {
+  
+  &[role=button] {
+    cursor: pointer;
+  }
+  &:link,
+  &.link {
+    outline: none;
+    cursor: pointer;
+    color: var(--link-color);
+    transition: var(--link-transition);
     
-    &[role=button] {
-        cursor: pointer;
+    text-decoration-line: var(--link-decoration);
+    text-decoration-style: var(--link-border-style);
+    text-decoration-color: var(--link-border-color);
+    text-underline-offset: var(--link-underline-offset);
+    text-decoration-thickness: var(--link-underline-thickness);
+  }
+  &:visited {
+    color: var(--link-color-visited);
+    text-decoration-color: var(--link-border-color-visited);
+  }
+  @media (hover: hover) {
+    &:hover,
+    &.hover {
+      color: var(--link-color-hover);
+      text-decoration-color: var(--link-border-color-hover);
     }
-    &:link,
-    &.link {
-        outline: none;
-        cursor: pointer;
-        color: var(--link-color);
-        transition: var(--link-transition);
-        
-        text-decoration-line: var(--link-decoration);
-        text-decoration-style: var(--link-border-style);
-        text-decoration-color: var(--link-border-color);
-        text-underline-offset: var(--link-underline-offset);
-        text-decoration-thickness: var(--link-underline-thickness);
-    }
-    &:visited {
-        color: var(--link-color-visited);
-        text-decoration-color: var(--link-border-color-visited);
-    }
-    @media (hover: hover) {
-        &:hover,
-        &.hover {
-            color: var(--link-color-hover);
-            text-decoration-color: var(--link-border-color-hover);
-        }
-    }
-    &:active,
-    &.active {
-        color: var(--link-color-hover);
-        text-decoration-color: var(--link-border-color-hover);
-    }
-    &.pseudo {
-        --link-decoration: underline;
-        --link-border-style: dashed;
-    }
+  }
+  &:active,
+  &.active {
+    color: var(--link-color-hover);
+    text-decoration-color: var(--link-border-color-hover);
+  }
+  &.pseudo {
+    --link-decoration: underline;
+    --link-border-style: dashed;
+  }
 }
 
 
 /* Remove underline from phones */
 
-/* a[href^="tel"], */
-/* a[href^="tel"]:hover, */
-/* a[href^="tel"]:active { */
-    /* color: inherit !important; */
-    /* text-decoration: inherit !important; */
-    /* border: inherit !important; */
-/* } */
+a[href^="tel"],
+a[href^="tel"]:hover,
+a[href^="tel"]:active {
+  color: inherit !important;
+  text-decoration: inherit !important;
+  border: inherit !important;
+}
