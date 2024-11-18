@@ -9,16 +9,19 @@ Created by Andrey Shpigunov on 27.09.2024.
 /* Sticky */
 
 
+/* .sticky (m,l,xl) */
+
+
 .sticky {
   position: sticky !important;
   top: 0;
 }
-@media (--small-max) {
-  .s\:sticky { position: sticky !important; top: 0 }
-}
-@media (--medium-min) and (--medium-max) {
+@media (--medium) {
   .m\:sticky { position: sticky !important; top: 0 }
 }
-@media (--large-min) {
-  .g\:sticky { position: sticky !important; top: 0 }
+@media (--large) {
+  .l\:sticky { position: sticky !important; top: 0 }
+}
+@media (--xlarge) {
+  .xl\:sticky { position: sticky !important; top: 0 }
 }

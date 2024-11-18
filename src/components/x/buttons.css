@@ -8,14 +8,30 @@ Created by Andrey Shpigunov on 08.09.2024.
 
 /* Buttons */
 
+
+/*
+  .button
+  .button_small  (s,m,l)
+  .button_normal (s,m,l)
+  .button_large  (s,m,l)
+  
+  .button_primary
+  .button_success
+  .button_danger
+  .button_warning
+  .button_white
+  .button_black
+*/
+
+
 :root {
   /* Base styles */
-  --button-height: 38px;
-  --button-side-padding: 20px;
+  --button-height: 2.5rem;
+  --button-side-padding: 1.25rem;
   --button-font-family: var(--font-family);
   --button-font-size: var(--font-size);
   --button-font-weight: 400;
-  --button-border-radius: 10px;
+  --button-border-radius: 0.625rem;
   --button-transition: all .1s ease-out;
   --button-disabled-opacity: .5;
   
@@ -33,6 +49,7 @@ Created by Andrey Shpigunov on 08.09.2024.
   --button-font-color-hover: var(--button-font-color);
   --button-font-color-active: var(--button-font-color);
 }
+
 
 .button, [type=submit] {
   position: relative;
@@ -100,16 +117,22 @@ Created by Andrey Shpigunov on 08.09.2024.
 /* Predefined sizes */
 
 @define-extend button_small  {
-  --button-height: 28px;
-  --button-side-padding: 14px;
+  /* --button-height: 28px; */
+  --button-height: 1.75rem;
+  /* --button-side-padding: 14px; */
+  --button-side-padding: .875rem;
 }
 @define-extend button_normal  {
-  --button-height: 38px;
-  --button-side-padding: 20px;
+  /* --button-height: 38px; */
+  --button-height: 2.5rem;
+  /* --button-side-padding: 20px; */
+  --button-side-padding: 1.25rem;
 }
 @define-extend button_large  {
-  --button-height: 48px;
-  --button-side-padding: 26px;
+  /* --button-height: 48px; */
+  --button-height: 3rem;
+  /* --button-side-padding: 26px; */
+  --button-side-padding: 1.625rem;
   --button-font-size: calc(var(--font-size) + 4px);
 }
 

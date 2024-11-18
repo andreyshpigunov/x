@@ -8,10 +8,11 @@ Created by Andrey Shpigunov on 08.09.2024.
 
 /* Form default styles */
 
+
 :root {
   --forms-width: 400px;
-  --forms-height: 38px;
-  --forms-side-padding: 10px;
+  --forms-height: 2.5rem;
+  --forms-side-padding: 0.625rem;
   
   --forms-font-size: var(--font-size);
   --forms-font-color: #000;
@@ -19,8 +20,8 @@ Created by Andrey Shpigunov on 08.09.2024.
   --forms-font-color-disabled: #666;
   --forms-font-color-placeholder: #ccc;
   
-  --forms-border-width: 1px;
-  --forms-border-radius: 8px;
+  --forms-border-width: .0625em;
+  --forms-border-radius: 0.5rem;
   --forms-border-color: #ddd;
   --forms-border-color-focused: #8cf;
   --forms-border-color-error: #f00;
@@ -31,6 +32,7 @@ Created by Andrey Shpigunov on 08.09.2024.
   --forms-background-color-readonly: #fafafa;
   --forms-background-color-disabled: #f6f6f6;
 }
+
 
 input[type=color],
 input[type=date],

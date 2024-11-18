@@ -8,6 +8,107 @@ Created by Andrey Shpigunov on 08.09.2024.
 
 /* Helpers – small help for you code. */
 
+
+/*
+  .container
+  .unselectable
+  .unclickable
+  .upper
+  .lower
+  .nowrap
+  .hyphens
+  .pointer
+  .toe
+  .toe2
+  .toe3
+  .oh
+  .touch-show
+  .touch-hide
+  .rel
+  .abs
+  .ins
+  .fit-none (xs,m,l,xl)
+  .fit-cover (xs,m,l,xl)
+  .fit-contain (xs,m,l,xl)
+  .t[0-10] (xs,m,l,xl)
+  .b[0-10] (xs,m,l,xl)
+  .z[0-10] (xs,m,l,xl)
+  .z[0-10] (xs,m,l,xl)
+  .op[0-10] (xs,m,l,xl)
+  .ratio1x1 (xs,m,l,xl)
+  .ratio2x1 (xs,m,l,xl)
+  .ratio3x1 (xs,m,l,xl)
+  .ratio4x1 (xs,m,l,xl)
+  .ratio3x2 (xs,m,l,xl)
+  .ratio4x3 (xs,m,l,xl)
+  .ratio16x9 (xs,m,l,xl)
+  .ratio1x2 (xs,m,l,xl)
+  .ratio1x3 (xs,m,l,xl)
+  .ratio1x4 (xs,m,l,xl)
+  .ratio2x3 (xs,m,l,xl)
+  .ratio3x4 (xs,m,l,xl)
+  .ratio9x16 (xs,m,l,xl)
+  .breakWord
+  .visuallyHidden
+  .invisible
+  .scrollResponsive
+  .hidden =(xs-s,m,l-xl)
+  .hiddenNext =(xs-s,m,l-xl)
+  .maxw (xs,m,l,xl)
+  .maxh (xs,m,l,xl)
+  .max (xs,m,l,xl)
+  .w[10-190] step 10 (xs,m,l,xl)
+  .w[200-380] step 20 (sx,m,l,xl)
+  .w[400-1600] step 100 (xs,m,l,xl)
+  .max[10-190] step 10 (xs,m,l,xl)
+  .max[200-380] step 20 (xs,m,l,xl)
+  .max[400-1600] step 100 (xs,m,l,xl)
+  .min[10-190] step 10 (xs,m,l,xl)
+  .min[200-380] step 20 (xs,m,l,xl)
+  .min[400-1600] step 100 (xs,m,l,xl)
+  .block (xs,m,l,xl)
+  .inline (xs,m,l,xl)
+  .inlineBlock (xs,m,l,xl)
+  .al (xs,m,l,xl)
+  .ar (xs,m,l,xl)
+  .ac (xs,m,l,xl)
+  .aj (xs,m,l,xl)
+  .m[0-10] (xs,m,l,xl)
+  .mx[0-10] (xs,m,l,xl)
+  .my[0-10] (xs,m,l,xl)
+  .mt[0-10] (xs,m,l,xl)
+  .mb[0-10] (xs,m,l,xl)
+  .ml[0-10] (xs,m,l,xl)
+  .mr[0-10] (xs,m,l,xl)
+  .ma (xs,m,l,xl)
+  .mxa (xs,m,l,xl)
+  .mya (xs,m,l,xl)
+  .mta (xs,m,l,xl)
+  .mba (xs,m,l,xl)
+  .mla (xs,m,l,xl)
+  .mra (xs,m,l,xl)
+  .p[0-10] (xs,m,l,xl)
+  .px[0-10] (xs,m,l,xl)
+  .py[0-10] (xs,m,l,xl)
+  .pt[0-10] (xs,m,l,xl)
+  .pb[0-10] (xs,m,l,xl)
+  .pl[0-10] (xs,m,l,xl)
+  .pr[0-10] (xs,m,l,xl)
+  .gap[0-10] (xs,m,l,xl)
+  .gapx[0-10] (xs,m,l,xl)
+  .gapy[0-10] (xs,m,l,xl)
+  .r[0-10] (xs,m,l,xl)
+  .r100 (xs,m,l,xl)
+  .sh0 (m,l)
+  .sh1 (m,l)
+  .sh2 (m,l)
+  .sh3 (m,l)
+  .sh4 (m,l)
+  .o[0-10] (xs,m,l,xl)
+  .noPrint
+*/
+
+
 :root {
   --container-max-width: 1600px;
 }
@@ -27,17 +128,12 @@ Created by Andrey Shpigunov on 08.09.2024.
 .unclickable {
   pointer-events: none;
 }
-.clear::after {
-  content: "";
-  display: table;
-  width: 100%;
-  clear: both;
-}
+
 
 /* !- Text helpers */
 .upper {
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: .0625em;
 }
 .lower {
   text-transform: lowercase;
@@ -62,6 +158,12 @@ Created by Andrey Shpigunov on 08.09.2024.
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.toe3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 
 /* !- Overflow */
@@ -71,7 +173,7 @@ Created by Andrey Shpigunov on 08.09.2024.
 
 
 /* !- Touch show/hide */
-/* Work with device.js */
+/* Required device.js */
 .touch-show { display: none }
 html.touch .touch-show { display: block }
 html.touch .touch-hide { display: none }
@@ -80,24 +182,16 @@ html.touch .touch-hide { display: none }
 /* !- Position */
 .rel { position: relative }
 .abs { position: absolute }
+.ins { position: absolute; inset: 0 }
 
 
 /* !- Object fit */
-.fit-none,
-.fit-cover,
-.fit-contain {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.fit-none { object-fit: none }
 .fit-cover { object-fit: cover }
 .fit-contain { object-fit: contain }
-@media (--small) {
-  .s\:fit-none { object-fit: none }
-  .s\:fit-cover { object-fit: cover }
-  .s\:fit-contain { object-fit: contain }
+@media (--xsmall) {
+  .xs\:fit-none { object-fit: none }
+  .xs\:fit-cover { object-fit: cover }
+  .xs\:fit-contain { object-fit: contain }
 }
 @media (--medium) {
   .m\:fit-none { object-fit: none }
@@ -120,34 +214,34 @@ html.touch .touch-hide { display: none }
 @for $i from 0 to 10 {
   .t$(i) { top: var(--space-$(i)) !important; }
   .b$(i) { bottom: var(--space-$(i)) !important; }
-  .z$(i) { z-index: var(--space-$(i)) !important; }
+  .z$(i) { z-index: $(i) !important; }
 }
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:t$(i) { top: var(--space-$(i)) !important; }
-    .s\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .s\:z$(i) { z-index: var(--space-$(i)) !important; }
+    .xs\:t$(i) { top: var(--space-$(i)) !important; }
+    .xs\:b$(i) { bottom: var(--space-$(i)) !important; }
+    .xs\:z$(i) { z-index: $(i) !important; }
   }
 }
 @media (--medium) {
   @for $i from 0 to 10 {
     .m\:t$(i) { top: var(--space-$(i)) !important; }
     .m\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .m\:z$(i) { z-index: var(--space-$(i)) !important; }
+    .m\:z$(i) { z-index: $(i) !important; }
   }
 }
 @media (--large) {
   @for $i from 0 to 10 {
     .l\:t$(i) { top: var(--space-$(i)) !important; }
     .l\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .l\:z$(i) { z-index: var(--space-$(i)) !important; }
+    .l\:z$(i) { z-index: $(i) !important; }
   }
 }
-@media (--large) {
+@media (--xlarge) {
   @for $i from 0 to 10 {
     .xl\:t$(i) { top: var(--space-$(i)) !important; }
     .xl\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .xl\:z$(i) { z-index: var(--space-$(i)) !important; }
+    .xl\:z$(i) { z-index: $(i) !important; }
   }
 }
 
@@ -156,9 +250,9 @@ html.touch .touch-hide { display: none }
 @for $i from 0 to 10 {
   .op$(i) { opacity: calc($(i) / 10) !important }
 }
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:op$(i) { opacity: calc($(i) / 10) !important }
+    .xs\:op$(i) { opacity: calc($(i) / 10) !important }
   }
 }
 @media (--medium) {
@@ -179,7 +273,6 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Ratio */
-.ratio,
 .ratio1x1,
 .ratio2x1,
 .ratio3x1,
@@ -228,23 +321,23 @@ html.touch .touch-hide { display: none }
 .ratio3x4 { aspect-ratio: 3/4 !important }
 .ratio9x16 { aspect-ratio: 9/16 !important }
 
-@media (--small) {
+@media (--xsmall) {
   /* Square */
-  .s\:ratio1x1 { aspect-ratio: 1/1 !important }
+  .xs\:ratio1x1 { aspect-ratio: 1/1 !important }
   /* Landscape */
-  .s\:ratio2x1 { aspect-ratio: 2/1 !important }
-  .s\:ratio3x1 { aspect-ratio: 3/1 !important }
-  .s\:ratio4x1 { aspect-ratio: 4/1 !important }
-  .s\:ratio3x2 { aspect-ratio: 3/2 !important }
-  .s\:ratio4x3 { aspect-ratio: 4/3 !important }
-  .s\:ratio16x9 { aspect-ratio: 16/9 !important }
+  .xs\:ratio2x1 { aspect-ratio: 2/1 !important }
+  .xs\:ratio3x1 { aspect-ratio: 3/1 !important }
+  .xs\:ratio4x1 { aspect-ratio: 4/1 !important }
+  .xs\:ratio3x2 { aspect-ratio: 3/2 !important }
+  .xs\:ratio4x3 { aspect-ratio: 4/3 !important }
+  .xs\:ratio16x9 { aspect-ratio: 16/9 !important }
   /* Portrait */
-  .s\:ratio1x2 { aspect-ratio: 1/2 !important }
-  .s\:ratio1x3 { aspect-ratio: 1/3 !important }
-  .s\:ratio1x4 { aspect-ratio: 1/4 !important }
-  .s\:ratio2x3 { aspect-ratio: 2/3 !important }
-  .s\:ratio3x4 { aspect-ratio: 3/4 !important }
-  .s\:ratio9x16 { aspect-ratio: 9/16 !important }
+  .xs\:ratio1x2 { aspect-ratio: 1/2 !important }
+  .xs\:ratio1x3 { aspect-ratio: 1/3 !important }
+  .xs\:ratio1x4 { aspect-ratio: 1/4 !important }
+  .xs\:ratio2x3 { aspect-ratio: 2/3 !important }
+  .xs\:ratio3x4 { aspect-ratio: 3/4 !important }
+  .xs\:ratio9x16 { aspect-ratio: 9/16 !important }
 }
 
 @media (--medium) {
@@ -305,7 +398,6 @@ html.touch .touch-hide { display: none }
 }
 
 
-
 /* !- Break word, invisible, scroll */
 .breakWord {
   overflow-wrap: anywhere;
@@ -333,38 +425,48 @@ html.touch .touch-hide { display: none }
 
 /* !- Hidden */
 .hidden,
-.hiddenNext + * {
-  display: none !important;
-}
-@media (--xsmall-min) and (--xsmall-max) {
+.hiddenNext + * { display: none !important }
+.block { display: block !important }
+.inlineBlock { display: inline-block !important }
+.grid { display: grid !important }
+.flex { display: flex !important }
+.table { display: table !important }
+
+@media (--xsmall) {
   .xs\:hidden,
-  .xs\:hiddenNext + * {
-    display: none !important;
-  }
+  .xs\:hiddenNext + * { display: none !important }
+  .xs\:block { display: block !important }
+  .xs\:inlineBlock { display: inline-block !important }
+  .xs\:grid { display: grid !important }
+  .xs\:flex { display: flex !important }
+  .xs\:table { display: table !important }
 }
-@media (--small-min) and (--small-max) {
-  .s\:hidden,
-  .s\:hiddenNext + * {
-    display: none !important;
-  }
-}
-@media (--medium-min) and (--medium-max) {
+@media (--medium) {
   .m\:hidden,
-  .m\:hiddenNext + * {
-    display: none !important;
-  }
+  .m\:hiddenNext + * { display: none !important }
+  .m\:block { display: block !important }
+  .m\:inlineBlock { display: inline-block !important }
+  .m\:grid { display: grid !important }
+  .m\:flex { display: flex !important }
+  .m\:table { display: table !important }
 }
-@media (--large-min) and (--large-max) {
+@media (--large) {
   .l\:hidden,
-  .l\:hiddenNext + * {
-    display: none !important;
-  }
+  .l\:hiddenNext + * { display: none !important }
+  .l\:block { display: block !important }
+  .l\:inlineBlock { display: inline-block !important }
+  .l\:grid { display: grid !important }
+  .l\:flex { display: flex !important }
+  .l\:table { display: table !important }
 }
-@media (--xlarge-min) and (--xlarge-max) {
+@media (--xlarge) {
   .xl\:hidden,
-  .xl\:hiddenNext + * {
-    display: none !important;
-  }
+  .xl\:hiddenNext + * { display: none !important }
+  .xl\:block { display: block !important }
+  .xl\:inlineBlock { display: inline-block !important }
+  .xl\:grid { display: grid !important }
+  .xl\:flex { display: flex !important }
+  .xl\:table { display: table !important }
 }
 
 
@@ -392,28 +494,28 @@ html.touch .touch-hide { display: none }
   .min$(i) { min-width: $(i)px !important }
 }
 
-@media (--small) {
-  .s\:maxw { width: 100% }
-  .s\:maxh { height: 100% }
-  .s\:max {
+@media (--xsmall) {
+  .xs\:maxw { width: 100% }
+  .xs\:maxh { height: 100% }
+  .xs\:max {
     width: 100% !important;
     max-width: 100% !important;
   }
   
   @for $i from 10 to 190 by 10 {
-    .s\:w$(i)   { width: $(i)px !important }
-    .s\:max$(i) { max-width: $(i)px !important }
-    .s\:min$(i) { min-width: $(i)px !important }
+    .xs\:w$(i)   { width: $(i)px !important }
+    .xs\:max$(i) { max-width: $(i)px !important }
+    .xs\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 200 to 380 by 20 {
-    .s\:w$(i)   { width: $(i)px !important }
-    .s\:max$(i) { max-width: $(i)px !important }
-    .s\:min$(i) { min-width: $(i)px !important }
+    .xs\:w$(i)   { width: $(i)px !important }
+    .xs\:max$(i) { max-width: $(i)px !important }
+    .xs\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 400 to 1600 by 100 {
-    .s\:w$(i)   { width: $(i)px !important }
-    .s\:max$(i) { max-width: $(i)px !important }
-    .s\:min$(i) { min-width: $(i)px !important }
+    .xs\:w$(i)   { width: $(i)px !important }
+    .xs\:max$(i) { max-width: $(i)px !important }
+    .xs\:min$(i) { min-width: $(i)px !important }
   }
 }
 
@@ -493,47 +595,17 @@ html.touch .touch-hide { display: none }
 }
 
 
-/* !- Block/Inline */
-.block { display: block }
-.inline { display: inline }
-.inlineBlock { display: inline-block }
-
-@media (--small) {
-  .s\:block { display: block }
-  .s\:inline { display: inline }
-  .s\:inlineBlock { display: inline-block }
-}
-
-@media (--medium) {
-  .m\:block { display: block }
-  .m\:inline { display: inline }
-  .m\:inlineBlock { display: inline-block }
-}
-
-@media (--large) {
-  .l\:block { display: block }
-  .l\:inline { display: inline }
-  .l\:inlineBlock { display: inline-block }
-}
-
-@media (--xlarge) {
-  .m\:block { display: block }
-  .m\:inline { display: inline }
-  .m\:inlineBlock { display: inline-block }
-}
-
-
 /* !- Text align */
 .al { text-align: left !important }
 .ar { text-align: right !important }
 .ac { text-align: center !important }
 .aj { text-align: justify !important }
 
-@media (--small) {
-  .s\:al { text-align: left !important }
-  .s\:ar { text-align: right !important }
-  .s\:ac { text-align: center !important }
-  .s\:aj { text-align: justify !important }
+@media (--xsmall) {
+  .xs\:al { text-align: left !important }
+  .xs\:ar { text-align: right !important }
+  .xs\:ac { text-align: center !important }
+  .xs\:aj { text-align: justify !important }
 }
 
 @media (--medium) {
@@ -558,21 +630,6 @@ html.touch .touch-hide { display: none }
 }
 
 
-/* !- Float */
-.fl { float: left }
-.fr { float: right }
-
-/* @media (--medium) {
-  .m\:fl { float: left }
-  .m\:fr { float: right }
-} */
-
-/* @media (--small) {
-  .s\:fl { float: left }
-  .s\:fr { float: right }
-} */
-
-
 /* !- Margin */
 @for $i from 0 to 10 {
   .m$(i)  { margin: var(--space-$(i)) !important }
@@ -591,23 +648,23 @@ html.touch .touch-hide { display: none }
 .mla { margin-left: auto !important }
 .mra { margin-right: auto !important }
 
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:m$(i)  { margin: var(--space-$(i)) !important }
-    .s\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
-    .s\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
-    .s\:mt$(i) { margin-top: var(--space-$(i)) !important }
-    .s\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
-    .s\:ml$(i) { margin-left: var(--space-$(i)) !important }
-    .s\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    .xs\:m$(i)  { margin: var(--space-$(i)) !important }
+    .xs\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
+    .xs\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
+    .xs\:mt$(i) { margin-top: var(--space-$(i)) !important }
+    .xs\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
+    .xs\:ml$(i) { margin-left: var(--space-$(i)) !important }
+    .xs\:mr$(i) { margin-right: var(--space-$(i)) !important }
   }
-  .s\:ma  { margin: auto !important }
-  .s\:mxa { margin-left: auto !important; margin-right: auto !important }
-  .s\:mya { margin-top: auto !important; margin-bottom: auto !important }
-  .s\:mta { margin-top: auto !important }
-  .s\:mba { margin-bottom: auto !important }
-  .s\:mla { margin-left: auto !important }
-  .s\:mra { margin-right: auto !important }
+  .xs\:ma  { margin: auto !important }
+  .xs\:mxa { margin-left: auto !important; margin-right: auto !important }
+  .xs\:mya { margin-top: auto !important; margin-bottom: auto !important }
+  .xs\:mta { margin-top: auto !important }
+  .xs\:mba { margin-bottom: auto !important }
+  .xs\:mla { margin-left: auto !important }
+  .xs\:mra { margin-right: auto !important }
 }
 
 @media (--medium) {
@@ -679,15 +736,15 @@ html.touch .touch-hide { display: none }
   .pr$(i) { padding-right: var(--space-$(i)) !important }
 }
 
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:p$(i)  { padding: var(--space-$(i)) !important }
-    .s\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
-    .s\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
-    .s\:pt$(i) { padding-top: var(--space-$(i)) !important }
-    .s\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
-    .s\:pl$(i) { padding-left: var(--space-$(i)) !important }
-    .s\:pr$(i) { padding-right: var(--space-$(i)) !important }
+    .xs\:p$(i)  { padding: var(--space-$(i)) !important }
+    .xs\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
+    .xs\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
+    .xs\:pt$(i) { padding-top: var(--space-$(i)) !important }
+    .xs\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
+    .xs\:pl$(i) { padding-left: var(--space-$(i)) !important }
+    .xs\:pr$(i) { padding-right: var(--space-$(i)) !important }
   }
 }
 
@@ -735,11 +792,11 @@ html.touch .touch-hide { display: none }
   .gapy$(i) { row-gap: var(--space-$(i)) !important }
 }
 
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:gap$(i) { gap: var(--space-$(i)) !important }
-    .s\:gapx$(i) { column-gap: var(--space-$(i)) !important }
-    .s\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+    .xs\:gap$(i) { gap: var(--space-$(i)) !important }
+    .xs\:gapx$(i) { column-gap: var(--space-$(i)) !important }
+    .xs\:gapy$(i) { row-gap: var(--space-$(i)) !important }
   }
 }
 
@@ -774,11 +831,11 @@ html.touch .touch-hide { display: none }
 }
 .r100 { border-radius: 100% !important }
 
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:r$(i) { border-radius: var(--space-$(i)) !important }
+    .xs\:r$(i) { border-radius: var(--space-$(i)) !important }
   }
-  .s\:r100 { border-radius: 100% !important }
+  .xs\:r100 { border-radius: 100% !important }
 }
 
 @media (--medium) {
@@ -805,33 +862,25 @@ html.touch .touch-hide { display: none }
 
 /* !- Shadows */
 .sh0 { box-shadow: none }
-.sh1 { box-shadow: 4px 4px 20px #00000011 }
-.sh2 { box-shadow: 4px 4px 20px #00000022 }
-.sh3 { box-shadow: 4px 4px 20px #00000033 }
-.sh4 { box-shadow: 4px 4px 20px #00000044 }
-
-@media (--small) {
-  .s\:sh0 { box-shadow: none }
-  .s\:sh1 { box-shadow: 4px 4px 20px #00000011 }
-  .s\:sh2 { box-shadow: 4px 4px 20px #00000022 }
-  .s\:sh3 { box-shadow: 4px 4px 20px #00000033 }
-  .s\:sh4 { box-shadow: 4px 4px 20px #00000044 }
-}
+.sh1 { box-shadow: 2px 4px 20px #00000011 }
+.sh2 { box-shadow: 2px 4px 20px #00000022 }
+.sh3 { box-shadow: 2px 4px 20px #00000033 }
+.sh4 { box-shadow: 2px 4px 20px #00000044 }
 
 @media (--medium) {
   .m\:sh0 { box-shadow: none }
-  .m\:sh1 { box-shadow: 4px 4px 20px #00000011 }
-  .m\:sh2 { box-shadow: 4px 4px 20px #00000022 }
-  .m\:sh3 { box-shadow: 4px 4px 20px #00000033 }
-  .m\:sh4 { box-shadow: 4px 4px 20px #00000044 }
+  .m\:sh1 { box-shadow: 2px 4px 20px #00000011 }
+  .m\:sh2 { box-shadow: 2px 4px 20px #00000022 }
+  .m\:sh3 { box-shadow: 2px 4px 20px #00000033 }
+  .m\:sh4 { box-shadow: 2px 4px 20px #00000044 }
 }
 
 @media (--large) {
   .l\:sh0 { box-shadow: none }
-  .l\:sh1 { box-shadow: 4px 4px 20px #00000011 }
-  .l\:sh2 { box-shadow: 4px 4px 20px #00000022 }
-  .l\:sh3 { box-shadow: 4px 4px 20px #00000033 }
-  .l\:sh4 { box-shadow: 4px 4px 20px #00000044 }
+  .l\:sh1 { box-shadow: 2px 4px 20px #00000011 }
+  .l\:sh2 { box-shadow: 2px 4px 20px #00000022 }
+  .l\:sh3 { box-shadow: 2px 4px 20px #00000033 }
+  .l\:sh4 { box-shadow: 2px 4px 20px #00000044 }
 }
 
 
@@ -839,9 +888,9 @@ html.touch .touch-hide { display: none }
 @for $i from 0 to 10 {
   .o$(i) { order: $(i) }
 }
-@media (--small) {
+@media (--xsmall) {
   @for $i from 0 to 10 {
-    .s\:o$(i) { order: $(i) }
+    .xs\:o$(i) { order: $(i) }
   }
 }
 @media (--medium) {

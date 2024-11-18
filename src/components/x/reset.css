@@ -5,11 +5,27 @@ auto
 Created by andreyshpigunov on 25.05.2021.
 ---------------------------*/
 
+
 /* CSS reset */
+
+
+/*
+  PostCSS media query min-width:
+  --------------------------------
+  |    s     |  m  |      l      |  - main breakpoints
+  ----- --------------------------
+  | 0  | 400 | 600 | 1000 | 1400 |  - min viewport size
+  --------------------------------
+  | xs |     |     |      |  xl  |  - additional breakpoints
+  --------------------------------
+  All queries are mobile first.
+  [s] - default size.
+*/
+
 
 :root {
   /* Base variables */
-  --line-height: 1.625;
+  --line-height: 1.5;
   --font-color: #000;
   --font-size: 16px;
   --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
@@ -20,24 +36,22 @@ Created by andreyshpigunov on 25.05.2021.
   --background-color: #fff;
 }
 
+
 /* PostCSS custom media */
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
-@custom-media --xsmall-min (min-width: 0px);
-@custom-media --xsmall-max (max-width: 399px);
-@custom-media --small-min  (min-width: 400px);
 @custom-media --small-max  (max-width: 599px);
+@custom-media --xsmall-max (max-width: 399px);
 @custom-media --medium-min (min-width: 600px);
 @custom-media --medium-max (max-width: 999px);
-@custom-media --large-min  (min-width: 1200px);
-@custom-media --large-max  (min-width: 1399px);
+@custom-media --large-min  (min-width: 1000px);
 @custom-media --xlarge-min (min-width: 1400px);
 
-/* Shortcuts */
-/* @custom-media --xsmall  (max-width: 0px); — not in code, it's DEFAULT value */
-@custom-media --small  (min-width: 400px);
-@custom-media --medium (min-width: 600px);
-@custom-media --large  (min-width: 1000px);
-@custom-media --xlarge (min-width: 1400px);
+/* Breakpoints */
+@custom-media --small  (min-width: 0px);     /* Small screen [s] (DEFAULT) */
+@custom-media --xsmall (max-width: 399px);   /* - additional breakpoint to [s] */
+@custom-media --medium (min-width: 600px);   /* Medium screen [m] */
+@custom-media --large  (min-width: 1000px);  /* Large screen [l] */
+@custom-media --xlarge (min-width: 1400px);  /* - additional breakpoint to [l] */
 
 
 html, body, main, div, span, object, iframe,
@@ -117,10 +131,10 @@ textarea {
 }
 hr {
   display: block;
-  height: 1px;
+  height: .0625em;
   margin: 1em 0;
   border: none;
-  background-color: #eaeaea;
+  background-color: #88888822;
 }
 sup, sub {
   position: relative;
@@ -137,7 +151,7 @@ mark {
   background-color: #fe0;
 }
 code, kbd, samp {
-  font-family: monospace;
+  font-family: var(--font-family-mono);
 }
 strong, b {
   font-weight: 700;
@@ -165,5 +179,6 @@ ul.reset li {
   list-style: none;
 }
 pre {
+  font-family: var(--font-family-mono);
   white-space: pre-wrap;
 }

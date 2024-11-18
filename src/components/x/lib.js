@@ -37,7 +37,19 @@
 class Lib {
 
   constructor() {
-    this.loadedScripts = []
+    this.loadedScripts = [];
+    this._elementRender()
+  }
+  
+  _elementRender() {
+    document.addEventListener('DOMContentLoaded', () => {
+      let items = qsa('[data-render]');
+      if (items) {
+        for (let item of items) {
+          this.render(item, eval(item.dataset.render))
+        }
+      }
+    })
   }
 
 

@@ -8,11 +8,21 @@ Created by Andrey Shpigunov on 19.09.2024.
 
 /* Links styles */
 
+
+/*
+  a
+  a.link
+  a.hover
+  a.active
+  a.pseudo
+*/
+
+
 :root {
   --link-decoration: underline;
   --link-border-style: solid;
   --link-underline-offset: .25em;
-  --link-underline-thickness: 1px;
+  --link-underline-thickness: .0625em;
   
   --link-color: #0060bb;
   --link-border-color: #0060bb44;
@@ -25,6 +35,7 @@ Created by Andrey Shpigunov on 19.09.2024.
   
   --link-transition: none;
 }
+
 
 a {
   

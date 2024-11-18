@@ -8,6 +8,7 @@ Created by Andrey Shpigunov on 18.09.2024.
 
 /* Modal windows */
 
+
 :root {
   --modal-outer-padding: 50px;
   --modal-outer-padding-small: 10px;
@@ -24,14 +25,17 @@ Created by Andrey Shpigunov on 18.09.2024.
   --modal-overlay-background-color: #00000066;
 }
 
+
 html.modal_active body {
   overflow: hidden;
 }
+
 
 /* !- Modal window content */
 .modal-content {
   display: none;
 }
+
 
 /* !- Modal wrapper */
 .modal {
@@ -61,6 +65,7 @@ html.modal_active body {
 .modal_z9  { z-index: 10009 }
 .modal_z10 { z-index: 10010 }
 
+
 /* !- Overlay */
 .modal-overlay {
   position: absolute;
@@ -71,6 +76,7 @@ html.modal_active body {
   right: 0;
   background-color: var(--modal-overlay-background-color);
 }
+
 
 /* ! -Main structure */
 .modal-outer {
@@ -92,6 +98,7 @@ html.modal_active body {
   flex-direction: column;
   min-height: 100%;
 }
+
 
 /* !- Modal window */
 .modal-window {
@@ -182,7 +189,6 @@ html.modal_active body {
 }
 
 
-
 /* !- Effects
    https://github.com/codrops/ModalWindowEffects */
 
@@ -197,6 +203,7 @@ html.modal_active body {
     opacity: 1;
   }
 }
+
 
 /* !- Default */
 .modal {
@@ -213,6 +220,7 @@ html.modal_active body {
   }
 }
 
+
 /* !- Zoom in */
 .modal_effect-in {
   & .modal-window {
@@ -222,6 +230,7 @@ html.modal_active body {
     transform: scale(1);
   }
 }
+
 
 /* !- Zoom out */
 .modal_effect-out {
@@ -233,6 +242,7 @@ html.modal_active body {
   }
 }
 
+
 /* !- Slide up */
 .modal_effect-up {
   & .modal-window {
@@ -242,6 +252,7 @@ html.modal_active body {
     transform: translateY(0);
   }
 }
+
 
 /* !- Slide down */
 .modal_effect-down {
@@ -253,6 +264,7 @@ html.modal_active body {
   }
 }
 
+
 /* !- Slide from left */
 .modal_effect-left {
   & .modal-window {
@@ -262,6 +274,7 @@ html.modal_active body {
     transform: translateX(0);
   }
 }
+
 
 /* !- Slide from right */
 .modal_effect-right {

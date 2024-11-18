@@ -6,9 +6,15 @@ Created by Andrey Shpigunov on 07.10.2024.
 ---------------------------*/
 
 
+/* Slides */
+
+
 :root {
-  --slides-point-color: #ffffff88;
-  --slides-point-color-active: #000000aa;
+  --slides-point-color: #ffffff66;
+  --slides-point-color-active: #fff;
+  --slides-point-size: 6px;
+  --slides-point-gap: 4px;
+  --slides-point-bottom: 12px;
 }
 
 
@@ -19,13 +25,13 @@ Created by Andrey Shpigunov on 07.10.2024.
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: var(--slides-point-gap);
   position: absolute;
   z-index: 10;
-  bottom: 10px;
+  bottom: var(--slides-point-bottom);
   left: 0;
   right: 0;
-  height: 5px;
+  height: var(--slides-point-size);
   opacity: 0;
   
   will-change: opacity;
@@ -35,9 +41,9 @@ Created by Andrey Shpigunov on 07.10.2024.
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 5px;
-  height: 5px;
-  border-radius: 5px;
+  width: var(--slides-point-size);
+  height: var(--slides-point-size);
+  border-radius: var(--slides-point-size);
   background: var(--slides-point-color);
 }
 .slides-item.active {

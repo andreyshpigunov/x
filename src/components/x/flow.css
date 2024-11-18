@@ -8,20 +8,28 @@ Created by Andrey Shpigunov on 19.09.2024.
 
 /* Vertical flow of elements with margin-top space  */
 
+
+/*
+  .flow
+  .flow.s[0-10] (xs,m,l,xl)   - vertical space
+*/
+
+
 .flow {
+  
   
   & > * { margin: 0 }
   
   @for $i from 0 to 10 {
     &.s$(i) > * {
-      margin-top: var(--space-$(i));
+      margin-bottom: var(--space-$(i));
     }
   }
   
-  @media(--small){
+  @media(--xsmall){
     @for $i from 0 to 10 {
-      &.s\:s$(i) > * {
-        margin-top: var(--space-$(i));
+      &.xs\:s$(i) > * {
+        margin-bottom: var(--space-$(i));
       }
     }
   }
@@ -29,7 +37,7 @@ Created by Andrey Shpigunov on 19.09.2024.
   @media(--medium){
     @for $i from 0 to 10 {
       &.m\:s$(i) > * {
-        margin-top: var(--space-$(i));
+        margin-bottom: var(--space-$(i));
       }
     }
   }
@@ -37,7 +45,7 @@ Created by Andrey Shpigunov on 19.09.2024.
   @media(--large){
     @for $i from 0 to 10 {
       &.l\:s$(i) > * {
-        margin-top: var(--space-$(i));
+        margin-bottom: var(--space-$(i));
       }
     }
   }
@@ -45,10 +53,10 @@ Created by Andrey Shpigunov on 19.09.2024.
   @media(--xlarge){
     @for $i from 0 to 10 {
       &.xl\:s$(i) > * {
-        margin-top: var(--space-$(i));
+        margin-bottom: var(--space-$(i));
       }
     }
   }
   
-  & > *:first-child { margin-top: 0 }
+  & > *:last-child { margin-bottom: 0 }
 }

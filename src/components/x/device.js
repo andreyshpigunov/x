@@ -10,11 +10,21 @@
 
 
 export const device = (function() {
-
+  
+  function size() {
+    return {
+      xs: window.innerWidth < 400,
+       s: window.innerWidth < 600,
+       m: window.innerWidth >= 600 && window.innerWidth < 1000,
+       l: window.innerWidth >= 1000,
+      xl: window.innerWidth >= 1400
+    }
+  }
+  
   let html = document.documentElement,
     userAgent = window.navigator.userAgent.toLowerCase(),
     classes = [];
-
+  
   let fields = {
     js: true,
     os: null,
@@ -23,12 +33,14 @@ export const device = (function() {
     mobile: false,
     touch: false,
     width: window.innerWidth,
-    height: window.innerHeight
+    height: window.innerHeight,
+    size: size()
   }
   
   window.addEventListener('resize', () => {
     fields.width = window.innerWidth;
     fields.height = window.innerHeight;
+    fields.size = size();
   })
 
   // Save current <html> tag classes

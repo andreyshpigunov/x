@@ -1,9 +1,3 @@
-<!--
-xs |  s   |   m  |   l   |  xl
-0+ | 400+ | 600+ | 1000+ | 1400+
--->
-
-
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -35,7 +29,19 @@ xs |  s   |   m  |   l   |  xl
       <a href="https://github.com/andreyshpigunov/x" target="_blank"></a>
     </div>
   </header>
-
+  
+  <ol class="p10 hidden">
+    <li class="fs1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs8">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+    <li class="fs9">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
+  </ol>
+  
   <div class="element3" x-animate='{
         "start": "50vh",
         "end": "-100px",
@@ -155,7 +161,11 @@ xs |  s   |   m  |   l   |  xl
                 function renderDevice() {
                   let content = '';
                   Object.keys(x.device).forEach(key => {
-                    content += key + ': ' + x.device[key] + '<br/>'
+                    let val = x.device[key];
+                    if (typeof val === 'object') {
+                      val = JSON.stringify(val);
+                    }
+                    content += key + ': ' + val + '<br/>'
                   })
                   x.lib.render('.jsDeviceExample', content)
                 }
@@ -689,13 +699,15 @@ xs |  s   |   m  |   l   |  xl
   </section>
 
 
-  <section class="section-plugins mt7 px5 m:px6 l:px8">
-    <div class="container max700">
-      <div class="flex jcsb fc l:fr gapy6">
-        <div class="ac">
+  <section class="-section-plugins mt7 px5 m:px6 l:px8">
+    <div class="container max1000">
+      <div class="grid g1 m:g2 gap6">
+        <div class="c1 ac">
           <h2>CSS</h2>
-          <ul class="reset">
+          <ul class="reset fs18 flow s1" style="column-count:2">
+            <li><a class="link" x-modal-open="modalBreakpoints">Breakpoints</a></li>
             <li><a class="link" x-modal-open="modalReset">Reset</a></li>
+            <li><a class="link" x-modal-open="modalSpaces">Spaces</a></li>
             <li><a class="link" x-modal-open="modalLinks">Links</a></li>
             <li><a class="link" x-modal-open="modalTypo">Typo</a></li>
             <li><a class="link" x-modal-open="modalForms">Forms</a></li>
@@ -706,9 +718,9 @@ xs |  s   |   m  |   l   |  xl
             <li><a class="link" x-modal-open="modalFlow">Flow</a></li>
           </ul>
         </div>
-        <div>
+        <div class="c1 ac">
           <h2>JS</h2>
-          <ul class="reset" style="column-count:2">
+          <ul class="reset fs18 flow s1" style="column-count:2">
             <li><a class="link" x-modal-open="modalAnimate">Animate</a></li>
             <li><a class="link" x-modal-open="modalAppear">Appear</a></li>
             <li><a class="link" x-modal-open="modalDevice">Device</a></li>
@@ -792,974 +804,296 @@ xs |  s   |   m  |   l   |  xl
       <hr class="my7" />
     </div>
   </section>
+  
+  
+  <div id="modalBreakpoints" x-modal class="modal_hash" data-window-class="max1000">
+      <h2>Breakpoints</h2>
+      <p>Mobile first breakpoints</p>
+      <p>
+        <code>s</code>, <code>m</code>, <code>l</code>, <code>xl</code> use <code>min-size</code><br/>
+        <code>xs</code> use <code>max-size</code>
+      </p>
+      <pre class="fs14 mono">
+--------------------------------
+|    s     |  m  |      l      |
+----- --------------------------
+| 0  | 400 | 600 | 1000 | 1400 |
+--------------------------------
+| xs |     |     |      |  xl  |
+--------------------------------</pre>
+    
+    <p>
+      <code>s</code> - default size, not using prefix <code>s:</code><br/>
+      <code>xs</code> - additional size to <code>s</code>, when you need to change anything on smaller screens<br/>
+      <code>m</code> - medium size<br/>
+      <code>l</code> - large size<br/>
+      <code>xl</code> - additional size to <code>l</code>, when you need to change anything on larger screens
+    </p>
+    
+    <h3>Custom media</h3>
+    <p>X use <a href="https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media" target="_blank">PostCSS custom media plugin</a> for compiling styles.</p>
+    
+    <pre class="fs14 mono">
+<span class="op4">/* Setting for custom media plugin */</span>
+@custom-media --small  (min-width: 0px);
+@custom-media --xsmall (max-width: 399px);
+@custom-media --medium (min-width: 600px);
+@custom-media --large  (min-width: 1000px);
+@custom-media --xlarge (min-width: 1400px);</pre>
+  </div>
 
 
   <div id="modalReset" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Reset</h2>
-    <p>Глобальный сброс стилей и базовые переменные.</p>
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Переменная</th>
-        <th width="50%">Значение по умолчанию</th>
-      </tr>
-      <tr>
-        <td><code>--line-height</code></td>
-        <td><code>1.5</code></td>
-      </tr>
-      <tr>
-        <td><code>--font-color</code></td>
-        <td><code>#000000</code></td>
-      </tr>
-      <tr>
-        <td><code>--font-size</code></td>
-        <td><code>16px</code></td>
-      </tr>
-      <tr>
-        <td><code>--font-family</code></td>
-        <td><code>-apple-system, BlinkMacSystemFont, Segoe UI,
-            Helvetica, Arial, sans-serif, Apple Color Emoji,
-            Segoe UI Emoji, Segoe UI Symbol;</code></td>
-      </tr>
-      <tr>
-        <td><code>--font-family-mono</code></td>
-        <td><code>SFMono-Regular, Consolas, Liberation Mono,
-            Menlo, monospace</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-0</code></td>
-        <td><code>0</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-1</code></td>
-        <td><code>0.25rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-2</code></td>
-        <td><code>0.5rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-3</code></td>
-        <td><code>1rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-4</code></td>
-        <td><code>1.5rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-5</code></td>
-        <td><code>2rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-6</code></td>
-        <td><code>3rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-7</code></td>
-        <td><code>4rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-8</code></td>
-        <td><code>6rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-9</code></td>
-        <td><code>8rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--space-10</code></td>
-        <td><code>10rem</code></td>
-      </tr>
-    </table>
+    <p>Global styles reset and base variables.</p>
+    
+    <h3>Variables</h3>
+    <pre class="fs14 mono">
+--line-height: 1.5;
+--font-color: #000;
+--font-size: 16px;
+--font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+--font-family-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+--background-color: #fff;</pre>
+  </div>
+  
+  
+  <div id="modalSpaces" x-modal class="modal_hash" data-window-class="max1000">
+    <h2>Spaces</h2>
+    <p>Global spaces.</p>
+    
+    <h3>Variables</h3>
+    <pre class="fs14 mono">
+--space-0:  0;
+--space-1:  0.25rem;
+--space-2:  0.5rem;
+--space-3:  0.75rem;
+--space-4:  1rem;
+--space-5:  1.5rem;
+--space-6:  2rem;
+--space-7:  3rem;
+--space-8:  4rem;
+--space-9:  6rem;
+--space-10: 8rem;</pre>
   </div>
 
 
   <div id="modalLinks" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Links</h2>
-    <p>Стилизация ссылок.</p>
+    <p>Links styling.</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+a
+a.link
+a.hover
+a.active
+a.pseudo</pre>
+    
+    <h3>Variables</h3>
+    <pre class="fs14 mono">
+--link-decoration: underline;
+--link-border-style: solid;
+--link-underline-offset: .25em;
+--link-underline-thickness: .0625em;
 
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Элемент</th>
-        <th width="50%">Модификатор</th>
-      </tr>
-      <tr>
-        <td><code>a</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.link</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.hover</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.active</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.pseudo</code></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Переменная</th>
-        <th width="50%">Значение по умолчанию</th>
-      </tr>
-      <tr>
-        <td><code>--link-decoration</code></td>
-        <td><code>underline</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-border-style</code></td>
-        <td><code>solid</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-underline-offset</code></td>
-        <td><code>.3em</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-color</code></td>
-        <td><code>#0060cc</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-border-color</code></td>
-        <td><code>#0060cc77</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-color-hover</code></td>
-        <td><code>#f40000</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-border-color-hover</code></td>
-        <td><code>var(--link-color-hover)</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-color-visited</code></td>
-        <td><code>var(--link-color)</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-border-color-visited</code></td>
-        <td><code>var(--link-border-color)</code></td>
-      </tr>
-      <tr>
-        <td><code>--link-transition</code></td>
-        <td><code>none</code></td>
-      </tr>
-    </table>
+--link-color: #0060bb;
+--link-border-color: #0060bb44;
+
+--link-color-hover: #f40000;
+--link-border-color-hover: var(--link-color-hover);
+
+--link-color-visited: var(--link-color);
+--link-border-color-visited: var(--link-border-color);
+
+--link-transition: none;</pre>
   </div>
 
 
   <div id="modalTypo" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Typo</h2>
-    <p>Типографика.</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+.h[1-6]
+.mono
+.italic
+.fs[1-9]   step 1 (xs,m,l,xl)  - size in spaces
+.fs[10-19] step 1 (xs,m,l,xl)  - size in px
+.fs[20-80] step 2 (xs,m,l,xl)  - size in px
+.fw[100-900] step 100 (xs,m,l,xl)
+.ls[0-4] (xs,m,l)
+.lh[0-9] (xs,m,l)  - values: 1.0-1.9</pre>
+    
+    <h3>Variables</h3>
+    <pre class="fs14 mono">
+--headers-margin-top: 1.125em;
+--headers-margin-bottom: .625em;
+--headers-font-family: var(--font-family);
+--headers-font-weight: 700;
+--headers-font-color: var(--font-color);
 
-    <table class="dataTable">
-      <tr>
-        <th width="30%">Элемент</th>
-        <th width="30%">Адаптивность</th>
-        <th width="40%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>.antialiased</code></td>
-        <td></td>
-        <td>Добавляет сглаживание</td>
-      </tr>
-      <tr>
-        <td><code>.h[1..6]</code></td>
-        <td></td>
-        <td>Заголовки</td>
-      </tr>
-      <tr>
-        <td><code>.italic</code></td>
-        <td></td>
-        <td><code>font-style: italic</code></td>
-      </tr>
-      <tr>
-        <td><code>.fsxxl</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 1.5rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fsxl</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 1.3rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fsl</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 1.15rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fsn</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: var(--font-size)</code></td>
-      </tr>
-      <tr>
-        <td><code>.fss</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: .9rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fsxs</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: .8rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fsxxs</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: .7rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs[8..20]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: .7rem</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs22</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 22px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs24</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 24px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs26</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 26px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs28</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 28px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs30</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 30px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs32</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 32px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs34</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 34px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs36</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 36px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs38</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 38px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs40</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 40px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs44</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 44px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs48</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 48px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs52</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 52px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs56</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 56px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs60</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 60px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fs64</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-size: 64px</code></td>
-      </tr>
-      <tr>
-        <td><code>.fw[100..900]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>font-weight: [100..900]</code></td>
-      </tr>
-      <tr>
-        <td><code>.lh[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>line-height: [1..2]</code></td>
-      </tr>
-      <tr>
-        <td><code>.ls[0..10]</code></td>
-        <td><code>l: m: s:</code></td>
-        <td><code>letter-spacing: [0..10]px</code></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Переменная</th>
-        <th width="50%">Значение по умолчанию</th>
-      </tr>
-      <tr>
-        <td><code>--headers-margin-top</code></td>
-        <td><code>2rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--headers-margin-bottom</code></td>
-        <td><code>1.5rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--headers-font-family</code></td>
-        <td><code>var(--font-family)</code></td>
-      </tr>
-      <tr>
-        <td><code>--headers-font-weight</code></td>
-        <td><code>700</code></td>
-      </tr>
-      <tr>
-        <td><code>--headers-font-color</code></td>
-        <td><code>#000</code></td>
-      </tr>
+--h1-font-size: 2.5em;
+--h2-font-size: 2em;
+--h3-font-size: 1.5em;
+--h4-font-size: 1.25em;
+--h5-font-size: 1em;
+--h6-font-size: 1em;
 
-      <tr>
-        <td><code>--h1-font-size</code></td>
-        <td><code>calc(var(--font-size) + 30px)</code></td>
-      </tr>
-      <tr>
-        <td><code>--h2-font-size</code></td>
-        <td><code>calc(var(--font-size) + 22px)</code></td>
-      </tr>
-      <tr>
-        <td><code>--h3-font-size</code></td>
-        <td><code>calc(var(--font-size) + 16px)</code></td>
-      </tr>
-      <tr>
-        <td><code>--h4-font-size</code></td>
-        <td><code>calc(var(--font-size) + 10px)</code></td>
-      </tr>
-      <tr>
-        <td><code>--h5-font-size</code></td>
-        <td><code>calc(var(--font-size) + 4px)</code></td>
-      </tr>
-      <tr>
-        <td><code>--h6-font-size</code></td>
-        <td><code>var(--font-size)</code></td>
-      </tr>
+--h1-line-height: 1.3;
+--h2-line-height: 1.4;
 
-      <tr>
-        <td><code>--h1-line-height</code></td>
-        <td><code>1.2</code></td>
-      </tr>
-      <tr>
-        <td><code>--h2-line-height</code></td>
-        <td><code>1.3</code></td>
-      </tr>
-      <tr>
-        <td><code>--h3-line-height</code></td>
-        <td><code>1.4</code></td>
-      </tr>
+--paragraph-margin: 1em;
 
-      <tr>
-        <td><code>--paragraph-margin</code></td>
-        <td><code>var(--space-4)</code></td>
-      </tr>
-      <tr>
-        <td><code>--figcaption-font-size</code></td>
-        <td><code>14px</code></td>
-      </tr>
-      <tr>
-        <td><code>--figcaption-color</code></td>
-        <td><code>#999</code></td>
-      </tr>
-      <tr>
-        <td><code>--table-padding</code></td>
-        <td><code>6px 10px</code></td>
-      </tr>
-      <tr>
-        <td><code>--table-border-color</code></td>
-        <td><code>#ccc</code></td>
-      </tr>
-      <tr>
-        <td><code>--table-header-weight</code></td>
-        <td><code>700</code></td>
-      </tr>
-    </table>
+--figure-margin: 2.5em auto 2em;
+--figcaption-margin-top: .5em;
+--figcaption-font-size: var(--font-size);
+--figcaption-color: #999;
+
+--blockquote-margin: 2em 0;
+--blockquote-padding: 1em 2em;
+--blockquote-border: solid .25em var(--font-color);
+
+--table-padding: .5em .75em;
+--table-border: 1px solid #ccc;
+--table-header-font-weight: 700;</pre>
   </div>
 
 
   <div id="modalForms" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Forms</h2>
-    <p>Элементы формы.</p>
+    <p>Form elements.</p>
+    
+    <h3>Modifiers</h3>
+    <pre class="fs14 mono">
+.error</pre>
+    
+    <h3>Variables</h3>
+    <pre class="fs14 mono">
+--forms-width: 400px;
+--forms-height: 2.5rem;
+--forms-side-padding: 0.625rem;
 
-    <table class="dataTable">
-      <tr>
-        <th width="25%">Элемент</th>
-        <th width="25%">Модификатор</th>
-        <th width="50%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>input<br />textarea<br />select<br />button</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.error</code></td>
-        <td><code>border-color: var(--forms-border-color-error)</code></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Переменная</th>
-        <th width="50%">Значение по умолчанию</th>
-      </tr>
-      <tr>
-        <td><code>--forms-width</code></td>
-        <td><code>400px</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-padding</code></td>
-        <td><code>.4rem .6rem</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-font-size</code></td>
-        <td><code>var(--font-size)</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-font-color</code></td>
-        <td><code>#000</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-font-color-readonly</code></td>
-        <td><code>#000</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-font-color-disabled</code></td>
-        <td><code>#666</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-font-color-placeholder</code></td>
-        <td><code>#ccc</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-width</code></td>
-        <td><code>1px</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-radius</code></td>
-        <td><code>4px</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-color</code></td>
-        <td><code>#ddd</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-color-focused</code></td>
-        <td><code>#8cf</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-color-error</code></td>
-        <td><code>#f00</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-color-readonly</code></td>
-        <td><code>#ddd</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-border-color-disabled</code></td>
-        <td><code>#ddd</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-background-color</code></td>
-        <td><code>#fff</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-background-color-readonly</code></td>
-        <td><code>#f8f8f8</code></td>
-      </tr>
-      <tr>
-        <td><code>--forms-background-color-disabled</code></td>
-        <td><code>#f6f6f6</code></td>
-      </tr>
-    </table>
+--forms-font-size: var(--font-size);
+--forms-font-color: #000;
+--forms-font-color-readonly: #000;
+--forms-font-color-disabled: #666;
+--forms-font-color-placeholder: #ccc;
+
+--forms-border-width: .0625em;
+--forms-border-radius: 0.5rem;
+--forms-border-color: #ddd;
+--forms-border-color-focused: #8cf;
+--forms-border-color-error: #f00;
+--forms-border-color-readonly: #ddd;
+--forms-border-color-disabled: #ddd;
+
+--forms-background-color: #fff;
+--forms-background-color-readonly: #fafafa;
+--forms-background-color-disabled: #f6f6f6;</pre>
   </div>
 
 
 
   <div id="modalButtons" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Buttons</h2>
-    <p>Стили оформления кнопок.</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+.button
 
-    <table class="dataTable">
-      <tr>
-        <th width="25%">Элемент</th>
-        <th width="25%">Модификатор</th>
-        <th width="50%">Адаптивность</th>
-      </tr>
-      <tr>
-        <td><code>.button</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.hover</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.active</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.disabled</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.xsmall</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.small</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.large</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.xlarge</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.primary</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.success</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.danger</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.warning</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.white</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.black</code></td>
-        <td></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="33%">Переменная</th>
-        <th width="33%">Значение по умолчанию</th>
-        <th width="33%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>--button-padding</code></td>
-        <td><code>.7em 1.1em</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-family</code></td>
-        <td><code>var(--font-family)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-size</code></td>
-        <td><code>var(--font-size)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-size-xsmall</code></td>
-        <td><code>calc(var(--font-size) * .8)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-size-small</code></td>
-        <td><code>calc(var(--font-size) * .9)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-size-large</code></td>
-        <td><code>calc(var(--font-size) * 1.2)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-size-xlarge</code></td>
-        <td><code>calc(var(--font-size) * 1.4)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-weight</code></td>
-        <td><code>400</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-line-height</code></td>
-        <td><code>1</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-border-radius</code></td>
-        <td><code>10px</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-transition</code></td>
-        <td><code>all .1s ease-out</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-transform</code></td>
-        <td><code>scale(1)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-transform-hover</code></td>
-        <td><code>scale(1)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-transform-active</code></td>
-        <td><code>scale(1)</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-transform-origin</code></td>
-        <td><code>center</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>--button-color</code></td>
-        <td><code>#f2f4f6</code></td>
-        <td rowspan="6">
-          Поддерживаемые типы:<br />
-          <code>--button-primary-...</code><br />
-          <code>--button-success-...</code><br />
-          <code>--button-danger-...</code><br />
-          <code>--button-warning-...</code><br />
-          <code>--button-white-...</code><br />
-          <code>--button-black-...</code><br />
-        </td>
-      </tr>
-      <tr>
-        <td><code>--button-color-hover</code></td>
-        <td><code>var(--button-color)</code></td>
-      </tr>
-      <tr>
-        <td><code>--button-color-active</code></td>
-        <td><code>var(--button-color)</code></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-color</code></td>
-        <td><code>#000</code></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-color-hover</code></td>
-        <td><code>var(--button-font-color)</code></td>
-      </tr>
-      <tr>
-        <td><code>--button-font-color-active</code></td>
-        <td><code>var(--button-font-color)</code></td>
-      </tr>
-    </table>
+.button_small  (s,m,l)
+.button_normal (s,m,l)
+.button_large  (s,m,l)
+
+.button_primary
+.button_success
+.button_danger
+.button_warning
+.button_white
+.button_black</pre>
+  
+  <h3>Variables</h3>
+  <pre class="fs14 mono">
+<span class="op4">/* Base styles */</span>
+--button-height: 2.5rem;
+--button-side-padding: 1.25rem;
+--button-font-family: var(--font-family);
+--button-font-size: var(--font-size);
+--button-font-weight: 400;
+--button-border-radius: 0.625rem;
+--button-transition: all .1s ease-out;
+--button-disabled-opacity: .5;
+
+<span class="op4">/* Transformations */</span>
+--button-transform: scale(1);
+--button-transform-hover: scale(1);
+--button-transform-active: scale(.98);
+--button-transform-origin: center;
+
+<span class="op4">/* Colors */</span>
+--button-color: #f0f2f4;
+--button-color-hover: var(--button-color);
+--button-color-active: var(--button-color);
+--button-font-color: #000;
+--button-font-color-hover: var(--button-font-color);
+--button-font-color-active: var(--button-font-color);</pre>
   </div>
 
 
   <div id="modalFlex" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Flex</h2>
-    <p>Флексбокс.</p>
+    <p>Flexbox.</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+.flex
 
-    <table class="dataTable">
-      <tr>
-        <th width="20%">Элемент</th>
-        <th width="20%">Модификатор</th>
-        <th width="20%">Адаптивность</th>
-        <th width="40%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>.flex</code></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.fr</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>flex-direction: row</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.fc</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>flex-direction: column</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.fw</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>flex-wrap: wrap</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.fnw</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>flex-wrap: nowrap</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.aic</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>align-items: stretch</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.aifc</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>align-items: flex-start</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.aic</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>align-items: center</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.aife</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>align-items: flex-end</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.jcfs</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>justify-content: flex-start</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.jcc</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>justify-content: center</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.jcfe</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>justify-content: flex-end</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.jcsb</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>justify-content: space-between</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.jcsa</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>justify-content: space-around</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.jcse</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>justify-content: space-evenly</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.f[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>flex: [0..10]</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.fb[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td>
-          <code>flex: 0 0 [0..100]%;</code><br />
-          <code>max-width: [0..100]%</code>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.fg[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>flex-grow: [0..10]</code></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Переменная</th>
-        <th width="50%">Значение по умолчанию</th>
-      </tr>
-      <tr>
-        <td><code>--flex-gap</code></td>
-        <td><code>0</code></td>
-      </tr>
-    </table>
+.flex.fr  (xs,m,l,xl)  - flex row
+.flex.fc  (xs,m,l,xl)  - flex column
+.flex.fw  (xs,m,l,xl)  - flex wrap
+.flex.fnw (xs,m,l,xl)  - flex nowrap
+
+<span class="op4">/* Align items */</span>
+.flex.ais  (xs,m,l,xl)  - stretch
+.flex.aifs (xs,m,l,xl)  - flex start
+.flex.aic  (xs,m,l,xl)  - center
+.flex.aife (xs,m,l,xl)  - flex end
+
+<span class="op4">/* Justify content */</span>
+.flex.jcfs (xs,m,l,xl)  - flex start
+.flex.jcc  (xs,m,l,xl)  - center
+.flex.jcfe (xs,m,l,xl)  - flex end
+.flex.jcsb (xs,m,l,xl)  - space between
+.flex.jcsa (xs,m,l,xl)  - space around
+.flex.jcse (xs,m,l,xl)  - space evenly
+
+.flex.f[0-10]  (xs,m,l,xl)  - flex
+.flex.fb[0-10] (xs,m,l,xl)  - flex basis
+.flex.fg[0-10] (xs,m,l,xl)  - flex grow</pre>
   </div>
 
 
   <div id="modalGrid" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Grid</h2>
-    <p>Многоколоночная адаптивная сетка (1–12 колонок).</p>
-
-    <table class="dataTable">
-      <tr>
-        <th width="20%">Элемент</th>
-        <th width="20%">Модификатор</th>
-        <th width="20%">Адаптивность</th>
-        <th width="40%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>.grid</code></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.gap[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.gapx[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.gapy[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.g[1..12]</code></td>
-        <td><code>m: s:</code></td>
-        <td>Количество колонок</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.c[1..12]</code></td>
-        <td><code>m: s:</code></td>
-        <td>Ширина колонок</td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.mtg</code></td>
-        <td></td>
-        <td><code>margin-top: var(--grid-gap)</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.mbg</code></td>
-        <td></td>
-        <td><code>margin-bottom: var(--grid-gap)</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.mlg</code></td>
-        <td></td>
-        <td><code>margin-left: var(--grid-gap)</code></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.mrg</code></td>
-        <td></td>
-        <td><code>margin-right: var(--grid-gap)</code></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="50%">Переменная</th>
-        <th width="50%">Значение по умолчанию</th>
-      </tr>
-      <tr>
-        <td><code>--grid-gap</code></td>
-        <td><code>1rem</code></td>
-      </tr>
-    </table>
+    <p>Multicolumn adaptive grid (1–12 columns).</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+.grid
+.grid.g[1-12] (xs,m,l,xl)   - columns in grid
+.grid .c[1-12] (xs,m,l,xl)  - column width</pre>
   </div>
 
 
   <div id="modalFlow" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Flow</h2>
-    <p>Вертикальный поток элементов с одинаковым расстоянием между ними.</p>
-
-    <table class="dataTable">
-      <tr>
-        <th width="20%">Элемент</th>
-        <th width="20%">Модификатор</th>
-        <th width="20%">Адаптивность</th>
-        <th width="40%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>.flow</code></td>
-        <td></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td></td>
-        <td><code>.s[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-top: var(--space-[0..10])</code></td>
-      </tr>
-    </table>
+    <p>Vertical flow of elements with equal spaces between them.</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+.flow
+.flow.s[0-10] (xs,m,l,xl) - vertical space</pre>
   </div>
 
 
@@ -1767,759 +1101,131 @@ xs |  s   |   m  |   l   |  xl
 
   <div id="modalHelpers" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Helpers</h2>
-    <p>Вспомогательные классы.</p>
+    <p>Helper classes.</p>
+    
+    <h3>Elements</h3>
+    <pre class="fs14 mono">
+.container
+.unselectable
+.unclickable
+.upper
+.lower
+.nowrap
+.hyphens
+.pointer    | cursor pointer
+.toe        | text overflow ellipsis
+.toe2       | toe 2 lines
+.toe3       | toe 3 lines
+.oh         | overflow hidden
+.touch-show | show on touch devices
+.touch-hide | hide on touch devices
+.rel        | position relative
+.abs        | position absolute
+.ins        | position absolute inset 0
 
-    <table class="dataTable">
-      <tr>
-        <th width="30%">Элемент</th>
-        <th width="30%">Адаптивность</th>
-        <th width="40%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>.container</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.unselectable</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.unclickable</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.clear</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.uppercase</code></td>
-        <td></td>
-        <td><code>text-transform: lowercase</code></td>
-      </tr>
-      <tr>
-        <td><code>.lowercase</code></td>
-        <td></td>
-        <td><code>text-transform: lowercase</code></td>
-      </tr>
-      <tr>
-        <td><code>.nowrap</code></td>
-        <td></td>
-        <td><code>white-space: nowrap</code></td>
-      </tr>
-      <tr>
-        <td><code>.wrap</code></td>
-        <td></td>
-        <td><code>white-space: normal</code></td>
-      </tr>
-      <tr>
-        <td><code>.hyphens</code></td>
-        <td></td>
-        <td><code>hyphens: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.pointer</code></td>
-        <td></td>
-        <td><code>cursor: pointer</code></td>
-      </tr>
-      <tr>
-        <td><code>.oh</code></td>
-        <td></td>
-        <td><code>overflow: hidden</code></td>
-      </tr>
-      <tr>
-        <td><code>.toe</code></td>
-        <td></td>
-        <td><code>text-overflow: ellipsis</code></td>
-      </tr>
-      <tr>
-        <td><code>.rel</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>position: relative</code></td>
-      </tr>
-      <tr>
-        <td><code>.abs</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>position: absolute</code></td>
-      </tr>
-      <tr>
-        <td><code>.fix</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>position: fix</code></td>
-      </tr>
-      <tr>
-        <td><code>.fit-none</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>отменяет вписывание в область</code></td>
-      </tr>
-      <tr>
-        <td><code>.fit-cover</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>вписывает объект в область с object-fit: cover</code></td>
-      </tr>
-      <tr>
-        <td><code>.fit-contain</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>вписывает объект в область с object-fit: contain</code></td>
-      </tr>
-      <tr>
-        <td><code>.sticky</code></td>
-        <td></td>
-        <td><code>position: sticky</code></td>
-      </tr>
-      <tr>
-        <td><code>.t[0..10]</code></td>
-        <td><code>l: m: s:</code></td>
-        <td><code>top: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.z[0..10]</code></td>
-        <td><code>l: m: s:</code></td>
-        <td><code>z-index: [0..10]</code></td>
-      </tr>
-      <tr>
-        <td><code>.op[0..10]</code></td>
-        <td><code>l: m: s:</code></td>
-        <td><code>opacity: [0..1]</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio</code></td>
-        <td></td>
-        <td rowspan="14">
-          Пропорционально масштабирует:<br />
-          <code>iframe</code><br />
-          <code>object</code><br />
-          <code>embed</code><br />
-          <code>img</code><br />
-          <code>a</code>
-        </td>
-      </tr>
-      <tr>
-        <td><code>.ratio1x1</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio2x1</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio3x1</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio4x1</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio3x2</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio4x3</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio16x9</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio1x2</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio1x3</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio1x4</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio2x3</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio3x4</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.ratio9x16</code></td>
-        <td><code>m: s:</code></td>
-      </tr>
-      <tr>
-        <td><code>.breakWord</code></td>
-        <td></td>
-        <td><code>word-break: break-word</code></td>
-      </tr>
-      <tr>
-        <td><code>.visuallyHidden</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.noBorder</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.invisible</code></td>
-        <td></td>
-        <td><code>visibility: hidden</code></td>
-      </tr>
-      <tr>
-        <td><code>.scrollResponsive</code></td>
-        <td></td>
-        <td><code>overflow-x: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.tableResponsive</code></td>
-        <td></td>
-        <td><code>overflow-x: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.hidden</code></td>
-        <td><code>l: m: s:</code></td>
-        <td><code>display: none</code></td>
-      </tr>
-      <tr>
-        <td><code>.hiddenNext</code></td>
-        <td><code>l: m: s:</code></td>
-        <td></td>
-      </tr>
-      <tr>
-        <td><code>.w100</code></td>
-        <td></td>
-        <td><code>width: 100%</code></td>
-      </tr>
-      <tr>
-        <td><code>.h100</code></td>
-        <td></td>
-        <td><code>height: 100%</code></td>
-      </tr>
-      <tr>
-        <td><code>.max</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>width: 100%</code></td>
-      </tr>
-      <tr>
-        <td><code>.max10</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 10px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max20</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 20px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max30</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 30px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max40</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 40px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max50</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 50px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max60</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 60px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max70</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 70px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max80</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 80px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max90</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 90px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max100</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 100px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max110</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 110px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max120</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 120px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max140</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 140px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max160</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 160px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max180</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 180px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max200</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 200px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max300</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 300px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max400</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 400px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max500</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 500px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max600</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 600px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max700</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 700px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max800</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 800px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max900</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 900px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1000</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1000px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1100</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1100px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1200</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1200px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1300</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1300px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1400</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1400px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1500</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1500px</code></td>
-      </tr>
-      <tr>
-        <td><code>.max1600</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>max-width: 1600px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min10</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 10px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min20</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 20px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min30</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 30px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min40</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 40px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min50</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 50px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min60</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 60px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min70</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 70px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min80</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 80px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min90</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 90px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min100</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 100px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min110</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 110px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min120</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 120px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min140</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 140px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min160</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 160px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min180</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 180px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min200</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 200px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min300</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 300px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min400</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 400px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min500</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 500px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min600</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 600px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min700</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 700px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min800</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 800px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min900</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 900px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1000</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1000px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1100</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1100px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1200</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1200px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1300</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1300px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1400</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1400px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1500</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1500px</code></td>
-      </tr>
-      <tr>
-        <td><code>.min1600</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>min-width: 1600px</code></td>
-      </tr>
-      <tr>
-        <td><code>.block</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>display: block</code></td>
-      </tr>
-      <tr>
-        <td><code>.inline</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>display: inline</code></td>
-      </tr>
-      <tr>
-        <td><code>.inlineBlock</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>display: inline-block</code></td>
-      </tr>
-      <tr>
-        <td><code>.al</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>text-align: left</code></td>
-      </tr>
-      <tr>
-        <td><code>.ar</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>text-align: right</code></td>
-      </tr>
-      <tr>
-        <td><code>.ac</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>text-align: center</code></td>
-      </tr>
-      <tr>
-        <td><code>.aj</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>text-align: justify</code></td>
-      </tr>
-      <tr>
-        <td><code>.fl</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>float: left</code></td>
-      </tr>
-      <tr>
-        <td><code>.fr</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>float: right</code></td>
-      </tr>
-      <tr>
-        <td><code>.m[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.ma</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.mx[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-left: var(--space-[0..10]);<br />margin-right: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.mxa</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-left: auto;<br />margin-right: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.my[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-top: var(--space-[0..10]);<br />margin-bottom: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.mya</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-top: auto;<br />margin-bottom: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.mt[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-top: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.mta</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-top: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.mb[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-bottom: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.mba</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-bottom: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.ml[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-left: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.mla</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-left: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.mr[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-right: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.mra</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>margin-right: auto</code></td>
-      </tr>
-      <tr>
-        <td><code>.p[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.px[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding-left: var(--space-[0..10]);<br />padding-right: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.py[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding-top: var(--space-[0..10]);<br />padding-bottom: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.pt[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding-top: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.pb[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding-bottom: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.pl[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding-left: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.pr[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>padding-right: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.gap[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>gap: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.gapx[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>column-gap: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.gapy[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>row-gap: var(--space-[0..10])</code></td>
-      </tr>
-      <tr>
-        <td><code>.r[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>border-radius: [0..32]px</code></td>
-      </tr>
-      <tr>
-        <td><code>.r100</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>border-radius: 100%</code></td>
-      </tr>
-      <tr>
-        <td><code>.sh[0..4]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>box-shadow: ...</code></td>
-      </tr>
-      <tr>
-        <td><code>.o[0..10]</code></td>
-        <td><code>m: s:</code></td>
-        <td><code>order: [0..10]</code></td>
-      </tr>
-      <tr>
-        <td><code>.noPrint</code></td>
-        <td></td>
-        <td></td>
-      </tr>
-    </table>
-    <br />
-    <br />
-    <table class="dataTable">
-      <tr>
-        <th width="30%">Переменная</th>
-        <th width="30%">Значение по умолчанию</th>
-        <th width="40%">Комментарий</th>
-      </tr>
-      <tr>
-        <td><code>--container-max-width</code></td>
-        <td><code>1600px</code></td>
-        <td>Максимальная ширина контейнера</td>
-      </tr>
-    </table>
+.fit-none (xs,m,l,xl)    | object fit none
+.fit-cover (xs,m,l,xl)   | object fit cover
+.fit-contain (xs,m,l,xl) | object fit containt
+
+.t[0-10] (xs,m,l,xl)  | top
+.b[0-10] (xs,m,l,xl)  | bottom
+.z[0-10] (xs,m,l,xl)  | z-index
+.op[0-10] (xs,m,l,xl) | opacity
+
+.ratio1x1 (xs,m,l,xl)
+.ratio2x1 (xs,m,l,xl)
+.ratio3x1 (xs,m,l,xl)
+.ratio4x1 (xs,m,l,xl)
+.ratio3x2 (xs,m,l,xl)
+.ratio4x3 (xs,m,l,xl)
+.ratio16x9 (xs,m,l,xl)
+.ratio1x2 (xs,m,l,xl)
+.ratio1x3 (xs,m,l,xl)
+.ratio1x4 (xs,m,l,xl)
+.ratio2x3 (xs,m,l,xl)
+.ratio3x4 (xs,m,l,xl)
+.ratio9x16 (xs,m,l,xl)
+
+.breakWord
+.visuallyHidden
+.invisible
+.scrollResponsive
+
+.hidden =(xs-s,m,l-xl)
+.hiddenNext =(xs-s,m,l-xl)
+
+.maxw (xs,m,l,xl) | max width
+.maxh (xs,m,l,xl) | max height
+.max (xs,m,l,xl)  | max width 100%
+
+.w[10-190] step 10 (xs,m,l,xl) | width
+.w[200-380] step 20 (sx,m,l,xl)
+.w[400-1600] step 100 (xs,m,l,xl)
+
+.max[10-190] step 10 (xs,m,l,xl) | max width
+.max[200-380] step 20 (xs,m,l,xl)
+.max[400-1600] step 100 (xs,m,l,xl)
+
+.min[10-190] step 10 (xs,m,l,xl) | min width
+.min[200-380] step 20 (xs,m,l,xl)
+.min[400-1600] step 100 (xs,m,l,xl)
+
+.block (xs,m,l,xl)
+.inline (xs,m,l,xl)
+.inlineBlock (xs,m,l,xl)
+
+.al (xs,m,l,xl) | aligh left
+.ar (xs,m,l,xl) | align right
+.ac (xs,m,l,xl) | align center
+.aj (xs,m,l,xl) | align justify
+
+.m[0-10] (xs,m,l,xl)  | margin
+.mx[0-10] (xs,m,l,xl) | margin x
+.my[0-10] (xs,m,l,xl) | margin y
+.mt[0-10] (xs,m,l,xl) | margin top
+.mb[0-10] (xs,m,l,xl) | margin bottom
+.ml[0-10] (xs,m,l,xl) | margin left
+.mr[0-10] (xs,m,l,xl) | margin right
+
+.ma (xs,m,l,xl)  | margin auto
+.mxa (xs,m,l,xl)
+.mya (xs,m,l,xl)
+.mta (xs,m,l,xl)
+.mba (xs,m,l,xl)
+.mla (xs,m,l,xl)
+.mra (xs,m,l,xl)
+
+.p[0-10] (xs,m,l,xl)  | padding
+.px[0-10] (xs,m,l,xl) | padding x
+.py[0-10] (xs,m,l,xl) | padding y
+.pt[0-10] (xs,m,l,xl) | padding top
+.pb[0-10] (xs,m,l,xl) | padding bottom
+.pl[0-10] (xs,m,l,xl) | padding left
+.pr[0-10] (xs,m,l,xl) | padding right
+
+.gap[0-10] (xs,m,l,xl)
+.gapx[0-10] (xs,m,l,xl)
+.gapy[0-10] (xs,m,l,xl)
+
+.r[0-10] (xs,m,l,xl) | radius
+.r100 (xs,m,l,xl)    | radius 100%
+
+.sh0 (m,l) | shadow
+.sh1 (m,l)
+.sh2 (m,l)
+.sh3 (m,l)
+.sh4 (m,l)
+
+.o[0-10] (xs,m,l,xl) | order
+.noPrint</pre>
+    
+    <h3>Variables</h3>
+    <pre class="fs14 mono">
+--container-max-width: 1600px;</pre>
   </div>
-
-
-
-
-
-
-
-
-
-
+  
+  
+  
   <div id="modalModal" x-modal class="modal_hash" data-window-class="max1000">
     <h2>Modals</h2>
 
@@ -3288,7 +1994,7 @@ xs |  s   |   m  |   l   |  xl
 
   <footer class="p6 ac fs14">
     <a href="mailto:andrey@shpigunov.ru">andrey@shpigunov.ru</a>
-    <div class="mt1">2024</div>
+    <div class="mt1" data-render="new Date().getFullYear()"></div>
   </footer>
 
 
