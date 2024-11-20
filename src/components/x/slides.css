@@ -12,9 +12,9 @@ Created by Andrey Shpigunov on 07.10.2024.
 :root {
   --slides-point-color: #ffffff66;
   --slides-point-color-active: #fff;
-  --slides-point-size: 6px;
-  --slides-point-gap: 4px;
-  --slides-point-bottom: 12px;
+  --slides-point-size: .6rem;
+  --slides-point-gap: .4rem;
+  --slides-point-bottom: 1.4rem;
 }
 
 

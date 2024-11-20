@@ -23,18 +23,25 @@ Created by Andrey Shpigunov on 07.09.2024.
 
 
 :root {
-  --headers-margin-top: 1.125em;
-  --headers-margin-bottom: .625em;
+  --headers-margin-top: 1em;
+  --headers-margin-bottom: .75em;
   --headers-font-family: var(--font-family);
   --headers-font-weight: 700;
   --headers-font-color: var(--font-color);
 
   --h1-font-size: 2.5em;
-  --h2-font-size: 2em;
+  --h2-font-size: 2.0em;
   --h3-font-size: 1.5em;
   --h4-font-size: 1.25em;
-  --h5-font-size: 1em;
-  --h6-font-size: 1em;
+  --h5-font-size: 1.125em;
+  --h6-font-size: 1.0em;
+  
+  /* --h1-font-size: calc(4.0em * 0.625);
+  --h2-font-size: calc(3.2em * 0.625);
+  --h3-font-size: calc(2.4em * 0.625);
+  --h4-font-size: calc(2.0em * 0.625);
+  --h5-font-size: calc(1.8em * 0.625);
+  --h6-font-size: calc(1.6em * 0.625); */
 
   --h1-line-height: 1.3;
   --h2-line-height: 1.4;
@@ -48,7 +55,7 @@ Created by Andrey Shpigunov on 07.09.2024.
   
   --blockquote-margin: 2em 0;
   --blockquote-padding: 1em 2em;
-  --blockquote-border: solid .25em var(--font-color);
+  --blockquote-border: solid .2em var(--font-color);
 
   --table-padding: .5em .75em;
   --table-border: 1px solid #ccc;
@@ -183,15 +190,11 @@ table {
 .mono { font-family: monospace }
 .italic { font-style: italic }
 
-@for $i from 1 to 9 {
-  .fs$(i) { font-size: var(--space-$(i)) !important }
-}
-
 @for $i from 10 to 19 {
-  .fs$(i) { font-size: $(i)px !important }
+  .fs$(i) { font-size: calc($(i)rem / 10) !important }
 }
 @for $i from 20 to 80 by 2 {
-  .fs$(i) { font-size: $(i)px !important }
+  .fs$(i) { font-size: calc($(i)rem / 10) !important }
 }
 
 .fw100 { font-weight: 100 !important }
@@ -206,14 +209,11 @@ table {
 
 @media (--xsmall) {
   
-  @for $i from 1 to 9 {
-    .xs\:fs$(i) { font-size: var(--space-$(i)) !important }
-  }
   @for $i from 10 to 19 {
-    .xs\:fs$(i) { font-size: $(i)px !important }
+    .xs\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   @for $i from 20 to 80 by 2 {
-    .xs\:fs$(i) { font-size: $(i)px !important }
+    .xs\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
   .xs\:fw100 { font-weight: 100 !important }
@@ -229,14 +229,11 @@ table {
 
 @media (--medium) {
   
-  @for $i from 1 to 9 {
-    .m\:fs$(i) { font-size: var(--space-$(i)) !important }
-  }
   @for $i from 10 to 19 {
-    .m\:fs$(i) { font-size: $(i)px !important }
+    .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   @for $i from 20 to 80 by 2 {
-    .m\:fs$(i) { font-size: $(i)px !important }
+    .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
   .m\:fw100 { font-weight: 100 !important }
@@ -252,14 +249,11 @@ table {
 
 @media (--large) {
   
-  @for $i from 1 to 9 {
-    .l\:fs$(i) { font-size: var(--space-$(i)) !important }
-  }
   @for $i from 10 to 19 {
-    .l\:fs$(i) { font-size: $(i)px !important }
+    .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   @for $i from 20 to 80 by 2 {
-    .l\:fs$(i) { font-size: $(i)px !important }
+    .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
   .l\:fw100 { font-weight: 100 !important }
@@ -275,14 +269,11 @@ table {
 
 @media (--xlarge) {
   
-  @for $i from 1 to 9 {
-    .xl\:fs$(i) { font-size: var(--space-$(i)) !important }
-  }
   @for $i from 10 to 19 {
-    .xl\:fs$(i) { font-size: $(i)px !important }
+    .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   @for $i from 20 to 80 by 2 {
-    .xl\:fs$(i) { font-size: $(i)px !important }
+    .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
   .xl\:fw100 { font-weight: 100 !important }

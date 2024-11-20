@@ -26,12 +26,12 @@ Created by Andrey Shpigunov on 08.09.2024.
 
 :root {
   /* Base styles */
-  --button-height: 2.5rem;
-  --button-side-padding: 1.25rem;
+  --button-height: 4rem;
+  --button-side-padding: 2rem;
   --button-font-family: var(--font-family);
   --button-font-size: var(--font-size);
   --button-font-weight: 400;
-  --button-border-radius: 0.625rem;
+  --button-border-radius: 1rem;
   --button-transition: all .1s ease-out;
   --button-disabled-opacity: .5;
   
@@ -117,23 +117,17 @@ Created by Andrey Shpigunov on 08.09.2024.
 /* Predefined sizes */
 
 @define-extend button_small  {
-  /* --button-height: 28px; */
-  --button-height: 1.75rem;
-  /* --button-side-padding: 14px; */
-  --button-side-padding: .875rem;
+  --button-height: 2.8rem;
+  --button-side-padding: 1.4rem;
 }
 @define-extend button_normal  {
-  /* --button-height: 38px; */
-  --button-height: 2.5rem;
-  /* --button-side-padding: 20px; */
-  --button-side-padding: 1.25rem;
+  --button-height: 4rem;
+  --button-side-padding: 2rem;
 }
 @define-extend button_large  {
-  /* --button-height: 48px; */
-  --button-height: 3rem;
-  /* --button-side-padding: 26px; */
-  --button-side-padding: 1.625rem;
-  --button-font-size: calc(var(--font-size) + 4px);
+  --button-height: 4.8rem;
+  --button-side-padding: 2.6rem;
+  --button-font-size: 2rem;
 }
 
 .button_small  { @extend button_small }

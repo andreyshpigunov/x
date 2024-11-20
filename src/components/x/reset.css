@@ -27,7 +27,8 @@ Created by andreyshpigunov on 25.05.2021.
   /* Base variables */
   --line-height: 1.5;
   --font-color: #000;
-  --font-size: 16px;
+  --font-size-coeff: 62.5%;
+  --font-size: 1.6rem;
   --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
                  Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
                  Segoe UI Symbol;
@@ -85,7 +86,7 @@ body {
 html {
   line-height: var(--line-height);
   font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-size: var(--font-size-coeff);
   background-color: var(--background-color);
   font-synthesis: initial;
   text-rendering: optimizeLegibility;
@@ -94,6 +95,9 @@ html {
   -moz-font-feature-settings: 'liga', 'kern';
   color: var(--font-color);
   scroll-behavior: smooth;
+}
+body {
+  font-size: var(--font-size);
 }
 blockquote, q {
   quotes: none;
@@ -131,23 +135,23 @@ textarea {
 }
 hr {
   display: block;
-  height: .0625em;
-  margin: 1em 0;
+  height: .1em;
+  margin: 1.6em 0;
   border: none;
   background-color: #88888822;
 }
 sup, sub {
   position: relative;
-  top: -.5em;
-  font-size: .7em;
+  top: -.8em;
+  font-size: 1.1em;
 }
 sub {
   top: auto;
-  bottom: -.5em;
+  bottom: -.8em;
 }
 mark {
-  margin: 0 -.2em;
-  padding: 0 .2em;
+  margin: 0 -.4em;
+  padding: 0 .4em;
   background-color: #fe0;
 }
 code, kbd, samp {
