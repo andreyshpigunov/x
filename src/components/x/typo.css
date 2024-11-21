@@ -13,9 +13,8 @@ Created by Andrey Shpigunov on 07.09.2024.
   .h[1-6]
   .mono
   .italic
-  .fs[1-9]   step 1 (xs,m,l,xl)  - size in spaces
-  .fs[10-19] step 1 (xs,m,l,xl)  - size in px
-  .fs[20-80] step 2 (xs,m,l,xl)  - size in px
+  .fs[10-19] step 1 (xs,m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
+  .fs[20-80] step 2 (xs,m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 8.0
   .fw[100-900] step 100 (xs,m,l,xl)
   .ls[0-4] (xs,m,l)
   .lh[0-9] (xs,m,l)  - values: 1.0-1.9
@@ -330,22 +329,22 @@ table {
 }
 
 @media (--xsmall) {
-  @for $i from 0 to 8 {
+  @for $i from 0 to 9 {
     .xs\:lh$(i)  { line-height: 1.$(i) !important }
   }
 }
 @media (--medium) {
-  @for $i from 0 to 8 {
+  @for $i from 0 to 9 {
     .m\:lh$(i)  { line-height: 1.$(i) !important }
   }
 }
 @media (--large) {
-  @for $i from 0 to 8 {
+  @for $i from 0 to 9 {
     .l\:lh$(i)  { line-height: 1.$(i) !important }
   }
 }
 @media (--xlarge) {
-  @for $i from 0 to 8 {
+  @for $i from 0 to 9 {
     .xl\:lh$(i)  { line-height: 1.$(i) !important }
   }
 }
