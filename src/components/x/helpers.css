@@ -54,8 +54,7 @@ Created by Andrey Shpigunov on 08.09.2024.
   .scrollResponsive
   .hidden =(xs-s,m,l-xl)
   .hiddenNext =(xs-s,m,l-xl)
-  .maxw (xs,m,l,xl)
-  .maxh (xs,m,l,xl)
+  .fullscreen
   .max (xs,m,l,xl)
   .w[10-190] step 10 (xs,m,l,xl)
   .w[200-380] step 20 (sx,m,l,xl)
@@ -471,8 +470,10 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Width, height */
-.maxw { width: 100% }
-.maxh { height: 100% }
+.fullscreen {
+  min-width: 100vh;
+  min-height: 100vh;
+}
 .max {
   width: 100% !important;
   max-width: 100% !important;
@@ -480,23 +481,21 @@ html.touch .touch-hide { display: none }
 
 @for $i from 10 to 190 by 10 {
   .w$(i)   { width: $(i)px !important }
-  .max$(i) { max-width: $(i)px !important }
+  .max$(i) { width: 100% !important; max-width: $(i)px !important }
   .min$(i) { min-width: $(i)px !important }
 }
 @for $i from 200 to 380 by 20 {
   .w$(i)   { width: $(i)px !important }
-  .max$(i) { max-width: $(i)px !important }
+  .max$(i) { width: 100% !important; max-width: $(i)px !important }
   .min$(i) { min-width: $(i)px !important }
 }
 @for $i from 400 to 1600 by 100 {
   .w$(i)   { width: $(i)px !important }
-  .max$(i) { max-width: $(i)px !important }
+  .max$(i) { width: 100% !important; max-width: $(i)px !important }
   .min$(i) { min-width: $(i)px !important }
 }
 
 @media (--xsmall) {
-  .xs\:maxw { width: 100% }
-  .xs\:maxh { height: 100% }
   .xs\:max {
     width: 100% !important;
     max-width: 100% !important;
@@ -504,24 +503,22 @@ html.touch .touch-hide { display: none }
   
   @for $i from 10 to 190 by 10 {
     .xs\:w$(i)   { width: $(i)px !important }
-    .xs\:max$(i) { max-width: $(i)px !important }
+    .xs\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .xs\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 200 to 380 by 20 {
     .xs\:w$(i)   { width: $(i)px !important }
-    .xs\:max$(i) { max-width: $(i)px !important }
+    .xs\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .xs\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 400 to 1600 by 100 {
     .xs\:w$(i)   { width: $(i)px !important }
-    .xs\:max$(i) { max-width: $(i)px !important }
+    .xs\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .xs\:min$(i) { min-width: $(i)px !important }
   }
 }
 
 @media (--medium) {
-  .m\:maxw { width: 100% }
-  .m\:maxh { height: 100% }
   .m\:max {
     width: 100% !important;
     max-width: 100% !important;
@@ -529,24 +526,22 @@ html.touch .touch-hide { display: none }
   
   @for $i from 10 to 190 by 10 {
     .m\:w$(i)   { width: $(i)px !important }
-    .m\:max$(i) { max-width: $(i)px !important }
+    .m\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .m\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 200 to 380 by 20 {
     .m\:w$(i)   { width: $(i)px !important }
-    .m\:max$(i) { max-width: $(i)px !important }
+    .m\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .m\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 400 to 1600 by 100 {
     .m\:w$(i)   { width: $(i)px !important }
-    .m\:max$(i) { max-width: $(i)px !important }
+    .m\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .m\:min$(i) { min-width: $(i)px !important }
   }
 }
 
 @media (--large) {
-  .l\:maxw { width: 100% }
-  .l\:maxh { height: 100% }
   .l\:max {
     width: 100% !important;
     max-width: 100% !important;
@@ -554,24 +549,22 @@ html.touch .touch-hide { display: none }
   
   @for $i from 10 to 190 by 10 {
     .l\:w$(i)   { width: $(i)px !important }
-    .l\:max$(i) { max-width: $(i)px !important }
+    .l\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .l\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 200 to 380 by 20 {
     .l\:w$(i)   { width: $(i)px !important }
-    .l\:max$(i) { max-width: $(i)px !important }
+    .l\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .l\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 400 to 1600 by 100 {
     .l\:w$(i)   { width: $(i)px !important }
-    .l\:max$(i) { max-width: $(i)px !important }
+    .l\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .l\:min$(i) { min-width: $(i)px !important }
   }
 }
 
 @media (--xlarge) {
-  .xl\:maxw { width: 100% }
-  .xl\:maxh { height: 100% }
   .xl\:max {
     width: 100% !important;
     max-width: 100% !important;
@@ -579,17 +572,17 @@ html.touch .touch-hide { display: none }
   
   @for $i from 10 to 190 by 10 {
     .xl\:w$(i)   { width: $(i)px !important }
-    .xl\:max$(i) { max-width: $(i)px !important }
+    .xl\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .xl\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 200 to 380 by 20 {
     .xl\:w$(i)   { width: $(i)px !important }
-    .xl\:max$(i) { max-width: $(i)px !important }
+    .xl\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .xl\:min$(i) { min-width: $(i)px !important }
   }
   @for $i from 400 to 1600 by 100 {
     .xl\:w$(i)   { width: $(i)px !important }
-    .xl\:max$(i) { max-width: $(i)px !important }
+    .xl\:max$(i) { width: 100% !important; max-width: $(i)px !important }
     .xl\:min$(i) { min-width: $(i)px !important }
   }
 }
