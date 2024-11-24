@@ -64,13 +64,11 @@ Created by andreyshpigunov on 25.05.2021.
         display: block;
     }
     & img {
-        display: block;
-        width: auto;
-        height: 100px;
+        max-width: 100px;
         will-change: transform;
         
         @media (--medium) {
-            height: 120px;
+            max-width: 120px;
         }
     }
 }

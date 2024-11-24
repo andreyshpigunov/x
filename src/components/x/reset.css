@@ -80,6 +80,7 @@ time, mark, audio, video {
 }
 html,
 body {
+  min-width: 320px;
   min-height: 100vh;
   max-height: none;
 }

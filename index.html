@@ -19,7 +19,7 @@
     "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.69</div>
+    <div class="header-version nowrap">0.0.70</div>
     <div class="header-logo mxa">
       <a role="button" data-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -29,18 +29,6 @@
       <a href="https://github.com/andreyshpigunov/x" target="_blank"></a>
     </div>
   </header>
-  
-  <ol class="p10 hidden">
-    <li class="fs1">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs3">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs4">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs5">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs6">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs7">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs8">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-    <li class="fs9">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum possimus, facilis beatae eveniet nisi numquam error laborum ullam, animi doloremque, fugiat labore dolore eum aspernatur impedit consequatur dolores! Inventore.</li>
-  </ol>
   
   <div class="element3" x-animate='{
         "start": "50vh",
@@ -52,7 +40,7 @@
     <div class="element3-figure"></div>
   </div>
 
-  <section class="section-header mt8" x-appear>
+  <section class="section-header mt8 px5 m:px6 l:px8" x-appear>
     <h1 class="mxa ac max800">Small and simple CSS & JavaScript library with interesting features</h1>
   </section>
 
@@ -651,7 +639,20 @@
             </div>
             <div class="mt3">
               <div id="sheetA" class="sheet-body">Once I saw a little bird outside my window. It was chirping happily and looking for food. I put some seeds on the windowsill, and it ate them right away.</div>
-              <div id="sheetB" class="sheet-body">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.</div>
+              <div id="sheetB" class="sheet-body">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.
+                
+                
+                <div x-sheets class="sheets-example">
+                  <div class="flex gap2">
+                    <a class="button sheet-tab active" x-sheet="sheetA1">Bird</a>
+                    <a class="button sheet-tab" x-sheet="sheetB1">Sea</a>
+                  </div>
+                  <div class="mt3">
+                    <div id="sheetA1" class="sheet-body">Once I saw a little bird outside my window. It was chirping happily and looking for food. I put some seeds on the windowsill, and it ate them right away.</div>
+                    <div id="sheetB1" class="sheet-body">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div x-sheets class="mt3 flex aic gap2 sheets-example">
