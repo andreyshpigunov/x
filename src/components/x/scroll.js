@@ -13,7 +13,6 @@
 //    {
 //      "parent": "#id or .class selector", — default "window"
 //      "target": "top",
-//      "duration": 200,
 //      "offset": 0,
 //      "classActive": "active",
 //      "hash": false
@@ -31,7 +30,6 @@
 //  this.scrollTo({
 //    parent: "element selector", — default value = window
 //    target: "element id, selector or element item",
-//    duration: 400, — scroll duration in ms
 //    offset: 0, — offset top in px
 //    classActive: 'active',
 //    hash: false
@@ -49,7 +47,6 @@ class Scroll {
 
   constructor() {
     this.parent = window;
-    this.duration = 1200;
     this.offset = 0;
     this.classActive = 'active';
     this.hash = false;
@@ -72,7 +69,6 @@ class Scroll {
               item.link = e;
               item.parent = json.parent || this.parent;
               item.target = lib.qs(json.target);
-              item.duration = json.duration || this.duration;
               item.offset = json.offset || this.offset;
               item.classActive = json.classActive || this.classActive;
               item.hash = json.hash || this.hash;
@@ -88,7 +84,6 @@ class Scroll {
               item.link = e;
               item.parent = this.parent;
               item.target = lib.qs(e.dataset.scrollto);
-              item.duration = this.duration;
               item.offset = this.offset;
               item.classActive = this.classActive;
               item.hash = this.hash;
@@ -107,7 +102,6 @@ class Scroll {
               this.scrollTo({
                 parent: item.parent,
                 target: item.target,
-                duration: item.duration,
                 offset: item.offset,
                 classActive: item.classActive,
                 hash: item.hash
@@ -143,20 +137,18 @@ class Scroll {
   }
 
   async scrollTo(params) {
-    // params — string (id, selector) or element node
-    // or object with fields:
-    // {
-    //     parent: "element selector", — default value = window
-    //     target: "element id, selector or element item",
-    //     duration: 200, — scroll duration in ms
-    //     offset: 0, — offset top in px
-    //     classActive: 'active',
-    //     hash: false
-    //  }
+  // params — string (id, selector) or element node
+  // or object with fields:
+  // {
+  //     parent: "element selector", — default value = window
+  //     target: "element id, selector or element item",
+  //     offset: 0, — offset top in px
+  //     classActive: 'active',
+  //     hash: false
+  //  }
     return new Promise(resolve => {
       let parent = lib.qs(params.parent) || this.parent,
         target,
-        duration = params.duration || this.duration,
         offset = params.offset || this.offset,
         hash = params.hash || this.hash;
 
@@ -172,7 +164,6 @@ class Scroll {
 
       let elementY,
         startingY,
-        // targetY,
         parentY,
         diff;
 
@@ -182,7 +173,6 @@ class Scroll {
         // Distance to target element, from page top
         elementY = parent.pageYOffset + target.getBoundingClientRect().top;
         diff = elementY - startingY - offset;
-        // console.log(diff)
       } else {
         // Code for not window object (scrollable div and others)
         startingY = parent.scrollTop;
@@ -190,35 +180,21 @@ class Scroll {
         elementY = parent.scrollTop + target.getBoundingClientRect().top - parentY;
         diff = elementY - startingY - offset;
       }
-
-      let start;
+      
       if (!diff) return;
-
-      window.requestAnimationFrame(function step(timestamp) {
-        if (!start) start = timestamp;
-        let time = timestamp - start;
-        // Scroll progress (0..1)
-        let progress = duration > 0 ? Math.min(time / duration, 1) : 1;
-        // progress = 1 - Math.pow(1 - progress, 5);
-        progress = Math.sin((progress * Math.PI) / 2);
-
-        // parent.scrollTo(0, startingY + diff * progress);
-        parent.scrollTo({
-          top: startingY + diff * progress,
-          left: 0,
-          behavior: 'smooth'
-        })
-        if (time < duration) {
-          window.requestAnimationFrame(step);
-        } else {
-          if (hash && target.id) {
-            window.location.hash = target.id;
-          } else if (hash) {
-            history.replaceState({}, document.title, window.location.href.split('#')[0]);
-          }
-          resolve();
-        }
-      })
+      
+      parent.scrollTo({
+        top: startingY + diff,
+        left: 0,
+        behavior: 'smooth'
+      });
+      
+      if (hash && target.id) {
+        window.location.hash = target.id;
+      } else if (hash) {
+        history.replaceState({}, document.title, window.location.href.split('#')[0]);
+      }
+      resolve();
     })
   }
 
@@ -226,12 +202,10 @@ class Scroll {
     Object.keys(linksHash).forEach(i => {
       let item = linksHash[i],
         targetOffset = item.target.getBoundingClientRect();
-      // duration = item.duration,
-      // offset = item.offset;
 
       if (
-        targetOffset.top <= document.documentElement.clientHeight / 2 &&
-        targetOffset.bottom > document.documentElement.clientHeight / 2
+        targetOffset.top <= document.documentElement.clientHeight / 6 &&
+        targetOffset.bottom > document.documentElement.clientHeight / 6
       ) {
         if (item.classActive != null) {
           item.link.classList.add(item.classActive);

@@ -41,6 +41,41 @@ Created by andreyshpigunov on 25.05.2021.
 }
 
 
+
+
+.foot {
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
+  grid-template-areas: "menu" "logo" "copyright";
+}
+.foot-menu {
+  grid-area: menu;
+}
+.foot-logo {
+  grid-area: logo;
+  
+  & img {
+    width: 100px;
+    height: 100px;
+    min-width: 100px;
+  }
+}
+.foot-copyright {
+  grid-area: copyright;
+}
+
+@media (--medium) {
+  .foot {
+    grid-template-rows: 1fr;
+    grid-template-columns: 140px 1fr 200px;
+    grid-template-areas: "logo menu copyright";
+  }
+}
+
+
+
+
 .header {
     z-index: 100;
     height: 100px;
@@ -133,6 +168,7 @@ code {
     padding: 16px 20px 16px 10px;
     background: var(--code-background-color);
     counter-reset: row 0;
+    border-radius: 8px;
     
     &:before {
         content: '</>';

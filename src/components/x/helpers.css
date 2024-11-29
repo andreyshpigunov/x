@@ -6,7 +6,7 @@ Created by Andrey Shpigunov on 08.09.2024.
 ---------------------------*/
 
 
-/* Helpers – small help for you code. */
+/* !- Helpers – small help for you code. */
 
 
 /*
@@ -27,83 +27,83 @@ Created by Andrey Shpigunov on 08.09.2024.
   .rel
   .abs
   .ins
-  .fit-none (xs,m,l,xl)
-  .fit-cover (xs,m,l,xl)
-  .fit-contain (xs,m,l,xl)
-  .t[0-10] (xs,m,l,xl)
-  .b[0-10] (xs,m,l,xl)
-  .z[0-10] (xs,m,l,xl)
-  .z[0-10] (xs,m,l,xl)
-  .op[0-10] (xs,m,l,xl)
-  .ratio1x1 (xs,m,l,xl)
-  .ratio2x1 (xs,m,l,xl)
-  .ratio3x1 (xs,m,l,xl)
-  .ratio4x1 (xs,m,l,xl)
-  .ratio3x2 (xs,m,l,xl)
-  .ratio4x3 (xs,m,l,xl)
-  .ratio16x9 (xs,m,l,xl)
-  .ratio1x2 (xs,m,l,xl)
-  .ratio1x3 (xs,m,l,xl)
-  .ratio1x4 (xs,m,l,xl)
-  .ratio2x3 (xs,m,l,xl)
-  .ratio3x4 (xs,m,l,xl)
-  .ratio9x16 (xs,m,l,xl)
+  .fit-none    (m,l,xl)
+  .fit-cover   (m,l,xl)
+  .fit-contain (m,l,xl)
+  .t[0-10]   (m,l,xl)
+  .b[0-10]   (m,l,xl)
+  .z[0-10]   (m,l,xl)
+  .z[0-10]   (m,l,xl)
+  .op[0-10]  (m,l,xl)
+  .ratio1x1  (m,l,xl)
+  .ratio2x1  (m,l,xl)
+  .ratio3x1  (m,l,xl)
+  .ratio4x1  (m,l,xl)
+  .ratio3x2  (m,l,xl)
+  .ratio4x3  (m,l,xl)
+  .ratio16x9 (m,l,xl)
+  .ratio1x2  (m,l,xl)
+  .ratio1x3  (m,l,xl)
+  .ratio1x4  (m,l,xl)
+  .ratio2x3  (m,l,xl)
+  .ratio3x4  (m,l,xl)
+  .ratio9x16 (m,l,xl)
   .breakWord
   .visuallyHidden
   .invisible
   .scrollResponsive
-  .hidden =(xs-s,m,l-xl)
+  .hidden     =(xs-s,m,l-xl)
   .hiddenNext =(xs-s,m,l-xl)
   .fullscreen
-  .max (xs,m,l,xl)
-  .w[10-190] step 10 (xs,m,l,xl)
-  .w[200-380] step 20 (sx,m,l,xl)
-  .w[400-1600] step 100 (xs,m,l,xl)
-  .max[10-190] step 10 (xs,m,l,xl)
-  .max[200-380] step 20 (xs,m,l,xl)
-  .max[400-1600] step 100 (xs,m,l,xl)
-  .min[10-190] step 10 (xs,m,l,xl)
-  .min[200-380] step 20 (xs,m,l,xl)
-  .min[400-1600] step 100 (xs,m,l,xl)
-  .block (xs,m,l,xl)
-  .inline (xs,m,l,xl)
-  .inlineBlock (xs,m,l,xl)
-  .al (xs,m,l,xl)
-  .ar (xs,m,l,xl)
-  .ac (xs,m,l,xl)
-  .aj (xs,m,l,xl)
-  .m[0-10] (xs,m,l,xl)
-  .mx[0-10] (xs,m,l,xl)
-  .my[0-10] (xs,m,l,xl)
-  .mt[0-10] (xs,m,l,xl)
-  .mb[0-10] (xs,m,l,xl)
-  .ml[0-10] (xs,m,l,xl)
-  .mr[0-10] (xs,m,l,xl)
-  .ma (xs,m,l,xl)
-  .mxa (xs,m,l,xl)
-  .mya (xs,m,l,xl)
-  .mta (xs,m,l,xl)
-  .mba (xs,m,l,xl)
-  .mla (xs,m,l,xl)
-  .mra (xs,m,l,xl)
-  .p[0-10] (xs,m,l,xl)
-  .px[0-10] (xs,m,l,xl)
-  .py[0-10] (xs,m,l,xl)
-  .pt[0-10] (xs,m,l,xl)
-  .pb[0-10] (xs,m,l,xl)
-  .pl[0-10] (xs,m,l,xl)
-  .pr[0-10] (xs,m,l,xl)
-  .gap[0-10] (xs,m,l,xl)
-  .gapx[0-10] (xs,m,l,xl)
-  .gapy[0-10] (xs,m,l,xl)
-  .r[0-10] (xs,m,l,xl)
-  .r100 (xs,m,l,xl)
+  .max (m,l,xl)
+  .w[10-190] step 10      (m,l,xl)
+  .w[200-380] step 20     (m,l,xl)
+  .w[400-1600] step 100   (m,l,xl)
+  .max[10-190] step 10    (m,l,xl)
+  .max[200-380] step 20   (m,l,xl)
+  .max[400-1600] step 100 (m,l,xl)
+  .min[10-190] step 10    (m,l,xl)
+  .min[200-380] step 20   (m,l,xl)
+  .min[400-1600] step 100 (m,l,xl)
+  .block       (m,l,xl)
+  .inline      (m,l,xl)
+  .inlineBlock (m,l,xl)
+  .al (m,l,xl)
+  .ar (m,l,xl)
+  .ac (m,l,xl)
+  .aj (m,l,xl)
+  .m[0-10]  (m,l,xl)
+  .mx[0-10] (m,l,xl)
+  .my[0-10] (m,l,xl)
+  .mt[0-10] (m,l,xl)
+  .mb[0-10] (m,l,xl)
+  .ml[0-10] (m,l,xl)
+  .mr[0-10] (m,l,xl)
+  .ma  (m,l,xl)
+  .mxa (m,l,xl)
+  .mya (m,l,xl)
+  .mta (m,l,xl)
+  .mba (m,l,xl)
+  .mla (m,l,xl)
+  .mra (m,l,xl)
+  .p[0-10]  (m,l,xl)
+  .px[0-10] (m,l,xl)
+  .py[0-10] (m,l,xl)
+  .pt[0-10] (m,l,xl)
+  .pb[0-10] (m,l,xl)
+  .pl[0-10] (m,l,xl)
+  .pr[0-10] (m,l,xl)
+  .gap[0-10]  (m,l,xl)
+  .gapx[0-10] (m,l,xl)
+  .gapy[0-10] (m,l,xl)
+  .r[0-10] (m,l,xl)
+  .r100 (m,l,xl)
   .sh0 (m,l)
   .sh1 (m,l)
   .sh2 (m,l)
   .sh3 (m,l)
   .sh4 (m,l)
-  .o[0-10] (xs,m,l,xl)
+  .o[0-12] (m,l,xl)
   .noPrint
 */
 
@@ -187,11 +187,6 @@ html.touch .touch-hide { display: none }
 /* !- Object fit */
 .fit-cover { object-fit: cover }
 .fit-contain { object-fit: contain }
-@media (--xsmall) {
-  .xs\:fit-none { object-fit: none }
-  .xs\:fit-cover { object-fit: cover }
-  .xs\:fit-contain { object-fit: contain }
-}
 @media (--medium) {
   .m\:fit-none { object-fit: none }
   .m\:fit-cover { object-fit: cover }
@@ -214,13 +209,6 @@ html.touch .touch-hide { display: none }
   .t$(i) { top: var(--space-$(i)) !important; }
   .b$(i) { bottom: var(--space-$(i)) !important; }
   .z$(i) { z-index: $(i) !important; }
-}
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:t$(i) { top: var(--space-$(i)) !important; }
-    .xs\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .xs\:z$(i) { z-index: $(i) !important; }
-  }
 }
 @media (--medium) {
   @for $i from 0 to 10 {
@@ -248,11 +236,6 @@ html.touch .touch-hide { display: none }
 /* !- Opacity */
 @for $i from 0 to 10 {
   .op$(i) { opacity: calc($(i) / 10) !important }
-}
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:op$(i) { opacity: calc($(i) / 10) !important }
-  }
 }
 @media (--medium) {
   @for $i from 0 to 10 {
@@ -319,25 +302,6 @@ html.touch .touch-hide { display: none }
 .ratio2x3 { aspect-ratio: 2/3 !important }
 .ratio3x4 { aspect-ratio: 3/4 !important }
 .ratio9x16 { aspect-ratio: 9/16 !important }
-
-@media (--xsmall) {
-  /* Square */
-  .xs\:ratio1x1 { aspect-ratio: 1/1 !important }
-  /* Landscape */
-  .xs\:ratio2x1 { aspect-ratio: 2/1 !important }
-  .xs\:ratio3x1 { aspect-ratio: 3/1 !important }
-  .xs\:ratio4x1 { aspect-ratio: 4/1 !important }
-  .xs\:ratio3x2 { aspect-ratio: 3/2 !important }
-  .xs\:ratio4x3 { aspect-ratio: 4/3 !important }
-  .xs\:ratio16x9 { aspect-ratio: 16/9 !important }
-  /* Portrait */
-  .xs\:ratio1x2 { aspect-ratio: 1/2 !important }
-  .xs\:ratio1x3 { aspect-ratio: 1/3 !important }
-  .xs\:ratio1x4 { aspect-ratio: 1/4 !important }
-  .xs\:ratio2x3 { aspect-ratio: 2/3 !important }
-  .xs\:ratio3x4 { aspect-ratio: 3/4 !important }
-  .xs\:ratio9x16 { aspect-ratio: 9/16 !important }
-}
 
 @media (--medium) {
   /* Square */
@@ -431,15 +395,6 @@ html.touch .touch-hide { display: none }
 .flex { display: flex !important }
 .table { display: table !important }
 
-@media (--xsmall) {
-  .xs\:hidden,
-  .xs\:hiddenNext + * { display: none !important }
-  .xs\:block { display: block !important }
-  .xs\:inlineBlock { display: inline-block !important }
-  .xs\:grid { display: grid !important }
-  .xs\:flex { display: flex !important }
-  .xs\:table { display: table !important }
-}
 @media (--medium) {
   .m\:hidden,
   .m\:hiddenNext + * { display: none !important }
@@ -493,29 +448,6 @@ html.touch .touch-hide { display: none }
   .w$(i)   { width: $(i)px !important }
   .max$(i) { width: 100% !important; max-width: $(i)px !important }
   .min$(i) { min-width: $(i)px !important }
-}
-
-@media (--xsmall) {
-  .xs\:max {
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-  
-  @for $i from 10 to 190 by 10 {
-    .xs\:w$(i)   { width: $(i)px !important }
-    .xs\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .xs\:min$(i) { min-width: $(i)px !important }
-  }
-  @for $i from 200 to 380 by 20 {
-    .xs\:w$(i)   { width: $(i)px !important }
-    .xs\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .xs\:min$(i) { min-width: $(i)px !important }
-  }
-  @for $i from 400 to 1600 by 100 {
-    .xs\:w$(i)   { width: $(i)px !important }
-    .xs\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .xs\:min$(i) { min-width: $(i)px !important }
-  }
 }
 
 @media (--medium) {
@@ -594,13 +526,6 @@ html.touch .touch-hide { display: none }
 .ac { text-align: center !important }
 .aj { text-align: justify !important }
 
-@media (--xsmall) {
-  .xs\:al { text-align: left !important }
-  .xs\:ar { text-align: right !important }
-  .xs\:ac { text-align: center !important }
-  .xs\:aj { text-align: justify !important }
-}
-
 @media (--medium) {
   .m\:al { text-align: left !important }
   .m\:ar { text-align: right !important }
@@ -640,25 +565,6 @@ html.touch .touch-hide { display: none }
 .mba { margin-bottom: auto !important }
 .mla { margin-left: auto !important }
 .mra { margin-right: auto !important }
-
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:m$(i)  { margin: var(--space-$(i)) !important }
-    .xs\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
-    .xs\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
-    .xs\:mt$(i) { margin-top: var(--space-$(i)) !important }
-    .xs\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
-    .xs\:ml$(i) { margin-left: var(--space-$(i)) !important }
-    .xs\:mr$(i) { margin-right: var(--space-$(i)) !important }
-  }
-  .xs\:ma  { margin: auto !important }
-  .xs\:mxa { margin-left: auto !important; margin-right: auto !important }
-  .xs\:mya { margin-top: auto !important; margin-bottom: auto !important }
-  .xs\:mta { margin-top: auto !important }
-  .xs\:mba { margin-bottom: auto !important }
-  .xs\:mla { margin-left: auto !important }
-  .xs\:mra { margin-right: auto !important }
-}
 
 @media (--medium) {
   @for $i from 0 to 10 {
@@ -729,18 +635,6 @@ html.touch .touch-hide { display: none }
   .pr$(i) { padding-right: var(--space-$(i)) !important }
 }
 
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:p$(i)  { padding: var(--space-$(i)) !important }
-    .xs\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
-    .xs\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
-    .xs\:pt$(i) { padding-top: var(--space-$(i)) !important }
-    .xs\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
-    .xs\:pl$(i) { padding-left: var(--space-$(i)) !important }
-    .xs\:pr$(i) { padding-right: var(--space-$(i)) !important }
-  }
-}
-
 @media (--medium) {
   @for $i from 0 to 10 {
     .m\:p$(i)  { padding: var(--space-$(i)) !important }
@@ -785,14 +679,6 @@ html.touch .touch-hide { display: none }
   .gapy$(i) { row-gap: var(--space-$(i)) !important }
 }
 
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:gap$(i) { gap: var(--space-$(i)) !important }
-    .xs\:gapx$(i) { column-gap: var(--space-$(i)) !important }
-    .xs\:gapy$(i) { row-gap: var(--space-$(i)) !important }
-  }
-}
-
 @media (--medium) {
   @for $i from 0 to 10 {
     .m\:gap$(i) { gap: var(--space-$(i)) !important }
@@ -823,13 +709,6 @@ html.touch .touch-hide { display: none }
   .r$(i) { border-radius: var(--space-$(i)) !important }
 }
 .r100 { border-radius: 100% !important }
-
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:r$(i) { border-radius: var(--space-$(i)) !important }
-  }
-  .xs\:r100 { border-radius: 100% !important }
-}
 
 @media (--medium) {
   @for $i from 0 to 10 {
@@ -878,26 +757,21 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Order */
-@for $i from 0 to 10 {
+@for $i from 0 to 12 {
   .o$(i) { order: $(i) }
 }
-@media (--xsmall) {
-  @for $i from 0 to 10 {
-    .xs\:o$(i) { order: $(i) }
-  }
-}
 @media (--medium) {
-  @for $i from 0 to 10 {
+  @for $i from 0 to 12 {
     .m\:o$(i) { order: $(i) }
   }
 }
 @media (--large) {
-  @for $i from 0 to 10 {
+  @for $i from 0 to 12 {
     .l\:o$(i) { order: $(i) }
   }
 }
 @media (--xlarge) {
-  @for $i from 0 to 10 {
+  @for $i from 0 to 12 {
     .xl\:o$(i) { order: $(i) }
   }
 }

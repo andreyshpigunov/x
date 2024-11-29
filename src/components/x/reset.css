@@ -6,18 +6,16 @@ Created by andreyshpigunov on 25.05.2021.
 ---------------------------*/
 
 
-/* CSS reset */
+/* !- CSS reset */
 
 
 /*
   PostCSS media query min-width:
-  --------------------------------
-  |    s     |  m  |      l      |  - main breakpoints
-  ----- --------------------------
-  | 0  | 400 | 600 | 1000 | 1400 |  - min viewport size
-  --------------------------------
-  | xs |     |     |      |  xl  |  - additional breakpoints
-  --------------------------------
+  ---------------------------
+  |  s  |  m  |  l   |  xl  |  - main breakpoints
+  ---------------------------
+  |  0  | 600 | 1000 | 1400 |  - min viewport size
+  ---------------------------
   All queries are mobile first.
   [s] - default size.
 */
@@ -41,18 +39,16 @@ Created by andreyshpigunov on 25.05.2021.
 /* PostCSS custom media */
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
 @custom-media --small-max  (max-width: 599px);
-@custom-media --xsmall-max (max-width: 399px);
 @custom-media --medium-min (min-width: 600px);
 @custom-media --medium-max (max-width: 999px);
 @custom-media --large-min  (min-width: 1000px);
 @custom-media --xlarge-min (min-width: 1400px);
 
 /* Breakpoints */
-@custom-media --small  (min-width: 0px);     /* Small screen [s] (DEFAULT) */
-@custom-media --xsmall (max-width: 399px);   /* - additional breakpoint to [s] */
-@custom-media --medium (min-width: 600px);   /* Medium screen [m] */
-@custom-media --large  (min-width: 1000px);  /* Large screen [l] */
-@custom-media --xlarge (min-width: 1400px);  /* - additional breakpoint to [l] */
+@custom-media --small  (min-width: 0px);     /* Small screen  [s] (DEFAULT) */
+@custom-media --medium (min-width: 600px);   /* Medium screen [m]  */
+@custom-media --large  (min-width: 1000px);  /* Large screen  [l]  */
+@custom-media --xlarge (min-width: 1400px);  /* XLarge screen [xl] */
 
 
 html, body, main, div, span, object, iframe,
@@ -91,6 +87,7 @@ html {
   background-color: var(--background-color);
   font-synthesis: initial;
   text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: #00000000;
   -moz-font-feature-settings: 'liga', 'kern';

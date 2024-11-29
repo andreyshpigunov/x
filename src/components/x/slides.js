@@ -8,6 +8,7 @@
 //  <div x-slides="['photo1.jpg','photo2.jpg','photo3.jpg']">
 //    <img src="photo1.jpg"/>
 //  </div>
+//
 
 
 import { device } from './device';

@@ -12,26 +12,24 @@ Created by Andrey Shpigunov on 19.09.2024.
 /*
   .flex
   
-  .flex.fr  (xs,m,l,xl)  - flex row
-  .flex.fc  (xs,m,l,xl)  - flex column
-  .flex.fw  (xs,m,l,xl)  - flex wrap
-  .flex.fnw (xs,m,l,xl)  - flex nowrap
+  .flex.fr  (m,l,xl)  - flex row
+  .flex.fc  (m,l,xl)  - flex column
+  .flex.fw  (m,l,xl)  - flex wrap
+  .flex.fnw (m,l,xl)  - flex nowrap
   
-  .flex.ais  (xs,m,l,xl)  - stretch
-  .flex.aifs (xs,m,l,xl)  - flex start
-  .flex.aic  (xs,m,l,xl)  - center
-  .flex.aife (xs,m,l,xl)  - flex end
+  .flex.ais  (m,l,xl)  - stretch
+  .flex.aifs (m,l,xl)  - flex start
+  .flex.aic  (m,l,xl)  - center
+  .flex.aife (m,l,xl)  - flex end
   
-  .flex.jcfs (xs,m,l,xl)  - flex start
-  .flex.jcc  (xs,m,l,xl)  - center
-  .flex.jcfe (xs,m,l,xl)  - flex end
-  .flex.jcsb (xs,m,l,xl)  - space between
-  .flex.jcsa (xs,m,l,xl)  - space around
-  .flex.jcse (xs,m,l,xl)  - space evenly
+  .flex.jcfs (m,l,xl)  - flex start
+  .flex.jcc  (m,l,xl)  - center
+  .flex.jcfe (m,l,xl)  - flex end
+  .flex.jcsb (m,l,xl)  - space between
+  .flex.jcsa (m,l,xl)  - space around
+  .flex.jcse (m,l,xl)  - space evenly
   
-  .flex.f[0-10]  (xs,m,l,xl)  - flex
-  .flex.fb[0-10] (xs,m,l,xl)  - flex basis
-  .flex.fg[0-10] (xs,m,l,xl)  - flex grow
+  .flex > .c[1-12]/[1-12] (m,l,xl) - column width "column/columns"
 */
 
 
@@ -55,48 +53,12 @@ Created by Andrey Shpigunov on 19.09.2024.
   &.jcsa { justify-content: space-around }
   &.jcse { justify-content: space-evenly }
   
-  @for $i from 0 to 10 {
-    & .f$(i) {
-      flex: $(i);
-    }
-    & .fb$(i) {
-      flex: 0 0 calc($(i) * 10%);
-      max-width: calc($(i) * 10%);
-    }
-    & .fg$(i) {
-      flex-grow: $(i);
-    }
-  }
-  
-  @media (--xsmall) {
-    
-    &.xs\:fr  { flex-direction: row }
-    &.xs\:fc  { flex-direction: column }
-    &.xs\:fw  { flex-wrap: wrap }
-    &.xs\:fnw { flex-wrap: nowrap }
-    
-    &.xs\:ais  { align-items: stretch }
-    &.xs\:aifs { align-items: flex-start }
-    &.xs\:aic  { align-items: center }
-    &.xs\:aife { align-items: flex-end }
-    
-    &.xs\:jcfs { justify-content: flex-start }
-    &.xs\:jcc  { justify-content: center }
-    &.xs\:jcfe { justify-content: flex-end }
-    &.xs\:jcsb { justify-content: space-between }
-    &.xs\:jcsa { justify-content: space-around }
-    &.xs\:jcse { justify-content: space-evenly }
-    
-    @for $i from 0 to 10 {
-      & .xs\:f$(i) {
-        flex: $(i);
-      }
-      & .xs\:fb$(i) {
-        flex: 0 0 calc($(i) * 10%);
-        max-width: calc($(i) * 10%);
-      }
-      & .xs\:fg$(i) {
-        flex-grow: $(i);
+  /* Columns */
+  @for $cols from 1 to 12 {
+    @for $col from 1 to $cols {
+      & > .c$(col)\/$(cols) {
+        flex-basis: calc($(col) / $(cols) * 100%);
+        max-width: calc($(col) / $(cols) * 100%);
       }
     }
   }
@@ -120,16 +82,12 @@ Created by Andrey Shpigunov on 19.09.2024.
     &.m\:jcsa { justify-content: space-around }
     &.m\:jcse { justify-content: space-evenly }
     
-    @for $i from 0 to 10 {
-      & .m\:f$(i) {
-        flex: $(i);
-      }
-      & .m\:fb$(i) {
-        flex: 0 0 calc($(i) * 10%);
-        max-width: calc($(i) * 10%);
-      }
-      & .m\:fg$(i) {
-        flex-grow: $(i);
+    @for $cols from 1 to 12 {
+      @for $col from 1 to $cols {
+        & > .m\:c$(col)\/$(cols) {
+          flex-basis: calc($(col) / $(cols) * 100%);
+          max-width: calc($(col) / $(cols) * 100%);
+        }
       }
     }
   }
@@ -153,16 +111,12 @@ Created by Andrey Shpigunov on 19.09.2024.
     &.l\:jcsa { justify-content: space-around }
     &.l\:jcse { justify-content: space-evenly }
     
-    @for $i from 0 to 10 {
-      & .l\:f$(i) {
-        flex: $(i);
-      }
-      & .l\:fb$(i) {
-        flex: 0 0 calc($(i) * 10%);
-        max-width: calc($(i) * 10%);
-      }
-      & .l\:fg$(i) {
-        flex-grow: $(i);
+    @for $cols from 1 to 12 {
+      @for $col from 1 to $cols {
+        & > .l\:c$(col)\/$(cols) {
+          flex-basis: calc($(col) / $(cols) * 100%);
+          max-width: calc($(col) / $(cols) * 100%);
+        }
       }
     }
   }
@@ -186,16 +140,12 @@ Created by Andrey Shpigunov on 19.09.2024.
     &.xl\:jcsa { justify-content: space-around }
     &.xl\:jcse { justify-content: space-evenly }
     
-    @for $i from 0 to 10 {
-      & .xl\:f$(i) {
-        flex: $(i);
-      }
-      & .xl\:fb$(i) {
-        flex: 0 0 calc($(i) * 10%);
-        max-width: calc($(i) * 10%);
-      }
-      & .xl\:fg$(i) {
-        flex-grow: $(i);
+    @for $cols from 1 to 12 {
+      @for $col from 1 to $cols {
+        & > .xl\:c$(col)\/$(cols) {
+          flex-basis: calc($(col) / $(cols) * 100%);
+          max-width: calc($(col) / $(cols) * 100%);
+        }
       }
     }
   }

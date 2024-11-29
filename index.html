@@ -19,7 +19,7 @@
     "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.70</div>
+    <div class="header-version nowrap">0.0.71</div>
     <div class="header-logo mxa">
       <a role="button" data-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -642,7 +642,7 @@
               <div id="sheetB" class="sheet-body">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.
                 
                 
-                <div x-sheets class="sheets-example">
+                <div x-sheets class="sheets-example mt3">
                   <div class="flex gap2">
                     <a class="button sheet-tab active" x-sheet="sheetA1">Bird</a>
                     <a class="button sheet-tab" x-sheet="sheetB1">Sea</a>
@@ -671,17 +671,17 @@
           <h5 class="pointer" x-modal-open="modalSlides">Slides</h5>
           <div class="max600">
             <div class="ratio4x3" x-slides='[
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0420.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0451.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0482.jpg",
-                            "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0485.jpg"
-                        ]'>
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0420.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0451.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0482.jpg",
+              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0485.jpg"
+            ]'>
               <img class="r3" src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg" width="800" height="600" />
             </div>
           </div>
@@ -815,20 +815,17 @@
         <code>xs</code> use <code>max-size</code>
       </p>
       <pre class="fs14 mono">
---------------------------------
-|    s     |  m  |      l      |
------ --------------------------
-| 0  | 400 | 600 | 1000 | 1400 |
---------------------------------
-| xs |     |     |      |  xl  |
---------------------------------</pre>
+---------------------------
+|  s  |  m  |  l   |  xl  |
+---------------------------
+|  0  | 600 | 1000 | 1400 |
+---------------------------</pre>
     
     <p>
       <code>s</code> - default size, not using prefix <code>s:</code><br/>
-      <code>xs</code> - additional size to <code>s</code>, when you need to change anything on smaller screens<br/>
       <code>m</code> - medium size<br/>
       <code>l</code> - large size<br/>
-      <code>xl</code> - additional size to <code>l</code>, when you need to change anything on larger screens
+      <code>xl</code> - xlarge size
     </p>
     
     <h3>Custom media</h3>
@@ -837,7 +834,6 @@
     <pre class="fs14 mono">
 <span class="op4">/* Setting for custom media plugin */</span>
 @custom-media --small  (min-width: 0px);
-@custom-media --xsmall (max-width: 399px);
 @custom-media --medium (min-width: 600px);
 @custom-media --large  (min-width: 1000px);
 @custom-media --xlarge (min-width: 1400px);</pre>
@@ -924,11 +920,11 @@ a.pseudo</pre>
 .h[1-6]
 .mono
 .italic
-.fs[10-19] step 1 (xs,m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
-.fs[20-80] step 2 (xs,m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 8.0
-.fw[100-900] step 100 (xs,m,l,xl)
-.ls[0-4] (xs,m,l)
-.lh[0-9] (xs,m,l)  - values: 1.0-1.9</pre>
+.fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
+.fs[20-80] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 8.0
+.fw[100-900] step 100 (m,l,xl)
+.ls[0-4] (m,l,xl)
+.lh[0-9] (m,l,xl)  - values: 1.0-1.9</pre>
     
     <h3>Variables</h3>
     <pre class="fs14 mono">
@@ -1052,28 +1048,26 @@ a.pseudo</pre>
     <pre class="fs14 mono">
 .flex
 
-.flex.fr  (xs,m,l,xl)  - flex row
-.flex.fc  (xs,m,l,xl)  - flex column
-.flex.fw  (xs,m,l,xl)  - flex wrap
-.flex.fnw (xs,m,l,xl)  - flex nowrap
+.flex.fr  (m,l,xl)  - flex row
+.flex.fc  (m,l,xl)  - flex column
+.flex.fw  (m,l,xl)  - flex wrap
+.flex.fnw (m,l,xl)  - flex nowrap
 
 <span class="op4">/* Align items */</span>
-.flex.ais  (xs,m,l,xl)  - stretch
-.flex.aifs (xs,m,l,xl)  - flex start
-.flex.aic  (xs,m,l,xl)  - center
-.flex.aife (xs,m,l,xl)  - flex end
+.flex.ais  (m,l,xl)  - stretch
+.flex.aifs (m,l,xl)  - flex start
+.flex.aic  (m,l,xl)  - center
+.flex.aife (m,l,xl)  - flex end
 
 <span class="op4">/* Justify content */</span>
-.flex.jcfs (xs,m,l,xl)  - flex start
-.flex.jcc  (xs,m,l,xl)  - center
-.flex.jcfe (xs,m,l,xl)  - flex end
-.flex.jcsb (xs,m,l,xl)  - space between
-.flex.jcsa (xs,m,l,xl)  - space around
-.flex.jcse (xs,m,l,xl)  - space evenly
+.flex.jcfs (m,l,xl)  - flex start
+.flex.jcc  (m,l,xl)  - center
+.flex.jcfe (m,l,xl)  - flex end
+.flex.jcsb (m,l,xl)  - space between
+.flex.jcsa (m,l,xl)  - space around
+.flex.jcse (m,l,xl)  - space evenly
 
-.flex.f[0-10]  (xs,m,l,xl)  - flex
-.flex.fb[0-10] (xs,m,l,xl)  - flex basis
-.flex.fg[0-10] (xs,m,l,xl)  - flex grow</pre>
+.flex > .c[1-12]/[1-12] (m,l,xl) - column width "column/columns"</pre>
   </div>
 
 
@@ -1084,8 +1078,9 @@ a.pseudo</pre>
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .grid
-.grid.g[1-12] (xs,m,l,xl)   - columns in grid
-.grid .c[1-12] (xs,m,l,xl)  - column width</pre>
+.grid.g[1-12]           (m,l,xl)  - columns limit in grid
+.grid > .c[1-12]        (m,l,xl)  - column width
+.grid > .c[1-12]/[1-12] (m,l,xl)  - columns range for content</pre>
   </div>
 
 
@@ -1096,7 +1091,7 @@ a.pseudo</pre>
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .flow
-.flow.s[0-10] (xs,m,l,xl) - vertical space</pre>
+.flow.s[0-10] (m,l,xl) - vertical space</pre>
   </div>
 
 
@@ -1126,92 +1121,92 @@ a.pseudo</pre>
 .abs        | position absolute
 .ins        | position absolute inset 0
 
-.fit-none (xs,m,l,xl)    | object fit none
-.fit-cover (xs,m,l,xl)   | object fit cover
-.fit-contain (xs,m,l,xl) | object fit containt
+.fit-none (m,l,xl)    | object fit none
+.fit-cover (m,l,xl)   | object fit cover
+.fit-contain (m,l,xl) | object fit containt
 
-.t[0-10] (xs,m,l,xl)  | top
-.b[0-10] (xs,m,l,xl)  | bottom
-.z[0-10] (xs,m,l,xl)  | z-index
-.op[0-10] (xs,m,l,xl) | opacity
+.t[0-10] (m,l,xl)  | top
+.b[0-10] (m,l,xl)  | bottom
+.z[0-10] (m,l,xl)  | z-index
+.op[0-10] (m,l,xl) | opacity
 
-.ratio1x1 (xs,m,l,xl)
-.ratio2x1 (xs,m,l,xl)
-.ratio3x1 (xs,m,l,xl)
-.ratio4x1 (xs,m,l,xl)
-.ratio3x2 (xs,m,l,xl)
-.ratio4x3 (xs,m,l,xl)
-.ratio16x9 (xs,m,l,xl)
-.ratio1x2 (xs,m,l,xl)
-.ratio1x3 (xs,m,l,xl)
-.ratio1x4 (xs,m,l,xl)
-.ratio2x3 (xs,m,l,xl)
-.ratio3x4 (xs,m,l,xl)
-.ratio9x16 (xs,m,l,xl)
+.ratio1x1 (m,l,xl)
+.ratio2x1 (m,l,xl)
+.ratio3x1 (m,l,xl)
+.ratio4x1 (m,l,xl)
+.ratio3x2 (m,l,xl)
+.ratio4x3 (m,l,xl)
+.ratio16x9 (m,l,xl)
+.ratio1x2 (m,l,xl)
+.ratio1x3 (m,l,xl)
+.ratio1x4 (m,l,xl)
+.ratio2x3 (m,l,xl)
+.ratio3x4 (m,l,xl)
+.ratio9x16 (m,l,xl)
 
 .breakWord
 .visuallyHidden
 .invisible
 .scrollResponsive
 
-.hidden =(xs-s,m,l-xl)
-.hiddenNext =(xs-s,m,l-xl)
+.hidden     =(s,m,l-xl)
+.hiddenNext =(s,m,l-xl)
 
 .fulscreen | min width and min height 100vw/vh
 
-.max (xs,m,l,xl)  | max width 100%
+.max (m,l,xl)  | max width 100%
 
-.w[10-190] step 10 (xs,m,l,xl) | width
-.w[200-380] step 20 (sx,m,l,xl)
-.w[400-1600] step 100 (xs,m,l,xl)
+.w[10-190] step 10    (m,l,xl) | width
+.w[200-380] step 20   (m,l,xl)
+.w[400-1600] step 100 (m,l,xl)
 
-.max[10-190] step 10 (xs,m,l,xl) | max width
-.max[200-380] step 20 (xs,m,l,xl)
-.max[400-1600] step 100 (xs,m,l,xl)
+.max[10-190] step 10    (m,l,xl) | max width
+.max[200-380] step 20   (m,l,xl)
+.max[400-1600] step 100 (m,l,xl)
 
-.min[10-190] step 10 (xs,m,l,xl) | min width
-.min[200-380] step 20 (xs,m,l,xl)
-.min[400-1600] step 100 (xs,m,l,xl)
+.min[10-190] step 10    (m,l,xl) | min width
+.min[200-380] step 20   (m,l,xl)
+.min[400-1600] step 100 (m,l,xl)
 
-.block (xs,m,l,xl)
-.inline (xs,m,l,xl)
-.inlineBlock (xs,m,l,xl)
+.block       (m,l,xl)
+.inline      (m,l,xl)
+.inlineBlock (m,l,xl)
 
-.al (xs,m,l,xl) | aligh left
-.ar (xs,m,l,xl) | align right
-.ac (xs,m,l,xl) | align center
-.aj (xs,m,l,xl) | align justify
+.al (m,l,xl) | aligh left
+.ar (m,l,xl) | align right
+.ac (m,l,xl) | align center
+.aj (m,l,xl) | align justify
 
-.m[0-10] (xs,m,l,xl)  | margin
-.mx[0-10] (xs,m,l,xl) | margin x
-.my[0-10] (xs,m,l,xl) | margin y
-.mt[0-10] (xs,m,l,xl) | margin top
-.mb[0-10] (xs,m,l,xl) | margin bottom
-.ml[0-10] (xs,m,l,xl) | margin left
-.mr[0-10] (xs,m,l,xl) | margin right
+.m[0-10]  (m,l,xl)  | margin
+.mx[0-10] (m,l,xl) | margin x
+.my[0-10] (m,l,xl) | margin y
+.mt[0-10] (m,l,xl) | margin top
+.mb[0-10] (m,l,xl) | margin bottom
+.ml[0-10] (m,l,xl) | margin left
+.mr[0-10] (m,l,xl) | margin right
 
-.ma (xs,m,l,xl)  | margin auto
-.mxa (xs,m,l,xl)
-.mya (xs,m,l,xl)
-.mta (xs,m,l,xl)
-.mba (xs,m,l,xl)
-.mla (xs,m,l,xl)
-.mra (xs,m,l,xl)
+.ma  (m,l,xl)  | margin auto
+.mxa (m,l,xl)
+.mya (m,l,xl)
+.mta (m,l,xl)
+.mba (m,l,xl)
+.mla (m,l,xl)
+.mra (m,l,xl)
 
-.p[0-10] (xs,m,l,xl)  | padding
-.px[0-10] (xs,m,l,xl) | padding x
-.py[0-10] (xs,m,l,xl) | padding y
-.pt[0-10] (xs,m,l,xl) | padding top
-.pb[0-10] (xs,m,l,xl) | padding bottom
-.pl[0-10] (xs,m,l,xl) | padding left
-.pr[0-10] (xs,m,l,xl) | padding right
+.p[0-10]  (m,l,xl) | padding
+.px[0-10] (m,l,xl) | padding x
+.py[0-10] (m,l,xl) | padding y
+.pt[0-10] (m,l,xl) | padding top
+.pb[0-10] (m,l,xl) | padding bottom
+.pl[0-10] (m,l,xl) | padding left
+.pr[0-10] (m,l,xl) | padding right
 
-.gap[0-10] (xs,m,l,xl)
-.gapx[0-10] (xs,m,l,xl)
-.gapy[0-10] (xs,m,l,xl)
+.gap[0-10]  (m,l,xl)
+.gapx[0-10] (m,l,xl)
+.gapy[0-10] (m,l,xl)
 
-.r[0-10] (xs,m,l,xl) | radius
-.r100 (xs,m,l,xl)    | radius 100%
+.r[0-10] (m,l,xl) | radius
+.r100    (m,l,xl) | radius 100%
 
 .sh0 (m,l) | shadow
 .sh1 (m,l)
@@ -1219,7 +1214,7 @@ a.pseudo</pre>
 .sh3 (m,l)
 .sh4 (m,l)
 
-.o[0-10] (xs,m,l,xl) | order
+.o[0-12] (m,l,xl) | order
 .noPrint</pre>
     
     <h3>Variables</h3>
@@ -1576,11 +1571,11 @@ a.pseudo</pre>
           <th width="50%">Description</th>
         </tr>
         <!-- <tr>
-                    <td><code>parent</code></td>
-                    <td><code>string, element</code></td>
-                    <td><code>window</code></td>
-                    <td><code>id</code>, селектор или элемент.</td>
-                </tr> -->
+            <td><code>parent</code></td>
+            <td><code>string, element</code></td>
+            <td><code>window</code></td>
+            <td><code>id</code>, селектор или элемент.</td>
+        </tr> -->
         <tr>
           <td><code>trigger</code></td>
           <td><code>string</code></td>

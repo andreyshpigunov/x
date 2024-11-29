@@ -29,10 +29,9 @@ window.element3 = (params) => {
   params.element.style.transform = 'rotate(' + rotate +  'deg)';
 }
 window.headerAnimation = (params) => {
-  console.log(x.device.size.s);
-  
+  // console.log(x.device.size.s);
   let _height = x.device.size.s ? 100 : 120;
-  console.log(_height);
+  // console.log(_height);
   let header = qs('.header');
   let headerLogo = qs('.header-logo img');
   let height = _height - params.progress * _height / 2;
