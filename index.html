@@ -19,9 +19,9 @@
     "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.71</div>
+    <div class="header-version nowrap">0.0.72</div>
     <div class="header-logo mxa">
-      <a role="button" data-scrollto="#top">
+      <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
       </a>
     </div>
@@ -1229,11 +1229,11 @@ a.pseudo</pre>
 
     <nav class="modalNavigation sticky unselectable">
       <div class="modalNavigation-inner">
-        <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalMain", "offset": 100}'>Описание</a>
-        <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalApi", "offset": 100}'>API</a>
-        <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalEvents", "offset": 100}'>События</a>
-        <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalCss", "offset": 100}'>CSS</a>
-        <a data-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalExamples", "offset": 100}'>Примеры</a>
+        <a x-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalMain", "offset": 100}'>Описание</a>
+        <a x-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalApi", "offset": 100}'>API</a>
+        <a x-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalEvents", "offset": 100}'>События</a>
+        <a x-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalCss", "offset": 100}'>CSS</a>
+        <a x-scrollto='{"parent": "#modalModal .modal-outer", "target": "#modalModalExamples", "offset": 100}'>Примеры</a>
       </div>
     </nav>
 
@@ -1432,9 +1432,9 @@ a.pseudo</pre>
 
     <nav class="modalNavigation sticky unselectable">
       <div class="modalNavigation-inner">
-        <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollMain", "offset": 100}'>Описание</a>
-        <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollApi", "offset": 100}'>API</a>
-        <a data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams", "offset": 100}'>Параметры</a>
+        <a x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollMain", "offset": 100}'>Описание</a>
+        <a x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollApi", "offset": 100}'>API</a>
+        <a x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams", "offset": 100}'>Параметры</a>
       </div>
     </nav>
 
@@ -1443,12 +1443,12 @@ a.pseudo</pre>
       <p>Краткий вызов:</p>
       <div class="codeBlock">
         <code>&lt;div id="top" class="top"&gt;&lt;/div&gt;</code>
-        <code>&lt;a data-scrollto="top"&gt;Наверх&lt;/a&gt;</code>
-        <code>&lt;a data-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
+        <code>&lt;a x-scrollto="top"&gt;Наверх&lt;/a&gt;</code>
+        <code>&lt;a x-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
       </div>
-      <p>Вызов с <a class="link pseudo" data-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
+      <p>Вызов с <a class="link pseudo" x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
       <div class="codeBlock">
-        <code>&lt;a data-scrollto='{</code>
+        <code>&lt;a x-scrollto='{</code>
         <code>    "parent": window,</code>
         <code>    "target": "top",</code>
         <code>    "duration": 400,</code>
@@ -1539,9 +1539,9 @@ a.pseudo</pre>
 
     <nav class="modalNavigation sticky unselectable">
       <div class="modalNavigation-inner">
-        <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateMain", "offset": 100}'>About</a>
-        <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateParams", "offset": 100}'>Params</a>
-        <a data-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateExamples", "offset": 100}'>Example</a>
+        <a x-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateMain", "offset": 100}'>About</a>
+        <a x-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateParams", "offset": 100}'>Params</a>
+        <a x-scrollto='{"parent": "#modalAnimate .modal-outer", "target": "#modalAnimateExamples", "offset": 100}'>Example</a>
       </div>
     </nav>
 
@@ -1630,9 +1630,9 @@ a.pseudo</pre>
 
     <nav class="modalNavigation sticky unselectable">
       <div class="modalNavigation-inner">
-        <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsMain", "offset": 100}'>Описание</a>
-        <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsApi", "offset": 100}'>API</a>
-        <a data-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsExamples", "offset": 100}'>Примеры</a>
+        <a x-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsMain", "offset": 100}'>Описание</a>
+        <a x-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsApi", "offset": 100}'>API</a>
+        <a x-scrollto='{"parent": "#modalSheets .modal-outer", "target": "#modalSheetsExamples", "offset": 100}'>Примеры</a>
       </div>
     </nav>
 
@@ -1695,8 +1695,8 @@ a.pseudo</pre>
 
     <nav class="modalNavigation sticky unselectable">
       <div class="modalNavigation-inner">
-        <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreMain", "offset": 100}'>Описание</a>
-        <a data-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreParams", "offset": 100}'>Параметры</a>
+        <a x-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreMain", "offset": 100}'>Описание</a>
+        <a x-scrollto='{"parent": "#modalLoadmore .modal-outer", "target": "#modalLoadmoreParams", "offset": 100}'>Параметры</a>
       </div>
     </nav>
 

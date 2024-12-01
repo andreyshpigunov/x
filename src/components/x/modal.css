@@ -10,13 +10,11 @@ Created by Andrey Shpigunov on 18.09.2024.
 
 
 :root {
-  --modal-outer-padding: 50px;
-  --modal-outer-padding-small: 10px;
-  --modal-padding: 50px;
-  --modal-padding-small: 40px 6vw;
+  --modal-margin: 6vw;
+  --modal-padding: clamp(2rem, 6vw, 4rem);
   --modal-background: #fff;
   --modal-box-shadow: 0 10px 40px #00000044;
-  --modal-border-radius: 12px;
+  --modal-border-radius: 1.6rem;
   --modal-closer-area: 40px;
   --modal-closer-size: 26px;
   --modal-closer-width: 2px;
@@ -84,14 +82,10 @@ html.modal_active body {
   z-index: 10020;
   width: 100%;
   height: 100%;
-  padding: var(--modal-outer-padding-small);
+  padding: var(--modal-margin);
   overflow: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
-  
-  @media (--medium) {
-    padding: var(--modal-outer-padding);
-  }
 }
 .modal-inner {
   display: flex;
@@ -107,15 +101,11 @@ html.modal_active body {
   width: 100%;
   max-width: 800px;
   margin: auto;
-  padding: var(--modal-padding-small);
+  padding: var(--modal-padding);
   text-align: left;
   background: var(--modal-background);
   box-shadow: var(--modal-box-shadow);
   border-radius: var(--modal-border-radius);
-  
-  @media (--medium) {
-    padding: var(--modal-padding);
-  }
 }
 
 
@@ -144,10 +134,10 @@ html.modal_active body {
     opacity: 0;
     transition: opacity .15s ease-out;
     
-    @media (--medium) {
+    /* @media (--medium) {
       top: -50px;
       background: none;
-    }
+    } */
     
     &:before,
     &:after {
