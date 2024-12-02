@@ -52,8 +52,8 @@ Created by Andrey Shpigunov on 08.09.2024.
   .visuallyHidden
   .invisible
   .scrollResponsive
-  .hidden     =(xs-s,m,l-xl)
-  .hiddenNext =(xs-s,m,l-xl)
+  .hidden     =(s,m,l)
+  .hiddenNext =(s,m,l)
   .fullscreen
   .max (m,l,xl)
   .w[10-190] step 10      (m,l,xl)
@@ -389,38 +389,22 @@ html.touch .touch-hide { display: none }
 /* !- Hidden */
 .hidden,
 .hiddenNext + * { display: none !important }
-.block { display: block !important }
-.inlineBlock { display: inline-block !important }
-.grid { display: grid !important }
-.flex { display: flex !important }
-.table { display: table !important }
 
-@media (--medium) {
+@media (--small-max) {
+  .s\:hidden,
+  .s\:hiddenNext + * { display: none !important }
+}
+@media (--medium-min) and (--medium-max) {
   .m\:hidden,
   .m\:hiddenNext + * { display: none !important }
-  .m\:block { display: block !important }
-  .m\:inlineBlock { display: inline-block !important }
-  .m\:grid { display: grid !important }
-  .m\:flex { display: flex !important }
-  .m\:table { display: table !important }
 }
-@media (--large) {
+@media (--large-min) {
   .l\:hidden,
   .l\:hiddenNext + * { display: none !important }
-  .l\:block { display: block !important }
-  .l\:inlineBlock { display: inline-block !important }
-  .l\:grid { display: grid !important }
-  .l\:flex { display: flex !important }
-  .l\:table { display: table !important }
 }
-@media (--xlarge) {
+@media (--xlarge-min) {
   .xl\:hidden,
   .xl\:hiddenNext + * { display: none !important }
-  .xl\:block { display: block !important }
-  .xl\:inlineBlock { display: inline-block !important }
-  .xl\:grid { display: grid !important }
-  .xl\:flex { display: flex !important }
-  .xl\:table { display: table !important }
 }
 
 
