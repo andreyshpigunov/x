@@ -50,6 +50,8 @@ class Scroll {
     this.offset = 0;
     this.classActive = 'active';
     this.hash = false;
+    // Shortcut to scrollTo
+    this.to = this.scrollTo;
   }
 
   init() {

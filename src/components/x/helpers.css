@@ -54,6 +54,8 @@ Created by Andrey Shpigunov on 08.09.2024.
   .scrollResponsive
   .hidden     =(s,m,l)
   .hiddenNext =(s,m,l)
+  .dark:hidden  =(s,m,l)
+  .light:hidden =(s,m,l)
   .fullscreen
   .max (m,l,xl)
   .w[10-190] step 10      (m,l,xl)
@@ -406,6 +408,42 @@ html.touch .touch-hide { display: none }
   .xl\:hidden,
   .xl\:hiddenNext + * { display: none !important }
 }
+
+
+/* !-- Hidden dark/light */
+@media (prefers-color-scheme: dark) {
+  .dark\:hidden { display: none !important }
+  
+  @media (--small-max) {
+    .s\:dark\:hidden { display: none !important }
+  }
+  @media (--medium-min) and (--medium-max) {
+    .m\:dark\:hidden { display: none !important }
+  }
+  @media (--large-min) {
+    .l\:dark\:hidden { display: none !important }
+  }
+  @media (--xlarge-min) {
+    .xl\:dark\:hidden { display: none !important }
+  }
+}
+@media (prefers-color-scheme: light) {
+  .light\:hidden { display: none !important }
+  
+  @media (--small-max) {
+    .s\:light\:hidden { display: none !important }
+  }
+  @media (--medium-min) and (--medium-max) {
+    .m\:light\:hidden { display: none !important }
+  }
+  @media (--large-min) {
+    .l\:light\:hidden { display: none !important }
+  }
+  @media (--xlarge-min) {
+    .xl\:light\:hidden { display: none !important }
+  }
+}
+
 
 
 /* !- Width, height */
