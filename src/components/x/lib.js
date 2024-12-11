@@ -10,6 +10,7 @@
 //  qsa(selector, context = document)
 //  hide(element)
 //  show(element)
+//  toggle(selector)
 //  async addClass(element, className, delay = 0)
 //  async removeClass(element, className, delay = 0)
 //  async toggleClass(element, className, delay = 0)
@@ -91,6 +92,15 @@ class Lib {
   // Show element(s) (remove class .hidden)
   show(selector) {
     this.removeClass(selector, 'hidden')
+  }
+  
+  // Toggle
+  toggle(selector) {
+    if (qs(selector).classList.contains('hidden')) {
+      this.show(selector)
+    } else {
+      this.hide(selector)
+    }
   }
 
 
