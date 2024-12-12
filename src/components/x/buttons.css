@@ -89,7 +89,7 @@ Created by Andrey Shpigunov on 08.09.2024.
     transform: var(--button-transform);
   }
   
-  @media (hover: hover) {
+  @media (any-hover: hover) {
     &:hover,
     &.hover {
       text-decoration: none;
@@ -134,11 +134,6 @@ Created by Andrey Shpigunov on 08.09.2024.
 .button_normal { @extend button_normal }
 .button_large  { @extend button_large }
 
-@media (--small) {
-  .s\:button_small  { @extend button_small }
-  .s\:button_normal { @extend button_normal }
-  .s\:button_large  { @extend button_large }
-}
 @media (--medium) {
   .m\:button_small  { @extend button_small }
   .m\:button_normal { @extend button_normal }

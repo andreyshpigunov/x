@@ -59,7 +59,7 @@ a {
     color: var(--link-color-visited);
     text-decoration-color: var(--link-border-color-visited);
   }
-  @media (hover: hover) {
+  @media (any-hover: hover) {
     &:hover,
     &.hover {
       color: var(--link-color-hover);

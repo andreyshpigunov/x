@@ -167,7 +167,7 @@ html.modal_active body {
   .modal-close {
     opacity: 1;
     
-    @media (hover: hover) {
+    @media (any-hover: hover) {
       &:hover:before,
       &:hover:after,
       &:active:before,
