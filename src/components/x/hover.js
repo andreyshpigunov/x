@@ -1,10 +1,11 @@
 //
-//	hover.js
-//	x
+//  hover.js
+//  x | Hover sync
+//  Created by Andrey Shpigunov at 11.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
 //
-// hover() - sync .hover class on elements with class '.syncHover' and same href
+// hover() - sync .hover class on elements with 'x-hover' attribute and same href
 //
 
 

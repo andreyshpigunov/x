@@ -1,8 +1,9 @@
 //
-//	scroll.js
-//	x
+//  scroll.js
+//  x | Scroll
+//  Created by Andrey Shpigunov at 11.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 27.09.2024.
 //
 //  Scroll page to element id.
 //  Automatically works on element with x-scroll:
@@ -143,12 +144,12 @@ class Scroll {
   // params — string (id, selector) or element node
   // or object with fields:
   // {
-  //     parent: "element selector", — default value = window
-  //     target: "element id, selector or element item",
-  //     offset: 0, — offset top in px
-  //     classActive: 'active',
-  //     hash: false
-  //  }
+  //   parent: "element selector", — default value = window
+  //   target: "element id, selector or element item",
+  //   offset: 0, — offset top in px
+  //   classActive: 'active',
+  //   hash: false
+  // }
     return new Promise(resolve => {
       let parent = lib.qs(params.parent) || this.parent,
         target,

@@ -1,8 +1,9 @@
 //
-//	slides.js
-//	x
+//  slides.js
+//  x | Slides of photo
+//  Created by Andrey Shpigunov at 12.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 20.09.2024.
 //
 //  Simple photos onmouseover slides
 //  <div x-slides="['photo1.jpg','photo2.jpg','photo3.jpg']">

@@ -1,11 +1,10 @@
 //
-//	lib.js
-//	x
+//  lib.js
+//  x | Library
+//  Created by Andrey Shpigunov at 09.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 19.09.2024.
-//
-//  Library
-//
+//  Methods:
 //  qs(selector, context = document)
 //  qsa(selector, context = document)
 //  hide(element)
@@ -32,6 +31,7 @@
 //  alertErrors(data)
 //  printErrors(data)
 //  async render(selector, data, placement = null)
+//  [data-render]  |  Render JavaScript in data-attribute
 //
 
 

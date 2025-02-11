@@ -1,8 +1,9 @@
 //
-//	sheets.js
-//	x
+//  sheets.js
+//  x | Sheets
+//  Created by Andrey Shpigunov at 12.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 21.09.2024.
 //
 //  Tab sheets
 //  <div x-sheets>
@@ -13,6 +14,7 @@
 //  </div>
 //
 //  No limits for wrapping tabs and sheets in another tags.
+//  But all nested sheets will be inactive, when focus out.
 //
 //  API call:
 //  this.show(sheetId) — show sheet
@@ -33,7 +35,7 @@ class Sheets {
         
         // Get sheet tabs
         let tabs = lib.qsa('[x-sheet]:not([x-sheet] [x-sheet])', sheet);
-        console.log(tabs);
+        // console.log(tabs);
         if (tabs.length) {
           for (let tab of tabs) {
             tab.addEventListener('click', e => {

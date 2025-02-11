@@ -1,8 +1,9 @@
 //
-//	device.js
-//	x
+//  device.js
+//  x | Device
+//  Created by Andrey Shpigunov at 20.01.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  Device, OS and browser detection
 //  Return object with fields ('fields' variable in code).
@@ -13,7 +14,6 @@ export const device = (function() {
   
   function size() {
     return {
-      xs: window.innerWidth < 400,
        s: window.innerWidth < 600,
        m: window.innerWidth >= 600 && window.innerWidth < 1000,
        l: window.innerWidth >= 1000,

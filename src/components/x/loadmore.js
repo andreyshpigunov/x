@@ -1,8 +1,9 @@
 //
-//	loadmore.js
-//	x
+//  loadmore.js
+//  x |
+//  Created by Andrey Shpigunov at 11.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 06.10.2024.
 //
 //  Load callback when element appeared in viewport from bottom.
 //

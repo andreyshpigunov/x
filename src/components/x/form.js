@@ -1,10 +1,9 @@
 //
-//	form.js
-//	x
+//  form.js
+//  x | Additional form elements functions
+//  Created by Andrey Shpigunov at 20.01.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
-//
-//  Additional form elements functions
 //
 //  setChecked(element, checked = false) - set checkbox and radio as checked with dispatchEvent
 //  setValue(element, value) - set input, textarea and select values with dispatchEvent

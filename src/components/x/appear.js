@@ -1,11 +1,13 @@
 //
-//	appear.js
-//	x
+//  appear.js
+//  x | Appear
+//  Created by Andrey Shpigunov at 20.01.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
 //
-//  Set the 'appeared class for elements that have appeared at least once
+//  Set the 'appeared' class for elements that have appeared at least once
 //  in the viewport. And the 'visible' class for elements in the viewport.
+//  <div x-appear>Hello!</div>
 //
 //  init() - initialize appear observer
 //  update() - update observers if DOM changed

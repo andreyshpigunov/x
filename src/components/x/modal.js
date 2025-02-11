@@ -1,19 +1,18 @@
 //
-//	modal.js
-//	x
-//
-//	Created by Andrey Shpigunov on 18.09.2024.
+//  modal.js
+//  x | Modal windows
+//  Created by Andrey Shpigunov at 09.02.2025
+//  All right reserved.
 //
 //  Usage:
-//  <a data-modal="modal">Open modal</a>
-//
-//  <div id="modal" class="modal-content [custom-classes]" data-window-class="[window-classes]">
-//      <p>Hello modal!</p>
-//      <p><a class="button modal-close">Close</a></p> — optional
+//  <div x-modal="modal" class="[custom-classes]" data-window-class="[window-classes]">
+//    <h1>Hello modal!</h1>
+//    <p><a class="button modal-close">Close</a></p> — optional
 //  </div>
+//  <a x-modal-open="modal">Open modal</a>
 //
 //  <script>
-//    let modal = document.getElementById('modal-test');
+//    let modal = qsa('#modal');
 //    modal.addEventListener('modal:ready', event => { ... });
 //    modal.addEventListener('modal:open', event => { ... });
 //    modal.addEventListener('modal:close', event => { ... });
@@ -45,28 +44,28 @@ class Modal {
     if (content.length) {
       for (let item of content) {
         let here = lib.qs('.modal-here'),
-          placeholder = here ? here : lib.qs('body'),
-
-          id = item.getAttribute('id'),
-          classes = item.getAttribute('class') || '',
-          windowClasses = item.dataset.windowClass || '',
-          content = item.innerHTML;
+        placeholder = here ? here : lib.qs('body'),
+        
+        id = item.getAttribute('x-modal'),
+        classes = item.getAttribute('class') || '',
+        windowClasses = item.dataset.windowClass || '',
+        content = item.innerHTML;
 
         placeholder.insertAdjacentHTML('beforeend', `
-                    <div id="${id}" class="modal ${classes}">
-                        <div class="modal-overlay"></div>
-                        <div class="modal-outer">
-                            <div class="modal-inner">
-                                <div class="modal-window ${windowClasses}">
-                                    ${content}
-                                    <div class="modal-rail">
-                                        <a role="button" class="modal-close"></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `);
+          <div id="${id}" class="modal ${classes}">
+            <div class="modal-overlay"></div>
+            <div class="modal-outer">
+              <div class="modal-inner">
+                <div class="modal-window ${windowClasses}">
+                  ${content}
+                  <div class="modal-rail">
+                    <a role="button" class="modal-close"></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
         item.remove();
       }
     }

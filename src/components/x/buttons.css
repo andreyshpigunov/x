@@ -1,19 +1,16 @@
-/*---------------------------
+/*----------------------------------------
 buttons.css
-x
-
-Created by Andrey Shpigunov on 08.09.2024.
----------------------------*/
-
-
-/* !- Buttons */
+x | Buttons
+Created by Andrey Shpigunov at 20.01.2025
+All right reserved.
+----------------------------------------*/
 
 
 /*
   .button
-  .button_small  (s,m,l)
-  .button_normal (s,m,l)
-  .button_large  (s,m,l)
+  .button_small  (m,l)
+  .button_normal (m,l)
+  .button_large  (m,l)
   
   .button_primary
   .button_success

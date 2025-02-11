@@ -1,8 +1,9 @@
 //
-//	animate.js
-//	x
+//  animate.js
+//  x | Animations
+//  Created by Andrey Shpigunov at 20.01.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  On scroll animations
 //
@@ -66,8 +67,8 @@ class Animate {
         document.addEventListener('scroll', () => {
           this._scroll(animationsHash);
         }, { passive: true });
-        // If element in scrollarea <div class="animate-scrollarea">
-        let animateScrollarea = lib.qsa('.animate-scrollarea');
+        // If element in scrollarea <div x-animate-scrollarea>
+        let animateScrollarea = lib.qsa('[x-animate-scrollarea]');
         if (animateScrollarea.length) {
           animateScrollarea.forEach(item => {
             item.addEventListener('scroll', () => {
@@ -78,11 +79,7 @@ class Animate {
         // First init elements positions
         document.addEventListener('DOMContentLoaded', () => {
           this._scroll(animationsHash)
-        });
-        // First init elements positions
-        // document.addEventListener('DOMContentLoaded', () => {
-        //     this._scroll(animationsHash)
-        // });
+        })
       }
     }
   }

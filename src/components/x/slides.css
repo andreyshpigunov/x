@@ -1,9 +1,9 @@
-/*---------------------------
+/*----------------------------------------
 slides.css
-x
-
-Created by Andrey Shpigunov on 07.10.2024.
----------------------------*/
+x | Slides
+Created by Andrey Shpigunov at 12.02.2025
+All right reserved.
+----------------------------------------*/
 
 
 /* !- Slides */
@@ -12,9 +12,10 @@ Created by Andrey Shpigunov on 07.10.2024.
 :root {
   --slides-point-color: #ffffff66;
   --slides-point-color-active: #fff;
-  --slides-point-size: .6rem;
-  --slides-point-gap: .4rem;
-  --slides-point-bottom: 1.4rem;
+  --slides-point-size: .3rem;
+  --slides-point-gap: .3rem;
+  --slides-point-side-padding: 1.4rem;
+  --slides-point-bottom-padding: 1.4rem;
 }
 
 
@@ -28,9 +29,9 @@ Created by Andrey Shpigunov on 07.10.2024.
   gap: var(--slides-point-gap);
   position: absolute;
   z-index: 10;
-  bottom: var(--slides-point-bottom);
-  left: 0;
-  right: 0;
+  bottom: var(--slides-point-bottom-padding);
+  left: var(--slides-point-side-padding);
+  right: var(--slides-point-side-padding);
   height: var(--slides-point-size);
   opacity: 0;
   
@@ -39,6 +40,7 @@ Created by Andrey Shpigunov on 07.10.2024.
 }
 .slides-item {
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   width: var(--slides-point-size);

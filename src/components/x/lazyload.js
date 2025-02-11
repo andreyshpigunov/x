@@ -1,11 +1,13 @@
 //
-//	lazyload.js
-//	x
+//  lazyload.js
+//  x | Lazyload images
+//  Created by Andrey Shpigunov at 11.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 11.09.2024.
 //
 //  Loading images when they appearing in viewport.
 //  If IntersectionObserver is not supported, triggered fallback.
+//  <img src="cover.jpg" data-src="image.jpg" alt="..." x-lazyload/>
 //
 //  init() - initialize layloading
 //

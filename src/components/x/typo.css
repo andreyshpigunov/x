@@ -1,9 +1,9 @@
-/*---------------------------
+/*----------------------------------------
 typo.css
-x
-
-Created by Andrey Shpigunov on 07.09.2024.
----------------------------*/
+x | Typography
+Created by Andrey Shpigunov at 12.02.2025
+All right reserved.
+----------------------------------------*/
 
 
 /* !- Typo */
@@ -34,13 +34,6 @@ Created by Andrey Shpigunov on 07.09.2024.
   --h4-font-size: 1.25em;
   --h5-font-size: 1.125em;
   --h6-font-size: 1.0em;
-  
-  /* --h1-font-size: calc(4.0em * 0.625);
-  --h2-font-size: calc(3.2em * 0.625);
-  --h3-font-size: calc(2.4em * 0.625);
-  --h4-font-size: calc(2.0em * 0.625);
-  --h5-font-size: calc(1.8em * 0.625);
-  --h6-font-size: calc(1.6em * 0.625); */
 
   --h1-line-height: 1.2;
   --h2-line-height: 1.3;

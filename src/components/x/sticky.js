@@ -1,8 +1,9 @@
 //
-//	sticky.js
-//	x
+//  sticky.js
+//  x | Sticky element on scroll
+//  Created by Andrey Shpigunov at 12.02.2025
+//  All right reserved.
 //
-//	Created by Andrey Shpigunov on 20.09.2024.
 //
 //  Add 'sticky_on' class to 'sticky' element.
 //

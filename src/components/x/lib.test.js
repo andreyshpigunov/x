@@ -1,8 +1,8 @@
 //
-//	lib.test.js
-//	x
-//
-//	Created by Andrey Shpigunov on 14.09.2024.
+//  lib.test.js
+//  x | Testing lib.js
+//  Created by Andrey Shpigunov at 11.02.2025
+//  All right reserved.
 //
 
 
