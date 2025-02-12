@@ -35,7 +35,7 @@ All right reserved.
   --button-transition: all .1s ease-out;
   --button-transform: scale(1);
   --button-transform-hover: scale(1);
-  --button-transform-active: scale(.9);
+  --button-transform-active: scale(.96);
   --button-transform-origin: center;
   
   /* Colors */
