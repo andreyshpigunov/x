@@ -94,6 +94,7 @@ html {
   -moz-font-feature-settings: 'liga', 'kern';
   color: var(--font-color);
   scroll-behavior: smooth;
+  touch-action: manipulation;
 }
 body {
   font-size: var(--font-size);

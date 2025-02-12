@@ -77,7 +77,6 @@ All right reserved.
   transform-origin: var(--button-transform-origin);
   user-select: none;
   appearance: none;
-  touch-action: manipulation;
   
   &:link,
   &:visited {
