@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.80</div>
+    <div class="header-version nowrap">0.0.81</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -624,10 +624,11 @@
           <h5 class="pointer" x-modal-open="modalSheets">Sheets</h5>
           <style>
             .sheets-example .button {
-              opacity: .5
+              /* opacity: .5 */
             }
             .sheets-example .button.active {
-              opacity: 1
+              /* opacity: 1 */
+              font-weight: 600;
             }
           </style>
           <div x-sheets class="sheets-example">
