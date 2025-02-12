@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.0.82",
+	"version": "0.0.83",
 	"devDependencies": {
 		"@jest/globals": "^29.7.0",
 		"@parcel/logger": "*",
