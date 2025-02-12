@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.86</div>
+    <div class="header-version nowrap">0.0.87</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -63,12 +63,11 @@
   
   <section class="section-content mt7 px5 m:px6 l:px8">
     <div class="container">
-      <div class="flex jcc gap4">
+      <div class="flex fc m:fr jcc gap4">
         <a class="button button_large">a button</a>
-        <a class="button button_large" onclick="">a button onclick</a>
-        <a class="button button_large" href="#">a.href button</a>
+        <a class="button button_large" onclick="return false">a button onclick</a>
         <button class="button button_large">button</button>
-        <button class="button button_large onclick" onclick="">button</button>
+        <button class="button button_large onclick" onclick="return false">button</button>
       </div>
     </div>
   </section>
