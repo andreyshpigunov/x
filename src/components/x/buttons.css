@@ -87,7 +87,7 @@ All right reserved.
     transform: var(--button-transform);
   }
   
-  @media (any-hover: hover) {
+  @media (hover: hover) {
     &:hover,
     &.hover {
       text-decoration: none;
