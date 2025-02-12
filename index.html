@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>X — Javascript library with interesting features</title>
-  <meta name="description" content="Small and simple Javascript library with interesting features"/>
-  <link rel="shortcut icon" href="https://andreyshpigunov.github.io/x/favicon.ico"/>
-  <link rel="icon" href="https://andreyshpigunov.github.io/x/favicon.svg" type="image/svg+xml"/>
-  <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/x/assets/apple-touch-icon.png"/>
+  <meta name="description" content="Small and simple Javascript library with interesting features">
+  <link rel="shortcut icon" href="https://andreyshpigunov.github.io/x/favicon.ico">
+  <link rel="icon" href="https://andreyshpigunov.github.io/x/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/x/assets/apple-touch-icon.png">
   <link rel="stylesheet" href="dist/app.css"/>
 </head>
 
@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.89</div>
+    <div class="header-version nowrap">0.0.90</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -148,7 +148,7 @@
                     if (typeof val === 'object') {
                       val = JSON.stringify(val);
                     }
-                    content += key + ': ' + val + '<br/>'
+                    content += key + ': ' + val + '<br>'
                   })
                   x.lib.render('.jsDeviceExample', content)
                 }
@@ -260,16 +260,16 @@
                 <tr>
                   <td><code>x.form.onUpdate([elements], callback)</code></td>
                   <td>
-                    Listen events on elements from array.<br />
-                    <code>[elements]</code> — selectors array<br />
+                    Listen events on elements from array.<br>
+                    <code>[elements]</code> — selectors array<br>
                     <code>callback</code> — callback function
                   </td>
                 </tr>
                 <tr>
                   <td><code>x.form.update([elements], callback)</code></td>
                   <td>
-                    Manually dispatch update event for elements from array.<br />
-                    <code>[elements]</code> — selectors array<br />
+                    Manually dispatch update event for elements from array.<br>
+                    <code>[elements]</code> — selectors array<br>
                     <code>callback</code> — callback function
                   </td>
                 </tr>
@@ -306,13 +306,13 @@
         <div class="c1">
           <h5 class="pointer" x-modal-open="modalLib">Lib</h5>
           <div class="jsLibExample">
-            lib.random(1000, 100000) → <span class="jsLibRandom"></span><br />
-            lib.number(<span class="jsLibRandom"></span>) → <span class="jsLibNumber"></span><br />
+            lib.random(1000, 100000) → <span class="jsLibRandom"></span><br>
+            lib.number(<span class="jsLibRandom"></span>) → <span class="jsLibNumber"></span><br>
             lib.numberDecline(<span class="jsLibRandom"></span>, 'item', 'items', 'items') →
-            <span class="jsLibNumberDecline"></span><br />
-            lib.isEmail('hello@mail.dev') → <span class="jsLibIsEmailTrue"></span><br />
-            lib.isEmail('hello@mail') → <span class="jsLibIsEmailFalse"></span><br />
-            makePassword(8) → <code class="jsLibMakePassword"></code><br />
+            <span class="jsLibNumberDecline"></span><br>
+            lib.isEmail('hello@mail.dev') → <span class="jsLibIsEmailTrue"></span><br>
+            lib.isEmail('hello@mail') → <span class="jsLibIsEmailFalse"></span><br>
+            makePassword(8) → <code class="jsLibMakePassword"></code><br>
           </div>
           <div class="flex gap3 aic mt1">
             <span class="jsLibExampleUpdate pointer unselectable">↺</span>
@@ -785,13 +785,13 @@
       <hr class="my7" />
       <h3>CDN links</h3>
       <p class="breakWord">
-        Latest release:<br />
-        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@1.0.0/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@1.0.0/dist/x.css</a><br />
+        Latest release:<br>
+        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@1.0.0/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@1.0.0/dist/x.css</a><br>
         <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@1.0.0/dist/x.js">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@1.0.0/dist/x.js</a>
       </p>
       <p class="breakWord">
-        Latest build:<br />
-        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css</a><br />
+        Latest build:<br>
+        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css</a><br>
         <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js</a>
       </p>
 
@@ -807,7 +807,7 @@
       <h2>Breakpoints</h2>
       <p>Mobile first breakpoints</p>
       <p>
-        <code>s</code>, <code>m</code>, <code>l</code>, <code>xl</code> use <code>min-size</code><br/>
+        <code>s</code>, <code>m</code>, <code>l</code>, <code>xl</code> use <code>min-size</code><br>
         <code>xs</code> use <code>max-size</code>
       </p>
       <pre class="fs14 mono">
@@ -818,9 +818,9 @@
 ---------------------------</pre>
     
     <p>
-      <code>s</code> - default size, not using prefix <code>s:</code><br/>
-      <code>m</code> - medium size<br/>
-      <code>l</code> - large size<br/>
+      <code>s</code> - default size, not using prefix <code>s:</code><br>
+      <code>m</code> - medium size<br>
+      <code>l</code> - large size<br>
       <code>xl</code> - xlarge size
     </p>
     
@@ -856,7 +856,7 @@
     <h2>Spaces</h2>
     <p>Global spaces.</p>
     <p class="fs12">
-      1rem = 10px by default (16px * var(--font-size-coeff)<br/>
+      1rem = 10px by default (16px * var(--font-size-coeff)<br>
       16px - default font size in most browsers
     </p>
     
@@ -1248,9 +1248,9 @@ a.pseudo</pre>
         <code>&lt;/div&gt;</code>
       </div>
       <p>
-        <code>[custom-classes]</code> — классы, которые будут добавлены элементу .modal после генерации модального окна на основе шаблона.<br />
-        <code>[modal-window-classes]</code> — классы, которые будут добавлены элементу .modal-window после генерации модального окна на основе шаблона.<br />
-        <code>.uniq</code> — класс, закрывающий все открытые окна при открытии данного окна, добавляется в <code>[custom-classes]</code>.<br />
+        <code>[custom-classes]</code> — классы, которые будут добавлены элементу .modal после генерации модального окна на основе шаблона.<br>
+        <code>[modal-window-classes]</code> — классы, которые будут добавлены элементу .modal-window после генерации модального окна на основе шаблона.<br>
+        <code>.uniq</code> — класс, закрывающий все открытые окна при открытии данного окна, добавляется в <code>[custom-classes]</code>.<br>
         <code>.hash</code> — если класс добавлен в <code>[custom-classes]</code>, окна, открываясь, будут добавлять хэш в конец адресной строки. Также при загрузке страницы с хэшем модального окна, оно автоматически будет открываться.
       </p>
       <p>Эффекты в <code>[custom-classes]</code>:</p>
@@ -1405,8 +1405,8 @@ a.pseudo</pre>
       </p>
 
       <iframe height="720" style="width: 100%;" scrolling="no" title="Auto / Modal init" src="https://codepen.io/andreyshpigunov/embed/vYXZGpm?height=700&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
-      <br />
-      <br />
+      <br>
+      <br>
       <iframe height="800" style="width: 100%;" scrolling="no" title="Auto / Modals examples" src="https://codepen.io/andreyshpigunov/embed/KKgqzBE?height=800&theme-id=dark&default-tab=html" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
     </div>
   </div>
@@ -1498,7 +1498,7 @@ a.pseudo</pre>
           <td><code>string, element</code></td>
           <td><code></code></td>
           <td>
-            <code>id</code>, селектор или элемент, к которому нужно совершить прокрутку.<br />
+            <code>id</code>, селектор или элемент, к которому нужно совершить прокрутку.<br>
             <b>Обязательный</b>
           </td>
         </tr>
@@ -1581,7 +1581,7 @@ a.pseudo</pre>
           <td><code>start</code></td>
           <td><code>string</code></td>
           <td>
-            The starting point of the animation (the distance from the top of the window in px, vh or %).<br />
+            The starting point of the animation (the distance from the top of the window in px, vh or %).<br>
             <b>Required</b>
           </td>
         </tr>
@@ -1589,7 +1589,7 @@ a.pseudo</pre>
           <td><code>end</code></td>
           <td><code>string</code></td>
           <td>
-            Animation end point (distance from the top of the window in px, vh or %).<br />
+            Animation end point (distance from the top of the window in px, vh or %).<br>
             <b>Required</b>
           </td>
         </tr>
@@ -1597,7 +1597,7 @@ a.pseudo</pre>
           <td><code>functionName</code></td>
           <td><code>string</code></td>
           <td>
-            The name of the global function that is performed when the tracked element is moved between the start and end points of the animation. The function receives an object with the <code>progress</code> parameter, which varies from 0 to 1.<br />
+            The name of the global function that is performed when the tracked element is moved between the start and end points of the animation. The function receives an object with the <code>progress</code> parameter, which varies from 0 to 1.<br>
             <b>Required</b>
           </td>
         </tr>
@@ -1668,8 +1668,8 @@ a.pseudo</pre>
     <div id="modalSheetsExamples" class="mt5">
       <h3>Примеры</h3>
       <iframe height="300" style="width: 100%;" scrolling="no" title="Auto / Tab sheets" src="https://codepen.io/andreyshpigunov/embed/qBpJaeO?theme-id=dark&default-tab=html%2Cresult" frameborder="no" loading="lazy" allowtransparency="true" allowfullscreen="true"></iframe>
-      <br />
-      <br />
+      <br>
+      <br>
       <div class="sheets">
         <div>
           <a role="button" class="sheets-tab button" data-sheet="sheet1">Tab 1</a>
@@ -1731,7 +1731,7 @@ a.pseudo</pre>
           <td><code>string</code></td>
           <td></td>
           <td>
-            Имя функции, которую нужно выполнить.<br />
+            Имя функции, которую нужно выполнить.<br>
             <b>Обязательный</b>
           </td>
         </tr>
@@ -1816,10 +1816,10 @@ a.pseudo</pre>
     </div>
 
     <p>
-      <code>name</code> — значения для проверки.<br />
-      Браузеры: <code>ie</code>, <code>firefox</code>, <code>safari</code>, <code>webkit</code>, <code>chrome</code>, <code>opera</code><br />
-      ОС и устройства: <code>windows</code>, <code>macos</code>, <code>linux</code>, <code>ios</code>, <code>ipad</code>, <code>ipod</code>, <code>iphone</code>, <code>android</code><br />
-      Мобильность: <code>mobile</code>, <code>desktop</code><br />
+      <code>name</code> — значения для проверки.<br>
+      Браузеры: <code>ie</code>, <code>firefox</code>, <code>safari</code>, <code>webkit</code>, <code>chrome</code>, <code>opera</code><br>
+      ОС и устройства: <code>windows</code>, <code>macos</code>, <code>linux</code>, <code>ios</code>, <code>ipad</code>, <code>ipod</code>, <code>iphone</code>, <code>android</code><br>
+      Мобильность: <code>mobile</code>, <code>desktop</code><br>
       Поддержка js: <code>js</code>
     </p>
 
@@ -1862,13 +1862,13 @@ a.pseudo</pre>
 
     <h4><code class="fs16">x.lib.hide(element)</code></h4>
     <p>
-      Скрывает элемент, добавляя класс <code>.hidden</code>.<br />
+      Скрывает элемент, добавляя класс <code>.hidden</code>.<br>
       <code>element</code> — селектор или элемент.
     </p>
 
     <h4><code class="fs16">x.lib.show(element)</code></h4>
     <p>
-      Показывает элемент, убирая класс <code>.hidden</code>.<br />
+      Показывает элемент, убирая класс <code>.hidden</code>.<br>
       <code>element</code> — селектор или элемент.
     </p>
 
@@ -1883,7 +1883,7 @@ a.pseudo</pre>
 
     <h4><code class="fs16">x.lib.updateURL(url, title)</code></h4>
     <p>
-      Обновляет title и URL страницы без перезагрузки.<br />
+      Обновляет title и URL страницы без перезагрузки.<br>
       Поддерживает добавлени хэша: <code>x.lib.updateURL('#ok')</code>
     </p>
 
@@ -1969,15 +1969,15 @@ a.pseudo</pre>
 
     <h4><code class="fs16">x.lib.alertErrors(data)</code></h4>
     <p>
-      Показывает алерт с ошибками.<br />
-      <code>data</code> — объект (ключ: значение), массив или строка.<br />
+      Показывает алерт с ошибками.<br>
+      <code>data</code> — объект (ключ: значение), массив или строка.<br>
       Каждая ошибка будет выведена с новой строки (разделены <code>\n</code>).
     </p>
 
     <h4><code class="fs16">x.lib.printErrors(data)</code></h4>
     <p>
-      Печатает ошибки.<br />
-      <code>data</code> — объект (ключ: значение), массив или строка.<br />
+      Печатает ошибки.<br>
+      <code>data</code> — объект (ключ: значение), массив или строка.<br>
       Каждая ошибка будет выведена с новой строки (разделены <code>&lt;br/&gt;</code>).
     </p>
   </div>
