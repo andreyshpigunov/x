@@ -29,10 +29,10 @@ All right reserved.
   --button-font-size: var(--font-size);
   --button-font-weight: 400;
   --button-border-radius: 1rem;
-  --button-transition: all .1s ease-out;
   --button-disabled-opacity: .5;
   
   /* Transformations */
+  --button-transition: all .1s ease-out;
   --button-transform: scale(1);
   --button-transform-hover: scale(1);
   --button-transform-active: scale(.98);
@@ -77,6 +77,7 @@ All right reserved.
   transform-origin: var(--button-transform-origin);
   user-select: none;
   appearance: none;
+  touch-action: manipulation;
   
   &:link,
   &:visited {
