@@ -1,10 +1,8 @@
 //
-//	x.js
-//	x
-//
-//	Created by Andrey Shpigunov on 06.10.2024.
-//
-//  Small and simple CSS & JavaScript library with interesting features
+//  x.js
+//  x | Small and simple CSS & JavaScript library with interesting features
+//  Created by Andrey Shpigunov at 12.02.2025
+//  All right reserved.
 //
 
 
@@ -24,42 +22,41 @@ import { slides   }  from "../components/x/slides";
 
 
 class X {
+  constructor() {
+    this.modal    = modal;
+    this.animate  = animate;
+    this.appear   = appear;
+    this.lazyload = lazyload;
+    this.loadmore = loadmore;
+    this.sheets   = sheets;
+    this.scroll   = scroll;
+    this.hover    = hover;
+    this.device   = device;
+    this.lib      = lib;
+    this.render   = lib.render.bind(lib);
+    this.form     = form;
+    this.sticky   = sticky;
+    this.slides   = slides;
     
-    constructor() {
-        this.modal    = modal;
-        this.animate  = animate;
-        this.appear   = appear;
-        this.lazyload = lazyload;
-        this.loadmore = loadmore;
-        this.sheets   = sheets;
-        this.scroll   = scroll;
-        this.hover    = hover;
-        this.device   = device;
-        this.lib      = lib;
-        this.render   = lib.render.bind(lib);
-        this.form     = form;
-        this.sticky   = sticky;
-        this.slides   = slides;
-        
-        this.initialized = false;
+    this.initialized = false;
+  }
+  
+  init() {
+    if (!this.initialized) {
+      this.modal.init();
+      this.animate.init();
+      this.appear.init();
+      this.lazyload.init();
+      this.loadmore.init();
+      this.sheets.init();
+      this.scroll.init();
+      this.sticky.init();
+      this.slides.init();
+      hover();
+      
+      this.initialized = true;
     }
-    
-    init() {
-        if (!this.initialized) {
-            this.modal.init();
-            this.animate.init();
-            this.appear.init();
-            this.lazyload.init();
-            this.loadmore.init();
-            this.sheets.init();
-            this.scroll.init();
-            this.sticky.init();
-            this.slides.init();
-            hover();
-            
-            this.initialized = true;
-        }
-    }
+  }
 };
 
 const x = new X();

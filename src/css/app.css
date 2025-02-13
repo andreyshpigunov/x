@@ -205,33 +205,6 @@ code {
 }
 
 
-/* .dataTable {
-    width: 100%;
-    
-    & code {
-        padding: 0;
-        font-size: 14px;
-        background: none;
-    }
-} */
-
-
-/* .section-plugins {
-    
-    & ul {
-        display: flex;
-        flex-wrap: wrap;
-        row-gap: 4px;
-        width: 300px;
-        
-        & li {
-            width: 150px;
-            font-size: 18px;
-        }
-    }
-} */
-
-
 .plugins-item {
     width: 100%;
     color: #fff;

@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.90</div>
+    <div class="header-version nowrap">0.0.91</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -63,7 +63,7 @@
     <div class="container">
       <div class="grid g1 m:g2 l:g3 xl:g4 gap6">
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalAnimate">Animate</h5>
+          <h4><a class="link" x-modal-open="modalAnimate">Animate</a></h4>
           <div x-animate='{
             "trigger": ".jsAnimateExample",
             "start": "80vh",
@@ -108,7 +108,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalAppear">Appear</h5>
+          <h5><a class="link" x-modal-open="modalAppear">Appear</a></h5>
           <style>
             .exampleAppear1,
             .exampleAppear2 {
@@ -134,7 +134,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalDevice">Device</h5>
+          <h4><a class="link" x-modal-open="modalDevice">Device</a></h4>
           <div class="jsDeviceExample breakWord"></div>
 
           <script>
@@ -161,7 +161,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalForm">Form</h5>
+          <h4><a class="link" x-modal-open="modalForm">Form</a></h4>
           <div>Form fields binding.</div>
           <div class="flex aic gap2 my2">
             <input class="max160" type="text" name="exampleText" placeholder="Type something" />
@@ -279,7 +279,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalHover">Hover</h5>
+          <h4><a class="link" x-modal-open="modalHover">Hover</a></h4>
           <div>
             <a href="#1" onclick="return false" x-hover>Link</a>
             <a href="#1" onclick="return false" x-hover>Link</a>
@@ -296,7 +296,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalLazyload">Lazyload</h5>
+          <h4><a class="link" x-modal-open="modalLazyload">Lazyload</a></h4>
           <div>Image loaded lazy.</div>
           <div class="mt2">
             <img class="r3" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
@@ -304,15 +304,15 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalLib">Lib</h5>
+          <h4><a class="link" x-modal-open="modalLib">Lib</a></h4>
           <div class="jsLibExample">
-            lib.random(1000, 100000) → <span class="jsLibRandom"></span><br>
-            lib.number(<span class="jsLibRandom"></span>) → <span class="jsLibNumber"></span><br>
-            lib.numberDecline(<span class="jsLibRandom"></span>, 'item', 'items', 'items') →
+            x.lib.random(1000, 100000) → <span class="jsLibRandom"></span><br>
+            x.lib.number(<span class="jsLibRandom"></span>) → <span class="jsLibNumber"></span><br>
+            x.lib.numberDecline(<span class="jsLibRandom"></span>, 'item', 'items', 'items') →
             <span class="jsLibNumberDecline"></span><br>
-            lib.isEmail('hello@mail.dev') → <span class="jsLibIsEmailTrue"></span><br>
-            lib.isEmail('hello@mail') → <span class="jsLibIsEmailFalse"></span><br>
-            makePassword(8) → <code class="jsLibMakePassword"></code><br>
+            x.lib.isEmail('hello@mail.dev') → <span class="jsLibIsEmailTrue"></span><br>
+            x.lib.isEmail('hello@mail') → <span class="jsLibIsEmailFalse"></span><br>
+            x.lib.makePassword(8) → <code class="jsLibMakePassword"></code><br>
           </div>
           <div class="flex gap3 aic mt1">
             <span class="jsLibExampleUpdate pointer unselectable">↺</span>
@@ -338,7 +338,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalLoadmore">Loadmore</h5>
+          <h4><a class="link" x-modal-open="modalLoadmore">Loadmore</a></h4>
           <div>Load new data on content scrolling.</div>
           <div class="flex fw gap3 mt2">
             <a role="button" class="button" x-modal-open="modalExampleLoadmore">Show example posts</a>
@@ -390,7 +390,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalModal">Modal</h5>
+          <h4><a class="link" x-modal-open="modalModal">Modal</a></h4>
 
           <div class="flex fw gap3">
             <a role="button" class="button" x-modal-open="modalExampleTest">Test modal</a>
@@ -615,14 +615,14 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalScroll">Scroll</h5>
+          <h4><a class="link" x-modal-open="modalScroll">Scroll</a></h4>
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalSheets">Sheets</h5>
+          <h4><a class="link" x-modal-open="modalSheets">Sheets</a></h4>
           <style>
             .sheets-example .button {
-              opacity: .6
+              opacity: .8
             }
             .sheets-example .button.active {
               opacity: 1
@@ -664,7 +664,7 @@
         </div>
 
         <div class="c1">
-          <h5 class="pointer" x-modal-open="modalSlides">Slides</h5>
+          <h4><a class="link" x-modal-open="modalSlides">Slides</a></h4>
           <div class="max600">
             <div class="ratio4x3" x-slides='[
               "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
@@ -696,7 +696,7 @@
   </section>
 
 
-  <section class="-section-plugins mt7 px5 m:px6 l:px8">
+  <section class="mt7 px5 m:px6 l:px8">
     <div class="container max1000">
       <div class="grid g1 m:g2 gap6">
         <div class="c1 ac">
@@ -713,6 +713,7 @@
             <li><a class="link" x-modal-open="modalGrid">Grid</a></li>
             <li><a class="link" x-modal-open="modalFlex">Flex</a></li>
             <li><a class="link" x-modal-open="modalFlow">Flow</a></li>
+            <li><a class="link" x-modal-open="modalIcons">Icons</a></li>
           </ul>
         </div>
         <div class="c1 ac">
@@ -732,6 +733,47 @@
             <li><a class="link" x-modal-open="modalSlides">Slider</a></li>
             <li><a class="link" x-modal-open="modalSticky">Sticky</a></li>
           </ul>
+        </div>
+        <div class="c1 m:c2 ac fw600">
+          ⚠️ Documentation in progress, read details in code ⚠️
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="section-header mt8 px5 m:px6 l:px8">
+    <h2 class="ac">Buttons</h2>
+  </section>
+  
+  <section class="section-content mt7 px5 m:px6 l:px8">
+    <div class="container max1000">
+      <div class="grid g1 m:g2 gap6">
+        <div class="c1 m:c2 flex gap4 jcc">
+          <button class="button button_small">Button</button>
+          <button class="button button_small button_primary">Button</button>
+          <button class="button button_small button_success">Button</button>
+          <button class="button button_small button_danger">Button</button>
+          <button class="button button_small button_warning">Button</button>
+          <button class="button button_small button_white">Button</button>
+          <button class="button button_small button_black">Button</button>
+        </div>
+        <div class="c1 m:c2 flex gap4 jcc">
+          <button class="button">Button</button>
+          <button class="button button_primary">Button</button>
+          <button class="button button_success">Button</button>
+          <button class="button button_danger">Button</button>
+          <button class="button button_warning">Button</button>
+          <button class="button button_white">Button</button>
+          <button class="button button_black">Button</button>
+        </div>
+        <div class="c1 m:c2 flex gap4 jcc">
+          <button class="button button_large">Button</button>
+          <button class="button button_large button_primary">Button</button>
+          <button class="button button_large button_success">Button</button>
+          <button class="button button_large button_danger">Button</button>
+          <button class="button button_large button_warning">Button</button>
+          <button class="button button_large button_white">Button</button>
+          <button class="button button_large button_black">Button</button>
         </div>
       </div>
     </div>
@@ -755,7 +797,7 @@
     <div class="container max700">
 
       <h3>HTML</h3>
-      <p>Manually download x.js and x.css and connect them in HTML.</p>
+      <p>Manually download <a class="button button_label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js">x.js</a> and <a class="button button_label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">x.css</a> and connect them in HTML.</p>
       <p>In the <code>&lt;head&gt;</code> tag, as first style.</p>
       <div class="codeBlock">
         <code>&lt;link rel="stylesheet" href="x.css"/&gt;</code>
@@ -905,6 +947,14 @@ a.pseudo</pre>
 --link-border-color-visited: var(--link-border-color);
 
 --link-transition: none;</pre>
+  </div>
+  
+  
+  <div x-modal="modalIcons" class="modal_hash" data-window-class="max1000">
+    <h2>Icons</h2>
+    <div class="mt6">
+      <pre class="fs14 mono">.icon[10-40] step 2 (m,l) - size in px</pre>
+    </div>
   </div>
 
 
@@ -1988,7 +2038,7 @@ a.pseudo</pre>
 
   <footer class="p6 ac fs14">
     <a href="mailto:andrey@shpigunov.ru">andrey@shpigunov.ru</a>
-    <div class="mt1" data-render="new Date().getFullYear()"></div>
+    <div class="mt1" x-render="new Date().getFullYear()"></div>
   </footer>
 
 

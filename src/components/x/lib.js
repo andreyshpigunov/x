@@ -31,7 +31,7 @@
 //  alertErrors(data)
 //  printErrors(data)
 //  async render(selector, data, placement = null)
-//  [data-render]  |  Render JavaScript in data-attribute
+//  [x-render]  |  Render JavaScript in 'x-render' attribute
 //
 
 
@@ -44,10 +44,10 @@ class Lib {
   
   _elementRender() {
     document.addEventListener('DOMContentLoaded', () => {
-      let items = qsa('[data-render]');
+      let items = qsa('[x-render]');
       if (items) {
         for (let item of items) {
-          this.render(item, eval(item.dataset.render))
+          this.render(item, eval(item.getAttribute('x-render')))
         }
       }
     })

@@ -144,9 +144,7 @@ class Modal {
       lib.addClass(html, id + '_active');
 
       let buttons = lib.qsa('[x-modal-open=' + id + ']');
-      if (buttons) {
-        for (let button of buttons) lib.addClass(button, 'active');
-      }
+      if (buttons) lib.addClass(buttons, 'active')
 
       this.modalLevel++;
       lib.addClass(modal, 'modal_z' + this.modalLevel);
@@ -172,7 +170,10 @@ class Modal {
       ) {
         history.replaceState(null, document.title, window.location.href.split('#')[0])
       }
-
+      
+      let buttons = lib.qsa('[x-modal-open=' + id + ']');
+      if (buttons) lib.removeClass(buttons, 'active');
+      
       await lib.removeClass(modal, 'modal_active', 200);
       lib.removeClass(modal, 'modal_z' + this.modalLevel);
       modal.dispatchEvent(this.eventClose);
@@ -182,11 +183,6 @@ class Modal {
       this.modalLevel--;
       if (this.modalLevel == 0) {
         lib.removeClass(html, 'modal_active');
-      }
-
-      let buttons = lib.qsa('[x-modal-open=' + id + ']');
-      if (buttons) {
-        for (let button of buttons) lib.removeClass(button, 'active');
       }
 
       this.lock = false;

@@ -1,0 +1,37 @@
+/*----------------------------------------
+icons.css
+x | Icons
+Created by Andrey Shpigunov at 13.02.2025
+All right reserved.
+----------------------------------------*/
+
+
+/*
+  .icon[10-40] step 2 (m,l) - size in px
+*/
+
+
+@for $i from 10 to 40 by 2 {
+  .icon$(i) {
+    width: $(i)px;
+    height: $(i)px;
+  }
+}
+
+@media (--medium) {
+  @for $i from 10 to 40 by 2 {
+    .m\:icon$(i) {
+      width: $(i)px;
+      height: $(i)px;
+    }
+  }
+}
+
+@media (--large) {
+  @for $i from 10 to 40 by 2 {
+    .l\:icon$(i) {
+      width: $(i)px;
+      height: $(i)px;
+    }
+  }
+}
