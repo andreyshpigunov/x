@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.0.91",
+	"version": "0.0.92",
 	"devDependencies": {
 		"@jest/globals": "^29.7.0",
 		"@parcel/logger": "*",
@@ -12,13 +12,15 @@
 		"postcss-cli": "^8.3.0",
 		"postcss-custom-media": "^11.0.1",
 		"postcss-custom-selectors": "^8.0.1",
+		"postcss-each": "^1.1.0",
 		"postcss-extend": "^1.0.5",
 		"postcss-for": "^2.1.1",
 		"postcss-import": "^14.0.2",
-		"postcss-nesting": "^10.2.0"
+		"postcss-nesting": "^10.2.0",
+		"postcss-simple-vars": "^7.0.1"
 	},
 	"scripts": {
-		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u autoprefixer -u cssnano --no-map -d dist/",
+		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u postcss-each -u autoprefixer -u cssnano --no-map -d dist/",
 		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
 		"build": "npm run build-css && npm run build-js",
 		"test": "exit 0"

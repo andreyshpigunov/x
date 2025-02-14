@@ -51,6 +51,9 @@ All right reserved.
 @custom-media --large  (min-width: 1000px);  /* Large screen  [l]  */
 @custom-media --xlarge (min-width: 1400px);  /* XLarge screen [xl] */
 
+/* Dark mode */
+@custom-media --dark (prefers-color-scheme: dark);
+
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

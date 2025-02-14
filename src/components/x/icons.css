@@ -7,20 +7,26 @@ All right reserved.
 
 
 /*
-  .icon[10-40] step 2 (m,l) - size in px
+  .icon - base icon style
+  .icon_[10-60] step 2 (m,l) - icon size in px
 */
 
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+}
 
-@for $i from 10 to 40 by 2 {
-  .icon$(i) {
+@for $i from 10 to 60 by 2 {
+  .icon_$(i) {
     width: $(i)px;
     height: $(i)px;
   }
 }
 
 @media (--medium) {
-  @for $i from 10 to 40 by 2 {
-    .m\:icon$(i) {
+  @for $i from 10 to 60 by 2 {
+    .m\:icon_$(i) {
       width: $(i)px;
       height: $(i)px;
     }
@@ -28,8 +34,8 @@ All right reserved.
 }
 
 @media (--large) {
-  @for $i from 10 to 40 by 2 {
-    .l\:icon$(i) {
+  @for $i from 10 to 60 by 2 {
+    .l\:icon_$(i) {
       width: $(i)px;
       height: $(i)px;
     }

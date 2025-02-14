@@ -13,6 +13,7 @@ All right reserved.
   .h[1-6]
   .mono
   .italic
+  .strike
   .fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
   .fs[20-80] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 8.0
   .fw[100-900] step 100 (m,l,xl)
@@ -185,6 +186,7 @@ table {
 
 .mono { font-family: monospace }
 .italic { font-style: italic }
+.strike { text-decoration: line-through }
 
 @for $i from 10 to 19 {
   .fs$(i) { font-size: calc($(i)rem / 10) !important }

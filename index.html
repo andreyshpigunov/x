@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.91</div>
+    <div class="header-version nowrap">0.0.92</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -714,6 +714,7 @@
             <li><a class="link" x-modal-open="modalFlex">Flex</a></li>
             <li><a class="link" x-modal-open="modalFlow">Flow</a></li>
             <li><a class="link" x-modal-open="modalIcons">Icons</a></li>
+            <li><a class="link" x-modal-open="modalColors">Colors</a></li>
           </ul>
         </div>
         <div class="c1 ac">
@@ -734,8 +735,10 @@
             <li><a class="link" x-modal-open="modalSticky">Sticky</a></li>
           </ul>
         </div>
-        <div class="c1 m:c2 ac fw600">
-          ⚠️ Documentation in progress, read details in code ⚠️
+        <div class="c1 m:c2 ac fw600 flex fc m:fr jcc gap2">
+          <div>⚠️</div>
+          <div>Documentation in progress, read details in code</div>
+          <div>⚠️</div>
         </div>
       </div>
     </div>
@@ -748,7 +751,7 @@
   <section class="section-content mt7 px5 m:px6 l:px8">
     <div class="container max1000">
       <div class="grid g1 m:g2 gap6">
-        <div class="c1 m:c2 flex gap4 jcc">
+        <div class="c1 m:c2 flex fw gap4 m:jcc">
           <button class="button button_small">Button</button>
           <button class="button button_small button_primary">Button</button>
           <button class="button button_small button_success">Button</button>
@@ -757,7 +760,7 @@
           <button class="button button_small button_white">Button</button>
           <button class="button button_small button_black">Button</button>
         </div>
-        <div class="c1 m:c2 flex gap4 jcc">
+        <div class="c1 m:c2 flex fw gap4 m:jcc">
           <button class="button">Button</button>
           <button class="button button_primary">Button</button>
           <button class="button button_success">Button</button>
@@ -766,7 +769,7 @@
           <button class="button button_white">Button</button>
           <button class="button button_black">Button</button>
         </div>
-        <div class="c1 m:c2 flex gap4 jcc">
+        <div class="c1 m:c2 flex fw gap4 m:jcc">
           <button class="button button_large">Button</button>
           <button class="button button_large button_primary">Button</button>
           <button class="button button_large button_success">Button</button>
@@ -953,8 +956,18 @@ a.pseudo</pre>
   <div x-modal="modalIcons" class="modal_hash" data-window-class="max1000">
     <h2>Icons</h2>
     <div class="mt6">
-      <pre class="fs14 mono">.icon[10-40] step 2 (m,l) - size in px</pre>
+      <pre class="fs14 mono">.icon[10-60] step 2 (m,l) - size in px</pre>
     </div>
+  </div>
+  
+  
+  <div x-modal="modalColors" class="modal_hash" data-window-class="max1000">
+    <h2>Colors</h2>
+    <div class="mt6">
+      <pre class="fs14 mono">.text[ColorName] (d) - text color
+.bg[ColorName] (d) — background color</pre>
+    </div>
+    <div class="mt6">All color names here: <a class="button button_label bgBeige" href="https://147colors.com" target="_blank"><div class="strike fw700 mr1">147</div> Colors →</a></div>
   </div>
 
 
@@ -966,6 +979,7 @@ a.pseudo</pre>
 .h[1-6]
 .mono
 .italic
+.strike
 .fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
 .fs[20-80] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 8.0
 .fw[100-900] step 100 (m,l,xl)

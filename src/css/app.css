@@ -20,7 +20,7 @@ Created by andreyshpigunov on 25.05.2021.
 }
 
 
-@media (prefers-color-scheme: dark) {
+@media (--dark) {
     :root {
       /* x */
         --font-color: #ddd;
