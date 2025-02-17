@@ -11,7 +11,7 @@ All right reserved.
 
 :root {
   --modal-margin: 3vw;
-  --modal-padding: clamp(4rem, 4vw, 5rem) clamp(2.5rem, 4vw, 5rem) clamp(2.5rem, 4vw, 5rem);
+  --modal-padding: clamp(4rem, 4vw, 5rem) clamp(2.5rem, 4vw, 5rem);
   --modal-background: #fff;
   --modal-box-shadow: 0 10px 40px #00000044;
   --modal-border-radius: 1.6rem;

@@ -115,7 +115,7 @@
 /* !- Sticky */.sticky{position:sticky!important;top:0}@media (min-width:600px){.m\:sticky{position:sticky!important;top:0}}@media (min-width:1000px){.l\:sticky{position:sticky!important;top:0}}@media (min-width:1400px){.xl\:sticky{position:sticky!important;top:0}}
 
 
-/* !- Modal windows */:root{--modal-margin:3vw;--modal-padding:clamp(4rem,4vw,5rem) clamp(2.5rem,4vw,5rem) clamp(2.5rem,4vw,5rem);--modal-background:#fff;--modal-box-shadow:0 10px 40px #00000044;--modal-border-radius:1.6rem;--modal-closer-area:40px;--modal-closer-size:26px;--modal-closer-width:2px;--modal-closer-color:#ccc;--modal-closer-color-hover:red;--modal-overlay-background-color:#00000066}html.modal_active body{overflow:hidden}
+/* !- Modal windows */:root{--modal-margin:3vw;--modal-padding:clamp(4rem,4vw,5rem) clamp(2.5rem,4vw,5rem);--modal-background:#fff;--modal-box-shadow:0 10px 40px #00000044;--modal-border-radius:1.6rem;--modal-closer-area:40px;--modal-closer-size:26px;--modal-closer-width:2px;--modal-closer-color:#ccc;--modal-closer-color-hover:red;--modal-overlay-background-color:#00000066}html.modal_active body{overflow:hidden}
 
 
 /* !- Modal window content */
