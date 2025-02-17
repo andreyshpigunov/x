@@ -137,6 +137,9 @@ All right reserved.
 .lower {
   text-transform: lowercase;
 }
+.cap {
+  text-transform: capitalize;
+}
 .nowrap {
   white-space: nowrap;
 }
