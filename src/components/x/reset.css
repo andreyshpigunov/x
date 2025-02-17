@@ -37,19 +37,18 @@ All right reserved.
 
 
 /* PostCSS custom media */
+
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
 @custom-media --small-max  (max-width: 599px);
 @custom-media --medium-min (min-width: 600px);
 @custom-media --medium-max (max-width: 999px);
 @custom-media --large-min  (min-width: 1000px);
 @custom-media --xlarge-min (min-width: 1400px);
-
 /* Breakpoints */
 @custom-media --small  (min-width: 0px);     /* Small screen  [s] (DEFAULT) */
 @custom-media --medium (min-width: 600px);   /* Medium screen [m]  */
 @custom-media --large  (min-width: 1000px);  /* Large screen  [l]  */
 @custom-media --xlarge (min-width: 1400px);  /* XLarge screen [xl] */
-
 /* Dark mode */
 @custom-media --dark (prefers-color-scheme: dark);
 

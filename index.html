@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.93</div>
+    <div class="header-version nowrap">0.0.94</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -852,8 +852,7 @@
       <h2>Breakpoints</h2>
       <p>Mobile first breakpoints</p>
       <p>
-        <code>s</code>, <code>m</code>, <code>l</code>, <code>xl</code> use <code>min-size</code><br>
-        <code>xs</code> use <code>max-size</code>
+        <code>s</code>, <code>m</code>, <code>l</code>, <code>xl</code> use <code>min-size</code>
       </p>
       <pre class="fs14 mono">
 ---------------------------
@@ -873,11 +872,12 @@
     <p>X use <a href="https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media" target="_blank">PostCSS custom media plugin</a> for compiling styles.</p>
     
     <pre class="fs14 mono">
-<span class="op4">/* Setting for custom media plugin */</span>
+<span class="op4">/* Setting for PostCSS custom media plugin */</span>
 @custom-media --small  (min-width: 0px);
 @custom-media --medium (min-width: 600px);
 @custom-media --large  (min-width: 1000px);
-@custom-media --xlarge (min-width: 1400px);</pre>
+@custom-media --xlarge (min-width: 1400px);
+@custom-media --dark (prefers-color-scheme: dark);</pre>
   </div>
 
 
@@ -956,7 +956,8 @@ a.pseudo</pre>
   <div x-modal="modalIcons" class="modal_hash" data-window-class="max1000">
     <h2>Icons</h2>
     <div class="mt6">
-      <pre class="fs14 mono">.icon[10-60] step 2 (m,l) - size in px</pre>
+      <pre class="fs14 mono">.icon - icon with default size 1em
+.icon_[10-60] step 2 (m,l) - modifier with size in px</pre>
     </div>
   </div>
   
