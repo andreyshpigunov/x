@@ -13,7 +13,7 @@ Created by andreyshpigunov on 25.05.2021.
     /* x */
     --font-color: #000;
     --background-color: #fff;
-    --link-transition: all .15s ease-out;
+    /* --link-transition: all .15s ease-out; */
     --code-font-size: 14px;
     --code-font-color: #000;
     --code-background-color: #f8f8f8;
@@ -26,9 +26,9 @@ Created by andreyshpigunov on 25.05.2021.
         --font-color: #ddd;
         --background-color: #1a1a1a;
         --link-color: #8bcdff;
-        --link-color-hover: #8bcdff;
-        --link-color-visited: #8bcdff;
-        --link-border-color: #8bcdff44;
+        /* --link-color-hover: #8bcdff; */
+        /* --link-color-visited: #8bcdff; */
+        --link-decoration-color: #8bcdff44;
         --modal-background: #2a2a2a;
         --code-font-color: #eee;
         --code-background-color: #333;

@@ -14,26 +14,30 @@ All right reserved.
   a.link
   a.hover
   a.active
-  a.pseudo
+  a.link_noline
+  a.link_underline
+  a.link_dashed
+  a.link_dotted
+  a.link_wavy
 */
 
 
 :root {
-  --link-decoration: underline;
-  --link-border-style: solid;
-  --link-underline-offset: .25em;
-  --link-underline-thickness: .06em;
-  
   --link-color: #0060bb;
-  --link-border-color: #0060bb44;
   
-  --link-color-hover: #f40000;
-  --link-border-color-hover: var(--link-color-hover);
-  
-  --link-color-visited: var(--link-color);
-  --link-border-color-visited: var(--link-border-color);
-  
-  --link-transition: none;
+  /*
+    Additional variables and their default values:
+    --link-color-hover: var(--link-color);
+    --link-color-visited: var(--link-color);
+    --link-decoration-line: underline;
+    --link-decoration-style: solid;
+    --link-decoration-thickness: .06em;
+    --link-decoration-color: color-mix(in srgb, currentcolor, transparent 75%);
+    --link-decoration-color-hover: currentcolor;
+    --link-decoration-color-visited: currentcolor;
+    --link-underline-offset: .2em;
+    --link-transition: all .1s ease-out;
+  */
 }
 
 
@@ -47,33 +51,48 @@ a {
     outline: none;
     cursor: pointer;
     color: var(--link-color);
-    transition: var(--link-transition);
+    transition: var(--link-transition, all .1s ease-out);
     
-    text-decoration-line: var(--link-decoration);
-    text-decoration-style: var(--link-border-style);
-    text-decoration-color: var(--link-border-color);
-    text-underline-offset: var(--link-underline-offset);
-    text-decoration-thickness: var(--link-underline-thickness);
+    text-decoration-line: var(--link-decoration-line, underline);
+    text-decoration-style: var(--link-decoration-style, solid);
+    text-decoration-color: var(--link-decoration-color, color-mix(in srgb, currentcolor, transparent 75%));
+    text-decoration-thickness: var(--link-decoration-thickness, .06em);
+    text-underline-offset: var(--link-underline-offset, .2em);
   }
   &:visited {
-    color: var(--link-color-visited);
-    text-decoration-color: var(--link-border-color-visited);
+    color: var(--link-color-visited, var(--link-color));
+    text-decoration-color: var(--link-decoration-color-visited, currentcolor);
   }
   @media (any-hover: hover) {
     &:hover,
     &.hover {
-      color: var(--link-color-hover);
-      text-decoration-color: var(--link-border-color-hover);
+      color: var(--link-color-hover, var(--link-color));
+      text-decoration-color: var(--link-decoration-color-hover, currentcolor);
     }
   }
   &:active,
   &.active {
-    color: var(--link-color-hover);
-    text-decoration-color: var(--link-border-color-hover);
+    color: var(--link-color-hover, var(--link-color));
+    text-decoration-color: var(--link-decoration-color-hover, currentcolor);
   }
-  &.pseudo {
-    --link-decoration: underline;
-    --link-border-style: dashed;
+  
+  
+  /* Link predefined styles */
+  
+  &.link_noline {
+    --link-decoration-line: none;
+  }
+  &.link_underline {
+    --link-decoration-line: underline;
+  }
+  &.link_dashed {
+    --link-decoration-style: dashed;
+  }
+  &.link_dotted {
+    --link-decoration-style: dotted;
+  }
+  &.link_wavy {
+    --link-decoration-style: wavy;
   }
 }
 
@@ -85,5 +104,4 @@ a[href^="tel"]:hover,
 a[href^="tel"]:active {
   color: inherit !important;
   text-decoration: inherit !important;
-  border: inherit !important;
 }

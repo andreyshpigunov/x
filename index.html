@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.0.99</div>
+    <div class="header-version nowrap">0.1.0</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -745,44 +745,6 @@
   </section>
   
   <section class="section-header mt8 px5 m:px6 l:px8">
-    <h2 class="ac">Buttons</h2>
-  </section>
-  
-  <section class="section-content mt7 px5 m:px6 l:px8">
-    <div class="container max1000">
-      <div class="grid g1 m:g2 gap6">
-        <div class="c1 m:c2 flex fw gap4 m:jcc">
-          <button class="button button_small">Button</button>
-          <button class="button button_small button_primary">Button</button>
-          <button class="button button_small button_success">Button</button>
-          <button class="button button_small button_danger">Button</button>
-          <button class="button button_small button_warning">Button</button>
-          <button class="button button_small button_white">Button</button>
-          <button class="button button_small button_black">Button</button>
-        </div>
-        <div class="c1 m:c2 flex fw gap4 m:jcc">
-          <button class="button">Button</button>
-          <button class="button button_primary">Button</button>
-          <button class="button button_success">Button</button>
-          <button class="button button_danger">Button</button>
-          <button class="button button_warning">Button</button>
-          <button class="button button_white">Button</button>
-          <button class="button button_black">Button</button>
-        </div>
-        <div class="c1 m:c2 flex fw gap4 m:jcc">
-          <button class="button button_large">Button</button>
-          <button class="button button_large button_primary">Button</button>
-          <button class="button button_large button_success">Button</button>
-          <button class="button button_large button_danger">Button</button>
-          <button class="button button_large button_warning">Button</button>
-          <button class="button button_large button_white">Button</button>
-          <button class="button button_large button_black">Button</button>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section-header mt8 px5 m:px6 l:px8">
     <h2 class="ac">Start usage</h2>
   </section>
 
@@ -931,25 +893,36 @@ a
 a.link
 a.hover
 a.active
-a.pseudo</pre>
+a.link_noline
+a.link_underline
+a.link_dashed
+a.link_dotted
+a.link_wavy</pre>
+
+    <h3>Example</h3>
+    <div class="flex gap4 m:gap6 fs20 m:fs24">
+      <a class="link link_noline">noline</a>
+      <a class="link link_underline">underline</a>
+      <a class="link link_dashed">dashed</a>
+      <a class="link link_dotted">dotted</a>
+      <a class="link link_wavy">wavy</a>
+    </div>
     
     <h3>Variables</h3>
     <pre class="fs14 mono">
---link-decoration: underline;
---link-border-style: solid;
---link-underline-offset: .25em;
---link-underline-thickness: .075em;
-
 --link-color: #0060bb;
---link-border-color: #0060bb44;
 
---link-color-hover: #f40000;
---link-border-color-hover: var(--link-color-hover);
-
+<span class="op4">/* Additional variables and their default values: */</span>
+--link-color-hover: var(--link-color);
 --link-color-visited: var(--link-color);
---link-border-color-visited: var(--link-border-color);
-
---link-transition: none;</pre>
+--link-decoration-line: underline;
+--link-decoration-style: solid;
+--link-decoration-thickness: .06em;
+--link-decoration-color: color-mix(in srgb, currentcolor, transparent 75%);
+--link-decoration-color-hover: currentcolor;
+--link-decoration-color-visited: currentcolor;
+--link-underline-offset: .2em;
+--link-transition: all .1s ease-out;</pre>
   </div>
   
   
@@ -965,10 +938,22 @@ a.pseudo</pre>
   <div x-modal="modalColors" class="modal_hash" data-window-class="max1000">
     <h2>Colors</h2>
     <div class="mt6">
-      <pre class="fs14 mono">.text[ColorName] (d) - text color
+      <pre class="fs14 mono"><span class="textPrimary">.textPrimary</span>
+<span class="textSuccess">.textSuccess</span>
+<span class="textWarning">.textWarning</span>
+<span class="textDanger">.textDanger</span>
+
+<span class="bgPrimary textWhite button button_label">.bgPrimary</span>
+<span class="bgSuccess textWhite button button_label">.bgSuccess</span>
+<span class="bgWarning textWhite button button_label">.bgWarning</span>
+<span class="bgDanger textWhite button button_label">.bgDanger</span>
+<span class="bgGrey textWhite button button_label">.bgGrey</span>
+
+.text[ColorName] (d) - text color
 .bg[ColorName] (d) — background color</pre>
     </div>
     <div class="mt6">All color names here: <a class="button button_label bgBeige" href="https://147colors.com" target="_blank"><div class="strike fw700 mr1">147</div> Colors →</a></div>
+    <div class="mt2">Colors by tones: <a class="button button_label" href="https://colorscheme.ru/html-colors.html" target="_blank">colorscheme.ru</a></div>
   </div>
 
 
@@ -1059,45 +1044,93 @@ a.pseudo</pre>
   <div x-modal="modalButtons" class="modal_hash" data-window-class="max1000">
     <h2>Buttons</h2>
     
+    <div class="flow s4">
+      <div class="flex fw gap4">
+        <button class="button button_label">Label</button>
+        <button class="button button_label button_primary">Label</button>
+        <button class="button button_label button_success">Label</button>
+        <button class="button button_label button_danger">Label</button>
+        <button class="button button_label button_warning">Label</button>
+        <button class="button button_label button_white">Label</button>
+        <button class="button button_label button_black">Label</button>
+      </div>
+      <div class="flex fw gap4">
+        <button class="button button_fs12">Button</button>
+        <button class="button button_fs12 button_primary">Button</button>
+        <button class="button button_fs12 button_success">Button</button>
+        <button class="button button_fs12 button_danger">Button</button>
+        <button class="button button_fs12 button_warning">Button</button>
+        <button class="button button_fs12 button_white">Button</button>
+        <button class="button button_fs12 button_black">Button</button>
+      </div>
+      <div class="flex fw gap4">
+        <button class="button">Button</button>
+        <button class="button button_primary">Button</button>
+        <button class="button button_success">Button</button>
+        <button class="button button_danger">Button</button>
+        <button class="button button_warning">Button</button>
+        <button class="button button_white">Button</button>
+        <button class="button button_black">Button</button>
+      </div>
+      <div class="flex fw gap4">
+        <button class="button button_fs20">Button</button>
+        <button class="button button_fs20 button_primary">Button</button>
+        <button class="button button_fs20 button_success">Button</button>
+        <button class="button button_fs20 button_danger">Button</button>
+        <button class="button button_fs20 button_warning">Button</button>
+        <button class="button button_fs20 button_white">Button</button>
+        <button class="button button_fs20 button_black">Button</button>
+      </div>
+      <div class="flex fw gap4">
+        <button class="button button_fs24">Button</button>
+        <button class="button button_fs24 button_primary">Button</button>
+        <button class="button button_fs24 button_success">Button</button>
+        <button class="button button_fs24 button_danger">Button</button>
+        <button class="button button_fs24 button_warning">Button</button>
+        <button class="button button_fs24 button_white">Button</button>
+        <button class="button button_fs24 button_black">Button</button>
+      </div>
+    </div>
+    
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .button
+.button_fs[10-19] step 1 (m,l) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
+.button_fs[20-40] step 2 (m,l) - size in rem - 2.0, 2.2, 2.4, ..., 4.0
 
-.button_small  (s,m,l)
-.button_normal (s,m,l)
-.button_large  (s,m,l)
-
+.button_label
 .button_primary
 .button_success
-.button_danger
 .button_warning
+.button_danger
 .button_white
 .button_black</pre>
   
   <h3>Variables</h3>
-  <pre class="fs14 mono"><span class="op4">/* Base styles */</span>
---button-height: 4rem;
---button-side-padding: 2rem;
---button-font-family: var(--font-family);
---button-font-size: var(--font-size);
---button-font-weight: 400;
---button-border-radius: 1rem;
+  <pre class="fs14 mono"><span class="op4">/* Required variables */</span>
+--button-height-coeff: 2.5;
+--button-side-padding-coeff: 1.25;
+--button-color: var(--color-grey);
+--button-font-color: #000;
 --button-transition: all .1s ease-out;
---button-disabled-opacity: .5;
-
-<span class="op4">/* Transformations */</span>
+--button-font-size: var(--font-size);
 --button-transform: scale(1);
 --button-transform-hover: scale(1);
 --button-transform-active: scale(.98);
 --button-transform-origin: center;
 
-<span class="op4">/* Colors */</span>
---button-color: #f0f2f4;
---button-color-hover: var(--button-color);
---button-color-active: var(--button-color);
---button-font-color: #000;
---button-font-color-hover: var(--button-font-color);
---button-font-color-active: var(--button-font-color);</pre>
+
+<span class="op4">/* Additional variables and their default values: */
+--button-height: 4rem;
+--button-side-padding: 2rem;
+--button-font-family: var(--font-family);
+--button-font-weight: 400;
+--button-disabled-opacity: .5;
+--button-border-radius: calc(var(--button-font-size) * 0.6);
+--button-color-hover: auto;
+--button-color-active: auto;
+--button-font-color-hover: auto;
+--button-font-color-active: auto;</span></pre>
   </div>
 
 
