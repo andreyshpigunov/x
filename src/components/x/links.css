@@ -30,7 +30,9 @@ All right reserved.
     --link-color-hover: var(--link-color);
     --link-color-visited: var(--link-color);
     --link-decoration-line: underline;
+    --link-decoration-line-hover: var(--link-decoration-line-hover, var(--link-decoration-line));
     --link-decoration-style: solid;
+    --link-decoration-style-hover: var(--link-decoration-style-hover, var(--link-decoration-style));
     --link-decoration-thickness: .06em;
     --link-decoration-color: color-mix(in srgb, currentcolor, transparent 75%);
     --link-decoration-color-hover: currentcolor;
@@ -67,12 +69,16 @@ a {
     &:hover,
     &.hover {
       color: var(--link-color-hover, var(--link-color));
+      text-decoration-line: var(--link-decoration-line-hover, var(--link-decoration-line));
+      text-decoration-style: var(--link-decoration-style-hover, var(--link-decoration-style));
       text-decoration-color: var(--link-decoration-color-hover, currentcolor);
     }
   }
   &:active,
   &.active {
     color: var(--link-color-hover, var(--link-color));
+    text-decoration-line: var(--link-decoration-line-hover, var(--link-decoration-line));
+    text-decoration-style: var(--link-decoration-style-hover, var(--link-decoration-style));
     text-decoration-color: var(--link-decoration-color-hover, currentcolor);
   }
   
