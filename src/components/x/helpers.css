@@ -10,6 +10,7 @@ All right reserved.
 
 
 /*
+  .antialiased
   .container
   .unselectable
   .unclickable
@@ -110,6 +111,12 @@ All right reserved.
 
 :root {
   --container-max-width: 1600px;
+}
+
+
+/* !- Font smoothing */
+.antialiased {
+  -webkit-font-smoothing: antialiased;
 }
 
 

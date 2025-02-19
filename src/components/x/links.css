@@ -58,7 +58,7 @@ a {
     text-decoration-line: var(--link-decoration-line);
     text-decoration-style: var(--link-decoration-style);
     text-decoration-color: var(--link-decoration-color, color-mix(in srgb, currentcolor, transparent 75%));
-    text-decoration-thickness: var(--link-decoration-thickness, .06em);
+    text-decoration-thickness: clamp(1px, var(--link-decoration-thickness, .06em), 10px);
     text-underline-offset: var(--link-underline-offset, .25em);
   }
   &:visited {

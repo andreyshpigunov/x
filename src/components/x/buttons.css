@@ -154,8 +154,7 @@ All right reserved.
   }
 }
 
-
-/* Button as label */
+/* Predefined styles */
 
 .button_label {
   --button-height: 1.4em;
@@ -164,8 +163,6 @@ All right reserved.
   --button-border-radius: .5em;
   vertical-align: baseline;
 }
-
-/* Predefined styles */
 
 .button_primary {
   --button-color: var(--color-primary);
