@@ -114,12 +114,6 @@ All right reserved.
 }
 
 
-/* !- Font smoothing */
-.antialiased {
-  -webkit-font-smoothing: antialiased;
-}
-
-
 /* !- Container */
 .container {
   max-width: var(--container-max-width);
