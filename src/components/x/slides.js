@@ -36,10 +36,10 @@ class Slides {
           // Get array images
           let slides = JSON.parse(e.getAttribute('x-slides'));
           // Get cover
-          let img = lib.qs('img', e);
-          let cover = img.getAttribute('src');
+          // let img = lib.qs('img', e);
+          // let cover = img.getAttribute('src');
           // Add cover to the start of array
-          slides.unshift(cover);
+          // slides.unshift(cover);
           // Create array without duplicates
           let array = [...new Set(slides)]
           let count = array.length;
@@ -63,7 +63,7 @@ class Slides {
           };
 
           // Remove 'x-slides' attribute
-          e.removeAttribute('x-slides');
+          // e.removeAttribute('x-slides');
           e.classList.add('slides')
         });
 
