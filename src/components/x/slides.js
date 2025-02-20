@@ -44,7 +44,15 @@ class Slides {
           // Create array without duplicates
           let array = [...new Set(slides)]
           let count = array.length;
-
+          
+          // Remove .slides-items if existed
+          let items = lib.qsa('.slides-items', e);
+          if (items.length) {
+            for (let item of items) {
+              item.remove();
+            }
+          }
+          
           let itemsId = lib.makeId();
           lib.render(e, `<div id="${itemsId}" class="slides-items"></div>`, 'beforeend');
 
