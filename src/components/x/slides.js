@@ -35,8 +35,9 @@ class Slides {
         sliders.forEach((e, index) => {
           // Get array images
           let slides = JSON.parse(e.getAttribute('x-slides'));
+          // Get img
+          let img = lib.qs('img', e);
           // Get cover
-          // let img = lib.qs('img', e);
           // let cover = img.getAttribute('src');
           // Add cover to the start of array
           // slides.unshift(cover);
