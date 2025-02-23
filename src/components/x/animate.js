@@ -7,16 +7,15 @@
 //
 //  On scroll animations
 //
-//  <div x-animate='
-//    {
-//      "trigger": "selector (default — this)",
-//      "start": "120vh",
-//      "end": "0vh",
-//      "functionName": "coverOut",
-//      "class": "fixed",
-//      "classRemove": true
-//    }
-//  '>...</div>
+//  <div x-animate='{
+//    "parent": "#id or .class selector", — default "window"
+//    "trigger": "selector (default — this)",
+//    "start": "120vh",
+//    "end": "0vh",
+//    "functionName": "coverOut",
+//    "class": "fixed",
+//    "classRemove": true
+//  }'>...</div>
 //
 //  trigger       selector of trigger element that we are tracking the position
 //  start         animation start point (height from the top in px, % or vh)
@@ -35,6 +34,10 @@ import { lib } from './lib';
 
 
 class Animate {
+  
+  constructor() {
+    this.parent = window;
+  }
 
   init() {
     let animations = lib.qsa('[x-animate]');
@@ -44,6 +47,7 @@ class Animate {
       animations.forEach((e, index) => {
         let json = JSON.parse(e.getAttribute('x-animate'));
         let item = {};
+        item.parent = json.parent || this.parent;
         if (
           json.hasOwnProperty('trigger') &&
           lib.qs(json.trigger).length
@@ -62,25 +66,53 @@ class Animate {
         animationsHash[index] = item;
         e.removeAttribute('x-animate')
       });
-
+      
       if (Object.keys(animationsHash).length) {
+        // Init document scroll observer
         document.addEventListener('scroll', () => {
           this._scroll(animationsHash);
         }, { passive: true });
-        // If element in scrollarea <div x-animate-scrollarea>
-        let animateScrollarea = lib.qsa('[x-animate-scrollarea]');
-        if (animateScrollarea.length) {
-          animateScrollarea.forEach(item => {
-            item.addEventListener('scroll', () => {
-              this._scroll(animationsHash)
-            }, { passive: true })
-          })
+        // Create array with scrolled parents
+        let parents = [];
+        for (let k in animationsHash) {
+          if (
+            Object.hasOwn(animationsHash[k], 'parent') &&
+            !parents.includes(animationsHash[k].parent)
+          ) {
+            parents.push(animationsHash[k].parent)
+          }
+        };
+        // Add scroll event to scrolled parents
+        for (let p in parents) {
+          let el = lib.qs(parents[p]);
+          el.addEventListener('scroll', () => {
+            this._scroll(animationsHash);
+          }, { passive: true });
         }
         // First init elements positions
         document.addEventListener('DOMContentLoaded', () => {
           this._scroll(animationsHash)
         })
       }
+      
+      // if (Object.keys(animationsHash).length) {
+      //   document.addEventListener('scroll', () => {
+      //     this._scroll(animationsHash);
+      //   }, { passive: true });
+      //   // If element in scrollarea <div x-animate-scrollarea>
+      //   let animateScrollarea = lib.qsa('[x-animate-scrollarea]');
+      //   if (animateScrollarea.length) {
+      //     animateScrollarea.forEach(item => {
+      //       item.addEventListener('scroll', () => {
+      //         this._scroll(animationsHash)
+      //       }, { passive: true })
+      //     })
+      //   }
+      //   // First init elements positions
+      //   document.addEventListener('DOMContentLoaded', () => {
+      //     this._scroll(animationsHash)
+      //   })
+      // }
     }
   }
 

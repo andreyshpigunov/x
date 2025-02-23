@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.14</div>
+    <div class="header-version nowrap">0.1.15</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -1548,7 +1548,7 @@ a.link_wavy</pre>
       <div class="codeBlock">
         <code>&lt;a x-scrollto='{</code>
         <code>  "parent": window,</code>
-        <code>  "target": "top",</code>
+        <code>  "target": "#top",</code>
         <code>  "duration": 400,</code>
         <code>  "offset": 0,</code>
         <code>  "classActive": "active",</code>
@@ -1567,7 +1567,7 @@ a.link_wavy</pre>
         <code>x.scroll.to(top)</code>
         <code>x.scroll.to({</code>
         <code>  parent: window,</code>
-        <code>  target: "top",</code>
+        <code>  target: "#top",</code>
         <code>  duration: 400,</code>
         <code>  offset: 0,</code>
         <code>  classActive: "active",</code>
@@ -1649,7 +1649,7 @@ a.link_wavy</pre>
       <div class="codeBlock">
         <code>&lt;div id="trigger"&gt;&lt;/div&gt;</code>
         <code>&lt;div class="element" x-animate='{</code>
-        <!-- <code>  "parent": window,</code> -->
+        <code>  "parent": window,</code>
         <code>  "trigger": "#trigger",</code>
         <code>  "start": "120vh",</code>
         <code>  "end": "0vh",</code>
@@ -1668,12 +1668,11 @@ a.link_wavy</pre>
           <th width="25%">Type</th>
           <th width="50%">Description</th>
         </tr>
-        <!-- <tr>
+        <tr>
             <td><code>parent</code></td>
-            <td><code>string, element</code></td>
-            <td><code>window</code></td>
-            <td><code>id</code>, селектор или элемент.</td>
-        </tr> -->
+            <td><code>string</code></td>
+            <td>Scrolled parent element selector Default: <code>window</code>.</td>
+        </tr>
         <tr>
           <td><code>trigger</code></td>
           <td><code>string</code></td>

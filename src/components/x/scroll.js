@@ -10,15 +10,13 @@
 //  <div id="top">...</div>
 //  <a x-scrollto="top">Up</a>
 //  or
-//  <a x-scrollto='
-//    {
-//      "parent": "#id or .class selector", — default "window"
-//      "target": "top",
-//      "offset": 0,
-//      "classActive": "active",
-//      "hash": false
-//    }
-//  '>Up</a>
+//  <a x-scrollto='{
+//    "parent": "#id or .class selector", — default "window"
+//    "target": "#id or .class selector",
+//    "offset": 0,
+//    "classActive": "active",
+//    "hash": false
+//  }'>Up</a>
 //
 //  API call for simple scroll:
 //
@@ -30,7 +28,7 @@
 //  With params:
 //  this.scrollTo({
 //    parent: "element selector", — default value = window
-//    target: "element id, selector or element item",
+//    target: "element selector or element item",
 //    offset: 0, — offset top in px
 //    classActive: 'active',
 //    hash: false
