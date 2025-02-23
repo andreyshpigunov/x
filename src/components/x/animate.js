@@ -43,7 +43,14 @@ class Animate {
       animations.forEach((e, index) => {
         let json = JSON.parse(e.getAttribute('x-animate'));
         let item = {};
-        item.parent = json.parent || window;
+        if (
+          json.hasOwnProperty('parent') &&
+          lib.qs(json.parent).length
+        ) {
+          item.parent = lib.qs(json.parent)
+        } else {
+          item.parent = window
+        }
         if (
           json.hasOwnProperty('trigger') &&
           lib.qs(json.trigger).length
@@ -115,16 +122,14 @@ class Animate {
   _scroll(animationsHash) {
     Object.keys(animationsHash).forEach(i => {
       let item = animationsHash[i],
-        parentOffset = (item.parent === window) ? 0 : item.parent.getBoundingClientRect(),
-        triggerOffset = item.trigger.getBoundingClientRect(),
-        top = triggerOffset.top,
+        top = item.trigger.getBoundingClientRect().top,
         start = this._2px(item.start),
         end = this._2px(item.end);
 
       item.duration = start - end;
       
       if (item.parent !== window) {
-        top = triggerOffset.top - parentOffset.top;
+        top = top - item.parent.getBoundingClientRect().top;
       }
 
       if (top <= start && top >= end) {
