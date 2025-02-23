@@ -34,10 +34,6 @@ import { lib } from './lib';
 
 
 class Animate {
-  
-  constructor() {
-    this.parent = window;
-  }
 
   init() {
     let animations = lib.qsa('[x-animate]');
@@ -47,7 +43,7 @@ class Animate {
       animations.forEach((e, index) => {
         let json = JSON.parse(e.getAttribute('x-animate'));
         let item = {};
-        item.parent = json.parent || this.parent;
+        item.parent = json.parent || window;
         if (
           json.hasOwnProperty('trigger') &&
           lib.qs(json.trigger).length
@@ -119,13 +115,19 @@ class Animate {
   _scroll(animationsHash) {
     Object.keys(animationsHash).forEach(i => {
       let item = animationsHash[i],
-        offset = item.trigger.getBoundingClientRect(),
+        parentOffset = (item.parent === window) ? 0 : item.parent.getBoundingClientRect(),
+        triggerOffset = item.trigger.getBoundingClientRect(),
+        top = triggerOffset.top,
         start = this._2px(item.start),
         end = this._2px(item.end);
 
       item.duration = start - end;
+      
+      if (item.parent !== window) {
+        top = triggerOffset.top - parentOffset.top;
+      }
 
-      if (offset.top <= start && offset.top >= end) {
+      if (top <= start && top >= end) {
         // Element inside of animation area --- > E < ---
         // Unlock function if locked
         item.locked = false;
@@ -135,7 +137,7 @@ class Animate {
         }
         // Animation progress
         if (typeof window[item.functionName] === 'function') {
-          item.progress = (start - offset.top) / item.duration;
+          item.progress = (start - top) / item.duration;
           item.progress = item.progress.toFixed(4);
           window[item.functionName](item)
 
@@ -153,12 +155,12 @@ class Animate {
 
         // Animation progress
         if (!item.locked && typeof window[item.functionName] === 'function') {
-          if (offset.top >= start) {
+          if (top >= start) {
             item.progress = 0;
             window[item.functionName](item);
             item.locked = true;
           }
-          if (offset.top <= end) {
+          if (top <= end) {
             item.progress = 1;
             window[item.functionName](item);
             item.locked = true;
