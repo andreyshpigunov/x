@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.12</div>
+    <div class="header-version nowrap">0.1.13</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -1738,15 +1738,11 @@ a.link_wavy</pre>
       <p>Создает табы с содержимым.</p>
       <p>Шаблон:</p>
       <div class="codeBlock">
-        <code>&lt;div class="sheets"&gt;</code>
-        <code>  &lt;a class="sheets-tab active" data-sheet="sheetA"&gt;Таб A&lt;/a&gt;</code>
-        <code>  &lt;a class="sheets-tab" data-sheet="sheetB"&gt;Таб B&lt;/a&gt;</code>
-        <code>  &lt;div id="sheetA" class="sheets-body active"&gt;</code>
-        <code>    Содержимое таба A</code>
-        <code>  &lt;/div&gt;</code>
-        <code>  &lt;div id="sheetB" class="sheets-body"&gt;</code>
-        <code>    Содержимое таба B</code>
-        <code>  &lt;/div&gt;</code>
+        <code>&lt;div x-sheets&gt;</code>
+        <code>  &lt;a class="sheet-tab active" x-sheet="sheetA"&gt;Sheet&lt;/a&gt;</code>
+        <code>  &lt;a class="sheet-tab" x-sheet="sheetB"&gt;Sheet&lt;/a&gt;</code>
+        <code>  &lt;div id="sheetA" class="sheet-body active"&gt;Sheet content&lt;/div&gt;</code>
+        <code>  &lt;div id="sheetB" class="sheet-body"&gt;Sheet content&lt;/div&gt;</code>
         <code>&lt;/div&gt;</code>
       </div>
       <p>Первый таб в шаблоне активен по умолчанию, для этого добавлен класс <code>.active</code>.</p>
