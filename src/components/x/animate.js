@@ -43,18 +43,12 @@ class Animate {
       animations.forEach((e, index) => {
         let json = JSON.parse(e.getAttribute('x-animate'));
         let item = {};
-        if (
-          json.hasOwnProperty('parent') &&
-          lib.qs(json.parent).length
-        ) {
+        if (json.hasOwnProperty('parent') && lib.qs(json.parent)) {
           item.parent = lib.qs(json.parent)
         } else {
           item.parent = window
         }
-        if (
-          json.hasOwnProperty('trigger') &&
-          lib.qs(json.trigger).length
-        ) {
+        if (json.hasOwnProperty('trigger') && lib.qs(json.trigger)) {
           item.trigger = lib.qs(json.trigger)
         } else {
           item.trigger = e
@@ -83,15 +77,18 @@ class Animate {
             !parents.includes(animationsHash[k].parent)
           ) {
             parents.push(animationsHash[k].parent)
+            animationsHash[k].parent.addEventListener('scroll', () => {
+              this._scroll(animationsHash);
+            }, { passive: true });
           }
         };
         // Add scroll event to scrolled parents
-        for (let p in parents) {
-          let el = lib.qs(parents[p]);
-          el.addEventListener('scroll', () => {
-            this._scroll(animationsHash);
-          }, { passive: true });
-        }
+        // for (let p in parents) {
+        //   let el = lib.qs(parents[p]);
+        //   el.addEventListener('scroll', () => {
+        //     this._scroll(animationsHash);
+        //   }, { passive: true });
+        // }
         // First init elements positions
         document.addEventListener('DOMContentLoaded', () => {
           this._scroll(animationsHash)

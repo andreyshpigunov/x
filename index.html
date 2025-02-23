@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.17</div>
+    <div class="header-version nowrap">0.1.18</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -29,6 +29,22 @@
       <a href="https://github.com/andreyshpigunov/x" target="_blank"></a>
     </div>
   </header>
+  
+  <div id="ttt" style="width: 600px; height: 600px; overflow-y: scroll;">
+    <div style="height: 400px"></div>
+    <div id="mark"></div>
+    <div style="height: 400px"></div>
+    <div x-animate='{
+      "parent": "#ttt",
+      "trigger": "#mark",
+      "start": "10vh",
+      "end": "20vh",
+      "functionName": "test",
+      "class": "show",
+      "classRemove": true
+    }'>mark</div>
+    <div style="height: 10000px"></div>
+  </div>
   
   <div class="element3" x-animate='{
     "start": "50vh",
