@@ -78,7 +78,7 @@ class Scroll {
               item.hash = json.hash || this.hash;
             } else {
               console.error(
-                'Target required in JSON ' + json + ' or element not exist'
+                'Target required in JSON ' + JSON.stringify(json) + ' or element not exist'
               );
             }
           } else {
