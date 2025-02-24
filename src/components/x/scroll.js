@@ -192,7 +192,7 @@ class Scroll {
       });
       
       if (hash && target.id) {
-        window.location.hash = target.id;
+        lib.updateURL('#' + target.id);
       } else if (hash) {
         history.replaceState({}, document.title, window.location.href.split('#')[0]);
       }
