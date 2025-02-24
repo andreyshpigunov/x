@@ -24,35 +24,43 @@ All right reserved.
 .scroll {
   flex-wrap: nowrap;
   overflow-x: scroll;
-  overflow-y: hidden;
+  overflow-y: auto;
   scroll-snap-type: x mandatory;
   /* Hide scrollbar in IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar in Firefox */
   scrollbar-width: none;
-  
+
   &_x-proximity {
     scroll-snap-type: x proximity;
   }
-  
+
   &::-webkit-scrollbar {
     width: var(--scroll-scrollbar-size);
     height: var(--scroll-scrollbar-size);
   }
-  
+
   &::-webkit-scrollbar-track {
     background-color: none;
     border-radius: var(--scroll-scrollbar-size);
   }
-  
+
   &::-webkit-scrollbar-thumb {
     border-radius: var(--scroll-scrollbar-size);
     background-color: var(--scroll-scrollbar-thumb-background);
+    will-change: background-color;
     transition: background .2s ease-out;
     cursor: pointer;
   }
-  
+
   &::-webkit-scrollbar-thumb:hover {
     background-color: var(--scroll-scrollbar-thumb-background-hover);
+  }
+
+  &::-webkit-scrollbar-button,
+  &::-webkit-scrollbar-track-piece,
+  &::-webkit-scrollbar-corner,
+  &::-webkit-resizer {
+    display: none;
   }
 }
