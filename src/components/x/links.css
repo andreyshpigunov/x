@@ -5,9 +5,7 @@ Created by Andrey Shpigunov at 12.02.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /* !- Links styles */
-
 
 /*
   a
@@ -21,12 +19,11 @@ All right reserved.
   a.link_wavy
 */
 
-
 :root {
   --link-color: #0060bb;
   --link-decoration-line: underline;
   --link-decoration-style: solid;
-  
+
   /*
     Additional variables and their default values:
     --link-color-hover: var(--link-color);
@@ -42,10 +39,8 @@ All right reserved.
   */
 }
 
-
 a {
-  
-  &[role=button] {
+  &[role="button"] {
     cursor: pointer;
   }
   &:link,
@@ -53,13 +48,16 @@ a {
     outline: none;
     cursor: pointer;
     color: var(--link-color);
-    transition: var(--link-transition, all .1s ease-out);
-    
+    transition: var(--link-transition, all 0.1s ease-out);
+
     text-decoration-line: var(--link-decoration-line);
     text-decoration-style: var(--link-decoration-style);
-    text-decoration-color: var(--link-decoration-color, color-mix(in srgb, currentcolor, transparent 75%));
-    text-decoration-thickness: clamp(1px, var(--link-decoration-thickness, .06em), 10px);
-    text-underline-offset: var(--link-underline-offset, .25em);
+    text-decoration-color: var(
+      --link-decoration-color,
+      color-mix(in srgb, currentcolor, transparent 75%)
+    );
+    text-decoration-thickness: clamp(1px, var(--link-decoration-thickness, 0.06em), 10px);
+    text-underline-offset: var(--link-underline-offset, 0.25em);
   }
   &:visited {
     color: var(--link-color-visited, var(--link-color));
@@ -81,10 +79,9 @@ a {
     text-decoration-style: var(--link-decoration-style-hover, var(--link-decoration-style));
     text-decoration-color: var(--link-decoration-color-hover, currentcolor);
   }
-  
-  
+
   /* Link predefined styles */
-  
+
   &.link_noline {
     --link-decoration-line: none;
   }
@@ -101,7 +98,6 @@ a {
     --link-decoration-style: wavy;
   }
 }
-
 
 /* Remove underline from phones */
 

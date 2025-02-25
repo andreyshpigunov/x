@@ -5,7 +5,6 @@ Created by Andrey Shpigunov at 20.01.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /*
   .grid
   .grid.g[1-12]           (m,l,xl)  - columns limit in grid
@@ -13,96 +12,175 @@ All right reserved.
   .grid > .c[1-12]/[1-12] (m,l,xl)  - columns range for content
 */
 
-
 .grid {
   display: grid;
   width: 100%;
   grid-template-columns: repeat(12, 1fr);
   grid-auto-flow: dense;
-  
+
   @for $i from 1 to 12 {
-    &.g$(i)  { grid-template-columns: repeat($(i), 1fr) }
-    & > .c$(i) { grid-column: span $(i) }
-    
+    &.g$(i) {
+      grid-template-columns: repeat($(i), 1fr);
+    }
+    & > .c$(i) {
+      grid-column: span $(i);
+    }
+
     @for $m from 12 to $i {
       & > .c$(i)\/$(m) {
-        grid-column: $(i) / calc($(m) + 1)
+        grid-column: $(i) / calc($(m) + 1);
       }
     }
   }
-  
-  & .jss   { justify-self: start }
-  & .jse   { justify-self: end }
-  & .jsc   { justify-self: center }
-  & .jsstr { justify-self: stretch }
-  & .ass   { align-self: start }
-  & .ase   { align-self: end }
-  & .asc   { align-self: center }
-  & .asstr { align-self: stretch }
-  
+
+  & .jss {
+    justify-self: start;
+  }
+  & .jse {
+    justify-self: end;
+  }
+  & .jsc {
+    justify-self: center;
+  }
+  & .jsstr {
+    justify-self: stretch;
+  }
+  & .ass {
+    align-self: start;
+  }
+  & .ase {
+    align-self: end;
+  }
+  & .asc {
+    align-self: center;
+  }
+  & .asstr {
+    align-self: stretch;
+  }
+
   @media (--medium) {
     @for $i from 1 to 12 {
-      &.m\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-      & > .m\:c$(i) { grid-column: span $(i) }
-      
+      &.m\:g$(i) {
+        grid-template-columns: repeat($(i), 1fr);
+      }
+      & > .m\:c$(i) {
+        grid-column: span $(i);
+      }
+
       @for $m from 12 to $i {
         & > .m\:c$(i)\/$(m) {
-          grid-column: $(i) / calc($(m) + 1)
+          grid-column: $(i) / calc($(m) + 1);
         }
       }
     }
-    
-    & .m\:jss   { justify-self: start }
-    & .m\:jse   { justify-self: end }
-    & .m\:jsc   { justify-self: center }
-    & .m\:jsstr { justify-self: stretch }
-    & .m\:ass   { align-self: start }
-    & .m\:ase   { align-self: end }
-    & .m\:asc   { align-self: center }
-    & .m\:asstr { align-self: stretch }
+
+    & .m\:jss {
+      justify-self: start;
+    }
+    & .m\:jse {
+      justify-self: end;
+    }
+    & .m\:jsc {
+      justify-self: center;
+    }
+    & .m\:jsstr {
+      justify-self: stretch;
+    }
+    & .m\:ass {
+      align-self: start;
+    }
+    & .m\:ase {
+      align-self: end;
+    }
+    & .m\:asc {
+      align-self: center;
+    }
+    & .m\:asstr {
+      align-self: stretch;
+    }
   }
-  
+
   @media (--large) {
     @for $i from 1 to 12 {
-      &.l\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-      & > .l\:c$(i) { grid-column: span $(i) }
-      
+      &.l\:g$(i) {
+        grid-template-columns: repeat($(i), 1fr);
+      }
+      & > .l\:c$(i) {
+        grid-column: span $(i);
+      }
+
       @for $m from 12 to $i {
         & > .l\:c$(i)\/$(m) {
-          grid-column: $(i) / calc($(m) + 1)
+          grid-column: $(i) / calc($(m) + 1);
         }
       }
     }
-    
-    & .l\:jss   { justify-self: start }
-    & .l\:jse   { justify-self: end }
-    & .l\:jsc   { justify-self: center }
-    & .l\:jsstr { justify-self: stretch }
-    & .l\:ass   { align-self: start }
-    & .l\:ase   { align-self: end }
-    & .l\:asc   { align-self: center }
-    & .l\:asstr { align-self: stretch }
+
+    & .l\:jss {
+      justify-self: start;
+    }
+    & .l\:jse {
+      justify-self: end;
+    }
+    & .l\:jsc {
+      justify-self: center;
+    }
+    & .l\:jsstr {
+      justify-self: stretch;
+    }
+    & .l\:ass {
+      align-self: start;
+    }
+    & .l\:ase {
+      align-self: end;
+    }
+    & .l\:asc {
+      align-self: center;
+    }
+    & .l\:asstr {
+      align-self: stretch;
+    }
   }
-  
+
   @media (--xlarge) {
     @for $i from 1 to 12 {
-      &.xl\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-      & > .xl\:c$(i) { grid-column: span $(i) }
-      
+      &.xl\:g$(i) {
+        grid-template-columns: repeat($(i), 1fr);
+      }
+      & > .xl\:c$(i) {
+        grid-column: span $(i);
+      }
+
       @for $m from 12 to $i {
         & > .xl\:c$(i)\/$(m) {
-          grid-column: $(i) / calc($(m) + 1)
+          grid-column: $(i) / calc($(m) + 1);
         }
       }
     }
-    
-    & .xl\:jss   { justify-self: start }
-    & .xl\:jse   { justify-self: end }
-    & .xl\:jsc   { justify-self: center }
-    & .xl\:jsstr { justify-self: stretch }
-    & .xl\:ass   { align-self: start }
-    & .xl\:ase   { align-self: end }
-    & .xl\:asc   { align-self: center }
-    & .xl\:asstr { align-self: stretch }
+
+    & .xl\:jss {
+      justify-self: start;
+    }
+    & .xl\:jse {
+      justify-self: end;
+    }
+    & .xl\:jsc {
+      justify-self: center;
+    }
+    & .xl\:jsstr {
+      justify-self: stretch;
+    }
+    & .xl\:ass {
+      align-self: start;
+    }
+    & .xl\:ase {
+      align-self: end;
+    }
+    & .xl\:asc {
+      align-self: center;
+    }
+    & .xl\:asstr {
+      align-self: stretch;
+    }
   }
 }

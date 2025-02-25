@@ -34,78 +34,70 @@
 //  [x-render]  |  Render JavaScript in 'x-render' attribute
 //
 
-
 class Lib {
-
   constructor() {
     this.loadedScripts = [];
-    this._elementRender()
-  }
-  
-  _elementRender() {
-    document.addEventListener('DOMContentLoaded', () => {
-      let items = qsa('[x-render]');
-      if (items) {
-        for (let item of items) {
-          this.render(item, eval(item.getAttribute('x-render')))
-        }
-      }
-    })
+    this._elementRender();
   }
 
+  _elementRender() {
+    document.addEventListener("DOMContentLoaded", () => {
+      let items = qsa("[x-render]");
+      if (items) {
+        for (let item of items) {
+          this.render(item, eval(item.getAttribute("x-render")));
+        }
+      }
+    });
+  }
 
   // !---------- Query selectors ----------
 
-
   // querySelector -> return element
   qs(selector, context = document) {
-    if (typeof selector == 'string') {
-      return context.querySelector(selector)
+    if (typeof selector == "string") {
+      return context.querySelector(selector);
     } else {
-      return selector instanceof NodeList ? selector[0] : selector
+      return selector instanceof NodeList ? selector[0] : selector;
     }
   }
 
   // querySelectorAll -> return NodeList or Array of elements
   qsa(selector, context = document) {
-    if (typeof selector == 'string') {
-      return context.querySelectorAll(selector)
+    if (typeof selector == "string") {
+      return context.querySelectorAll(selector);
     } else {
       if (selector instanceof NodeList) {
-        return selector
+        return selector;
       } else {
         // Check is Array to prevent nesting
-        return Array.isArray(selector) ? selector : [selector]
+        return Array.isArray(selector) ? selector : [selector];
       }
     }
   }
 
-
   // !---------- Hide/show element (s) ----------
-
 
   // Hide element(s) (add class .hidden)
   hide(selector) {
-    this.addClass(selector, 'hidden')
+    this.addClass(selector, "hidden");
   }
 
   // Show element(s) (remove class .hidden)
   show(selector) {
-    this.removeClass(selector, 'hidden')
+    this.removeClass(selector, "hidden");
   }
-  
+
   // Toggle
   toggle(selector) {
-    if (qs(selector).classList.contains('hidden')) {
-      this.show(selector)
+    if (qs(selector).classList.contains("hidden")) {
+      this.show(selector);
     } else {
-      this.hide(selector)
+      this.hide(selector);
     }
   }
 
-
   // !---------- Work with classes ----------
-
 
   // Add class to element(s)
   // delay - if > 0, add class 'className_ready' before className, then delay in ms
@@ -113,18 +105,18 @@ class Lib {
     let items = this.qsa(selector);
     if (items.length) {
       if (delay > 0) {
-        for (let i of items) i.classList.add(className.split('_')[0] + '_ready');
-        await new Promise(resolve => {
+        for (let i of items) i.classList.add(className.split("_")[0] + "_ready");
+        await new Promise((resolve) => {
           setTimeout(() => {
             for (let i of items) i.classList.add(className);
-            resolve()
+            resolve();
           }, delay);
-        })
+        });
       } else {
         for (let i of items) i.classList.add(className);
       }
     }
-    return
+    return;
   }
 
   // Remove class to element(s)
@@ -134,17 +126,17 @@ class Lib {
     if (items.length) {
       if (delay > 0) {
         for (let i of items) i.classList.remove(className);
-        await new Promise(resolve => {
+        await new Promise((resolve) => {
           setTimeout(() => {
-            for (let i of items) i.classList.remove(className.split('_')[0] + '_ready');
-            resolve()
+            for (let i of items) i.classList.remove(className.split("_")[0] + "_ready");
+            resolve();
           }, delay);
-        })
+        });
       } else {
         for (let i of items) i.classList.remove(className);
       }
     }
-    return
+    return;
   }
 
   // Toggle class on element(s)
@@ -153,13 +145,13 @@ class Lib {
     if (items.length) {
       for (let i of items) {
         if (i.classList.contains(className)) {
-          await this.removeClass(i, className, delay)
+          await this.removeClass(i, className, delay);
         } else {
-          await this.addClass(i, className, delay)
+          await this.addClass(i, className, delay);
         }
       }
     }
-    return
+    return;
   }
 
   // Switch class by condition
@@ -169,53 +161,49 @@ class Lib {
     if (items.length) {
       for (let i of items) {
         if (condition) {
-          await this.addClass(i, className, delay)
+          await this.addClass(i, className, delay);
         } else {
-          await this.removeClass(i, className, delay)
+          await this.removeClass(i, className, delay);
         }
       }
     }
-    return
+    return;
   }
-
 
   // !---------- Page events and URL ----------
 
-
   // Reload page
   reload() {
-    location.reload()
+    location.reload();
   }
 
   // Reload page with new hash
   reloadWithHash(hash) {
     window.location.hash = hash;
-    this.reload()
+    this.reload();
   }
 
   // Redirect to url
   redirectTo(url) {
     window.location = url;
-    return false
+    return false;
   }
 
   // Update title and page url without reload
   // You can add only hash: lib.updateURL('#ok').
   updateURL(url, title) {
-    if (typeof(history.pushState) != 'undefined') {
-      history.pushState(null, title, url)
+    if (typeof history.pushState != "undefined") {
+      history.pushState(null, title, url);
     } else {
-      location.href = url
+      location.href = url;
     }
   }
 
-
   //  !---------- Numbers ----------
-
 
   // Random number
   random(a, b) {
-    return Math.floor(Math.random() * (b - a + 1)) + a
+    return Math.floor(Math.random() * (b - a + 1)) + a;
   }
 
   // Price format
@@ -229,9 +217,9 @@ class Lib {
   price(price) {
     let p = parseFloat(price);
     p = p.toFixed(2);
-    p = p.replace(/\d(?=(\d{3})+\.)/g, '$& ');
-    p = p.replace('.00', '');
-    return p
+    p = p.replace(/\d(?=(\d{3})+\.)/g, "$& ");
+    p = p.replace(".00", "");
+    return p;
   }
 
   // Number format
@@ -244,19 +232,19 @@ class Lib {
   // 10.55 -> 10.55
   // 10.555 -> 10.555
   number(num) {
-    num = parseFloat(num) + '';
-    let x = num.split('.'),
+    num = parseFloat(num) + "";
+    let x = num.split("."),
       x1 = x[0],
-      x2 = x.length > 1 ? '.' + x[1] : '';
-    for (let b = /(\d+)(\d{3})/; b.test(x1);) x1 = x1.replace(b, '$1 $2');
-    return x1 + x2
+      x2 = x.length > 1 ? "." + x[1] : "";
+    for (let b = /(\d+)(\d{3})/; b.test(x1); ) x1 = x1.replace(b, "$1 $2");
+    return x1 + x2;
   }
 
   // Number decline
   numberDecline(number, nominative, genitiveSingular, genetivePlural) {
-    let text = '';
+    let text = "";
     if (number > 10 && 1 == parseInt((number % 100) / 10)) {
-      text = genetivePlural
+      text = genetivePlural;
     } else {
       switch (number % 10) {
         case 1:
@@ -273,20 +261,18 @@ class Lib {
         case 8:
         case 9:
         case 0:
-          text = genetivePlural
+          text = genetivePlural;
       }
     }
-    return text
+    return text;
   }
 
-
   // !---------- Validate ----------
-
 
   // Email validation
   isEmail(email) {
     let regexp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regexp.test(email)
+    return regexp.test(email);
   }
 
   // JSON validator
@@ -299,37 +285,40 @@ class Lib {
     }
   }
 
-
   // !---------- Utils ----------
-
 
   // Make unique id
   makeId() {
-    return 'id' + this.random(100000, 999999);
+    return "id" + this.random(100000, 999999);
   }
 
   // Make password with length (default — 8)
   // selector — input or textarea field query selector
   makePassword(length, selector) {
     length = length || 8;
-    let password = '',
-      upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      lower = 'abcdefghijklmnopqrstuvwxyz',
-      chars = '!@#^$%^&*()-+:,.;_',
-      digits = '0123456789';
+    let password = "",
+      upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+      lower = "abcdefghijklmnopqrstuvwxyz",
+      chars = "!@#^$%^&*()-+:,.;_",
+      digits = "0123456789";
 
     for (var i = 0; i < length / 4; ++i) {
       password += upper.charAt(Math.floor(Math.random() * upper.length));
       password += lower.charAt(Math.floor(Math.random() * lower.length));
       password += chars.charAt(Math.floor(Math.random() * chars.length));
-      password += digits.charAt(Math.floor(Math.random() * digits.length))
+      password += digits.charAt(Math.floor(Math.random() * digits.length));
     }
     password = password.substring(0, length);
-    password = password.split('').sort(() => { return 0.5 - Math.random() }).join('');
+    password = password
+      .split("")
+      .sort(() => {
+        return 0.5 - Math.random();
+      })
+      .join("");
     if (selector) {
-      this.qs(selector).value = password
+      this.qs(selector).value = password;
     } else {
-      return password
+      return password;
     }
   }
 
@@ -340,16 +329,16 @@ class Lib {
   //   () => { Callback code },
   //   async|defer
   // )
-  loadScript(path, callback, type = 'async') {
+  loadScript(path, callback, type = "async") {
     if (this.loadedScripts.indexOf(path) == -1) {
-      let script = document.createElement('script');
+      let script = document.createElement("script");
       script.onload = () => callback();
       script.src = path;
-      if (type) script.setAttribute(type, '');
+      if (type) script.setAttribute(type, "");
       document.body.appendChild(script);
-      this.loadedScripts.push(path)
+      this.loadedScripts.push(path);
     } else {
-      callback()
+      callback();
     }
   }
 
@@ -359,31 +348,31 @@ class Lib {
   //   delay in ms
   // )
   deffered(callback, delay = 10000) {
-    const events = ['scroll', 'resize', 'click', 'keydown', 'mousemove', 'touchmove'];
+    const events = ["scroll", "resize", "click", "keydown", "mousemove", "touchmove"];
     let fired = false;
     let timer;
 
     function run() {
       if (!fired) {
         for (let e of events) {
-          window.removeEventListener(e, run, false)
+          window.removeEventListener(e, run, false);
         }
         // Load or set load event
-        if (document.readyState == 'complete') {
-          callback()
+        if (document.readyState == "complete") {
+          callback();
         } else {
-          window.addEventListener('load', callback, false)
+          window.addEventListener("load", callback, false);
         }
         clearTimeout(timer);
-        fired = true
+        fired = true;
       }
     }
     for (let e of events) {
       window.addEventListener(e, run, {
         capture: false,
         once: true,
-        passive: true
-      })
+        passive: true,
+      });
     }
     timer = setTimeout(run, delay);
   }
@@ -399,84 +388,75 @@ class Lib {
     if (elements.length) {
       let params = {
         root: null,
-        rootMargin: '200px',
+        rootMargin: "200px",
         threshold: 0,
-        ...options
-      }
+        ...options,
+      };
       let observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             appearCallback(entry.target);
             if (disappearCallback == null) observer.unobserve(entry.target);
           } else {
             if (disappearCallback != null) disappearCallback(entry.target);
           }
-        })
-      }
+        });
+      };
       let observer = new IntersectionObserver(observerCallback, params);
       for (let el of elements) observer.observe(el);
     }
   }
 
-
   // !---------- Work with errors ----------
-
 
   // Show alert window with errors
   // data — object (with key:value), array or string (object and array splitted by '\n')
   alertErrors(data) {
     if (data) {
-      if (
-        typeof data === 'string' ||
-        data instanceof String
-      ) {
-        alert(data)
+      if (typeof data === "string" || data instanceof String) {
+        alert(data);
       } else {
         let err = [];
         for (let e in data) err.push(data[e]);
-        alert(err.join('\n'))
+        alert(err.join("\n"));
       }
     }
   }
 
   // Return errors as text, each error in it's own <div>
   // data — object (with key:value), array or string (object and array splitted by '<br/>')
-  printErrors(data) { // -> string
+  printErrors(data) {
+    // -> string
     if (data) {
-      if (
-        typeof data === 'string' ||
-        data instanceof String
-      ) {
-        return `<div>${data}</div>`
+      if (typeof data === "string" || data instanceof String) {
+        return `<div>${data}</div>`;
       } else {
         let err = [];
         for (let e in data) err.push(`<div class="error_${e}">${data[e]}</div>`);
-        return err.join('\n')
+        return err.join("\n");
       }
     }
   }
 
-
   // !---------- DOM ----------
-
 
   // Render data
   async render(selector, data, placement = null) {
     let items = this.qsa(selector);
     if (items.length) {
-      await new Promise(resolve => {
-        data = typeof data === 'function' ? data() : data;
+      await new Promise((resolve) => {
+        data = typeof data === "function" ? data() : data;
         for (let i of items) {
           if (placement == null) {
-            i.innerHTML = data
+            i.innerHTML = data;
           } else {
-            i.insertAdjacentHTML(placement, data)
+            i.insertAdjacentHTML(placement, data);
           }
         }
-        resolve()
+        resolve();
       });
     }
-    return
+    return;
   }
 }
 

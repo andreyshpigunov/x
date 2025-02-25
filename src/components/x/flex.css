@@ -5,7 +5,6 @@ Created by Andrey Shpigunov at 20.01.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /*
   .flex
   
@@ -29,27 +28,54 @@ All right reserved.
   .flex > .c[1-12]/[1-12] (m,l,xl) - column width "column/columns"
 */
 
-
 .flex {
   display: flex;
-  
-  &.fr  { flex-direction: row }
-  &.fc  { flex-direction: column }
-  &.fw  { flex-wrap: wrap }
-  &.fnw { flex-wrap: nowrap }
-  
-  &.ais  { align-items: stretch }
-  &.aifs { align-items: flex-start }
-  &.aic  { align-items: center }
-  &.aife { align-items: flex-end }
-  
-  &.jcfs { justify-content: flex-start }
-  &.jcc  { justify-content: center }
-  &.jcfe { justify-content: flex-end }
-  &.jcsb { justify-content: space-between }
-  &.jcsa { justify-content: space-around }
-  &.jcse { justify-content: space-evenly }
-  
+
+  &.fr {
+    flex-direction: row;
+  }
+  &.fc {
+    flex-direction: column;
+  }
+  &.fw {
+    flex-wrap: wrap;
+  }
+  &.fnw {
+    flex-wrap: nowrap;
+  }
+
+  &.ais {
+    align-items: stretch;
+  }
+  &.aifs {
+    align-items: flex-start;
+  }
+  &.aic {
+    align-items: center;
+  }
+  &.aife {
+    align-items: flex-end;
+  }
+
+  &.jcfs {
+    justify-content: flex-start;
+  }
+  &.jcc {
+    justify-content: center;
+  }
+  &.jcfe {
+    justify-content: flex-end;
+  }
+  &.jcsb {
+    justify-content: space-between;
+  }
+  &.jcsa {
+    justify-content: space-around;
+  }
+  &.jcse {
+    justify-content: space-evenly;
+  }
+
   /* Columns */
   @for $cols from 1 to 12 {
     @for $col from 1 to $cols {
@@ -59,26 +85,53 @@ All right reserved.
       }
     }
   }
-  
+
   @media (--medium) {
-    
-    &.m\:fr  { flex-direction: row }
-    &.m\:fc  { flex-direction: column }
-    &.m\:fw  { flex-wrap: wrap }
-    &.m\:fnw { flex-wrap: nowrap }
-    
-    &.m\:ais  { align-items: stretch }
-    &.m\:aifs { align-items: flex-start }
-    &.m\:aic  { align-items: center }
-    &.m\:aife { align-items: flex-end }
-    
-    &.m\:jcfs { justify-content: flex-start }
-    &.m\:jcc  { justify-content: center }
-    &.m\:jcfe { justify-content: flex-end }
-    &.m\:jcsb { justify-content: space-between }
-    &.m\:jcsa { justify-content: space-around }
-    &.m\:jcse { justify-content: space-evenly }
-    
+    &.m\:fr {
+      flex-direction: row;
+    }
+    &.m\:fc {
+      flex-direction: column;
+    }
+    &.m\:fw {
+      flex-wrap: wrap;
+    }
+    &.m\:fnw {
+      flex-wrap: nowrap;
+    }
+
+    &.m\:ais {
+      align-items: stretch;
+    }
+    &.m\:aifs {
+      align-items: flex-start;
+    }
+    &.m\:aic {
+      align-items: center;
+    }
+    &.m\:aife {
+      align-items: flex-end;
+    }
+
+    &.m\:jcfs {
+      justify-content: flex-start;
+    }
+    &.m\:jcc {
+      justify-content: center;
+    }
+    &.m\:jcfe {
+      justify-content: flex-end;
+    }
+    &.m\:jcsb {
+      justify-content: space-between;
+    }
+    &.m\:jcsa {
+      justify-content: space-around;
+    }
+    &.m\:jcse {
+      justify-content: space-evenly;
+    }
+
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .m\:c$(col)\/$(cols) {
@@ -88,26 +141,53 @@ All right reserved.
       }
     }
   }
-  
+
   @media (--large) {
-    
-    &.l\:fr  { flex-direction: row }
-    &.l\:fc  { flex-direction: column }
-    &.l\:fw  { flex-wrap: wrap }
-    &.l\:fnw { flex-wrap: nowrap }
-    
-    &.l\:ais  { align-items: stretch }
-    &.l\:aifs { align-items: flex-start }
-    &.l\:aic  { align-items: center }
-    &.l\:aife { align-items: flex-end }
-    
-    &.l\:jcfs { justify-content: flex-start }
-    &.l\:jcc  { justify-content: center }
-    &.l\:jcfe { justify-content: flex-end }
-    &.l\:jcsb { justify-content: space-between }
-    &.l\:jcsa { justify-content: space-around }
-    &.l\:jcse { justify-content: space-evenly }
-    
+    &.l\:fr {
+      flex-direction: row;
+    }
+    &.l\:fc {
+      flex-direction: column;
+    }
+    &.l\:fw {
+      flex-wrap: wrap;
+    }
+    &.l\:fnw {
+      flex-wrap: nowrap;
+    }
+
+    &.l\:ais {
+      align-items: stretch;
+    }
+    &.l\:aifs {
+      align-items: flex-start;
+    }
+    &.l\:aic {
+      align-items: center;
+    }
+    &.l\:aife {
+      align-items: flex-end;
+    }
+
+    &.l\:jcfs {
+      justify-content: flex-start;
+    }
+    &.l\:jcc {
+      justify-content: center;
+    }
+    &.l\:jcfe {
+      justify-content: flex-end;
+    }
+    &.l\:jcsb {
+      justify-content: space-between;
+    }
+    &.l\:jcsa {
+      justify-content: space-around;
+    }
+    &.l\:jcse {
+      justify-content: space-evenly;
+    }
+
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .l\:c$(col)\/$(cols) {
@@ -117,26 +197,53 @@ All right reserved.
       }
     }
   }
-  
+
   @media (--xlarge) {
-    
-    &.xl\:fr  { flex-direction: row }
-    &.xl\:fc  { flex-direction: column }
-    &.xl\:fw  { flex-wrap: wrap }
-    &.xl\:fnw { flex-wrap: nowrap }
-    
-    &.xl\:ais  { align-items: stretch }
-    &.xl\:aifs { align-items: flex-start }
-    &.xl\:aic  { align-items: center }
-    &.xl\:aife { align-items: flex-end }
-    
-    &.xl\:jcfs { justify-content: flex-start }
-    &.xl\:jcc  { justify-content: center }
-    &.xl\:jcfe { justify-content: flex-end }
-    &.xl\:jcsb { justify-content: space-between }
-    &.xl\:jcsa { justify-content: space-around }
-    &.xl\:jcse { justify-content: space-evenly }
-    
+    &.xl\:fr {
+      flex-direction: row;
+    }
+    &.xl\:fc {
+      flex-direction: column;
+    }
+    &.xl\:fw {
+      flex-wrap: wrap;
+    }
+    &.xl\:fnw {
+      flex-wrap: nowrap;
+    }
+
+    &.xl\:ais {
+      align-items: stretch;
+    }
+    &.xl\:aifs {
+      align-items: flex-start;
+    }
+    &.xl\:aic {
+      align-items: center;
+    }
+    &.xl\:aife {
+      align-items: flex-end;
+    }
+
+    &.xl\:jcfs {
+      justify-content: flex-start;
+    }
+    &.xl\:jcc {
+      justify-content: center;
+    }
+    &.xl\:jcfe {
+      justify-content: flex-end;
+    }
+    &.xl\:jcsb {
+      justify-content: space-between;
+    }
+    &.xl\:jcsa {
+      justify-content: space-around;
+    }
+    &.xl\:jcse {
+      justify-content: space-evenly;
+    }
+
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .xl\:c$(col)\/$(cols) {
@@ -146,5 +253,4 @@ All right reserved.
       }
     }
   }
-  
 }

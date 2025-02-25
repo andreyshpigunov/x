@@ -11,54 +11,50 @@
 //  </div>
 //
 
-
-import { device } from './device';
-import { lib } from './lib';
-
+import { device } from "./device";
+import { lib } from "./lib";
 
 class Slides {
-
   constructor() {
     // ...
   }
 
   init() {
-
-    let sliders = lib.qsa('[x-slides]');
+    let sliders = lib.qsa("[x-slides]");
     if (sliders.length) {
       if (device.touch) {
         // Touch device, remove 'x-slides' attribute
-        for (let slider of sliders) slider.removeAttribute('x-slides');
+        for (let slider of sliders) slider.removeAttribute("x-slides");
       } else {
         let slidersObject = {};
 
         sliders.forEach((e, index) => {
           // Get array images
-          let slides = JSON.parse(e.getAttribute('x-slides'));
+          let slides = JSON.parse(e.getAttribute("x-slides"));
           // Get img
-          let img = lib.qs('img', e);
+          let img = lib.qs("img", e);
           // Get cover
           // let cover = img.getAttribute('src');
           // Add cover to the start of array
           // slides.unshift(cover);
           // Create array without duplicates
-          let array = [...new Set(slides)]
+          let array = [...new Set(slides)];
           let count = array.length;
-          
+
           // Remove .slides-items if existed
-          let items = lib.qsa('.slides-items', e);
+          let items = lib.qsa(".slides-items", e);
           if (items.length) {
             for (let item of items) {
               item.remove();
             }
           }
-          
+
           let itemsId = lib.makeId();
-          lib.render(e, `<div id="${itemsId}" class="slides-items"></div>`, 'beforeend');
+          lib.render(e, `<div id="${itemsId}" class="slides-items"></div>`, "beforeend");
 
           for (let index in array) {
-            let div = `<div class="slides-item ${index == 0 ? 'active' : ''}"></div>`;
-            lib.render('#' + itemsId, div, 'beforeend');
+            let div = `<div class="slides-item ${index == 0 ? "active" : ""}"></div>`;
+            lib.render("#" + itemsId, div, "beforeend");
           }
 
           // Add data to object
@@ -68,22 +64,22 @@ class Slides {
             img: img,
             array: array,
             count: count,
-            items: lib.qs('#' + itemsId)
+            items: lib.qs("#" + itemsId),
           };
 
           // Remove 'x-slides' attribute
           // e.removeAttribute('x-slides');
-          e.classList.add('slides')
+          e.classList.add("slides");
         });
 
         // Add event listeners
         if (Object.values(slidersObject).length) {
           for (let item of Object.values(slidersObject)) {
             if (item.array.length) {
-              item.element.addEventListener('mousemove', event => {
+              item.element.addEventListener("mousemove", (event) => {
                 this._update(event, item);
               });
-              item.element.addEventListener('mouseout', () => {
+              item.element.addEventListener("mouseout", () => {
                 this._reset(item);
               });
             }
@@ -99,8 +95,8 @@ class Slides {
     let slide = Math.floor(x / (item.rect.width / item.count));
     item.img.src = item.array[slide];
 
-    lib.removeClass(lib.qsa('div', item.items), 'active');
-    lib.addClass(lib.qsa('div', item.items)[slide], 'active');
+    lib.removeClass(lib.qsa("div", item.items), "active");
+    lib.addClass(lib.qsa("div", item.items)[slide], "active");
 
     // item.img.dataset.slide = slide + 1;
     // item.img.dataset.slides = item.array.length;
@@ -110,10 +106,9 @@ class Slides {
     item.img.src = item.array[0];
     // item.img.dataset.slide = 1;
 
-    lib.removeClass(lib.qsa('div', item.items), 'active');
-    lib.addClass(lib.qsa('div', item.items)[0], 'active');
+    lib.removeClass(lib.qsa("div", item.items), "active");
+    lib.addClass(lib.qsa("div", item.items)[0], "active");
   }
-
 }
 
 export const slides = new Slides();

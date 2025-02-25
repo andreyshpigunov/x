@@ -5,9 +5,7 @@ Created by Andrey Shpigunov at 12.02.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /* !- CSS reset */
-
 
 /*
   PostCSS media query min-width:
@@ -20,51 +18,115 @@ All right reserved.
   [s] - default size.
 */
 
-
 :root {
   /* Base variables */
   --line-height: 1.5;
   --font-color: #000;
   --font-size-coeff: 62.5%;
   --font-size: 1.6rem;
-  --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
-                 Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji,
-                 Segoe UI Symbol;
-  --font-family-mono: SFMono-Regular, Consolas, Liberation Mono,
-                      Menlo, monospace;
+  --font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif,
+    Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol;
+  --font-family-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
   --background-color: #fff;
 }
-
 
 /* PostCSS custom media */
 
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
-@custom-media --small-max  (max-width: 599px);
+@custom-media --small-max (max-width: 599px);
 @custom-media --medium-min (min-width: 600px);
 @custom-media --medium-max (max-width: 999px);
-@custom-media --large-min  (min-width: 1000px);
+@custom-media --large-min (min-width: 1000px);
 @custom-media --xlarge-min (min-width: 1400px);
 /* Breakpoints */
-@custom-media --small  (min-width: 0px);     /* Small screen  [s] (DEFAULT) */
-@custom-media --medium (min-width: 600px);   /* Medium screen [m]  */
-@custom-media --large  (min-width: 1000px);  /* Large screen  [l]  */
-@custom-media --xlarge (min-width: 1400px);  /* XLarge screen [xl] */
+@custom-media --small (min-width: 0px); /* Small screen  [s] (DEFAULT) */
+@custom-media --medium (min-width: 600px); /* Medium screen [m]  */
+@custom-media --large (min-width: 1000px); /* Large screen  [l]  */
+@custom-media --xlarge (min-width: 1400px); /* XLarge screen [xl] */
 /* Dark mode */
 @custom-media --dark (prefers-color-scheme: dark);
 
-
-html, body, main, div, span, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
+html,
+body,
+main,
+div,
+span,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
   margin: 0;
   padding: 0;
   border: 0;
@@ -92,19 +154,20 @@ html {
   /* -webkit-font-smoothing: antialiased; */
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: #00000000;
-  -moz-font-feature-settings: 'liga', 'kern';
+  -moz-font-feature-settings: "liga", "kern";
   color: var(--font-color);
   scroll-behavior: smooth;
 }
 body {
   font-size: var(--font-size);
 }
-blockquote, q {
+blockquote,
+q {
   quotes: none;
-  
+
   &:before,
   &:after {
-    content: '';
+    content: "";
     content: none;
   }
 }
@@ -118,59 +181,74 @@ table {
     text-align: left;
   }
 }
-input[type=button],
-input[type=submit],
-input[type=reset],
-input[type=radio],
-input[type=checkbox],
-select, button {
+input[type="button"],
+input[type="submit"],
+input[type="reset"],
+input[type="radio"],
+input[type="checkbox"],
+select,
+button {
   cursor: pointer;
 }
-input, textarea,
-select, button {
+input,
+textarea,
+select,
+button {
   margin: 0;
 }
 textarea {
   line-height: var(--line-height);
 }
-a, button, .button,
-input[type=button] {
+a,
+button,
+.button,
+input[type="button"] {
   touch-action: manipulation;
 }
 hr {
   display: block;
-  height: .1em;
+  height: 0.1em;
   margin: 1.6em 0;
   border: none;
   background-color: #88888822;
 }
-sup, sub {
+sup,
+sub {
   position: relative;
-  top: -.8em;
+  top: -0.8em;
   font-size: 1.1em;
 }
 sub {
   top: auto;
-  bottom: -.8em;
+  bottom: -0.8em;
 }
 mark {
-  margin: 0 -.4em;
-  padding: 0 .4em;
+  margin: 0 -0.4em;
+  padding: 0 0.4em;
   background-color: #fe0;
 }
-code, kbd, samp {
+code,
+kbd,
+samp {
   font-family: var(--font-family-mono);
 }
-strong, b {
+strong,
+b {
   font-weight: 700;
 }
-em, i, var, dfn, cite {
+em,
+i,
+var,
+dfn,
+cite {
   font-style: italic;
 }
-ins, u {
+ins,
+u {
   text-decoration: underline;
 }
-del, s {
+del,
+s {
   text-decoration: line-through;
 }
 img {

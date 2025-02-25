@@ -29,26 +29,23 @@
 //  init() - init animations
 //
 
-
-import { lib } from './lib';
-
+import { lib } from "./lib";
 
 class Animate {
-
   init() {
-    let animations = lib.qsa('[x-animate]');
+    let animations = lib.qsa("[x-animate]");
     if (animations.length) {
       let animationsHash = {};
 
       animations.forEach((e, index) => {
-        let json = JSON.parse(e.getAttribute('x-animate'));
+        let json = JSON.parse(e.getAttribute("x-animate"));
         let item = {};
-        if (Object.hasOwn(json, 'parent') && lib.qs(json.parent)) {
+        if (Object.hasOwn(json, "parent") && lib.qs(json.parent)) {
           item.parent = lib.qs(json.parent);
         } else {
           item.parent = document.documentElement;
         }
-        if (Object.hasOwn(json, 'trigger') && lib.qs(json.trigger)) {
+        if (Object.hasOwn(json, "trigger") && lib.qs(json.trigger)) {
           item.trigger = lib.qs(json.trigger);
         } else {
           item.trigger = e;
@@ -63,58 +60,66 @@ class Animate {
         item.lockedOut = false;
         item.log = json.log || false;
         animationsHash[index] = item;
-        e.removeAttribute('x-animate')
+        e.removeAttribute("x-animate");
       });
-      
+
       if (Object.keys(animationsHash).length) {
         // Init document scroll observer
-        document.addEventListener('scroll', () => {
-          this._scroll(animationsHash);
-        }, { passive: true });
+        document.addEventListener(
+          "scroll",
+          () => {
+            this._scroll(animationsHash);
+          },
+          { passive: true }
+        );
         // Create array with all scrolled parents
         let parents = [];
         for (let k in animationsHash) {
           if (
-            Object.hasOwn(animationsHash[k], 'parent') &&
+            Object.hasOwn(animationsHash[k], "parent") &&
             !parents.includes(animationsHash[k].parent)
           ) {
-            parents.push(animationsHash[k].parent)
+            parents.push(animationsHash[k].parent);
             // Add scroll event listener to every parent
-            animationsHash[k].parent.addEventListener('scroll', () => {
-              this._scroll(animationsHash);
-            }, { passive: true });
+            animationsHash[k].parent.addEventListener(
+              "scroll",
+              () => {
+                this._scroll(animationsHash);
+              },
+              { passive: true }
+            );
           }
-        };
+        }
         // First init elements positions
-        document.addEventListener('DOMContentLoaded', () => {
-          this._scroll(animationsHash)
-        })
+        document.addEventListener("DOMContentLoaded", () => {
+          this._scroll(animationsHash);
+        });
       }
     }
   }
 
   _scroll(animationsHash) {
-    Object.keys(animationsHash).forEach(i => {
+    Object.keys(animationsHash).forEach((i) => {
       let item = animationsHash[i];
       let top = item.trigger.getBoundingClientRect().top;
       let start = this._2px(item.start, item.parent);
       let end = this._2px(item.end, item.parent);
-      
+
       // If 'end' undefined, set duration = 0
       if (isNaN(end)) {
         item.duration = 0;
       } else {
         item.duration = start - end;
       }
-      
+
       if (item.parent !== window) {
         top = top - item.parent.getBoundingClientRect().top;
       }
-      
+
       if (item.log) {
         console.log(top, start, end, item);
       }
-      
+
       if (!isNaN(start) && !isNaN(end)) {
         // If definded start and end
         if (top <= start && top >= end) {
@@ -126,10 +131,10 @@ class Animate {
             item.element.classList.add(item.class);
           }
           // Animation progress
-          if (typeof window[item.functionName] === 'function') {
+          if (typeof window[item.functionName] === "function") {
             item.progress = (start - top) / item.duration;
             item.progress = item.progress.toFixed(4);
-            window[item.functionName](item)
+            window[item.functionName](item);
           }
         } else {
           // Element outside of animation area --- E --- > ... < --- E ---
@@ -141,9 +146,9 @@ class Animate {
           ) {
             item.element.classList.remove(item.class);
           }
-  
+
           // Animation progress
-          if (!item.lockedOut && typeof window[item.functionName] === 'function') {
+          if (!item.lockedOut && typeof window[item.functionName] === "function") {
             if (top >= start) {
               item.progress = 0;
               window[item.functionName](item);
@@ -167,7 +172,7 @@ class Animate {
             item.element.classList.add(item.class);
           }
           // Animation progress
-          if (!item.lockedIn && typeof window[item.functionName] === 'function') {
+          if (!item.lockedIn && typeof window[item.functionName] === "function") {
             item.progress = 1;
             window[item.functionName](item);
             item.lockedIn = true;
@@ -184,9 +189,9 @@ class Animate {
           ) {
             item.element.classList.remove(item.class);
           }
-        
+
           // Animation progress
-          if (!item.lockedOut && typeof window[item.functionName] === 'function') {
+          if (!item.lockedOut && typeof window[item.functionName] === "function") {
             if (top >= start) {
               item.progress = 0;
               window[item.functionName](item);
@@ -195,21 +200,20 @@ class Animate {
           }
         }
       }
-    })
+    });
   }
 
   _2px(value, parent = document.documentElement) {
     if (/(%|vh)/.test(value)) {
       let y = parent.clientHeight;
       // Remove 'vh' and '%' from value
-      value = value.replace(/(vh|%)/, '');
-      return (y * parseFloat(value)) / 100
+      value = value.replace(/(vh|%)/, "");
+      return (y * parseFloat(value)) / 100;
     } else {
       // Remove all chars from value
-      return parseFloat(value)
+      return parseFloat(value);
     }
   }
-
 }
 
 export const animate = new Animate();

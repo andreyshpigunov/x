@@ -5,7 +5,6 @@ Created by Andrey Shpigunov at 20.01.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /*
   .button
   .button_fs[10-19] step 1 (m,l) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
@@ -20,7 +19,6 @@ All right reserved.
   .button_black
 */
 
-
 :root {
   /*
     External variables:
@@ -34,19 +32,19 @@ All right reserved.
       --color-warning
       --color-danger
   */
-  
+
   /* Required variables */
   --button-height-coeff: 2.5;
   --button-side-padding-coeff: 1.25;
   --button-color: var(--color-grey);
   --button-font-color: #000;
-  --button-transition: all .1s ease-out;
+  --button-transition: all 0.1s ease-out;
   --button-font-size: var(--font-size);
   --button-transform: scale(1);
   --button-transform-hover: scale(1);
-  --button-transform-active: scale(.98);
+  --button-transform-active: scale(0.98);
   --button-transform-origin: center;
-  
+
   /*
     Additional variables and their default values:
     --button-height: 4rem;
@@ -62,15 +60,16 @@ All right reserved.
   */
 }
 
-
-.button, [type=submit] {
+.button,
+[type="submit"] {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: auto;
   height: var(--button-height, calc(var(--button-font-size) * var(--button-height-coeff)));
-  padding: 0 var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff)));
+  padding: 0
+    var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff)));
   color: var(--button-font-color);
   font-family: var(--button-font-family, var(--font-family));
   font-size: var(--button-font-size);
@@ -92,7 +91,7 @@ All right reserved.
   transform-origin: var(--button-transform-origin);
   user-select: none;
   appearance: none;
-  
+
   &:link,
   &:visited {
     text-decoration: none;
@@ -100,57 +99,74 @@ All right reserved.
     background-color: var(--button-color);
     transform: var(--button-transform);
   }
-  
+
   @media (any-hover: hover) {
     &:hover,
     &.hover {
       text-decoration: none;
       color: var(--button-font-color-hover, var(--button-font-color));
-      background-color: var(--button-color-hover, color(from var(--button-color) display-p3 calc(r - 0.05) calc(g - 0.05) calc(b - 0.05)));
+      background-color: var(
+        --button-color-hover,
+        color(from var(--button-color) display-p3 calc(r - 0.05) calc(g - 0.05) calc(b - 0.05))
+      );
       transform: var(--button-transform-hover);
     }
   }
-  
+
   &:active,
   &.active {
     text-decoration: none;
     color: var(--button-font-color-active, var(--button-font-color));
-    background-color: var(--button-color-active, color(from var(--button-color) display-p3 calc(r - 0.05) calc(g - 0.05) calc(b - 0.05)));
+    background-color: var(
+      --button-color-active,
+      color(from var(--button-color) display-p3 calc(r - 0.05) calc(g - 0.05) calc(b - 0.05))
+    );
     transform: var(--button-transform-active);
   }
 
   &[disabled],
   &.disabled {
-    opacity: var(--button-disabled-opacity, .5);
+    opacity: var(--button-disabled-opacity, 0.5);
     pointer-events: none;
   }
 }
 
-
 /* Button font sizes */
 
 @for $i from 10 to 19 {
-  .button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
+  .button_fs$(i) {
+    --button-font-size: calc($(i) rem / 10);
+  }
 }
 @for $i from 20 to 80 by 2 {
-  .button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
+  .button_fs$(i) {
+    --button-font-size: calc($(i) rem / 10);
+  }
 }
 
 @media (--medium) {
   @for $i from 10 to 19 {
-    .m\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
+    .m\:button_fs$(i) {
+      --button-font-size: calc($(i) rem / 10);
+    }
   }
   @for $i from 20 to 40 by 2 {
-    .m\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
+    .m\:button_fs$(i) {
+      --button-font-size: calc($(i) rem / 10);
+    }
   }
 }
 
 @media (--large) {
   @for $i from 10 to 19 {
-    .l\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
+    .l\:button_fs$(i) {
+      --button-font-size: calc($(i) rem / 10);
+    }
   }
   @for $i from 20 to 40 by 2 {
-    .l\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
+    .l\:button_fs$(i) {
+      --button-font-size: calc($(i) rem / 10);
+    }
   }
 }
 
@@ -158,9 +174,9 @@ All right reserved.
 
 .button_label {
   --button-height: 1.4em;
-  --button-side-padding: .5em;
+  --button-side-padding: 0.5em;
   --button-font-size: inherit;
-  --button-border-radius: .5em;
+  --button-border-radius: 0.5em;
   vertical-align: baseline;
 }
 

@@ -5,19 +5,16 @@ Created by Andrey Shpigunov at 12.02.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /* !- Slides */
-
 
 :root {
   --slides-point-color: #ffffff66;
   --slides-point-color-active: #fff;
-  --slides-point-size: .3rem;
-  --slides-point-gap: .3rem;
+  --slides-point-size: 0.3rem;
+  --slides-point-gap: 0.3rem;
   --slides-point-side-padding: 1.6rem;
   --slides-point-bottom-padding: 1rem;
 }
-
 
 .slides {
   position: relative;
@@ -34,9 +31,9 @@ All right reserved.
   right: var(--slides-point-side-padding);
   height: var(--slides-point-size);
   opacity: 0;
-  
+
   will-change: opacity;
-  transition: opacity .25s ease-out;
+  transition: opacity 0.25s ease-out;
 }
 .slides-item {
   display: flex;

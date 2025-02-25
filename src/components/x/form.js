@@ -11,19 +11,16 @@
 //  update(element) - dispatch 'update' event manually
 //
 
-
-import { lib } from './lib';
-
+import { lib } from "./lib";
 
 class Form {
-
   constructor() {
     // Events
-    this.change = new Event('change');
-    this.input = new Event('input');
+    this.change = new Event("change");
+    this.input = new Event("input");
     // Object with added events
     this.listen = {
-      update: []
+      update: [],
     };
   }
 
@@ -39,18 +36,18 @@ class Form {
     let el = lib.qs(element);
     let tagName = el.tagName.toLowerCase();
     switch (tagName) {
-      case 'input':
-      case 'textarea':
+      case "input":
+      case "textarea":
         el.value = value;
         el.dispatchEvent(this.input);
-        break
-      case 'select':
+        break;
+      case "select":
         el.value = value;
         el.dispatchEvent(this.change);
-        break
+        break;
       default:
         console.error(`Unsupported element: ${tagName}`);
-        break
+        break;
     }
   }
 
@@ -65,26 +62,26 @@ class Form {
         let el = lib.qs(element);
         let tagName = el.tagName.toLowerCase();
         switch (tagName) {
-          case 'input':
-          case 'textarea':
+          case "input":
+          case "textarea":
             if (!this.listen.update.includes(el)) {
-              el.addEventListener('input', () => callback(el));
-              this.listen.update.push(el)
+              el.addEventListener("input", () => callback(el));
+              this.listen.update.push(el);
             } else {
-              console.log(el, 'Element always listening')
+              console.log(el, "Element always listening");
             }
-            break
-          case 'select':
+            break;
+          case "select":
             if (!this.listen.update.includes(el)) {
-              el.addEventListener('change', () => callback(el));
-              this.listen.update.push(el)
+              el.addEventListener("change", () => callback(el));
+              this.listen.update.push(el);
             } else {
-              console.log(el, 'Element always listening')
+              console.log(el, "Element always listening");
             }
-            break
+            break;
           default:
             console.error(`Unsupported element: ${tagName}`);
-            break
+            break;
         }
       }
     }
@@ -100,21 +97,21 @@ class Form {
         let el = lib.qs(element);
         let tagName = el.tagName.toLowerCase();
         switch (tagName) {
-          case 'input':
-          case 'textarea':
+          case "input":
+          case "textarea":
             el.dispatchEvent(this.input);
-            break
-          case 'select':
+            break;
+          case "select":
             el.dispatchEvent(this.change);
-            break
+            break;
           default:
-            console.error('Unsupported element: ' + tagName);
-            break
+            console.error("Unsupported element: " + tagName);
+            break;
         }
       }
     }
   }
-
+  
 }
 
 export const form = new Form();
