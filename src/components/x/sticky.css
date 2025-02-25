@@ -5,29 +5,24 @@ Created by Andrey Shpigunov at 12.02.2025
 All right reserved.
 ----------------------------------------*/
 
+
+
 /* !- Sticky */
 
+
 /* .sticky (m,l,xl) */
+
 
 .sticky {
   position: sticky !important;
   top: 0;
 }
 @media (--medium) {
-  .m\:sticky {
-    position: sticky !important;
-    top: 0;
-  }
+  .m\:sticky { position: sticky !important; top: 0 }
 }
 @media (--large) {
-  .l\:sticky {
-    position: sticky !important;
-    top: 0;
-  }
+  .l\:sticky { position: sticky !important; top: 0 }
 }
 @media (--xlarge) {
-  .xl\:sticky {
-    position: sticky !important;
-    top: 0;
-  }
+  .xl\:sticky { position: sticky !important; top: 0 }
 }

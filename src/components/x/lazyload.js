@@ -12,13 +12,16 @@
 //  init() - initialize layloading
 //
 
-import { lib } from "./lib";
+
+import { lib } from './lib';
+
 
 class Lazyload {
+
   init() {
-    const images = lib.qsa("[x-lazyload]:not(.loaded)");
+    const images = lib.qsa('[x-lazyload]:not(.loaded)');
     if (images.length) {
-      if ("IntersectionObserver" in window) {
+      if ('IntersectionObserver' in window) {
         // IntersectionObserver
         const callback = (entries, observer) => {
           for (let entry of entries) {
@@ -27,12 +30,12 @@ class Lazyload {
               observer.unobserve(entry.target);
             }
           }
-        };
+        }
         const options = {
           root: null,
-          rootMargin: "200px",
-          threshold: 0,
-        };
+          rootMargin: '200px',
+          threshold: 0
+        }
         const observer = new IntersectionObserver(callback, options);
         for (let image of images) observer.observe(image);
       } else {
@@ -42,7 +45,7 @@ class Lazyload {
           const src = img.dataset.src;
           if (srcset) img.srcset = srcset;
           if (src) img.src = src;
-          lib.addClass(img, "loaded");
+          lib.addClass(img, 'loaded');
         }
       }
     }
@@ -50,8 +53,8 @@ class Lazyload {
 
   async _fetchImage(src, srcset) {
     const image = new Image();
-    image.srcset = srcset ? srcset : "";
-    image.src = src ? src : "";
+    image.srcset = srcset ? srcset : '';
+    image.src = src ? src : '';
     image.onload = () => Promise.resolve();
     image.onerror = () => Promise.reject();
   }
@@ -62,17 +65,18 @@ class Lazyload {
     await this._fetchImage(src, srcset);
     if (srcset) {
       img.srcset = srcset;
-      img.removeAttribute("data-srcset");
+      img.removeAttribute('data-srcset');
     }
     if (src) {
       img.src = src;
-      img.removeAttribute("data-src");
+      img.removeAttribute('data-src');
     }
     if (srcset || src) {
-      lib.addClass(img, "loaded");
+      lib.addClass(img, 'loaded');
     }
-    return;
+    return
   }
+
 }
 
 export const lazyload = new Lazyload();

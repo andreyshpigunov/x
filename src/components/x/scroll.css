@@ -5,17 +5,21 @@ Created by Andrey Shpigunov at 12.02.2025
 All right reserved.
 ----------------------------------------*/
 
+
 /* !- Scroll - native CSS horizontal scroller */
+
 
 /*
   .scroll_x-proximity
 */
+
 
 :root {
   --scroll-scrollbar-size: 6px;
   --scroll-scrollbar-thumb-background: #00000011;
   --scroll-scrollbar-thumb-background-hover: #00000022;
 }
+
 
 .scroll {
   flex-wrap: nowrap;
@@ -45,7 +49,7 @@ All right reserved.
     border-radius: var(--scroll-scrollbar-size);
     background-color: var(--scroll-scrollbar-thumb-background);
     will-change: background-color;
-    transition: background 0.2s ease-out;
+    transition: background .2s ease-out;
     cursor: pointer;
   }
 

@@ -5,6 +5,7 @@ Created by Andrey Shpigunov at 13.02.2025
 All right reserved.
 ----------------------------------------*/
 
+
 /*
   .icon - base icon style
   .icon_[10-60] step 2 (m,l) - icon size in px
@@ -20,16 +21,16 @@ All right reserved.
 
 @for $i from 10 to 60 by 2 {
   .icon_$(i) {
-    width: $(i) px;
-    height: $(i) px;
+    width: $(i)px;
+    height: $(i)px;
   }
 }
 
 @media (--medium) {
   @for $i from 10 to 60 by 2 {
     .m\:icon_$(i) {
-      width: $(i) px;
-      height: $(i) px;
+      width: $(i)px;
+      height: $(i)px;
     }
   }
 }
@@ -37,8 +38,8 @@ All right reserved.
 @media (--large) {
   @for $i from 10 to 60 by 2 {
     .l\:icon_$(i) {
-      width: $(i) px;
-      height: $(i) px;
+      width: $(i)px;
+      height: $(i)px;
     }
   }
 }

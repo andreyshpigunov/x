@@ -95,16 +95,6 @@ select {
   background-repeat: no-repeat;
   background-position: right calc(var(--forms-side-padding) - 4px) top 52%, 0 0;
   background-size: 1.6rem;
-
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: calc(var(--forms-side-padding) * 2.6);
-    width: 1px;
-    background-color: var(--forms-border-color);
-  }
 }
 
 ::placeholder {

@@ -13,28 +13,31 @@
 //  update() - update observers if DOM changed
 //
 
-import { lib } from "./lib";
+
+import { lib } from './lib';
+
 
 class Appear {
+
   constructor() {
     this.items = [];
-    this.classAppeared = "appeared";
-    this.classVisible = "visible";
+    this.classAppeared = 'appeared';
+    this.classVisible = 'visible';
     this.observer = null;
 
-    this.eventVisible = new CustomEvent("visible");
-    this.eventInvisible = new CustomEvent("invisible");
+    this.eventVisible = new CustomEvent('visible');
+    this.eventInvisible = new CustomEvent('invisible');
   }
 
   init() {
-    this.items = lib.qsa("[x-appear]");
+    this.items = lib.qsa('[x-appear]');
     if (this.items.length) {
       // Remove attribute
       // for (let item of this.items) {
       // item.removeAttribute('x-appear')
       // }
       // Observe items
-      let observerCallback = (entries) => {
+      let observerCallback = entries => {
         for (let entry of entries) {
           if (entry.isIntersecting) {
             if (
@@ -48,21 +51,25 @@ class Appear {
               entry.target.dispatchEvent(this.eventVisible);
             }
           } else {
-            if (this.classVisible != null && entry.target.classList.contains(this.classVisible)) {
+            if (
+              this.classVisible != null &&
+              entry.target.classList.contains(this.classVisible)
+            ) {
               entry.target.classList.remove(this.classVisible);
               entry.target.dispatchEvent(this.eventInvisible);
             }
           }
         }
-      };
+      }
       this.observer = new IntersectionObserver(observerCallback);
-      this.items.forEach((item) => this.observer.observe(item));
+      this.items.forEach(item => this.observer.observe(item));
     }
   }
 
   update() {
-    this.items.forEach((item) => this.observer.observe(item));
+    this.items.forEach(item => this.observer.observe(item));
   }
+
 }
 
 export const appear = new Appear();

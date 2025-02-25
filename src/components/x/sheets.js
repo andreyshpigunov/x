@@ -31,6 +31,7 @@ class Sheets {
       for (let sheet of sheets) {
         // Get sheet tabs
         let tabs = lib.qsa("[x-sheet]:not([x-sheet] [x-sheet])", sheet);
+        // console.log(tabs);
         if (tabs.length) {
           for (let tab of tabs) {
             tab.addEventListener("click", (e) => {

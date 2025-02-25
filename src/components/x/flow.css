@@ -5,47 +5,47 @@ Created by Andrey Shpigunov at 20.01.2025
 All right reserved.
 ----------------------------------------*/
 
+
 /*
   .flow
   .flow.s[0-10] (m,l,xl)   - vertical space
 */
 
-.flow {
-  & > * {
-    margin: 0;
-  }
 
+.flow {
+  
+  
+  & > * { margin: 0 }
+  
   @for $i from 0 to 10 {
     &.s$(i) > * {
       margin-bottom: var(--space-$(i));
     }
   }
-
-  @media (--medium) {
+  
+  @media(--medium){
     @for $i from 0 to 10 {
       &.m\:s$(i) > * {
         margin-bottom: var(--space-$(i));
       }
     }
   }
-
-  @media (--large) {
+  
+  @media(--large){
     @for $i from 0 to 10 {
       &.l\:s$(i) > * {
         margin-bottom: var(--space-$(i));
       }
     }
   }
-
-  @media (--xlarge) {
+  
+  @media(--xlarge){
     @for $i from 0 to 10 {
       &.xl\:s$(i) > * {
         margin-bottom: var(--space-$(i));
       }
     }
   }
-
-  & > *:last-child {
-    margin-bottom: 0;
-  }
+  
+  & > *:last-child { margin-bottom: 0 }
 }

@@ -111,7 +111,6 @@ class Form {
       }
     }
   }
-  
 }
 
 export const form = new Form();
