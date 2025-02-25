@@ -229,12 +229,16 @@ html.touch .touch-hide { display: none }
 @for $i from 0 to 10 {
   .t$(i) { top: var(--space-$(i)) !important; }
   .b$(i) { bottom: var(--space-$(i)) !important; }
+  .t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
+  .b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
   .z$(i) { z-index: $(i) !important; }
 }
 @media (--medium) {
   @for $i from 0 to 10 {
     .m\:t$(i) { top: var(--space-$(i)) !important; }
     .m\:b$(i) { bottom: var(--space-$(i)) !important; }
+    .m\:t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
+    .m\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
     .m\:z$(i) { z-index: $(i) !important; }
   }
 }
@@ -242,6 +246,8 @@ html.touch .touch-hide { display: none }
   @for $i from 0 to 10 {
     .l\:t$(i) { top: var(--space-$(i)) !important; }
     .l\:b$(i) { bottom: var(--space-$(i)) !important; }
+    .l\:t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
+    .l\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
     .l\:z$(i) { z-index: $(i) !important; }
   }
 }
@@ -249,6 +255,8 @@ html.touch .touch-hide { display: none }
   @for $i from 0 to 10 {
     .xl\:t$(i) { top: var(--space-$(i)) !important; }
     .xl\:b$(i) { bottom: var(--space-$(i)) !important; }
+    .xl\:t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
+    .xl\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
     .xl\:z$(i) { z-index: $(i) !important; }
   }
 }
@@ -598,6 +606,20 @@ html.touch .touch-hide { display: none }
   .mb$(i) { margin-bottom: var(--space-$(i)) !important }
   .ml$(i) { margin-left: var(--space-$(i)) !important }
   .mr$(i) { margin-right: var(--space-$(i)) !important }
+  
+  .m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+  .mx$(i)n {
+    margin-left: calc(var(--space-$(i)) * -1) !important;
+    margin-right: calc(var(--space-$(i)) * -1) !important;
+  }
+  .my$(i)n {
+    margin-top: calc(var(--space-$(i)) * -1) !important;
+    margin-bottom: calc(var(--space-$(i)) * -1) !important;
+  }
+  .mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
+  .mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
+  .ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
+  .mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
 }
 .ma  { margin: auto !important }
 .mxa { margin-left: auto !important; margin-right: auto !important }
@@ -616,6 +638,20 @@ html.touch .touch-hide { display: none }
     .m\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
     .m\:ml$(i) { margin-left: var(--space-$(i)) !important }
     .m\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    
+    .m\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+    .m\:mx$(i)n {
+      margin-left: calc(var(--space-$(i)) * -1) !important;
+      margin-right: calc(var(--space-$(i)) * -1) !important;
+    }
+    .m\:my$(i)n {
+      margin-top: calc(var(--space-$(i)) * -1) !important;
+      margin-bottom: calc(var(--space-$(i)) * -1) !important;
+    }
+    .m\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
+    .m\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
+    .m\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
+    .m\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
   }
   .m\:ma  { margin: auto !important }
   .m\:mxa { margin-left: auto !important; margin-right: auto !important }
@@ -635,6 +671,20 @@ html.touch .touch-hide { display: none }
     .l\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
     .l\:ml$(i) { margin-left: var(--space-$(i)) !important }
     .l\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    
+    .l\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+    .l\:mx$(i)n {
+      margin-left: calc(var(--space-$(i)) * -1) !important;
+      margin-right: calc(var(--space-$(i)) * -1) !important;
+    }
+    .l\:my$(i)n {
+      margin-top: calc(var(--space-$(i)) * -1) !important;
+      margin-bottom: calc(var(--space-$(i)) * -1) !important;
+    }
+    .l\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
+    .l\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
+    .l\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
+    .l\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
   }
   .l\:ma  { margin: auto !important }
   .l\:mxa { margin-left: auto !important; margin-right: auto !important }
@@ -654,6 +704,20 @@ html.touch .touch-hide { display: none }
     .xl\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
     .xl\:ml$(i) { margin-left: var(--space-$(i)) !important }
     .xl\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    
+    .xl\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+    .xl\:mx$(i)n {
+      margin-left: calc(var(--space-$(i)) * -1) !important;
+      margin-right: calc(var(--space-$(i)) * -1) !important;
+    }
+    .xl\:my$(i)n {
+      margin-top: calc(var(--space-$(i)) * -1) !important;
+      margin-bottom: calc(var(--space-$(i)) * -1) !important;
+    }
+    .xl\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
+    .xl\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
+    .xl\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
+    .xl\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
   }
   .xl\:ma  { margin: auto !important }
   .xl\:mxa { margin-left: auto !important; margin-right: auto !important }
