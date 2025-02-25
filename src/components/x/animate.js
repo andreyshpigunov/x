@@ -46,7 +46,7 @@ class Animate {
         if (Object.hasOwn(json, 'parent') && lib.qs(json.parent)) {
           item.parent = lib.qs(json.parent);
         } else {
-          item.parent = document.documentElement;
+          item.parent = document;
         }
         if (Object.hasOwn(json, 'trigger') && lib.qs(json.trigger)) {
           item.trigger = lib.qs(json.trigger);
@@ -72,7 +72,7 @@ class Animate {
           this._scroll(animationsHash);
         }, { passive: true });
         // Create array with all scrolled parents
-        let parents = [];
+        let parents = [document];
         for (let k in animationsHash) {
           if (
             Object.hasOwn(animationsHash[k], 'parent') &&
@@ -107,7 +107,7 @@ class Animate {
         item.duration = start - end;
       }
       
-      if (item.parent !== window) {
+      if (item.parent !== document) {
         top = top - item.parent.getBoundingClientRect().top;
       }
       
@@ -198,9 +198,9 @@ class Animate {
     })
   }
 
-  _2px(value, parent = document.documentElement) {
+  _2px(value, parent = document) {
     if (/(%|vh)/.test(value)) {
-      let y = parent.clientHeight;
+      let y = (parent === document) ? document.documentElement.clientHeight : parent.clientHeight;
       // Remove 'vh' and '%' from value
       value = value.replace(/(vh|%)/, '');
       return (y * parseFloat(value)) / 100
