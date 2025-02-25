@@ -26,6 +26,8 @@ All right reserved.
   overflow-x: scroll;
   overflow-y: auto;
   scroll-snap-type: x mandatory;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   /* Hide scrollbar in IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar in Firefox */
