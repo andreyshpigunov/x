@@ -30,7 +30,7 @@ html.modal_active body {
 
 
 /* !- Modal window content */
-.modal-content {
+[x-modal] {
   display: none;
 }
 
