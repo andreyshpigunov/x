@@ -19,6 +19,7 @@ All right reserved.
   .nowrap
   .hyphens
   .pointer
+  .toe - text-overflow: ellipsis
   .lc[1-5] (m,l,xl) — text line clamp
   .oh
   .touch-show
@@ -155,6 +156,14 @@ All right reserved.
 }
 .pointer {
   cursor: pointer;
+}
+
+
+/* !- Text overflow ellipsis */
+.toe {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 
