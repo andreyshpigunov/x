@@ -76,6 +76,12 @@ time, mark, audio, video {
 :after {
   box-sizing: border-box;
 }
+html,
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  max-height: none;
+}
 html {
   line-height: var(--line-height);
   font-family: var(--font-family);
@@ -91,8 +97,6 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  min-width: 320px;
-  min-height: 100vh;
   font-size: var(--font-size);
 }
 blockquote, q {
