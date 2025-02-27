@@ -157,7 +157,7 @@ All right reserved.
 /* Predefined styles */
 
 .button_label {
-  --button-height: 1.4em;
+  --button-height: calc(var(--line-height) * 1em);
   --button-side-padding: .5em;
   --button-font-size: inherit;
   --button-border-radius: .5em;
