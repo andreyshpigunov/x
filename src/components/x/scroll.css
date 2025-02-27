@@ -10,7 +10,10 @@ All right reserved.
 
 
 /*
+  .scroll
+  .scroll_contain
   .scroll_x-proximity
+  .scroll_x-mandatory
 */
 
 
@@ -26,16 +29,11 @@ All right reserved.
   overflow-x: scroll;
   overflow-y: auto;
   scroll-snap-type: x mandatory;
-  overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
   /* Hide scrollbar in IE and Edge */
   -ms-overflow-style: none;
   /* Hide scrollbar in Firefox */
   scrollbar-width: none;
-
-  &_x-proximity {
-    scroll-snap-type: x proximity;
-  }
 
   &::-webkit-scrollbar {
     width: var(--scroll-scrollbar-size);
@@ -65,4 +63,15 @@ All right reserved.
   &::-webkit-resizer {
     display: none;
   }
+}
+
+.scroll_contain {
+  overscroll-behavior: contain;
+}
+
+.scroll_x-proximity {
+  scroll-snap-type: x proximity;
+}
+.scroll_x-mandatory {
+  scroll-snap-type: x mandatory;
 }
