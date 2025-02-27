@@ -11,7 +11,8 @@ All right reserved.
   .icon_[10-60] step 2 (m,l) - icon size in px
 */
 
-.icon {
+.icon,
+.icon > svg {
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -20,7 +21,8 @@ All right reserved.
 }
 
 @for $i from 10 to 60 by 2 {
-  .icon_$(i) {
+  .icon_$(i),
+  .icon_$(i) > svg {
     width: $(i)px;
     height: $(i)px;
   }
@@ -28,7 +30,8 @@ All right reserved.
 
 @media (--medium) {
   @for $i from 10 to 60 by 2 {
-    .m\:icon_$(i) {
+    .m\:icon_$(i),
+    .m\:icon_$(i) > svg {
       width: $(i)px;
       height: $(i)px;
     }
@@ -37,7 +40,8 @@ All right reserved.
 
 @media (--large) {
   @for $i from 10 to 60 by 2 {
-    .l\:icon_$(i) {
+    .l\:icon_$(i),
+    .l\:icon_$(i) > svg {
       width: $(i)px;
       height: $(i)px;
     }
