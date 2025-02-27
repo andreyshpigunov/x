@@ -100,7 +100,7 @@ All right reserved.
   .gapy[0-10] (m,l,xl)
   .r[0-10] (m,l,xl)
   .r100 (m,l,xl)
-  .sh[0-12] (m,l)
+  .sh[0-10] (m,l)
   .o[0-12] (m,l,xl)
   .noPrint
 */
@@ -108,6 +108,17 @@ All right reserved.
 
 :root {
   --container-max-width: 1600px;
+  
+  --shadow-1:  0px 2px 6px #00000011;
+  --shadow-2:  0px 2px 6px #00000022;
+  --shadow-3:  0px 2px 6px #00000033;
+  --shadow-4:  2px 4px 12px #00000011;
+  --shadow-5:  2px 4px 12px #00000022;
+  --shadow-6:  2px 4px 12px #00000033;
+  --shadow-7:  2px 4px 20px #00000011;
+  --shadow-8:  2px 4px 20px #00000022;
+  --shadow-9:  2px 4px 20px #00000033;
+  --shadow-10: 2px 4px 24px #00000044;
 }
 
 
@@ -844,49 +855,43 @@ html.touch .touch-hide { display: none }
 
 /* !- Shadows */
 .sh0  { box-shadow: none }
-.sh1  { box-shadow: 0px 2px 6px #00000011 }
-.sh2  { box-shadow: 0px 2px 6px #00000022 }
-.sh3  { box-shadow: 0px 2px 6px #00000033 }
-.sh4  { box-shadow: 0px 2px 6px #00000044 }
-.sh5  { box-shadow: 2px 4px 12px #00000011 }
-.sh6  { box-shadow: 2px 4px 12px #00000022 }
-.sh7  { box-shadow: 2px 4px 12px #00000033 }
-.sh8  { box-shadow: 2px 4px 12px #00000044 }
-.sh9  { box-shadow: 2px 4px 20px #00000011 }
-.sh10 { box-shadow: 2px 4px 20px #00000022 }
-.sh11 { box-shadow: 2px 4px 20px #00000033 }
-.sh12 { box-shadow: 2px 4px 20px #00000044 }
+.sh1  { box-shadow: var(--shadow-1) }
+.sh2  { box-shadow: var(--shadow-2) }
+.sh3  { box-shadow: var(--shadow-3) }
+.sh4  { box-shadow: var(--shadow-4) }
+.sh5  { box-shadow: var(--shadow-5) }
+.sh6  { box-shadow: var(--shadow-6) }
+.sh7  { box-shadow: var(--shadow-7) }
+.sh8  { box-shadow: var(--shadow-8) }
+.sh9  { box-shadow: var(--shadow-9) }
+.sh10 { box-shadow: var(--shadow-10) }
 
 @media (--medium) {
   .m\:sh0 { box-shadow: none }
-  .m\:sh1  { box-shadow: 0px 2px 6px #00000011 }
-  .m\:sh2  { box-shadow: 0px 2px 6px #00000022 }
-  .m\:sh3  { box-shadow: 0px 2px 6px #00000033 }
-  .m\:sh4  { box-shadow: 0px 2px 6px #00000044 }
-  .m\:sh5  { box-shadow: 2px 4px 12px #00000011 }
-  .m\:sh6  { box-shadow: 2px 4px 12px #00000022 }
-  .m\:sh7  { box-shadow: 2px 4px 12px #00000033 }
-  .m\:sh8  { box-shadow: 2px 4px 12px #00000044 }
-  .m\:sh9  { box-shadow: 2px 4px 20px #00000011 }
-  .m\:sh10 { box-shadow: 2px 4px 20px #00000022 }
-  .m\:sh11 { box-shadow: 2px 4px 20px #00000033 }
-  .m\:sh12 { box-shadow: 2px 4px 20px #00000044 }
+  .m\:sh1  { box-shadow: var(--shadow-1) }
+  .m\:sh2  { box-shadow: var(--shadow-2) }
+  .m\:sh3  { box-shadow: var(--shadow-3) }
+  .m\:sh4  { box-shadow: var(--shadow-4) }
+  .m\:sh5  { box-shadow: var(--shadow-5) }
+  .m\:sh6  { box-shadow: var(--shadow-6) }
+  .m\:sh7  { box-shadow: var(--shadow-7) }
+  .m\:sh8  { box-shadow: var(--shadow-8) }
+  .m\:sh9  { box-shadow: var(--shadow-9) }
+  .m\:sh10 { box-shadow: var(--shadow-10) }
 }
 
 @media (--large) {
   .l\:sh0 { box-shadow: none }
-  .l\:sh1  { box-shadow: 0px 2px 6px #00000011 }
-  .l\:sh2  { box-shadow: 0px 2px 6px #00000022 }
-  .l\:sh3  { box-shadow: 0px 2px 6px #00000033 }
-  .l\:sh4  { box-shadow: 0px 2px 6px #00000044 }
-  .l\:sh5  { box-shadow: 2px 4px 12px #00000011 }
-  .l\:sh6  { box-shadow: 2px 4px 12px #00000022 }
-  .l\:sh7  { box-shadow: 2px 4px 12px #00000033 }
-  .l\:sh8  { box-shadow: 2px 4px 12px #00000044 }
-  .l\:sh9  { box-shadow: 2px 4px 20px #00000011 }
-  .l\:sh10 { box-shadow: 2px 4px 20px #00000022 }
-  .l\:sh11 { box-shadow: 2px 4px 20px #00000033 }
-  .l\:sh12 { box-shadow: 2px 4px 20px #00000044 }
+  .l\:sh1  { box-shadow: var(--shadow-1) }
+  .l\:sh2  { box-shadow: var(--shadow-2) }
+  .l\:sh3  { box-shadow: var(--shadow-3) }
+  .l\:sh4  { box-shadow: var(--shadow-4) }
+  .l\:sh5  { box-shadow: var(--shadow-5) }
+  .l\:sh6  { box-shadow: var(--shadow-6) }
+  .l\:sh7  { box-shadow: var(--shadow-7) }
+  .l\:sh8  { box-shadow: var(--shadow-8) }
+  .l\:sh9  { box-shadow: var(--shadow-9) }
+  .l\:sh10 { box-shadow: var(--shadow-10) }
 }
 
 

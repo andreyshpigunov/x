@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.34</div>
+    <div class="header-version nowrap">0.1.35</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -1306,18 +1306,25 @@ a.link_wavy</pre>
 .r[0-10] (m,l,xl) | radius
 .r100    (m,l,xl) | radius 100%
 
-.sh0 (m,l) | shadow
-.sh1 (m,l)
-.sh2 (m,l)
-.sh3 (m,l)
-.sh4 (m,l)
+.sh[0-10] (m,l) | shadow
 
 .o[0-12] (m,l,xl) | order
 .noPrint</pre>
     
     <h3>Variables</h3>
     <pre class="fs14 mono">
---container-max-width: 1600px;</pre>
+--container-max-width: 1600px;
+
+--shadow-1:  0px 2px 6px #00000011;
+--shadow-2:  0px 2px 6px #00000022;
+--shadow-3:  0px 2px 6px #00000033;
+--shadow-4:  2px 4px 12px #00000011;
+--shadow-5:  2px 4px 12px #00000022;
+--shadow-6:  2px 4px 12px #00000033;
+--shadow-7:  2px 4px 20px #00000011;
+--shadow-8:  2px 4px 20px #00000022;
+--shadow-9:  2px 4px 20px #00000033;
+--shadow-10: 2px 4px 24px #00000044;</pre>
   </div>
   
   
