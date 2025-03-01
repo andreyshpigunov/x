@@ -12,6 +12,6 @@ All right reserved.
 .sheet-tab {
   /* ... */
 }
-.sheet-body:not(.active) {
+[x-sheet]:not(.active) {
   display: none;
 }
