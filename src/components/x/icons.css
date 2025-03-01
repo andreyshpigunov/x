@@ -12,17 +12,23 @@ All right reserved.
 */
 
 .icon,
-.icon > svg {
+.icon > svg,
+.icon > img {
   display: inline-block;
   width: 1em;
   height: 1em;
   max-width: none;
   max-height: none;
 }
+.icon > svg,
+.icon > img {
+  display: block;
+}
 
 @for $i from 10 to 60 by 2 {
   .icon_$(i),
-  .icon_$(i) > svg {
+  .icon_$(i) > svg,
+  .icon_$(i) > img {
     width: $(i)px;
     height: $(i)px;
   }
@@ -31,7 +37,8 @@ All right reserved.
 @media (--medium) {
   @for $i from 10 to 60 by 2 {
     .m\:icon_$(i),
-    .m\:icon_$(i) > svg {
+    .m\:icon_$(i) > svg,
+    .m\:icon_$(i) > img {
       width: $(i)px;
       height: $(i)px;
     }
@@ -41,7 +48,8 @@ All right reserved.
 @media (--large) {
   @for $i from 10 to 60 by 2 {
     .l\:icon_$(i),
-    .l\:icon_$(i) > svg {
+    .l\:icon_$(i) > svg,
+    .l\:icon_$(i) > img {
       width: $(i)px;
       height: $(i)px;
     }
