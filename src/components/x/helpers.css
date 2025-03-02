@@ -110,15 +110,15 @@ All right reserved.
   --container-max-width: 1600px;
   
   --shadow-1:  0px 2px 6px #00000010;
-  --shadow-2:  0px 2px 6px #00000018;
-  --shadow-3:  0px 2px 6px #0000001f;
+  --shadow-2:  0px 2px 6px #00000020;
+  --shadow-3:  0px 2px 6px #00000030;
   --shadow-4:  1px 3px 12px #00000010;
-  --shadow-5:  1px 3px 12px #00000018;
-  --shadow-6:  1px 3px 12px #0000001f;
+  --shadow-5:  1px 3px 12px #00000020;
+  --shadow-6:  1px 3px 12px #00000030;
   --shadow-7:  2px 4px 20px #00000010;
-  --shadow-8:  2px 4px 20px #00000018;
-  --shadow-9:  2px 4px 20px #0000001f;
-  --shadow-10: 2px 4px 24px #00000028;
+  --shadow-8:  2px 4px 20px #00000020;
+  --shadow-9:  2px 4px 20px #00000030;
+  --shadow-10: 2px 4px 24px #00000040;
 }
 
 
