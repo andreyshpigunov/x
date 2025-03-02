@@ -9,6 +9,9 @@ All right reserved.
 /* !- Spaces variables */
 
 
+/* .space[0-10] (m,l) — vertical spacer */
+
+
 :root {
   /* Spaces */
   --space-0:  0;
@@ -22,4 +25,26 @@ All right reserved.
   --space-8:  6.4rem;
   --space-9:  9.6rem;
   --space-10: 12.8rem;
+}
+
+@for $i from 0 to 10 {
+  .space$(i) {
+    height: var(--space-$(i));
+  }
+}
+
+@media (--medium) {
+  @for $i from 0 to 10 {
+    .m\:space$(i) {
+      height: var(--space-$(i));
+    }
+  }
+}
+
+@media (--large) {
+  @for $i from 0 to 10 {
+    .l\:space$(i) {
+      height: var(--space-$(i));
+    }
+  }
 }
