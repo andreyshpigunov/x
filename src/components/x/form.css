@@ -7,7 +7,7 @@ All right reserved.
 
 :root {
   --forms-width: 400px;
-  --forms-height: 4rem;
+  --forms-height-coeff: 2.5;
   --forms-side-padding: 1rem;
 
   --forms-font-size: var(--font-size);
@@ -27,6 +27,11 @@ All right reserved.
   --forms-background-color: #fff;
   --forms-background-color-readonly: #fafafa;
   --forms-background-color-disabled: #f6f6f6;
+  
+  /*
+    Additional variables and their default values:
+    --forms-height: 4rem;
+  */
 }
 
 input[type="color"],
@@ -48,6 +53,7 @@ select {
   position: relative;
   width: 100%;
   height: var(--forms-height);
+  height: var(--forms-height, calc(var(--forms-font-size) * var(--forms-height-coeff)));
   margin: 0;
   padding: 0 var(--forms-side-padding);
   font-size: var(--forms-font-size);
