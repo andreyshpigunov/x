@@ -107,7 +107,7 @@ All right reserved.
 
 
 :root {
-  --container-max-width: 1600px;
+  --container-max-width: 160rem;
   
   --shadow-1:  0px 2px 6px #00000010;
   --shadow-2:  0px 2px 6px #00000020;

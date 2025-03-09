@@ -29,8 +29,8 @@ All right reserved.
   .icon_$(i),
   .icon_$(i) > svg,
   .icon_$(i) > img {
-    width: $(i)px;
-    height: $(i)px;
+    width: calc($(i)rem / 10);
+    height: calc($(i)rem / 10);
   }
 }
 
@@ -39,8 +39,8 @@ All right reserved.
     .m\:icon_$(i),
     .m\:icon_$(i) > svg,
     .m\:icon_$(i) > img {
-      width: $(i)px;
-      height: $(i)px;
+      width: calc($(i)rem / 10);
+      height: calc($(i)rem / 10);
     }
   }
 }
@@ -50,8 +50,8 @@ All right reserved.
     .l\:icon_$(i),
     .l\:icon_$(i) > svg,
     .l\:icon_$(i) > img {
-      width: $(i)px;
-      height: $(i)px;
+      width: calc($(i)rem / 10);
+      height: calc($(i)rem / 10);
     }
   }
 }

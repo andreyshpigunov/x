@@ -13,11 +13,11 @@ All right reserved.
   --modal-margin: 3vw;
   --modal-padding: clamp(4rem, 4vw, 5rem) clamp(2.5rem, 4vw, 5rem);
   --modal-background: #fff;
-  --modal-box-shadow: 0 10px 40px #00000044;
+  --modal-box-shadow: 0 1rem 4rem #00000033;
   --modal-border-radius: 1.6rem;
-  --modal-closer-area: 40px;
-  --modal-closer-size: 26px;
-  --modal-closer-width: 2px;
+  --modal-closer-area: 4rem;
+  --modal-closer-size: 2.6rem;
+  --modal-closer-width: .2rem;
   --modal-closer-color: #ccc;
   --modal-closer-color-hover: #f00;
   --modal-overlay-background-color: #00000066;
@@ -99,7 +99,7 @@ html.modal_active body {
   position: relative;
   z-index: 10030;
   width: 100%;
-  max-width: 800px;
+  max-width: 80rem;
   margin: auto;
   padding: var(--modal-padding);
   text-align: left;
@@ -121,7 +121,7 @@ html.modal_active body {
     display: block;
     position: sticky;
     z-index: 10040;
-    top: 1px;
+    top: calc(-.8 * var(--modal-margin));
     background: var(--modal-background);
     width: var(--modal-closer-area);
     height: var(--modal-closer-area);
@@ -133,11 +133,6 @@ html.modal_active body {
     will-change: opacity;
     opacity: 0;
     transition: opacity .15s ease-out;
-    
-    /* @media (--medium) {
-      top: -50px;
-      background: none;
-    } */
     
     &:before,
     &:after {
