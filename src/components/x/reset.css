@@ -108,6 +108,10 @@ html {
   &.scale3  { --font-scale: 1.15 }
   &.scale4  { --font-scale: 1.20 }
   &.scale5  { --font-scale: 1.25 }
+  
+  &.noTransitions * {
+    transition: none !important;
+  }
 }
 body {
   font-size: var(--font-size);

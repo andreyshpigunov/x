@@ -478,6 +478,19 @@ class Lib {
     }
     return
   }
+  
+  // Transitions global on
+  transitionsOn() {
+    if (document.documentElement.classList.contains('noTransitions')) {
+      setTimeout(() => { document.documentElement.classList.remove('noTransitions') }, 10);
+    }
+  }
+  
+  // Transitions global off
+  transitionsOff() {
+    document.documentElement.classList.add('noTransitions');
+  }
+  
 }
 
 export const lib = new Lib();

@@ -54,6 +54,8 @@ class X {
       this.slides.init();
       hover();
       
+      // Return deactivated transitions
+      this.lib.transitionsOn();
       this.initialized = true;
     }
   }
