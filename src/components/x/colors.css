@@ -7,11 +7,12 @@ All right reserved.
 
 
 /*
-  .textPrimary
-  .textSuccess
-  .textWarning
-  .textDanger
-  .textError
+  .colorPrimary
+  .colorSuccess
+  .colorWarning
+  .colorDanger
+  .colorError
+  .colorGrey
   
   .bgPrimary
   .bgSuccess
@@ -20,7 +21,7 @@ All right reserved.
   .bgError
   .bgGrey
   
-  .text[ColorName] - text color (d)
+  .color[ColorName] - color (d)
   .bg[ColorName] - background color (d)
 */
 
@@ -35,11 +36,11 @@ All right reserved.
 }
 
 
-.textPrimary { color: var(--color-primary) !important }
-.textSuccess { color: var(--color-success) !important }
-.textWarning { color: var(--color-warning) !important }
-.textDanger  { color: var(--color-danger) !important }
-.textError   { color: var(--color-error) !important }
+.colorPrimary { color: var(--color-primary) !important }
+.colorSuccess { color: var(--color-success) !important }
+.colorWarning { color: var(--color-warning) !important }
+.colorDanger  { color: var(--color-danger) !important }
+.colorError   { color: var(--color-error) !important }
 .bgPrimary   { background-color: var(--color-primary) !important }
 .bgSuccess   { background-color: var(--color-success) !important }
 .bgWarning   { background-color: var(--color-warning) !important }
@@ -50,13 +51,13 @@ All right reserved.
 
 @each $color in AliceBlue, AntiqueWhite, Aqua, Azure, Beige, Bisque, Black, BlanchedAlmond, Blue, BlueViolet, Brown, Burlywood, CadetBlue, Chartreuse, Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson, Cyan, DarkBlue, DarkCyan, DarkGoldenrod, DarkGray, DarkGreen, DarkGrey, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange, DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue, DarkSlateGray, DarkSlateGrey, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue, DimGray, DimGrey, DodgerBlue, FireBrick, FloralWhite, ForestGreen, Fuchsia, Gainsboro, GhostWhite, Gold, Goldenrod, Gray, Green, GreenYellow, Grey, HoneyDew, HotPink, IndianRed, Indigo, Ivory, Khaki, Lavender, LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral, LightCyan, LightGoldenrodYellow, LightGray, LightGreen, LightGrey, LightPink, LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSlateGrey, LightSteelBlue, LightYellow, Lime, LimeGreen, Linen, Magenta, Maroon, MediumAquaMarine, MediumBlue, MediumOrchid, MediumPurple, MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed, MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite, Navy, OldLace, Olive, OliveDrab, Orange, OrangeRed, Orchid, PaleGoldenrod, PaleGreen, PaleTurquoise, PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink, Plum, PowderBlue, Purple, RebeccaPurple, Red, RosyBrown, RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen, SeaShell, Sienna, Silver, SkyBlue, SlateBlue, SlateGray, SlateGrey, Snow, SpringGreen, SteelBlue, Tan, Teal, Thistle, Tomato, Turquoise, Violet, Wheat, White, WhiteSmoke, Yellow, YellowGreen {
   
-  .text$(color) { color: $(color) !important }
+  .color$(color) { color: $(color) !important }
   .bg$(color) { background-color: $(color) !important }
 }
 
 @media (--dark) {
   @each $color in AliceBlue, AntiqueWhite, Aqua, Azure, Beige, Bisque, Black, BlanchedAlmond, Blue, BlueViolet, Brown, Burlywood, CadetBlue, Chartreuse, Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson, Cyan, DarkBlue, DarkCyan, DarkGoldenrod, DarkGray, DarkGreen, DarkGrey, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange, DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue, DarkSlateGray, DarkSlateGrey, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue, DimGray, DimGrey, DodgerBlue, FireBrick, FloralWhite, ForestGreen, Fuchsia, Gainsboro, GhostWhite, Gold, Goldenrod, Gray, Green, GreenYellow, Grey, HoneyDew, HotPink, IndianRed, Indigo, Ivory, Khaki, Lavender, LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral, LightCyan, LightGoldenrodYellow, LightGray, LightGreen, LightGrey, LightPink, LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSlateGrey, LightSteelBlue, LightYellow, Lime, LimeGreen, Linen, Magenta, Maroon, MediumAquaMarine, MediumBlue, MediumOrchid, MediumPurple, MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed, MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite, Navy, OldLace, Olive, OliveDrab, Orange, OrangeRed, Orchid, PaleGoldenrod, PaleGreen, PaleTurquoise, PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink, Plum, PowderBlue, Purple, RebeccaPurple, Red, RosyBrown, RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen, SeaShell, Sienna, Silver, SkyBlue, SlateBlue, SlateGray, SlateGrey, Snow, SpringGreen, SteelBlue, Tan, Teal, Thistle, Tomato, Turquoise, Violet, Wheat, White, WhiteSmoke, Yellow, YellowGreen {
-    .d\:text$(color) { color: $(color) !important }
+    .d\:color$(color) { color: $(color) !important }
     .d\:bg$(color) { background-color: $(color) !important }
   }
 }
