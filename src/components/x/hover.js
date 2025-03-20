@@ -1,7 +1,8 @@
 //
-//  hover.js
-//  x | Hover sync
-//  Created by Andrey Shpigunov at 11.02.2025
+//  hover.js / x
+//  Hover sync
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

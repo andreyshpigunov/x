@@ -1,9 +1,10 @@
-/*---------------------------
-auto.css
-auto
+/*----------------------------------------
+x.css / x
+Small and simple CSS & JavaScript library with interesting features
 
-Created by andreyshpigunov on 25.05.2021.
----------------------------*/
+Created by Andrey Shpigunov at 20.03.2025
+All right reserved.
+----------------------------------------*/
 
 
 @import "../components/x/reset.css";
@@ -16,6 +17,7 @@ Created by andreyshpigunov on 25.05.2021.
 @import "../components/x/flow.css";
 @import "../components/x/form.css";
 @import "../components/x/buttons.css";
+@import "../components/x/dropdown.css";
 @import "../components/x/sheets.css";
 @import "../components/x/slides.css";
 @import "../components/x/sticky.css";

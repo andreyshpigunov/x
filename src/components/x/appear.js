@@ -1,7 +1,8 @@
 //
-//  appear.js
-//  x | Appear
-//  Created by Andrey Shpigunov at 20.01.2025
+//  appear.js / x
+//  Appear
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

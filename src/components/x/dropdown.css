@@ -1,0 +1,143 @@
+/*----------------------------------------
+dropdown.css / x
+Dropdown menu
+
+Created by Andrey Shpigunov at 20.03.2025
+All right reserved.
+----------------------------------------*/
+
+
+:root {
+  --dropdown-border-radius: 1.2rem;
+  --dropdown-backgroud-color: white;
+  --dropdown-box-shadow: var(--shadow-4);
+  --dropdown-padding: .8rem;
+  --dropdown-item-padding: .6rem 2.4rem .6rem 1.2rem;
+  --dropdown-item-font-color: black;
+  --dropdown-item-font-color-hover: black;
+  --dropdown-item-background-color: white;
+  --dropdown-item-background-color-hover: var(--color-grey);
+  --dropdown-divider-color: var(--color-grey);
+}
+
+
+.dropdown {
+  position: relative;
+}
+
+[x-dropdown] {
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  opacity: 0;
+  min-width: 22rem;
+  max-width: 32rem;
+  max-height: clamp(0px, 80vh, 500px);
+  overflow: auto;
+  list-style: none;
+  padding: var(--dropdown-padding);
+  margin: 0;
+  background-color: var(--dropdown-backgroud-color);
+  border: none;
+  box-shadow: var(--dropdown-box-shadow);
+  border-radius: var(--dropdown-border-radius);
+  transform: scale(.95);
+  transform-origin: top;
+  transition: opacity .15s ease-out,
+              transform .15s ease-out;
+  pointer-events: none;
+  overscroll-behavior: contain;
+  
+  &.dropdown_right {
+    right: 0;
+  }
+  
+  & > li {
+    margin: 0;
+  }
+  
+  &::-webkit-scrollbar {
+    width: var(--scroll-scrollbar-size);
+    height: var(--scroll-scrollbar-size);
+  }
+  
+  &::-webkit-scrollbar-track {
+    background-color: none;
+    border-radius: var(--scroll-scrollbar-size);
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    border-radius: var(--scroll-scrollbar-size);
+    background-color: var(--scroll-scrollbar-thumb-background);
+    will-change: background-color;
+    transition: background .2s ease-out;
+    cursor: pointer;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scroll-scrollbar-thumb-background-hover);
+  }
+  
+  &::-webkit-scrollbar-button,
+  &::-webkit-scrollbar-track-piece,
+  &::-webkit-scrollbar-corner,
+  &::-webkit-resizer {
+    display: none;
+  }
+}
+
+.dropdown.dropdown_ready [x-dropdown] {
+  display: block;
+  pointer-events: auto;
+}
+.dropdown.dropdown_open [x-dropdown] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+[x-dropdown] {
+  
+  & li {
+    
+    &.divider {
+      height: 0;
+      padding: 0;
+      margin: var(--dropdown-padding) calc(-1 * var(--dropdown-padding));
+      border-bottom: 1px solid var(--dropdown-divider-color);
+    }
+    
+    & > a,
+    & > span {
+      display: block;
+      padding: var(--dropdown-item-padding);
+      line-height: 1.4;
+      color: var(--dropdown-item-font-color);
+      text-overflow: ellipsis;
+      text-decoration: none;
+      overflow: hidden;
+      border: none;
+      border-radius: calc(var(--dropdown-border-radius) / 2);
+      background: var(--dropdown-item-background-color);
+    }
+    
+    & > a {
+      will-change: color, background, transform;
+      transition: all .1s ease-out;
+      transform: scale(1);
+      transform-origin: bottom center;
+      
+      &:hover,
+      &:active {
+        color: var(--dropdown-item-font-color-hover);
+        background: var(--dropdown-item-background-color-hover);
+      }
+      
+      &:active {
+        transform: scale(.99);
+      }
+    }
+  }
+}

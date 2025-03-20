@@ -1,7 +1,8 @@
 //
-//  slides.js
-//  x | Slides of photo
-//  Created by Andrey Shpigunov at 12.02.2025
+//  slides.js / x
+//  Slides of photos
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

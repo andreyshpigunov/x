@@ -1,8 +1,9 @@
 //
-//	app.js
-//	auto-x
+//  app.js / x
+//  App
 //
-//	Created by Andrey Shpigunov on 03.09.2024.
+//  Created by Andrey Shpigunov at 20.03.2025
+//  All right reserved.
 //
 
 

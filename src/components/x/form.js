@@ -1,7 +1,8 @@
 //
-//  form.js
-//  x | Additional form elements functions
-//  Created by Andrey Shpigunov at 20.01.2025
+//  form.js / x
+//  Additional form elements functions
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

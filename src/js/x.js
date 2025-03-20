@@ -1,7 +1,8 @@
 //
-//  x.js
-//  x | Small and simple CSS & JavaScript library with interesting features
-//  Created by Andrey Shpigunov at 12.02.2025
+//  x.js / x
+//  Small and simple CSS & JavaScript library with interesting features
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 
@@ -12,6 +13,7 @@ import { appear   }  from "../components/x/appear";
 import { lazyload }  from "../components/x/lazyload";
 import { loadmore }  from "../components/x/loadmore";
 import { sheets   }  from "../components/x/sheets";
+import { dropdown }  from "../components/x/dropdown";
 import { scroll   }  from "../components/x/scroll";
 import { hover    }  from "../components/x/hover";
 import { device   }  from "../components/x/device";
@@ -29,6 +31,7 @@ class X {
     this.lazyload = lazyload;
     this.loadmore = loadmore;
     this.sheets   = sheets;
+    this.dropdown = dropdown;
     this.scroll   = scroll;
     this.hover    = hover;
     this.device   = device;
@@ -49,6 +52,7 @@ class X {
       this.lazyload.init();
       this.loadmore.init();
       this.sheets.init();
+      this.dropdown.init();
       this.scroll.init();
       this.sticky.init();
       this.slides.init();

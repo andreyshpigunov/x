@@ -1,7 +1,8 @@
 //
-//  animate.js
-//  x | Animations
-//  Created by Andrey Shpigunov at 20.01.2025
+//  animate.js / x
+//  Animations
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

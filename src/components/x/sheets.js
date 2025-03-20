@@ -1,7 +1,8 @@
 //
-//  sheets.js
-//  x | Sheets
-//  Created by Andrey Shpigunov at 12.02.2025
+//  sheets.js / x
+//  Sheets
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

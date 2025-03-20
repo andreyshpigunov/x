@@ -1,12 +1,9 @@
 //
-//  device.js
-//  x | Device
-//  Created by Andrey Shpigunov at 20.01.2025
+//  device.js / x
+//  Device
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
-//
-//
-//  Device, OS and browser detection
-//  Return object with fields ('fields' variable in code).
 //
 
 

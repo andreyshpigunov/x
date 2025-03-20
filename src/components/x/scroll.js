@@ -1,7 +1,8 @@
 //
-//  scroll.js
-//  x | Scroll
-//  Created by Andrey Shpigunov at 11.02.2025
+//  scroll.js / x
+//  Scroll
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
 //
 //

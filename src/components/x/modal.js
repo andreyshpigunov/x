@@ -1,8 +1,10 @@
 //
-//  modal.js
-//  x | Modal windows
-//  Created by Andrey Shpigunov at 09.02.2025
+//  modal.js / x
+//  Modal windows
+//
+//  Created by Andrey Shpigunov at 20.03.2025
 //  All right reserved.
+//
 //
 //  Usage:
 //  <div x-modal="modal" class="[custom-classes]" data-window-class="[window-classes]">
