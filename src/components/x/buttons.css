@@ -111,7 +111,7 @@ All right reserved.
     &.hover {
       text-decoration: none;
       color: var(--button-font-color-hover, var(--button-font-color));
-      background-color: var(--button-color-hover, color(from var(--button-color) display-p3 calc(r - 0.05) calc(g - 0.05) calc(b - 0.05)));
+      background-color: var(--button-color-hover, color(from var(--button-color) display-p3 calc(r - 0.04) calc(g - 0.04) calc(b - 0.04)));
       transform: var(--button-transform-hover);
       box-shadow: var(--button-box-shadow-hover);
     }
@@ -121,7 +121,7 @@ All right reserved.
   &.active {
     text-decoration: none;
     color: var(--button-font-color-active, var(--button-font-color));
-    background-color: var(--button-color-active, color(from var(--button-color) display-p3 calc(r - 0.05) calc(g - 0.05) calc(b - 0.05)));
+    background-color: var(--button-color-active, color(from var(--button-color) display-p3 calc(r - 0.04) calc(g - 0.04) calc(b - 0.04)));
     transform: var(--button-transform-active);
     box-shadow: var(--button-box-shadow-active);
   }
