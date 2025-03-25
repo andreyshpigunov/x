@@ -44,12 +44,12 @@ All right reserved.
   --button-transition: all .1s ease-out;
   --button-font-size: var(--font-size);
   --button-transform: scale(1);
-  --button-transform-hover: scale(1);
-  --button-transform-active: scale(.99);
+  --button-transform-hover: none;
+  --button-transform-active: none;
   --button-transform-origin: center bottom;
   --button-box-shadow: none;
   --button-box-shadow-hover: none;
-  --button-box-shadow-active: inset 0 1px 1px #0002;
+  --button-box-shadow-active: inset 0 0 2px #0002;
   
   /*
     Additional variables and their default values:
@@ -111,7 +111,7 @@ All right reserved.
     &.hover {
       text-decoration: none;
       color: var(--button-font-color-hover, var(--button-font-color));
-      background-color: var(--button-color-hover, color(from var(--button-color) display-p3 calc(r - 0.04) calc(g - 0.04) calc(b - 0.04)));
+      background-color: var(--button-color-hover, color(from var(--button-color) display-p3 calc(r - 0.02) calc(g - 0.02) calc(b - 0.02)));
       transform: var(--button-transform-hover);
       box-shadow: var(--button-box-shadow-hover);
     }

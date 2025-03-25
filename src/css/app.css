@@ -17,7 +17,7 @@ All right reserved.
     /* --link-transition: all .15s ease-out; */
     --code-font-size: 14px;
     --code-font-color: #000;
-    --code-background-color: #f8f8f8;
+    --code-background-color: var(--color-grey);
 }
 
 
@@ -181,7 +181,7 @@ code {
         font-weight: 500;
         font-size: 18px;
         font-family: var(--font-family-mono);
-        color: #e4e4e4;
+        color: #ccc;
     }
     
     & code {

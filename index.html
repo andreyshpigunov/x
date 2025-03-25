@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.55</div>
+    <div class="header-version nowrap">0.1.56</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -129,13 +129,10 @@
             .exampleAppear2 {
               transition-delay: 1s;
             }
-            .exampleAppear1.appeared {
-              opacity: 1;
-              background: #cccccc55;
-            }
+            .exampleAppear1.appeared,
             .exampleAppear2.visible {
               opacity: 1;
-              background: #cccccc55;
+              background: var(--color-grey);
             }
           </style>
           <div class="exampleAppear1 flex jcc py5 r3" x-appear>Appeared</div>
