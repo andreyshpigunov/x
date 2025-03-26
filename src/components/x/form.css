@@ -18,9 +18,9 @@ All right reserved.
   --forms-font-color-disabled: #666;
   --forms-font-color-placeholder: #ccc;
 
-  --forms-border-width: 0.16rem;
+  --forms-border-width: 0.1rem;
   --forms-border-radius: 0.8rem;
-  --forms-border-color: #ddd;
+  --forms-border-color: #d4d4d4;
   --forms-border-color-focused: #8cf;
   --forms-border-color-error: #f00;
   --forms-border-color-readonly: #ddd;
