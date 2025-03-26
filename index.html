@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.56</div>
+    <div class="header-version nowrap">0.1.57</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -636,8 +636,10 @@
           </style>
           <div x-sheets class="sheets-example unselectable">
             <div class="button_tabs">
+              <a class="button hidden" x-sheet-open="sheet0">First</a>
               <a class="button active" x-sheet-open="sheetA">Bird</a>
               <a class="button" x-sheet-open="sheetB">Sea</a>
+              <a class="button hidden" x-sheet-open="sheetC">Last</a>
             </div>
             <div class="mt3">
               <div x-sheet="sheetA">Once I saw a little bird outside my window. It was chirping happily and looking for food. I put some seeds on the windowsill, and it ate them right away.</div>
