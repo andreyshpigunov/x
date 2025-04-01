@@ -45,11 +45,11 @@ All right reserved.
   --button-font-size: var(--font-size);
   --button-transform: scale(1);
   --button-transform-hover: none;
-  --button-transform-active: none;
+  --button-transform-active: scale(.98);
   --button-transform-origin: center bottom;
   --button-box-shadow: none;
   --button-box-shadow-hover: none;
-  --button-box-shadow-active: inset 0 0 2px #0002;
+  --button-box-shadow-active: none;
   
   /*
     Additional variables and their default values:
