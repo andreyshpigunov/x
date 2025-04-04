@@ -45,7 +45,7 @@ All right reserved.
   --button-font-size: var(--font-size);
   --button-transform: scale(1);
   --button-transform-hover: none;
-  --button-transform-active: scale(.98);
+  --button-transform-active: scale(.99);
   --button-transform-origin: center bottom;
   --button-box-shadow: none;
   --button-box-shadow-hover: none;
