@@ -132,3 +132,7 @@ textarea {
   padding-top: calc(var(--forms-side-padding) / 2);
   padding-bottom: calc(var(--forms-side-padding) / 2);
 }
+
+::-webkit-file-upload-button {
+    cursor:pointer;
+}
