@@ -3,118 +3,197 @@
 //  Slides of photos
 //
 //  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  All rights reserved.
 //
-//
-//  Simple photos onmouseover slides
+//  Simple photo slider on mouseover.
 //  <div x-slides="['photo1.jpg','photo2.jpg','photo3.jpg']">
 //    <img src="photo1.jpg"/>
 //  </div>
 //
 
-
 import { device } from './device';
 import { lib } from './lib';
 
-
 class Slides {
+  constructor() {}
 
-  constructor() {
-    // ...
+  /**
+   * Initializes lazy loading for all [x-slides] elements.
+   * On touch devices, removes the attribute and skips initialization.
+   * Sets up DOM mutation observer to support dynamically added elements.
+   */
+  init() {
+    let sliders = lib.qsa('[x-slides]');
+
+    // Skip initialization on touch devices
+    if (device.touch) {
+      for (let slider of sliders) slider.removeAttribute('x-slides');
+      return;
+    }
+
+    // Set up lazy init on mouseenter
+    sliders.forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        if (!el.dataset.slidesInited) {
+          this._initSlider(el);
+          el.dataset.slidesInited = 'true';
+        }
+      }, { once: true });
+    });
+
+    // Watch for dynamically added elements
+    this._observeDOM();
   }
 
-  init() {
-
-    let sliders = lib.qsa('[x-slides]');
-    if (sliders.length) {
-      if (device.touch) {
-        // Touch device, remove 'x-slides' attribute
-        for (let slider of sliders) slider.removeAttribute('x-slides');
-      } else {
-        let slidersObject = {};
-
-        sliders.forEach((e, index) => {
-          // Get array images
-          let slides = JSON.parse(e.getAttribute('x-slides'));
-          // Get img
-          let img = lib.qs('img', e);
-          // Get cover
-          // let cover = img.getAttribute('src');
-          // Add cover to the start of array
-          // slides.unshift(cover);
-          // Create array without duplicates
-          let array = [...new Set(slides)]
-          let count = array.length;
-          
-          // Remove .slides-items if existed
-          let items = lib.qsa('.slides-items', e);
-          if (items.length) {
-            for (let item of items) {
-              item.remove();
-            }
-          }
-          
-          let itemsId = lib.makeId();
-          lib.render(e, `<div id="${itemsId}" class="slides-items"></div>`, 'beforeend');
-
-          for (let index in array) {
-            let div = `<div class="slides-item ${index == 0 ? 'active' : ''}"></div>`;
-            lib.render('#' + itemsId, div, 'beforeend');
-          }
-
-          // Add data to object
-          slidersObject[index] = {
-            element: e,
-            rect: e.getBoundingClientRect(),
-            img: img,
-            array: array,
-            count: count,
-            items: lib.qs('#' + itemsId)
-          };
-
-          // Remove 'x-slides' attribute
-          // e.removeAttribute('x-slides');
-          e.classList.add('slides')
-        });
-
-        // Add event listeners
-        if (Object.values(slidersObject).length) {
-          for (let item of Object.values(slidersObject)) {
-            if (item.array.length) {
-              item.element.addEventListener('mousemove', event => {
-                this._update(event, item);
-              });
-              item.element.addEventListener('mouseout', () => {
-                this._reset(item);
-              });
-            }
+  /**
+   * Observes DOM for dynamically added elements with x-slides attribute.
+   */
+  _observeDOM() {
+    const observer = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        for (const node of m.addedNodes) {
+          if (node.nodeType === 1) {
+            this._checkForSlides(node);
           }
         }
       }
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
+
+  /**
+   * Checks if added node or its children contain x-slides and prepares lazy init.
+   */
+  _checkForSlides(node) {
+    if (node.hasAttribute?.('x-slides')) {
+      this._prepareLazyInit(node);
+    }
+
+    const inner = node.querySelectorAll?.('[x-slides]');
+    if (inner?.length) {
+      inner.forEach(el => this._prepareLazyInit(el));
     }
   }
 
+  /**
+   * Preloads images and sets up mouseenter event if not already initialized.
+   */
+  _prepareLazyInit(el) {
+    if (!el.dataset.slidesPreloaded) {
+      try {
+        const slides = JSON.parse(el.getAttribute('x-slides'));
+        this._preloadImages(slides);
+        el.dataset.slidesPreloaded = 'true';
+      } catch (e) {
+        console.warn('Invalid x-slides JSON on dynamic element', e);
+      }
+    }
+
+    if (!el.dataset.slidesInited) {
+      el.addEventListener('mouseenter', () => {
+        this._initSlider(el);
+      }, { once: true });
+    }
+  }
+
+  /**
+   * Initializes a single slider element.
+   */
+  _initSlider(el) {
+    const slides = JSON.parse(el.getAttribute('x-slides'));
+    const img = lib.qs('img', el);
+    if (!img) {
+      console.warn('No <img> inside x-slides element', el);
+      return;
+    }
+
+    const unique = [...new Set(slides)];
+    const count = unique.length;
+
+    this._preloadImages(unique);
+
+    const id = lib.makeId();
+    lib.render(el, `<div id="${id}" class="slides-items"></div>`, 'beforeend');
+
+    // Create dot indicators
+    for (let i = 0; i < unique.length; i++) {
+      const div = `<div class="slides-item ${i === 0 ? 'active' : ''}"></div>`;
+      lib.render('#' + id, div, 'beforeend');
+    }
+
+    const rect = el.getBoundingClientRect();
+    const dots = lib.qsa('div', lib.qs('#' + id));
+
+    const item = {
+      element: el,
+      rect,
+      img,
+      array: unique,
+      count,
+      items: lib.qs('#' + id),
+      dots
+    };
+
+    el.dataset.slidesInited = 'true';
+    el.classList.add('slides');
+    this._bindEvents(item);
+  }
+
+  /**
+   * Binds mousemove and mouseout events to a slider.
+   */
+  _bindEvents(item) {
+    item.element.addEventListener('mousemove', lib.throttle(event => {
+      item.rect = item.element.getBoundingClientRect(); // Update rect if needed
+      this._update(event, item);
+    }, 50));
+
+    item.element.addEventListener('mouseout', () => {
+      this._reset(item);
+    });
+  }
+
+  /**
+   * Updates the image and active dot based on mouse position.
+   */
   _update(event, item) {
-    let x = event.clientX - item.rect.left;
-    if (x < 0) x = 0;
+    const x = Math.max(0, event.clientX - item.rect.left);
     let slide = Math.floor(x / (item.rect.width / item.count));
-    item.img.src = item.array[slide];
 
-    lib.removeClass(lib.qsa('div', item.items), 'active');
-    lib.addClass(lib.qsa('div', item.items)[slide], 'active');
-
-    // item.img.dataset.slide = slide + 1;
-    // item.img.dataset.slides = item.array.length;
+    if (item.img.src !== item.array[slide]) {
+      item.img.src = item.array[slide];
+      this._setActiveItem(item, slide);
+    }
   }
 
+  /**
+   * Resets image and active dot to the first slide.
+   */
   _reset(item) {
-    item.img.src = item.array[0];
-    // item.img.dataset.slide = 1;
-
-    lib.removeClass(lib.qsa('div', item.items), 'active');
-    lib.addClass(lib.qsa('div', item.items)[0], 'active');
+    if (item.img.src !== item.array[0]) {
+      item.img.src = item.array[0];
+      this._setActiveItem(item, 0);
+    }
   }
 
+  /**
+   * Updates the active dot indicator.
+   */
+  _setActiveItem(item, index) {
+    lib.removeClass(item.dots, 'active');
+    lib.addClass(item.dots[index], 'active');
+  }
+
+  /**
+   * Preloads an array of image URLs.
+   */
+  _preloadImages(urls) {
+    for (const url of urls) {
+      const img = new Image();
+      img.src = url;
+      img.onerror = () => console.warn(`Image failed to load: ${url}`);
+    }
+  }
 }
 
 export const slides = new Slides();

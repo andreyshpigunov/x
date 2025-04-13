@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="noTransitions">
+<html lang="en" class="noTransitions antialiased">
 
 <head>
   <meta charset="utf-8">
@@ -18,8 +18,8 @@
   "end": "-50vh",
   "functionName": "headerAnimation"
 }'>
-  <header class="header flex aic sticky px5 m:px6 l:px8">
-    <div class="header-version nowrap">0.1.62</div>
+  <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
+    <div class="header-version nowrap">0.2.0</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -43,8 +43,8 @@
   <section class="section-header mt8 px5 m:px6 l:px8" x-appear>
     <h1 class="mxa ac max800">Small and simple CSS & JavaScript library with interesting features</h1>
     <div id="menu" class="mt4">
-      <a x-dropdown-open class="button">Menu</a>
-      <ul x-dropdown>
+      <a x-dropdown-open class="button" aria-expanded="false" aria-controls="menu1">Menu</a>
+      <ul x-dropdown id="menu1" role="menu" tabindex="-1">
         <li><a href="/admin/settings/profile/">Профиль</a></li>
         <li><a href="/logout/">Выйти</a></li>
         <li class="divider"></li>
@@ -160,7 +160,14 @@
                 }
                 
                 renderDevice();
-                window.addEventListener('resize', renderDevice)
+                
+                let renderTimeout;
+                window.addEventListener('resize', () => {
+                  clearTimeout(renderTimeout);
+                  renderTimeout = setTimeout(() => {
+                    renderDevice()
+                  }, 100)
+                })
               }
             })
           </script>
@@ -305,7 +312,7 @@
           <h4><a class="link" x-modal-open="modalLazyload">Lazyload</a></h4>
           <div>Image loaded lazy.</div>
           <div class="mt2">
-            <img class="r3" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
+            <img class="r3" src="https://seosecret.id/placeholder/800x600/ffffff/584959/Loading.../png" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
           </div>
         </div>
 
@@ -322,7 +329,7 @@
           </div>
           <div class="flex gap3 aic mt1">
             <span class="jsLibExampleUpdate pointer unselectable">↺</span>
-            <a class="link pseudo fs14" x-modal-open="modalLib">Show all methods</a>
+            <a class="link link_dashed fs14" x-modal-open="modalLib">Show all methods</a>
           </div>
           <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -390,7 +397,8 @@
                   }
                 }
               }
-              window.loadPosts = new Posts().load;
+              const posts = new Posts();
+              window.loadPosts = posts.load.bind(posts);
             })
           </script>
         </div>
@@ -404,7 +412,7 @@
             <a role="button" class="button" x-modal-open="modalExampleStory">Modal with long story</a>
           </div>
           <h6>API call:</h6>
-          <a class="link pseudo" onclick="x.modal.show('modalExampleTest')">x.modal.show('modalExampleTest')</a>
+          <a class="link link_dashed" onclick="x.modal.show('modalExampleTest')">x.modal.show('modalExampleTest')</a>
 
           <div x-modal="modalExampleTest">
             <h2>Test modal</h2>
@@ -1593,7 +1601,7 @@ a.link_wavy</pre>
         <code>&lt;a x-scrollto="top"&gt;Наверх&lt;/a&gt;</code>
         <code>&lt;a x-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
       </div>
-      <p>Вызов с <a class="link pseudo" x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
+      <p>Вызов с <a class="link link_dashed" x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
       <div class="codeBlock">
         <code>&lt;a x-scrollto='{</code>
         <code>  "parent": window,</code>

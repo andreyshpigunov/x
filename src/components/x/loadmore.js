@@ -2,71 +2,113 @@
 //  loadmore.js / x
 //  Loadmore
 //
-//  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  Created by Andrey Shpigunov at 12.04.2025
+//  All rights reserved.
 //
+//  Automatically triggers a callback function when an element becomes visible
+//  from the bottom of the viewport (infinite scroll).
 //
-//  Load callback when element appeared in viewport from bottom.
-//
+//  Usage:
 //  <div x-loadmore='{"functionName": "load"}'>...</div>
-//  Callback function has paramenter "page":
-//  function load(page) { ... }
 //
-
+//  The callback function should accept a "page" parameter:
+//  function load(page) { ... return true/false; }
+//
+//  - true → more content available, keep observing
+//  - false → stop observing this element
+//
 
 import { lib } from './lib';
 
-
 class Loadmore {
-
   constructor() {
-    // Items with 'x-loadmore'
+    // Store tracked elements and their current page state
     this.items = {};
-    // Lock repeat events, when current event in progress
+
+    // Prevents multiple triggers during concurrent load
     this.locked = false;
   }
 
+  /**
+   * Initializes the loadmore system by observing all [x-loadmore] elements.
+   * When the element enters the viewport (with bottom padding),
+   * calls the defined callback function.
+   */
   init() {
     const blocks = lib.qsa('[x-loadmore]');
-    if (blocks.length) {
-      const callback = async (entries, observer) => {
-        for (let entry of entries) {
-          if (entry.isIntersecting && !this.locked) {
-            this.locked = true;
-            if (lib.isValidJSON(entry.target.getAttribute('x-loadmore'))) {
-              let json = JSON.parse(entry.target.getAttribute('x-loadmore'));
-              if (json.hasOwnProperty('functionName')) {
-                let state = await window[json.functionName](this.items[entry.target.id].page);
-                if (state) {
-                  this.items[entry.target.id].page++;
-                } else {
-                  observer.unobserve(entry.target);
+    if (!blocks.length) return;
+
+    // IntersectionObserver callback
+    const callback = async (entries, observer) => {
+      for (let entry of entries) {
+        // Only trigger when the element becomes visible and not locked
+        if (entry.isIntersecting && !this.locked) {
+          this.locked = true;
+
+          const el = entry.target;
+          const loadmoreAttr = el.getAttribute('x-loadmore');
+
+          // Parse and validate JSON from x-loadmore attribute
+          if (lib.isValidJSON(loadmoreAttr)) {
+            const json = JSON.parse(loadmoreAttr);
+
+            if (json.functionName) {
+              const fn = window[json.functionName];
+
+              if (typeof fn === 'function') {
+                try {
+                  const id = el.id;
+                  const page = this.items[id].page;
+
+                  // Execute callback with current page
+                  const hasMore = await fn(page);
+
+                  if (hasMore) {
+                    this.items[id].page++;
+                  } else {
+                    // Stop observing if no more pages
+                    observer.unobserve(el);
+                  }
+                } catch (error) {
+                  console.error('Error executing loadmore callback:', error);
                 }
               } else {
-                console.log('functionName required in JSON ' + json);
+                console.error(`Function "${json.functionName}" is not defined.`);
               }
             } else {
-              console.error('Invalid JSON in x-loadmore');
+              console.warn('Missing "functionName" in x-loadmore attribute:', json);
             }
-            this.locked = false;
+          } else {
+            console.error('Invalid JSON in x-loadmore attribute:', loadmoreAttr);
           }
+
+          // Unlock after processing completes
+          this.locked = false;
         }
       }
-      const options = {
-        rootMargin: '0px 0px 400px 0px',
-        threshold: 0
-      }
-      const observer = new IntersectionObserver(callback, options);
-      for (let block of blocks) {
-        let id = lib.makeId();
-        block.setAttribute('id', id);
-        this.items[id] = {
-          el: block,
-          page: 1
-        }
-        observer.observe(block);
-      }
-    }
+    };
+
+    // Observer options: trigger when element is 400px from bottom of viewport
+    const options = {
+      rootMargin: '0px 0px 400px 0px',
+      threshold: 0
+    };
+
+    // Create observer
+    const observer = new IntersectionObserver(callback, options);
+
+    // Observe all blocks
+    blocks.forEach(block => {
+      const id = lib.makeId();
+      block.setAttribute('id', id);
+
+      this.items[id] = {
+        el: block,
+        page: 1
+      };
+
+      observer.observe(block);
+    });
   }
 }
 

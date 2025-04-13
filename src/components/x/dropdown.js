@@ -1,105 +1,164 @@
 //
 //  dropdown.js / x
-//  Dropdown menu
+//  Dropdown menu logic
 //
-//  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  Created by Andrey Shpigunov at 12.04.2025
+//  All rights reserved.
 //
+//  This module provides behavior for toggling dropdown menus.
+//  Supports keyboard accessibility, click to open, click outside to close,
+//  and custom event hooks for show/hide.
 //
-//  Connect styles and add html code:
-//  <div id="menu"> or any parent element
+//  HTML example:
+//  <div id="menu">
 //    <button x-dropdown-open>Open</button>
 //    <ul x-dropdown>
 //      <li>Menu item</li>
-//      ...
 //    </ul>
 //  </div>
 //
-//  <script>
-//    let menu = qs('#menu');
-//    menu.addEventListener('dropdown:ready', event => { ... });
+//  Script usage:
+//    menu.addEventListener('dropdown:ready',      event => { ... });
 //    menu.addEventListener('dropdown:beforeshow', event => { ... });
-//    menu.addEventListener('dropdown:aftershow', event => { ... });
+//    menu.addEventListener('dropdown:aftershow',  event => { ... });
 //    menu.addEventListener('dropdown:beforehide', event => { ... });
-//    menu.addEventListener('dropdown:afterhide', event => { ... });
+//    menu.addEventListener('dropdown:afterhide',  event => { ... });
 //
-//    qsa('.dropdown').forEach(item => {
-//      item.addEventListener('dropdown:beforeshow', e => { console.log('Before show') })
-//    });
-//  </script>
+//  Available methods:
+//    init()                          — Initializes all [x-dropdown] in the DOM
+//    toggleDropdown(parent, trigger) — Toggles visibility of a single dropdown
+//    openDropdown(parent, trigger)   — Opens a dropdown manually
+//    closeAllDropdowns()             — Closes all open dropdowns globally
+//    attachGlobalListeners()         — Adds global click / key listeners
 //
-
 
 import { lib } from './lib';
 
-
 class Dropdown {
-  
+
   constructor() {
-    // Dropdown events
-    this.eventReady      = new CustomEvent('dropdown:ready');
-    this.eventBeforeShow = new CustomEvent('dropdown:beforeshow');
-    this.eventAfterShow  = new CustomEvent('dropdown:aftershow');
-    this.eventBeforeHide = new CustomEvent('dropdown:beforehide');
-    this.eventAfterHide  = new CustomEvent('dropdown:afterhide');
+    // Attach global click/escape listeners once
+    this.attachGlobalListeners();
   }
-  
+
+  /**
+   * Initializes all dropdown components in the DOM.
+   * Binds click and keyboard events to [x-dropdown-open] buttons.
+   */
   init() {
-    qsa('[x-dropdown]').forEach(menu => {
-      let parent = menu.parentElement;
-      let trigger = qs('[x-dropdown-open]', parent);
-      
-      if (trigger) {
-        // Add parent class
-        parent.classList.add('dropdown');
-        trigger.addEventListener('click', e => {
-          
-          let isOpened = parent.classList.contains('dropdown_open');
-          let allOpened = qsa('.dropdown_open');
-          
-          // If menu was opened
-          if (isOpened) {
-            parent.dispatchEvent(this.eventBeforeHide);
-            lib.removeClass(trigger, 'active');
-            lib.removeClass(parent, 'dropdown_open', 200);
-            parent.dispatchEvent(this.eventAfterHide);
-            return false;
-          }
-          
-          // Close all opened menus
-          if (allOpened.length) {
-            parent.dispatchEvent(this.eventBeforeHide);
-            lib.removeClass('.dropdown_open [x-dropdown-open]', 'active');
-            lib.removeClass('.dropdown_open', 'dropdown_open', 200);
-            parent.dispatchEvent(this.eventAfterHide);
-          }
-          
-          // Open current menu
-          parent.dispatchEvent(this.eventBeforeShow);
-          lib.addClass(trigger, 'active');
-          lib.addClass(parent, 'dropdown_open', 20);
-          parent.dispatchEvent(this.eventAfterShow);
-          
-        })
-        
-        // Close menu on click outside
-        document.addEventListener('click', e => {
-          if (
-            !e.target.matches('[x-dropdown-open], [x-dropdown-open] *') &&
-            !e.target.matches('[x-dropdown] .dropdown_stay, [x-dropdown] .dropdown_stay *')
-          ) {
-            parent.dispatchEvent(this.eventBeforeHide);
-            lib.removeClass('.dropdown_open [x-dropdown-open]', 'active');
-            lib.removeClass('.dropdown_open', 'dropdown_open', 200);
-            parent.dispatchEvent(this.eventAfterHide);
-          }
-        });
-        
-        parent.dispatchEvent(this.eventReady)
-      }
-    })
+    lib.qsa('[x-dropdown]').forEach(menu => {
+      const parent = menu.parentElement;
+      const trigger = lib.qs('[x-dropdown-open]', parent);
+
+      if (!trigger) return;
+
+      // Add base class for styling
+      parent.classList.add('dropdown');
+
+      // Set accessibility attributes
+      trigger.setAttribute('aria-expanded', 'false');
+      trigger.setAttribute('aria-controls', menu.id || '');
+      menu.setAttribute('role', 'menu');
+      menu.setAttribute('tabindex', '-1');
+
+      // Toggle dropdown on click
+      trigger.addEventListener('click', e => {
+        e.stopPropagation(); // Prevent closing by global listener
+        this.toggleDropdown(parent, trigger);
+      });
+
+      // Open dropdown with keyboard ArrowDown key
+      trigger.addEventListener('keydown', e => {
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          this.openDropdown(parent, trigger);
+        }
+      });
+
+      // Dispatch custom ready event
+      parent.dispatchEvent(new CustomEvent('dropdown:ready'));
+    });
   }
-  
+
+  /**
+   * Toggles dropdown visibility: opens it if closed, closes others.
+   * @param {Element} parent - The container element with class 'dropdown'.
+   * @param {Element} trigger - The button element that toggles the dropdown.
+   */
+  toggleDropdown(parent, trigger) {
+    const isOpened = parent.classList.contains('dropdown_open');
+    this.closeAllDropdowns();
+
+    if (!isOpened) {
+      this.openDropdown(parent, trigger);
+    }
+  }
+
+  /**
+   * Opens a single dropdown and fires related custom events.
+   * @param {Element} parent - The dropdown container.
+   * @param {Element} trigger - The button element that opens the dropdown.
+   */
+  openDropdown(parent, trigger) {
+    parent.dispatchEvent(new CustomEvent('dropdown:beforeshow'));
+    lib.addClass(trigger, 'active');                     // Highlight trigger
+    lib.addClass(parent, 'dropdown_open', 20);           // Open dropdown after 20ms
+    trigger.setAttribute('aria-expanded', 'true');       // Accessibility attribute
+    parent.dispatchEvent(new CustomEvent('dropdown:aftershow'));
+  }
+
+  /**
+   * Closes all open dropdowns on the page.
+   * Fires related custom events and removes active classes/ARIA attributes.
+   */
+  closeAllDropdowns() {
+    lib.qsa('.dropdown_open').forEach(openMenu => {
+      const trigger = lib.qs('[x-dropdown-open]', openMenu);
+
+      openMenu.dispatchEvent(new CustomEvent('dropdown:beforehide'));
+
+      if (trigger) {
+        lib.removeClass(trigger, 'active');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+
+      lib.removeClass(openMenu, 'dropdown_open', 200);
+      openMenu.dispatchEvent(new CustomEvent('dropdown:afterhide'));
+    });
+  }
+
+  /**
+   * Attaches global event listeners for:
+   * - closing dropdowns when clicking outside
+   * - closing dropdowns when pressing Escape
+   */
+  attachGlobalListeners() {
+    // Prevent attaching multiple times
+    if (Dropdown._listenersAttached) return;
+
+    // Click anywhere outside dropdown closes all
+    document.addEventListener('click', e => {
+      if (
+        !e.target.closest('[x-dropdown-open]') &&
+        !e.target.closest('[x-dropdown] .dropdown_stay')
+      ) {
+        this.closeAllDropdowns();
+      }
+    });
+
+    // Pressing Escape closes all dropdowns
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        this.closeAllDropdowns();
+      }
+    });
+
+    Dropdown._listenersAttached = true;
+  }
 }
 
-export const dropdown = new Dropdown({});
+// Static property to track if listeners are already set
+Dropdown._listenersAttached = false;
+
+// Export a singleton instance
+export const dropdown = new Dropdown();

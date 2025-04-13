@@ -1,117 +1,188 @@
 //
 //  form.js / x
-//  Additional form elements functions
+//  Additional form element utilities
 //
-//  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  Created by Andrey Shpigunov at 12.04.2025
+//  All rights reserved.
 //
+//  This utility module provides convenient helpers for working with forms.
+//  It allows batch setting of input values, checkbox states, value tracking,
+//  and custom input update handling.
 //
-//  setChecked(element, checked = false) - set checkbox and radio as checked with dispatchEvent
-//  setValue(element, value) - set input, textarea and select values with dispatchEvent
-//  onUpdate(...args) - callback function after updating fields with setChecked, setValue and internal
-//  update(element) - dispatch 'update' event manually
+//  Available methods:
+//    setChecked(elements, checked = false) — Set checkbox or radio input(s) checked/unchecked
+//    setValue(elements, value)             — Set value for various input types
+//    onUpdate(elements, callback)          — Attach input/change listeners to elements
+//    update(elements)                      — Manually dispatch an "update" event (input/change)
 //
 
 import { lib } from "./lib";
 
 class Form {
   constructor() {
-    // Events
-    this.change = new Event("change");
-    this.input = new Event("input");
-    // Object with added events
     this.listen = {
-      update: [],
+      update: new Set(), // Track elements already listening to avoid duplicate bindings
     };
   }
 
-  // Alternative to element.checked = bool with event callback
-  setChecked(element, checked = false) {
-    let el = lib.qs(element);
-    el.checked = checked;
-    el.dispatchEvent(this.input);
-  }
+  /**
+   * Sets the checked state of checkbox or radio input(s).
+   * @param {string|HTMLElement|Array} elements - One or multiple elements/selectors.
+   * @param {boolean} checked - Whether the checkbox/radio should be checked.
+   */
+  setChecked(elements, checked = false) {
+    if (!Array.isArray(elements)) elements = [elements];
 
-  // Alternative to element.value = string with event callback
-  setValue(element, value) {
-    let el = lib.qs(element);
-    let tagName = el.tagName.toLowerCase();
-    switch (tagName) {
-      case "input":
-      case "textarea":
-        el.value = value;
-        el.dispatchEvent(this.input);
-        break;
-      case "select":
-        el.value = value;
-        el.dispatchEvent(this.change);
-        break;
-      default:
-        console.error(`Unsupported element: ${tagName}`);
-        break;
+    for (const element of elements) {
+      const el = lib.qs(element);
+      if (!el) {
+        console.error(`Element not found: ${element}`);
+        continue;
+      }
+
+      el.checked = checked;
+      el.dispatchEvent(new Event("input")); // Trigger input event for listeners
     }
   }
 
-  // Callback for events on elements
-  // Supports input, textarea and select
-  // Usage 1: onUpdate(element, callback)
-  // Usage 2: onUpdate([el1, el2, ..., elN], callback)
-  onUpdate(elements, callback) {
+  /**
+   * Sets the value of an input, textarea, select, or contenteditable element.
+   * Automatically dispatches the appropriate input/change event.
+   *
+   * @param {string|HTMLElement|Array} elements - One or multiple elements/selectors.
+   * @param {*} value - The value to assign.
+   */
+  setValue(elements, value) {
     if (!Array.isArray(elements)) elements = [elements];
-    if (elements.length) {
-      for (let element of elements) {
-        let el = lib.qs(element);
-        let tagName = el.tagName.toLowerCase();
-        switch (tagName) {
-          case "input":
-          case "textarea":
-            if (!this.listen.update.includes(el)) {
-              el.addEventListener("input", () => callback(el));
-              this.listen.update.push(el);
-            } else {
-              console.log(el, "Element always listening");
-            }
+
+    for (const element of elements) {
+      const el = lib.qs(element);
+      if (!el) {
+        console.error(`Element not found: ${element}`);
+        continue;
+      }
+
+      const tagName = el.tagName.toLowerCase();
+
+      switch (tagName) {
+        case "input":
+          if (["checkbox", "radio"].includes(el.type)) {
+            el.checked = !!value;
+            el.dispatchEvent(new Event("input"));
+          } else {
+            el.value = value;
+            el.dispatchEvent(new Event("input"));
+          }
+          break;
+
+        case "textarea":
+          el.value = value;
+          el.dispatchEvent(new Event("input"));
+          break;
+
+        case "select":
+          el.value = value;
+          el.dispatchEvent(new Event("change"));
+          break;
+
+        case "div":
+          if (el.isContentEditable) {
+            el.innerText = value;
+            el.dispatchEvent(new Event("input"));
             break;
-          case "select":
-            if (!this.listen.update.includes(el)) {
-              el.addEventListener("change", () => callback(el));
-              this.listen.update.push(el);
-            } else {
-              console.log(el, "Element always listening");
-            }
-            break;
-          default:
-            console.error(`Unsupported element: ${tagName}`);
-            break;
-        }
+          }
+        // Fallthrough for unsupported types
+        default:
+          throw new Error(`Unsupported element: ${tagName}`);
       }
     }
   }
 
-  // Dispatch update event
-  // Usage 1: update(element)
-  // Usage 2: update([el1, el2, ..., elN])
+  /**
+   * Attaches an input/change listener to elements.
+   * Ensures each element only has one listener bound.
+   *
+   * @param {string|HTMLElement|Array} elements - One or more elements/selectors.
+   * @param {function} callback - Callback function to call on change.
+   */
+  onUpdate(elements, callback) {
+    if (!Array.isArray(elements)) elements = [elements];
+
+    for (const element of elements) {
+      const el = lib.qs(element);
+      if (!el) {
+        console.error(`Element not found: ${element}`);
+        continue;
+      }
+
+      const tagName = el.tagName.toLowerCase();
+
+      // Attach listener once per element
+      const addOnce = (eventType) => {
+        if (!this.listen.update.has(el)) {
+          el.addEventListener(eventType, () => callback(el));
+          this.listen.update.add(el);
+        }
+      };
+
+      switch (tagName) {
+        case "input":
+        case "textarea":
+          addOnce("input");
+          break;
+
+        case "select":
+          addOnce("change");
+          break;
+
+        case "div":
+          if (el.isContentEditable) {
+            addOnce("input");
+            break;
+          }
+        // Fallthrough for unsupported types
+        default:
+          throw new Error(`Unsupported element: ${tagName}`);
+      }
+    }
+  }
+
+  /**
+   * Dispatches an "input" or "change" event manually on elements,
+   * simulating user updates for reactivity/tracking purposes.
+   *
+   * @param {string|HTMLElement|Array} elements - One or more elements/selectors.
+   */
   update(elements) {
     if (!Array.isArray(elements)) elements = [elements];
-    if (elements.length) {
-      for (let element of elements) {
-        let el = lib.qs(element);
-        let tagName = el.tagName.toLowerCase();
-        switch (tagName) {
-          case "input":
-          case "textarea":
-            el.dispatchEvent(this.input);
-            break;
-          case "select":
-            el.dispatchEvent(this.change);
-            break;
-          default:
-            console.error("Unsupported element: " + tagName);
-            break;
-        }
+
+    for (const element of elements) {
+      const el = lib.qs(element);
+      if (!el) {
+        console.error(`Element not found: ${element}`);
+        continue;
+      }
+
+      const tagName = el.tagName.toLowerCase();
+
+      switch (tagName) {
+        case "input":
+        case "textarea":
+        case "div":
+          el.dispatchEvent(new Event("input"));
+          break;
+
+        case "select":
+          el.dispatchEvent(new Event("change"));
+          break;
+
+        // Fallthrough for unsupported types
+        default:
+          throw new Error(`Unsupported element: ${tagName}`);
       }
     }
   }
 }
 
+// Export singleton instance
 export const form = new Form();

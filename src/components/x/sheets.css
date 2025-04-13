@@ -10,9 +10,6 @@ All right reserved.
 /* !- Sheets */
 
 
-.sheet-tab {
-  /* ... */
-}
 [x-sheet]:not(.active) {
   display: none;
 }

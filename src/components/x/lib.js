@@ -1,297 +1,255 @@
 //
 //  lib.js / x
-//  Library
+//  Utility Library for DOM, UI, and Web Helpers
 //
-//  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  Created by Andrey Shpigunov on 12.04.2025
+//  All rights reserved.
 //
+//  This utility library provides reusable methods for:
+//  - DOM selection and manipulation
+//  - Element visibility and transitions
+//  - Class toggling with delay support
+//  - Page navigation and URL control
+//  - Number formatting and pluralization
+//  - Data validation (email, JSON)
+//  - Unique ID/password generation
+//  - Script loading and deferred actions
+//  - Scroll/resize throttle
+//  - Lazy element appearance detection
+//  - Error displaying
+//  - DOM rendering utilities
 //
-//  Methods:
-//  qs(selector, context = document)
-//  qsa(selector, context = document)
-//  hide(element)
-//  show(element)
-//  toggle(selector)
-//  async addClass(element, className, delay = 0)
-//  async removeClass(element, className, delay = 0)
-//  async toggleClass(element, className, delay = 0)
-//  async switchClass(element, condition, className, delay = 0)
-//  reload()
-//  reloadWithHash(hash)
-//  redirectTo(url)
-//  updateURL(url, title)
-//  random(a, b)
-//  price(price)
-//  number(num)
-//  numberDecline(number, nominative, genitiveSingular, genetivePlural)
-//  isEmail(email)
-//  makeId()
-//  makePassword(length, selector)
-//  loadScript(path, callback, type = 'async')
-//  deffered(callback, delay = 10000)
-//  onAppear(selector, appearCallback, disappearCallback, options)
-//  alertErrors(data)
-//  printErrors(data)
-//  async render(selector, data, placement = null)
-//  [x-render]  |  Render JavaScript in 'x-render' attribute
+//  Available methods:
+//    qs(selector, context)
+//    qsa(selector, context)
+//    hide(selector)
+//    show(selector)
+//    toggle(selector)
+//    addClass(selector, className, delay)
+//    removeClass(selector, className, delay)
+//    toggleClass(selector, className, delay)
+//    switchClass(selector, condition, className, delay)
+//    reload()
+//    reloadWithHash(hash)
+//    redirectTo(url)
+//    updateURL(url, title)
+//    random(a, b)
+//    price(price)
+//    number(num)
+//    numberDecline(number, nominative, genitiveSingular, genitivePlural)
+//    isEmail(email)
+//    isValidJSON(str)
+//    makeId()
+//    makePassword(length, selector)
+//    loadScript(path, callback, type)
+//    deferred(callback, delay)
+//    deffered(callback, delay) [alias]
+//    throttle(func, limit)
+//    onAppear(selector, appearCallback, disappearCallback, options)
+//    alertErrors(data)
+//    printErrors(data)
+//    render(selector, data, placement)
+//    transitionsOn()
+//    transitionsOff()
 //
-
 
 class Lib {
-
   constructor() {
     this.loadedScripts = [];
-    this._elementRender()
+    this._elementRender();
   }
-  
+
+  /**
+   * Automatically renders content into elements with [x-render] attribute.
+   * Executes after DOM is loaded.
+   */
   _elementRender() {
     document.addEventListener('DOMContentLoaded', () => {
-      let items = qsa('[x-render]');
-      if (items) {
-        for (let item of items) {
-          this.render(item, eval(item.getAttribute('x-render')))
-        }
-      }
-    })
+      this.qsa('[x-render]').forEach(item => {
+        this.render(item, eval(item.getAttribute('x-render')));
+      });
+    });
   }
 
+  // ---------- DOM Selection ----------
 
-  // !---------- Query selectors ----------
-
-
-  // querySelector -> return element
+  /** Returns a single element by selector or the element itself */
   qs(selector, context = document) {
-    if (typeof selector == 'string') {
-      return context.querySelector(selector)
+    if (typeof selector === 'string') {
+      return context.querySelector(selector);
     } else {
-      return selector instanceof NodeList ? selector[0] : selector
+      return selector instanceof NodeList ? selector[0] : selector;
     }
   }
 
-  // querySelectorAll -> return NodeList or Array of elements
+  /** Returns all matched elements as NodeList or array */
   qsa(selector, context = document) {
-    if (typeof selector == 'string') {
-      return context.querySelectorAll(selector)
+    if (typeof selector === 'string') {
+      return context.querySelectorAll(selector);
     } else {
-      if (selector instanceof NodeList) {
-        return selector
-      } else {
-        // Check is Array to prevent nesting
-        return Array.isArray(selector) ? selector : [selector]
-      }
+      return selector instanceof NodeList
+        ? selector
+        : Array.isArray(selector) ? selector : [selector];
     }
   }
 
+  // ---------- Visibility ----------
 
-  // !---------- Hide/show element (s) ----------
-
-
-  // Hide element(s) (add class .hidden)
-  hide(selector) {
-    this.addClass(selector, 'hidden')
+  /** Adds .hidden class to element(s) */
+  async hide(selector) {
+    await this.addClass(selector, 'hidden');
   }
 
-  // Show element(s) (remove class .hidden)
-  show(selector) {
-    this.removeClass(selector, 'hidden')
-  }
-  
-  // Toggle
-  toggle(selector) {
-    if (qs(selector).classList.contains('hidden')) {
-      this.show(selector)
-    } else {
-      this.hide(selector)
-    }
+  /** Removes .hidden class from element(s) */
+  async show(selector) {
+    await this.removeClass(selector, 'hidden');
   }
 
+  /** Toggles .hidden class on element(s) */
+  async toggle(selector) {
+    await this.toggleClass(selector, 'hidden');
+  }
 
-  // !---------- Work with classes ----------
+  // ---------- Class Handling ----------
 
-
-  // Add class to element(s)
-  // delay - if > 0, add class 'className_ready' before className, then delay in ms
+  /**
+   * Adds className to element(s) with optional delay.
+   * If delay is used, adds "_ready" class before applying main class.
+   */
   async addClass(selector, className, delay = 0) {
     let items = this.qsa(selector);
-    if (items.length) {
-      if (delay > 0) {
-        for (let i of items) i.classList.add(className.split('_')[0] + '_ready');
-        await new Promise(resolve => {
-          setTimeout(() => {
-            for (let i of items) i.classList.add(className);
-            resolve()
-          }, delay);
-        })
-      } else {
-        for (let i of items) i.classList.add(className);
-      }
+    if (!items || !items.length) return;
+    if (delay > 0) {
+      for (let i of items) i.classList.add(className.replace(/_.*/, '') + '_ready');
+      await new Promise(resolve => {
+        setTimeout(() => {
+          for (let i of items) i.classList.add(className);
+          resolve();
+        }, delay);
+      });
+    } else {
+      for (let i of items) i.classList.add(className);
     }
-    return
   }
 
-  // Remove class to element(s)
-  // delay - if > 0, remove class 'className_ready' after className, then delay in ms
+  /**
+   * Removes className from element(s) with optional delay.
+   * If delay is used, removes main class first, then "_ready".
+   */
   async removeClass(selector, className, delay = 0) {
     let items = this.qsa(selector);
-    if (items.length) {
-      if (delay > 0) {
-        for (let i of items) i.classList.remove(className);
-        await new Promise(resolve => {
-          setTimeout(() => {
-            for (let i of items) i.classList.remove(className.split('_')[0] + '_ready');
-            resolve()
-          }, delay);
-        })
-      } else {
-        for (let i of items) i.classList.remove(className);
-      }
+    if (!items || !items.length) return;
+    if (delay > 0) {
+      for (let i of items) i.classList.remove(className);
+      await new Promise(resolve => {
+        setTimeout(() => {
+          for (let i of items) i.classList.remove(className.replace(/_.*/, '') + '_ready');
+          resolve();
+        }, delay);
+      });
+    } else {
+      for (let i of items) i.classList.remove(className);
     }
-    return
   }
 
-  // Toggle class on element(s)
+  /** Toggles className on element(s) */
   async toggleClass(selector, className, delay = 0) {
     let items = this.qsa(selector);
-    if (items.length) {
-      for (let i of items) {
-        if (i.classList.contains(className)) {
-          await this.removeClass(i, className, delay)
-        } else {
-          await this.addClass(i, className, delay)
-        }
+    if (!items || !items.length) return;
+    for (let i of items) {
+      if (i.classList.contains(className)) {
+        await this.removeClass(i, className, delay);
+      } else {
+        await this.addClass(i, className, delay);
       }
     }
-    return
   }
 
-  // Switch class by condition
-  // If condition is true -> add className, if false -> remove className
+  /** Adds or removes className based on condition */
   async switchClass(selector, condition, className, delay = 0) {
     let items = this.qsa(selector);
-    if (items.length) {
-      for (let i of items) {
-        if (condition) {
-          await this.addClass(i, className, delay)
-        } else {
-          await this.removeClass(i, className, delay)
-        }
+    if (!items || !items.length) return;
+    for (let i of items) {
+      if (condition) {
+        await this.addClass(i, className, delay);
+      } else {
+        await this.removeClass(i, className, delay);
       }
     }
-    return
   }
 
+  // ---------- Navigation and URL ----------
 
-  // !---------- Page events and URL ----------
-
-
-  // Reload page
+  /** Reloads the page */
   reload() {
-    location.reload()
+    location.reload();
   }
 
-  // Reload page with new hash
+  /** Reloads the page with updated hash */
   reloadWithHash(hash) {
     window.location.hash = hash;
-    this.reload()
+    this.reload();
   }
 
-  // Redirect to url
+  /** Redirects to a given URL */
   redirectTo(url) {
     window.location = url;
-    return false
   }
 
-  // Update title and page url without reload
-  // You can add only hash: lib.updateURL('#ok').
+  /** Updates URL and optionally sets document title */
   updateURL(url, title) {
-    if (typeof(history.pushState) != 'undefined') {
-      history.pushState(null, title, url)
+    if (typeof history.pushState !== 'undefined') {
+      history.pushState(null, title, url);
     } else {
-      location.href = url
+      location.href = url;
     }
   }
 
+  // ---------- Number & Formatting ----------
 
-  //  !---------- Numbers ----------
-
-
-  // Random number
+  /** Returns random integer between a and b (inclusive) */
   random(a, b) {
-    return Math.floor(Math.random() * (b - a + 1)) + a
+    return Math.floor(Math.random() * (b - a + 1)) + a;
   }
 
-  // Price format
-  // 10 -> 10
-  // 1000 -> 1 000
-  // 100000 -> 100 000
-  // 10.00 -> 10
-  // 10.5 -> 10.50
-  // 10.55 -> 10.55
-  // 10.555 -> 10.56
+  /** Formats number as price with spacing and decimal handling */
   price(price) {
-    let p = parseFloat(price);
-    p = p.toFixed(2);
-    p = p.replace(/\d(?=(\d{3})+\.)/g, '$& ');
-    p = p.replace('.00', '');
-    return p
+    let p = parseFloat(price).toFixed(2);
+    p = p.replace(/\d(?=(\d{3})+\.)/g, '$& ').replace('.00', '');
+    return p;
   }
 
-  // Number format
-  // 10 -> 10
-  // 1000 -> 1 000
-  // 100000 -> 100 000
-  // 10.00 -> 10
-  // 10.5 -> 10.5
-  // 10.50 -> 10.5
-  // 10.55 -> 10.55
-  // 10.555 -> 10.555
+  /** Formats number with thousand separators */
   number(num) {
     num = parseFloat(num) + '';
-    let x = num.split('.'),
-      x1 = x[0],
-      x2 = x.length > 1 ? '.' + x[1] : '';
-    for (let b = /(\d+)(\d{3})/; b.test(x1);) x1 = x1.replace(b, '$1 $2');
-    return x1 + x2
-  }
-
-  // Number decline
-  numberDecline(number, nominative, genitiveSingular, genetivePlural) {
-    let text = '';
-    if (number > 10 && 1 == parseInt((number % 100) / 10)) {
-      text = genetivePlural
-    } else {
-      switch (number % 10) {
-        case 1:
-          text = nominative;
-          break;
-        case 2:
-        case 3:
-        case 4:
-          text = genitiveSingular;
-          break;
-        case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-        case 0:
-          text = genetivePlural
-      }
+    let [x1, x2] = num.split('.');
+    x2 = x2 ? '.' + x2 : '';
+    for (let b = /(\d+)(\d{3})/; b.test(x1);) {
+      x1 = x1.replace(b, '$1 $2');
     }
-    return text
+    return x1 + x2;
   }
 
+  /** Returns correct word form based on number */
+  numberDecline(number, nominative, genitiveSingular, genitivePlural) {
+    if (number > 10 && parseInt((number % 100) / 10) === 1) return genitivePlural;
+    switch (number % 10) {
+      case 1: return nominative;
+      case 2:
+      case 3:
+      case 4: return genitiveSingular;
+      default: return genitivePlural;
+    }
+  }
 
-  // !---------- Validate ----------
+  // ---------- Validation ----------
 
-
-  // Email validation
+  /** Checks if email is valid */
   isEmail(email) {
-    let regexp = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regexp.test(email)
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
   }
 
-  // JSON validator
+  /** Checks if string is valid JSON */
   isValidJSON(str) {
     try {
       JSON.parse(str);
@@ -301,198 +259,181 @@ class Lib {
     }
   }
 
+  // ---------- Utilities ----------
 
-  // !---------- Utils ----------
-
-
-  // Make unique id
+  /** Generates unique DOM-safe ID */
   makeId() {
     return 'id' + this.random(100000, 999999);
   }
 
-  // Make password with length (default — 8)
-  // selector — input or textarea field query selector
-  makePassword(length, selector) {
-    length = length || 8;
-    let password = '',
-      upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      lower = 'abcdefghijklmnopqrstuvwxyz',
-      chars = '!@#^$%^&*()-+:,.;_',
-      digits = '0123456789';
+  /**
+   * Generates secure random password
+   * @param {number} length - Password length
+   * @param {string} selector - Optional input field selector to insert result
+   */
+  makePassword(length = 8, selector) {
+    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lower = 'abcdefghijklmnopqrstuvwxyz';
+    const chars = '!@#^$%^&*()-+:,.;_';
+    const digits = '0123456789';
+    let password = '';
 
-    for (var i = 0; i < length / 4; ++i) {
-      password += upper.charAt(Math.floor(Math.random() * upper.length));
-      password += lower.charAt(Math.floor(Math.random() * lower.length));
-      password += chars.charAt(Math.floor(Math.random() * chars.length));
-      password += digits.charAt(Math.floor(Math.random() * digits.length))
+    for (let i = 0; i < Math.ceil(length / 4); ++i) {
+      password += upper[Math.floor(Math.random() * upper.length)];
+      password += lower[Math.floor(Math.random() * lower.length)];
+      password += chars[Math.floor(Math.random() * chars.length)];
+      password += digits[Math.floor(Math.random() * digits.length)];
     }
-    password = password.substring(0, length);
-    password = password.split('').sort(() => { return 0.5 - Math.random() }).join('');
+
+    password = password.substring(0, length)
+      .split('').sort(() => 0.5 - Math.random()).join('');
+
     if (selector) {
-      this.qs(selector).value = password
+      this.qs(selector).value = password;
     } else {
-      return password
+      return password;
     }
   }
 
-  // Load script and add it to the end of the body
-  // Callback function run after the script loaded.
-  // lib.loadScript(
-  //   '/path/to/file.js',
-  //   () => { Callback code },
-  //   async|defer
-  // )
+  /**
+   * Dynamically loads an external script into the document.
+   */
   loadScript(path, callback, type = 'async') {
-    if (this.loadedScripts.indexOf(path) == -1) {
+    if (!this.loadedScripts.includes(path)) {
       let script = document.createElement('script');
       script.onload = () => callback();
+      script.onerror = () => console.error(`Failed to load script: ${path}`);
       script.src = path;
       if (type) script.setAttribute(type, '');
       document.body.appendChild(script);
-      this.loadedScripts.push(path)
+      this.loadedScripts.push(path);
     } else {
-      callback()
+      callback();
     }
   }
 
-  // Deffered callback execution
-  // lib.deffered(
-  //   () => { Callback code },
-  //   delay in ms
-  // )
-  deffered(callback, delay = 10000) {
+  /**
+   * Defers callback execution until user interacts or timeout hits.
+   */
+  deferred(callback, delay = 10000) {
     const events = ['scroll', 'resize', 'click', 'keydown', 'mousemove', 'touchmove'];
-    let fired = false;
     let timer;
 
-    function run() {
-      if (!fired) {
-        for (let e of events) {
-          window.removeEventListener(e, run, false)
-        }
-        // Load or set load event
-        if (document.readyState == 'complete') {
-          callback()
-        } else {
-          window.addEventListener('load', callback, false)
-        }
-        clearTimeout(timer);
-        fired = true
-      }
-    }
-    for (let e of events) {
-      window.addEventListener(e, run, {
-        capture: false,
-        once: true,
-        passive: true
-      })
-    }
+    const run = () => {
+      events.forEach(e => window.removeEventListener(e, run, { once: true }));
+      if (document.readyState === 'complete') callback();
+      else window.addEventListener('load', callback, { once: true });
+      clearTimeout(timer);
+    };
+
     timer = setTimeout(run, delay);
+    events.forEach(e => window.addEventListener(e, run, { once: true }));
   }
 
-  // Run callback(e) on element appear/disappear in viewport
-  // selector — trigger element(s)
-  // appearCallback — callback function on element appeared
-  // disappearCallback — callback function on element disappeared
-  // options — IntersectionObserver options
-  // lib.onAppeared('.picture', e => { Appear code... }, e => { Disappear code... })
-  onAppear(selector, appearCallback, disappearCallback = null, options) {
+  /** Deprecated alias for deferred */
+  deffered(callback, delay = 10000) {
+    return this.deferred(callback, delay);
+  }
+
+  /**
+   * Throttles function execution to one call per [limit] ms.
+   */
+  throttle(func, limit) {
+    let inThrottle;
+    return function (...args) {
+      if (!inThrottle) {
+        func.apply(this, args);
+        inThrottle = true;
+        setTimeout(() => inThrottle = false, limit);
+      }
+    };
+  }
+
+  /**
+   * Watches elements and triggers callbacks when they enter or leave viewport.
+   */
+  onAppear(selector, appearCallback, disappearCallback = null, options = {}) {
     let elements = this.qsa(selector);
-    if (elements.length) {
-      let params = {
-        root: null,
-        rootMargin: '200px',
-        threshold: 0,
-        ...options
-      }
-      let observerCallback = (entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            appearCallback(entry.target);
-            if (disappearCallback == null) observer.unobserve(entry.target);
-          } else {
-            if (disappearCallback != null) disappearCallback(entry.target);
-          }
-        })
-      }
-      let observer = new IntersectionObserver(observerCallback, params);
-      for (let el of elements) observer.observe(el);
-    }
+    if (!elements.length) return;
+
+    let observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          appearCallback(entry.target);
+          if (!disappearCallback) obs.unobserve(entry.target);
+        } else if (disappearCallback) {
+          disappearCallback(entry.target);
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '200px',
+      threshold: 0.1,
+      ...options
+    });
+
+    elements.forEach(el => observer.observe(el));
   }
 
+  // ---------- Error Handling ----------
 
-  // !---------- Work with errors ----------
-
-
-  // Show alert window with errors
-  // data — object (with key:value), array or string (object and array splitted by '\n')
+  /** Shows alert() with all collected errors */
   alertErrors(data) {
-    if (data) {
-      if (
-        typeof data === 'string' ||
-        data instanceof String
-      ) {
-        alert(data)
-      } else {
-        let err = [];
-        for (let e in data) err.push(data[e]);
-        alert(err.join('\n'))
-      }
+    if (!data) return;
+    if (typeof data === 'string') {
+      alert(data);
+    } else {
+      alert(Object.values(data).join('\n'));
     }
   }
 
-  // Return errors as text, each error in it's own <div>
-  // data — object (with key:value), array or string (object and array splitted by '<br/>')
-  printErrors(data) { // -> string
-    if (data) {
-      if (
-        typeof data === 'string' ||
-        data instanceof String
-      ) {
-        return `<div>${data}</div>`
-      } else {
-        let err = [];
-        for (let e in data) err.push(`<div class="error_${e}">${data[e]}</div>`);
-        return err.join('\n')
-      }
+  /** Returns HTML string with errors inside <div>s */
+  printErrors(data) {
+    if (!data) return;
+    if (typeof data === 'string') {
+      return `<div>${data}</div>`;
+    } else {
+      return Object.entries(data)
+        .map(([key, val]) => `<div class="error_${key}">${val}</div>`)
+        .join('\n');
     }
   }
 
+  // ---------- DOM Rendering ----------
 
-  // !---------- DOM ----------
-
-
-  // Render data
+  /**
+   * Renders string/html into target selector.
+   * Can insert or replace depending on placement.
+   */
   async render(selector, data, placement = null) {
     let items = this.qsa(selector);
-    if (items.length) {
-      await new Promise(resolve => {
-        data = typeof data === 'function' ? data() : data;
-        for (let i of items) {
-          if (placement == null) {
-            i.innerHTML = data
-          } else {
-            i.insertAdjacentHTML(placement, data)
-          }
-        }
-        resolve()
-      });
+    if (!items || !items.length) return;
+    data = typeof data === 'function' ? await data() : data;
+
+    for (let i of items) {
+      if (placement == null) {
+        i.innerHTML = data;
+      } else {
+        i.insertAdjacentHTML(placement, data);
+      }
     }
-    return
   }
-  
-  // Transitions global on
+
+  // ---------- Global Transitions ----------
+
+  /** Enables CSS transitions globally */
   transitionsOn() {
     if (document.documentElement.classList.contains('noTransitions')) {
-      setTimeout(() => { document.documentElement.classList.remove('noTransitions') }, 10);
+      setTimeout(() => {
+        document.documentElement.classList.remove('noTransitions');
+      }, 10);
     }
   }
-  
-  // Transitions global off
+
+  /** Disables CSS transitions globally */
   transitionsOff() {
     document.documentElement.classList.add('noTransitions');
   }
-  
 }
 
 export const lib = new Lib();

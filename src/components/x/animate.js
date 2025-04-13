@@ -2,148 +2,153 @@
 //  animate.js / x
 //  Animations
 //
-//  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  Created by Andrey Shpigunov at 12.04.2025
+//  All rights reserved.
 //
+//  This module enables scroll-based animations using configurable
+//  parameters via the x-animate attribute.
 //
-//  On scroll animations
-//
+//  Example:
 //  <div x-animate='{
-//    "parent": "#id or .class selector", — default "window"
-//    "trigger": "selector (default — this)",
-//    "start": "120vh",
-//    "end": "0vh",
-//    "functionName": "coverOut",
-//    "class": "fixed",
-//    "classRemove": true
-//  }'>...</div>
+//    "parent": "#scroll-container",  // scroll context, default "window"
+//    "trigger": ".trigger",          // element to track, default is the element itself
+//    "start": "120vh",               // start of animation zone (e.g. in vh, %, or px)
+//    "end": "0vh",                   // end of animation zone
+//    "functionName": "coverOut",     // name of a function to execute during animation
+//    "class": "fixed",               // class to add when inside animation zone
+//    "classRemove": true             // remove class when leaving zone
+//  }'></div>
 //
-//  trigger       selector of trigger element that we are tracking the position
-//  start         animation start point (height from the top in px, % or vh)
-//  end           animation end point (height from the top in px, % or vh)
-//  functionName  name of the function that starts executing when the element
-//                moves between "start" and "end"
-//  class         class, added to a reference when "target" is between "start" and "end"
-//  classRemove   whether to delete the "class" from the element after it leaves
-//                the animation zone, by default false
+//  Available methods:
+//    init()              — Initialize and observe all [x-animate] elements
+//    _scrollHandler()    — Optimized scroll handler (requestAnimationFrame)
+//    _scroll(array)      — Calculates animation progress for each element
+//    _2px(value, parent) — Converts start/end values to pixels
 //
-//  init() - init animations
-//
-
 
 import { lib } from './lib';
 
-
 class Animate {
 
-  init() {
-    let animations = lib.qsa('[x-animate]');
-    if (animations.length) {
-      let animationsHash = {};
+  constructor() {
+    this.ticking = false;              // Prevents multiple requestAnimationFrame calls
+    this.animationsArray = [];         // All animation items
+    this._scrollHandler = this._scrollHandler.bind(this); // Bind context
+  }
 
-      animations.forEach((e, index) => {
-        let json = JSON.parse(e.getAttribute('x-animate'));
-        let item = {};
-        if (Object.hasOwn(json, 'parent') && lib.qs(json.parent)) {
-          item.parent = lib.qs(json.parent);
-        } else {
-          item.parent = document;
-        }
-        if (Object.hasOwn(json, 'trigger') && lib.qs(json.trigger)) {
-          item.trigger = lib.qs(json.trigger);
-        } else {
-          item.trigger = e;
-        }
-        item.element = e;
-        item.start = json.start;
-        item.end = json.end || false;
-        item.class = json.class;
-        item.classRemove = json.classRemove;
-        item.functionName = json.functionName;
-        item.lockedIn = false;
-        item.lockedOut = false;
-        item.log = json.log || false;
-        animationsHash[index] = item;
-        e.removeAttribute('x-animate')
-      });
-      
-      if (Object.keys(animationsHash).length) {
-        // Init document scroll observer
-        document.addEventListener('scroll', () => {
-          this._scroll(animationsHash);
-        }, { passive: true });
-        // Create array with all scrolled parents
-        let parents = [document];
-        for (let k in animationsHash) {
-          if (
-            Object.hasOwn(animationsHash[k], 'parent') &&
-            !parents.includes(animationsHash[k].parent)
-          ) {
-            parents.push(animationsHash[k].parent)
-            // Add scroll event listener to every parent
-            animationsHash[k].parent.addEventListener('scroll', () => {
-              this._scroll(animationsHash);
-            }, { passive: true });
-          }
-        };
-        // First init elements positions
-        document.addEventListener('DOMContentLoaded', () => {
-          this._scroll(animationsHash)
-        })
+  /**
+   * Initializes all elements with the [x-animate] attribute.
+   * Parses JSON configuration, stores elements, and sets up scroll listeners.
+   */
+  init() {
+    const elements = lib.qsa('[x-animate]');
+    if (!elements.length) return;
+
+    elements.forEach((e) => {
+      let json;
+      try {
+        json = JSON.parse(e.getAttribute('x-animate'));
+      } catch (error) {
+        console.warn('Invalid JSON in x-animate attribute:', e, error);
+        return;
       }
+
+      const item = {
+        element: e,
+        trigger: json.trigger && lib.qs(json.trigger) ? lib.qs(json.trigger) : e,
+        parent: json.parent && lib.qs(json.parent) ? lib.qs(json.parent) : window,
+        start: json.start,
+        end: json.end || false,
+        class: json.class,
+        classRemove: json.classRemove,
+        functionName: json.functionName,
+        lockedIn: false,
+        lockedOut: false,
+        log: json.log || false
+      };
+
+      this.animationsArray.push(item);
+      e.removeAttribute('x-animate'); // Clean up DOM attribute
+    });
+
+    if (!this.animationsArray.length) return;
+
+    const parents = new Set();
+    parents.add(window);
+
+    // Add scroll listeners to each unique scroll container
+    this.animationsArray.forEach(item => {
+      if (!parents.has(item.parent)) {
+        parents.add(item.parent);
+        item.parent.addEventListener('scroll', this._scrollHandler, { passive: true });
+      }
+    });
+
+    window.addEventListener('scroll', this._scrollHandler, { passive: true });
+
+    // Trigger initial animation evaluation after DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this._scroll(this.animationsArray));
+    } else {
+      this._scroll(this.animationsArray);
     }
   }
 
-  _scroll(animationsHash) {
-    Object.keys(animationsHash).forEach(i => {
-      let item = animationsHash[i];
-      let top = item.trigger.getBoundingClientRect().top;
-      let start = this._2px(item.start, item.parent);
-      let end = this._2px(item.end, item.parent);
-      
-      // If 'end' undefined, set duration = 0
-      if (isNaN(end)) {
-        item.duration = 0;
-      } else {
-        item.duration = start - end;
-      }
-      
-      if (item.parent !== document) {
-        top = top - item.parent.getBoundingClientRect().top;
-      }
-      
+  /**
+   * Scroll event handler optimized with requestAnimationFrame.
+   * Batches updates to improve performance.
+   * @private
+   */
+  _scrollHandler() {
+    if (!this.ticking) {
+      this.ticking = true;
+      window.requestAnimationFrame(() => {
+        this._scroll(this.animationsArray);
+        this.ticking = false;
+      });
+    }
+  }
+
+  /**
+   * Main animation update logic.
+   * Calculates position and progress, applies classes and calls functions.
+   * @param {Array} animationsArray - Array of configured animation items.
+   * @private
+   */
+  _scroll(animationsArray) {
+    animationsArray.forEach(item => {
+      const triggerRect = item.trigger.getBoundingClientRect();
+      const parentRect = item.parent !== window ? item.parent.getBoundingClientRect() : null;
+
+      const top = triggerRect.top - (parentRect ? parentRect.top : 0);
+      const start = this._2px(item.start, item.parent);
+      const end = this._2px(item.end, item.parent);
+      item.duration = isNaN(end) ? 0 : start - end;
+
       if (item.log) {
         console.log(top, start, end, item);
       }
-      
+
+      // === Case: start and end defined ===
       if (!isNaN(start) && !isNaN(end)) {
-        // If definded start and end
         if (top <= start && top >= end) {
-          // Element inside of animation area --- > E < ---
-          // Unlock function if locked
           item.lockedOut = false;
-          // Add active class
-          if (item.class != null) {
-            item.element.classList.add(item.class);
-          }
-          // Animation progress
+          if (item.class) item.element.classList.add(item.class);
+
           if (typeof window[item.functionName] === 'function') {
-            item.progress = (start - top) / item.duration;
-            item.progress = item.progress.toFixed(4);
-            window[item.functionName](item)
+            item.progress = ((start - top) / item.duration).toFixed(4);
+            window[item.functionName](item);
           }
+
         } else {
-          // Element outside of animation area --- E --- > ... < --- E ---
-          // Remove active class
           if (
-            item.class != null &&
-            item.classRemove == true &&
+            item.class &&
+            item.classRemove === true &&
             item.element.classList.contains(item.class)
           ) {
             item.element.classList.remove(item.class);
           }
-  
-          // Animation progress
+
           if (!item.lockedOut && typeof window[item.functionName] === 'function') {
             if (top >= start) {
               item.progress = 0;
@@ -157,36 +162,30 @@ class Animate {
             }
           }
         }
+
+      // === Case: only start defined ===
       } else if (!isNaN(start)) {
-        // If definded start only
         if (top <= start) {
-          // The element above the start line
-          // Unlock function if locked
           item.lockedOut = false;
-          // Add active class
-          if (item.class != null) {
-            item.element.classList.add(item.class);
-          }
-          // Animation progress
+          if (item.class) item.element.classList.add(item.class);
+
           if (!item.lockedIn && typeof window[item.functionName] === 'function') {
             item.progress = 1;
             window[item.functionName](item);
             item.lockedIn = true;
           }
+
         } else {
-          // The element below the start line
-          // Unlock function if locked
           item.lockedIn = false;
-          // Remove active class
+
           if (
-            item.class != null &&
-            item.classRemove == true &&
+            item.class &&
+            item.classRemove === true &&
             item.element.classList.contains(item.class)
           ) {
             item.element.classList.remove(item.class);
           }
-        
-          // Animation progress
+
           if (!item.lockedOut && typeof window[item.functionName] === 'function') {
             if (top >= start) {
               item.progress = 0;
@@ -196,21 +195,28 @@ class Animate {
           }
         }
       }
-    })
+    });
   }
 
-  _2px(value, parent = document) {
+  /**
+   * Converts a value like '120vh', '50%' or '300' into pixels.
+   * @param {string|number} value - Value to convert.
+   * @param {HTMLElement|Window} parent - Scroll parent (for % and vh).
+   * @returns {number} Pixel equivalent.
+   * @private
+   */
+  _2px(value, parent = window) {
     if (/(%|vh)/.test(value)) {
-      let y = (parent === document) ? document.documentElement.clientHeight : parent.clientHeight;
-      // Remove 'vh' and '%' from value
+      const height = parent === window
+        ? document.documentElement.clientHeight
+        : parent.clientHeight;
+
       value = value.replace(/(vh|%)/, '');
-      return (y * parseFloat(value)) / 100
+      return (height * parseFloat(value)) / 100;
     } else {
-      // Remove all chars from value
-      return parseFloat(value)
+      return parseFloat(value);
     }
   }
-
 }
 
 export const animate = new Animate();

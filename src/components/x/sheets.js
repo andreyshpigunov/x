@@ -3,18 +3,11 @@
 //  Sheets
 //
 //  Created by Andrey Shpigunov at 20.03.2025
-//  All right reserved.
+//  All rights reserved.
 //
+//  Tab sheets component
 //
-//  Tab sheets
-//  <div x-sheets>
-//    <a class="sheet-tab active" x-sheet="sheetA">Sheet</a>
-//    <a class="sheet-tab" x-sheet="sheetB">Sheet</a>
-//    <div id="sheetA" class="sheet-body active">Sheet content</div>
-//    <div id="sheetB" class="sheet-body">Sheet content</div>
-//  </div>
-//
-//  Tab sheets
+//  Example usage:
 //  <div x-sheets>
 //    <a x-sheet-open="sheetA" class="active">Sheet</a>
 //    <a x-sheet-open="sheetB">Sheet</a>
@@ -22,60 +15,78 @@
 //    <div x-sheet="sheetB">Sheet content</div>
 //  </div>
 //
-//  No limits for wrapping tabs and sheets in another tags.
-//  But all nested sheets will be inactive, when focus out.
+//  You can wrap tabs and sheets in any additional tags.
+//  Nested sheets will be hidden when they lose focus.
 //
-//  API call:
-//  this.show(xSheet) — show sheet
-//  xSheet — x-sheet attribute
+//  API:
+//    this.show(xSheet) — manually activate a sheet by x-sheet attribute value
 //
 
-import { lib } from "./lib";
+import { lib } from './lib';
 
 class Sheets {
+  /**
+   * Initializes all [x-sheets] blocks on the page.
+   * Adds click event listeners to [x-sheet-open] elements (tabs),
+   * and activates the tab marked with `.active` by default.
+   */
   init() {
-    // Get sheets
-    let sheets = lib.qsa("[x-sheets]");
-    if (sheets.length) {
-      for (let sheet of sheets) {
-        // Get sheet tabs
-        let tabs = lib.qsa("[x-sheet-open]:not([x-sheet-open] [x-sheet-open])", sheet);
-        if (tabs.length) {
-          for (let tab of tabs) {
-            tab.addEventListener("click", (e) => {
-              e.preventDefault();
-              this.show(e.target.getAttribute("x-sheet-open"));
-            });
-          }
-        }
+    // Find all [x-sheets] containers
+    let sheets = lib.qsa('[x-sheets]');
+    if (!sheets.length) return;
 
-        // Set active tab
-        let active = lib.qs("[x-sheet-open].active", sheet);
-        if (active) {
-          // active = lib.qs("[x-sheet-open]", sheet);
-          this.show(active.getAttribute("x-sheet-open"));
+    for (let sheet of sheets) {
+      // Find all tab elements inside the sheet container
+      let tabs = lib.qsa('[x-sheet-open]:not([x-sheet-open] [x-sheet-open])', sheet);
+      if (tabs.length) {
+        for (let tab of tabs) {
+          // Attach click handler to each tab
+          tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            this.show(e.target.getAttribute('x-sheet-open'));
+          });
         }
+      }
+
+      // Automatically activate the tab that has the .active class
+      let active = lib.qs('[x-sheet-open].active', sheet);
+      if (active) {
+        this.show(active.getAttribute('x-sheet-open'));
       }
     }
   }
 
+  /**
+   * Shows the tab and corresponding content block by x-sheet key.
+   * @param {string} xSheet - The identifier specified in x-sheet and x-sheet-open attributes.
+   */
   show(xSheet) {
-    // Get parent '.sheets' element (context)
-    let sheets = lib.qs("[x-sheet=" + xSheet + "]").closest("[x-sheets]");
+    // Find the corresponding content element
+    let targetBody = lib.qs(`[x-sheet="${CSS.escape(xSheet)}"]`);
+    if (!targetBody) return;
 
-    // Remove class 'active' from tabs
-    let tabs = lib.qsa("[x-sheet-open]", sheets);
-    lib.removeClass(tabs, "active");
+    // Find the parent [x-sheets] container
+    let sheets = targetBody.closest('[x-sheets]');
+    if (!sheets) return;
 
-    // Remove class 'active' from bodies
-    let bodies = lib.qsa("[x-sheet]", sheets);
-    lib.removeClass(bodies, "active");
+    // Find the tab that triggered the sheet
+    let selectedTab = lib.qs(`[x-sheet-open="${CSS.escape(xSheet)}"]`, sheets);
+    if (
+      selectedTab?.classList.contains('active') &&
+      targetBody?.classList.contains('active')
+    ) return; // Already active, no need to update
 
-    // Add class 'active' to selected tab and body
-    let selectedTab = lib.qs("[x-sheet-open=" + xSheet + "]");
-    let selectedBody = lib.qs("[x-sheet=" + xSheet + "]");
-    lib.addClass(selectedTab, "active");
-    lib.addClass(selectedBody, "active");
+    // Deactivate all tabs
+    let tabs = lib.qsa('[x-sheet-open]', sheets);
+    lib.removeClass(tabs, 'active');
+
+    // Deactivate all sheet content blocks
+    let bodies = lib.qsa('[x-sheet]', sheets);
+    lib.removeClass(bodies, 'active');
+
+    // Activate the selected tab and its content
+    lib.addClass(selectedTab, 'active');
+    lib.addClass(targetBody, 'active');
   }
 }
 
