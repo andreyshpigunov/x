@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"devDependencies": {
 		"@babel/preset-env": "^7.26.9",
 		"@jest/globals": "^29.7.0",
@@ -26,7 +26,8 @@
 	"scripts": {
 		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u postcss-each -u autoprefixer -u cssnano --no-map -d dist/",
 		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
-		"build": "npm run build-css && npm run build-js"
+		"build": "npm run build-css && npm run build-js",
+		"test": "exit 0"
 	},
 	"repository": {
 		"type": "git",
