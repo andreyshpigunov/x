@@ -8,31 +8,31 @@ All right reserved.
 
 
 :root {
-  --forms-width: 40rem;
-  --forms-height-coeff: 2.5;
-  --forms-side-padding: 1rem;
+  --form-width: 40rem;
+  --form-height-coeff: 2.5;
+  --form-side-padding: 1rem;
 
-  --forms-font-size: var(--font-size);
-  --forms-font-color: #000;
-  --forms-font-color-readonly: #000;
-  --forms-font-color-disabled: #666;
-  --forms-font-color-placeholder: #ccc;
+  --form-font-size: var(--font-size);
+  --form-font-color: #000;
+  --form-font-color-readonly: #000;
+  --form-font-color-disabled: #666;
+  --form-font-color-placeholder: #ccc;
 
-  --forms-border-width: 0.1rem;
-  --forms-border-radius: 0.8rem;
-  --forms-border-color: #d4d4d4;
-  --forms-border-color-focused: #8cf;
-  --forms-border-color-error: #f00;
-  --forms-border-color-readonly: #ddd;
-  --forms-border-color-disabled: #ddd;
+  --form-border-width: 0.1rem;
+  --form-border-radius: 0.8rem;
+  --form-border-color: #d4d4d4;
+  --form-border-color-focused: #8cf;
+  --form-border-color-error: #f00;
+  --form-border-color-readonly: #ddd;
+  --form-border-color-disabled: #ddd;
 
-  --forms-background-color: #fff;
-  --forms-background-color-readonly: #fafafa;
-  --forms-background-color-disabled: #f6f6f6;
+  --form-background-color: #fff;
+  --form-background-color-readonly: #fafafa;
+  --form-background-color-disabled: #f6f6f6;
   
   /*
     Additional variables and their default values:
-    --forms-height: 4rem;
+    --form-height: 4rem;
   */
 }
 
@@ -54,59 +54,59 @@ textarea,
 select {
   position: relative;
   width: 100%;
-  height: var(--forms-height);
-  height: var(--forms-height, calc(var(--forms-font-size) * var(--forms-height-coeff)));
+  height: var(--form-height);
+  height: var(--form-height, calc(var(--form-font-size) * var(--form-height-coeff)));
   margin: 0;
-  padding: 0 var(--forms-side-padding);
-  font-size: var(--forms-font-size);
-  color: var(--forms-font-color);
+  padding: 0 var(--form-side-padding);
+  font-size: var(--form-font-size);
+  color: var(--form-font-color);
   outline: none;
-  border-width: var(--forms-border-width);
+  border-width: var(--form-border-width);
   border-style: solid;
-  border-color: var(--forms-border-color);
-  border-radius: var(--forms-border-radius);
-  background-color: var(--forms-background-color);
+  border-color: var(--form-border-color);
+  border-radius: var(--form-border-radius);
+  background-color: var(--form-background-color);
   appearance: none;
 
   &[readonly],
   &[readonly]:focus {
-    color: var(--forms-font-color-readonly);
-    border-color: var(--forms-border-color-readonly);
-    background-color: var(--forms-background-color-readonly);
+    color: var(--form-font-color-readonly);
+    border-color: var(--form-border-color-readonly);
+    background-color: var(--form-background-color-readonly);
     box-shadow: none;
   }
   &[disabled],
   &[disabled]:focus {
-    color: var(--forms-font-color-disabled);
-    border-color: var(--forms-border-color-disabled);
-    background-color: var(--forms-background-color-disabled);
+    color: var(--form-font-color-disabled);
+    border-color: var(--form-border-color-disabled);
+    background-color: var(--form-background-color-disabled);
     cursor: not-allowed !important;
     box-shadow: none;
   }
 
   &:focus {
-    border-color: var(--forms-border-color-focused);
-    box-shadow: 0 0 0 1px var(--forms-border-color-focused);
+    border-color: var(--form-border-color-focused);
+    box-shadow: 0 0 0 1px var(--form-border-color-focused);
   }
   &.error,
   &.error:focus,
   &[pattern]:invalid,
   &[pattern]:invalid:focus {
-    border-color: var(--forms-border-color-error);
-    box-shadow: 0 0 0 1px var(--forms-border-color-error);
+    border-color: var(--form-border-color-error);
+    box-shadow: 0 0 0 1px var(--form-border-color-error);
   }
 }
 
 select {
-  padding-right: calc(var(--forms-side-padding) * 2.6);
+  padding-right: calc(var(--form-side-padding) * 2.6);
   background-image: url("data:image/svg+xml,%3C%3Fxml version='1.0' encoding='utf-8'%3F%3E%3Csvg width='800px' height='800px' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.70711 16.1359C5.31659 16.5264 5.31659 17.1596 5.70711 17.5501L10.5993 22.4375C11.3805 23.2179 12.6463 23.2176 13.4271 22.4369L18.3174 17.5465C18.708 17.156 18.708 16.5228 18.3174 16.1323C17.9269 15.7418 17.2937 15.7418 16.9032 16.1323L12.7176 20.3179C12.3271 20.7085 11.6939 20.7085 11.3034 20.3179L7.12132 16.1359C6.7308 15.7454 6.09763 15.7454 5.70711 16.1359Z' fill='%230F0F0F'/%3E%3Cpath d='M18.3174 7.88675C18.708 7.49623 18.708 6.86307 18.3174 6.47254L13.4252 1.58509C12.644 0.804698 11.3783 0.805008 10.5975 1.58579L5.70711 6.47615C5.31658 6.86667 5.31658 7.49984 5.70711 7.89036C6.09763 8.28089 6.7308 8.28089 7.12132 7.89036L11.307 3.70472C11.6975 3.31419 12.3307 3.31419 12.7212 3.70472L16.9032 7.88675C17.2937 8.27728 17.9269 8.27728 18.3174 7.88675Z' fill='%23000000'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right calc(var(--forms-side-padding) - 4px) top 52%, 0 0;
+  background-position: right calc(var(--form-side-padding) - 4px) top 52%, 0 0;
   background-size: 1.6rem;
 }
 
 ::placeholder {
-  color: var(--forms-font-color-placeholder);
+  color: var(--form-font-color-placeholder);
 }
 
 input[placeholder],
@@ -120,7 +120,7 @@ input,
 textarea,
 select,
 button {
-  max-width: var(--forms-width);
+  max-width: var(--form-width);
   font-family: inherit;
   font-size: var(--font-size);
   box-sizing: border-box;
@@ -129,8 +129,8 @@ button {
 
 textarea {
   height: auto;
-  padding-top: calc(var(--forms-side-padding) / 2);
-  padding-bottom: calc(var(--forms-side-padding) / 2);
+  padding-top: calc(var(--form-side-padding) / 2);
+  padding-bottom: calc(var(--form-side-padding) / 2);
 }
 
 ::-webkit-file-upload-button {
