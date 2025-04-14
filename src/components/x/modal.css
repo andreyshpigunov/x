@@ -11,11 +11,13 @@ All right reserved.
 
 
 :root {
-  --modal-margin: 3vw;
+  --modal-margin-x: 3vw;
+  --modal-margin-y: 3vw;
   --modal-padding: clamp(4rem, 4vw, 5rem) clamp(2.5rem, 4vw, 5rem);
   --modal-background: #fff;
   --modal-box-shadow: 0 1rem 4rem #00000033;
   --modal-border-radius: 1.6rem;
+  --modal-closer-margin: .6rem;
   --modal-closer-area: 4rem;
   --modal-closer-size: 2.6rem;
   --modal-closer-width: .2rem;
@@ -83,7 +85,10 @@ html.modal_active body {
   z-index: 10020;
   width: 100%;
   height: 100%;
-  padding: var(--modal-margin);
+  padding-left: var(--modal-margin-x);
+  padding-right: var(--modal-margin-x);
+  padding-top: var(--modal-margin-y);
+  padding-bottom: var(--modal-margin-y);
   overflow: auto;
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
@@ -113,16 +118,16 @@ html.modal_active body {
 /* !- Close cross */
 .modal-rail {
   position: absolute;
-  top: 6px;
-  bottom: 6px;
-  right: 6px;
+  top: var(--modal-closer-margin);
+  bottom: var(--modal-closer-margin);
+  right: var(--modal-closer-margin);
   width: 0;
   
   .modal-close {
     display: block;
     position: sticky;
     z-index: 10040;
-    top: calc(-.8 * var(--modal-margin));
+    top: calc(var(--modal-closer-margin) - var(--modal-margin-y));
     background: var(--modal-background);
     width: var(--modal-closer-area);
     height: var(--modal-closer-area);
