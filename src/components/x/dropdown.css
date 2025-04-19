@@ -130,7 +130,8 @@ All right reserved.
       transform-origin: bottom center;
       
       &:hover,
-      &:active {
+      &:active,
+      &.active {
         color: var(--dropdown-item-font-color-hover);
         background: var(--dropdown-item-background-color-hover);
       }
