@@ -165,7 +165,7 @@ class Scroll {
       }
   
       let elementY, startingY, parentY, diff;
-  
+      
       if (parent === window) {
         startingY = window.pageYOffset;
         elementY = startingY + target.getBoundingClientRect().top;
@@ -176,24 +176,23 @@ class Scroll {
         elementY = startingY + target.getBoundingClientRect().top - parentY;
         diff = elementY - startingY - offset;
       }
-  
-      // Perform smooth scroll
-      parent.scrollTo({
-        top: startingY + diff,
-        left: 0,
-        behavior: 'smooth'
-      });
-  
+      
       const targetY = startingY + diff;
       const threshold = 2;
-  
       const isScrollNeeded = Math.abs(diff) > threshold;
-  
+      
       if (!isScrollNeeded) {
-        // If no real scroll needed, resolve async
+        // If no real scroll needed, just resolve asynchronously
         requestAnimationFrame(resolve);
       } else {
-        // Otherwise, wait for scroll event
+        // Perform smooth scroll
+        parent.scrollTo({
+          top: targetY,
+          left: 0,
+          behavior: 'smooth'
+        });
+      
+        // Listen for scroll event to resolve
         const onScroll = () => {
           const currentY = parent === window ? parent.pageYOffset : parent.scrollTop;
           if (Math.abs(currentY - targetY) < threshold) {
