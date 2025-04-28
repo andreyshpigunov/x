@@ -159,13 +159,13 @@ class Scroll {
         : lib.qs(params);
   
       if (!target) {
-        console.error('Target ' + target + ' not found');
+        console.error('Target not found:', target);
         resolve();
         return;
       }
   
       let elementY, startingY, parentY, diff;
-      
+  
       if (parent === window) {
         startingY = window.pageYOffset;
         elementY = startingY + target.getBoundingClientRect().top;
@@ -176,34 +176,16 @@ class Scroll {
         elementY = startingY + target.getBoundingClientRect().top - parentY;
         diff = elementY - startingY - offset;
       }
-      
-      const targetY = startingY + diff;
-      const threshold = 2;
-      const isScrollNeeded = Math.abs(diff) > threshold;
-      
-      if (!isScrollNeeded) {
-        // If no real scroll needed, just resolve asynchronously
-        requestAnimationFrame(resolve);
-      } else {
-        // Perform smooth scroll
-        parent.scrollTo({
-          top: targetY,
-          left: 0,
-          behavior: 'smooth'
-        });
-      
-        // Listen for scroll event to resolve
-        const onScroll = () => {
-          const currentY = parent === window ? parent.pageYOffset : parent.scrollTop;
-          if (Math.abs(currentY - targetY) < threshold) {
-            parent.removeEventListener('scroll', onScroll);
-            resolve();
-          }
-        };
-        parent.addEventListener('scroll', onScroll, { passive: true });
-      }
   
-      // Update URL hash
+      parent.scrollTo({
+        top: startingY + diff,
+        left: 0,
+        behavior: 'smooth'
+      });
+  
+      // Always resolve after a small delay
+      setTimeout(resolve, 400); // 400ms — нормальное время для плавной прокрутки
+  
       if (hash && target.id) {
         lib.updateURL('#' + target.id);
       } else if (hash) {
