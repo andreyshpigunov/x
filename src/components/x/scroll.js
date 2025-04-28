@@ -118,13 +118,14 @@ class Scroll {
 
   /**
    * Smoothly scrolls the parent element to the target element.
+   * Waits until scroll finishes or a timeout occurs.
    * @param {string|Element|Object} params - selector, element, or settings object
    * @returns {Promise<void>}
    */
   async scrollTo(params) {
     return new Promise(resolve => {
       let parent, target, offset, hash;
-
+  
       // Object form
       if (typeof params === 'object') {
         parent = params.parent ? lib.qs(params.parent) : this.parent;
@@ -139,44 +140,80 @@ class Scroll {
         offset = this.offset;
         hash = this.hash;
       }
-
+  
       if (!target) {
         console.warn('Scroll target not found:', target);
         resolve();
         return;
       }
-
+  
       const { startingY, diff } = this._getScrollDiff(parent, target, offset);
-
-      if (diff === 0 || !parent || typeof parent.scrollTo !== 'function') {
+  
+      if (!parent || typeof parent.scrollTo !== 'function') {
         resolve();
         return;
       }
-
-      // Perform smooth scroll
-      parent.scrollTo({
-        top: startingY + diff,
-        left: 0,
-        behavior: 'smooth'
-      });
-
-      // Optionally update URL hash
-      if (hash && target.id) {
-        lib.updateURL('#' + target.id);
-      } else if (hash) {
-        history.replaceState({}, document.title, window.location.href.split('#')[0]);
-      }
-
-      // Wait for scroll to finish
-      const checkScroll = () => {
-        const currentY = parent === window ? parent.pageYOffset : parent.scrollTop;
-        if (Math.abs((startingY + diff) - currentY) < 2) {
-          resolve();
-        } else {
-          requestAnimationFrame(checkScroll);
+  
+      const startScroll = () => {
+        parent.scrollTo({
+          top: startingY + diff,
+          left: 0,
+          behavior: 'smooth'
+        });
+  
+        if (hash && target.id) {
+          lib.updateURL('#' + target.id);
+        } else if (hash) {
+          history.replaceState({}, document.title, window.location.href.split('#')[0]);
         }
       };
-      requestAnimationFrame(checkScroll);
+  
+      const isWindow = parent === window;
+      const getScrollTop = () => isWindow ? parent.pageYOffset : parent.scrollTop;
+      const targetY = startingY + diff;
+      const threshold = 2;
+      const maxWaitTime = 3000; // 3 seconds timeout
+      let finished = false;
+      let timeoutId;
+  
+      const cleanup = () => {
+        if (isWindow) {
+          window.removeEventListener('scroll', onScroll);
+        } else {
+          parent.removeEventListener('scroll', onScroll);
+        }
+        if (timeoutId) clearTimeout(timeoutId);
+      };
+  
+      const finish = () => {
+        if (!finished) {
+          finished = true;
+          cleanup();
+          resolve();
+        }
+      };
+  
+      const onScroll = () => {
+        const currentY = getScrollTop();
+        if (Math.abs(currentY - targetY) < threshold) {
+          requestAnimationFrame(finish);
+        }
+      };
+  
+      // Even if no scrolling needed, keep async behavior
+      if (Math.abs(diff) < threshold) {
+        requestAnimationFrame(resolve);
+        return;
+      }
+  
+      if (isWindow) {
+        window.addEventListener('scroll', onScroll, { passive: true });
+      } else {
+        parent.addEventListener('scroll', onScroll, { passive: true });
+      }
+  
+      timeoutId = setTimeout(finish, maxWaitTime);
+      startScroll();
     });
   }
 
