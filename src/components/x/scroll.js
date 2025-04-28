@@ -150,42 +150,31 @@ class Scroll {
   //   hash: false
   // }
     return new Promise(resolve => {
-      let parent = lib.qs(params.parent) || this.parent,
-          target,
-          offset = params.offset || this.offset,
-          hash = params.hash || this.hash;
+      const parent = lib.qs(params.parent) || this.parent;
+      const offset = params.offset || this.offset;
+      const hash = params.hash || this.hash;
   
-      if (typeof params === 'object') {
-        target = lib.qs(params.target);
-      } else {
-        target = lib.qs(params);
-      }
-      
+      const target = typeof params === 'object'
+        ? lib.qs(params.target)
+        : lib.qs(params);
+  
       if (!target) {
         console.error('Target ' + target + ' not found');
         resolve();
         return;
       }
   
-      let elementY,
-          startingY,
-          parentY,
-          diff;
+      let elementY, startingY, parentY, diff;
   
-      if (parent == window) {
-        startingY = parent.pageYOffset;
-        elementY = parent.pageYOffset + target.getBoundingClientRect().top;
+      if (parent === window) {
+        startingY = window.pageYOffset;
+        elementY = startingY + target.getBoundingClientRect().top;
         diff = elementY - startingY - offset;
       } else {
         startingY = parent.scrollTop;
         parentY = parent.getBoundingClientRect().top;
-        elementY = parent.scrollTop + target.getBoundingClientRect().top - parentY;
+        elementY = startingY + target.getBoundingClientRect().top - parentY;
         diff = elementY - startingY - offset;
-      }
-  
-      if (!diff) {
-        resolve();
-        return;
       }
   
       // Perform smooth scroll
@@ -195,16 +184,25 @@ class Scroll {
         behavior: 'smooth'
       });
   
-      // Listen for scroll event to resolve
-      const onScroll = () => {
-        const currentY = parent === window ? parent.pageYOffset : parent.scrollTop;
-        if (Math.abs((startingY + diff) - currentY) < 2) {
-          parent.removeEventListener('scroll', onScroll); // Remove listener once finished
-          resolve();
-        }
-      };
+      const targetY = startingY + diff;
+      const threshold = 2;
   
-      parent.addEventListener('scroll', onScroll, { passive: true });
+      const isScrollNeeded = Math.abs(diff) > threshold;
+  
+      if (!isScrollNeeded) {
+        // If no real scroll needed, resolve async
+        requestAnimationFrame(resolve);
+      } else {
+        // Otherwise, wait for scroll event
+        const onScroll = () => {
+          const currentY = parent === window ? parent.pageYOffset : parent.scrollTop;
+          if (Math.abs(currentY - targetY) < threshold) {
+            parent.removeEventListener('scroll', onScroll);
+            resolve();
+          }
+        };
+        parent.addEventListener('scroll', onScroll, { passive: true });
+      }
   
       // Update URL hash
       if (hash && target.id) {
@@ -214,7 +212,7 @@ class Scroll {
       }
     });
   }
-
+  
   _scrollObserve(linksHash) {
     Object.keys(linksHash).forEach(i => {
       let item = linksHash[i],
