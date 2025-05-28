@@ -42,6 +42,14 @@ All right reserved.
   --h3-line-height: 1.4;
 
   --paragraph-margin: 1em;
+  
+  --font-size-xxs: 1.2rem;
+  --font-size-xs: 1.2rem;
+  --font-size-s: 1.4rem;
+  --font-size-n: 1.6rem;
+  --font-size-l: 1.8rem;
+  --font-size-xl: 2rem;
+  --font-size-xxl: 2rem;
 
   --figure-margin: 2.5em auto 2em;
   --figcaption-margin-top: .5em;
@@ -196,6 +204,14 @@ table {
   .fs$(i) { font-size: calc($(i)rem / 10) !important }
 }
 
+.fsxxs { font-size: var(--font-size-xxs) !important }
+.fsxs  { font-size: var(--font-size-xs)  !important }
+.fss   { font-size: var(--font-size-s)   !important }
+.fsn   { font-size: var(--font-size-n)   !important }
+.fsl   { font-size: var(--font-size-l)   !important }
+.fsxl  { font-size: var(--font-size-xl)  !important }
+.fsxxl { font-size: var(--font-size-xxl) !important }
+
 .fw100 { font-weight: 100 !important }
 .fw200 { font-weight: 200 !important }
 .fw300 { font-weight: 300 !important }
@@ -214,6 +230,14 @@ table {
   @for $i from 20 to 80 by 2 {
     .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
+  
+  .m\:fsxxs { font-size: var(--font-size-xxs) !important }
+  .m\:fsxs  { font-size: var(--font-size-xs)  !important }
+  .m\:fss   { font-size: var(--font-size-s)   !important }
+  .m\:fsn   { font-size: var(--font-size-n)   !important }
+  .m\:fsl   { font-size: var(--font-size-l)   !important }
+  .m\:fsxl  { font-size: var(--font-size-xl)  !important }
+  .m\:fsxxl { font-size: var(--font-size-xxl) !important }
   
   .m\:fw100 { font-weight: 100 !important }
   .m\:fw200 { font-weight: 200 !important }
@@ -235,6 +259,14 @@ table {
     .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
+  .l\:fsxxs { font-size: var(--font-size-xxs) !important }
+  .l\:fsxs  { font-size: var(--font-size-xs)  !important }
+  .l\:fss   { font-size: var(--font-size-s)   !important }
+  .l\:fsn   { font-size: var(--font-size-n)   !important }
+  .l\:fsl   { font-size: var(--font-size-l)   !important }
+  .l\:fsxl  { font-size: var(--font-size-xl)  !important }
+  .l\:fsxxl { font-size: var(--font-size-xxl) !important }
+  
   .l\:fw100 { font-weight: 100 !important }
   .l\:fw200 { font-weight: 200 !important }
   .l\:fw300 { font-weight: 300 !important }
@@ -254,6 +286,14 @@ table {
   @for $i from 20 to 80 by 2 {
     .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
+  
+  .xl\:fsxxs { font-size: var(--font-size-xxs) !important }
+  .xl\:fsxs  { font-size: var(--font-size-xs)  !important }
+  .xl\:fss   { font-size: var(--font-size-s)   !important }
+  .xl\:fsn   { font-size: var(--font-size-n)   !important }
+  .xl\:fsl   { font-size: var(--font-size-l)   !important }
+  .xl\:fsxl  { font-size: var(--font-size-xl)  !important }
+  .xl\:fsxxl { font-size: var(--font-size-xxl) !important }
   
   .xl\:fw100 { font-weight: 100 !important }
   .xl\:fw200 { font-weight: 200 !important }
