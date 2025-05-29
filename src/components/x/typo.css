@@ -196,14 +196,6 @@ table {
   .fs$(i) { font-size: calc($(i)rem / 10) !important }
 }
 
-.fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
-.fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
-.fss   { font-size: calc(var(--font-size) - .2rem) !important }
-.fsn   { font-size: var(--font-size) !important }
-.fsl   { font-size: calc(var(--font-size) + .2rem) !important }
-.fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
-.fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
-
 .fw100 { font-weight: 100 !important }
 .fw200 { font-weight: 200 !important }
 .fw300 { font-weight: 300 !important }
@@ -222,14 +214,6 @@ table {
   @for $i from 20 to 80 by 2 {
     .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
-  
-  .m\:fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
-  .m\:fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
-  .m\:fss   { font-size: calc(var(--font-size) - .2rem) !important }
-  .m\:fsn   { font-size: var(--font-size) !important }
-  .m\:fsl   { font-size: calc(var(--font-size) + .2rem) !important }
-  .m\:fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
-  .m\:fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
   
   .m\:fw100 { font-weight: 100 !important }
   .m\:fw200 { font-weight: 200 !important }
@@ -251,14 +235,6 @@ table {
     .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
-  .l\:fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
-  .l\:fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
-  .l\:fss   { font-size: calc(var(--font-size) - .2rem) !important }
-  .l\:fsn   { font-size: var(--font-size) !important }
-  .l\:fsl   { font-size: calc(var(--font-size) + .2rem) !important }
-  .l\:fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
-  .l\:fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
-  
   .l\:fw100 { font-weight: 100 !important }
   .l\:fw200 { font-weight: 200 !important }
   .l\:fw300 { font-weight: 300 !important }
@@ -278,14 +254,6 @@ table {
   @for $i from 20 to 80 by 2 {
     .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
-  
-  .xl\:fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
-  .xl\:fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
-  .xl\:fss   { font-size: calc(var(--font-size) - .2rem) !important }
-  .xl\:fsn   { font-size: var(--font-size) !important }
-  .xl\:fsl   { font-size: calc(var(--font-size) + .2rem) !important }
-  .xl\:fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
-  .xl\:fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
   
   .xl\:fw100 { font-weight: 100 !important }
   .xl\:fw200 { font-weight: 200 !important }
