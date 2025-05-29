@@ -42,14 +42,6 @@ All right reserved.
   --h3-line-height: 1.4;
 
   --paragraph-margin: 1em;
-  
-  --font-size-xxs: 1.2rem;
-  --font-size-xs: 1.2rem;
-  --font-size-s: 1.4rem;
-  --font-size-n: 1.6rem;
-  --font-size-l: 1.8rem;
-  --font-size-xl: 2rem;
-  --font-size-xxl: 2rem;
 
   --figure-margin: 2.5em auto 2em;
   --figcaption-margin-top: .5em;
@@ -204,13 +196,13 @@ table {
   .fs$(i) { font-size: calc($(i)rem / 10) !important }
 }
 
-.fsxxs { font-size: var(--font-size-xxs) !important }
-.fsxs  { font-size: var(--font-size-xs)  !important }
-.fss   { font-size: var(--font-size-s)   !important }
-.fsn   { font-size: var(--font-size-n)   !important }
-.fsl   { font-size: var(--font-size-l)   !important }
-.fsxl  { font-size: var(--font-size-xl)  !important }
-.fsxxl { font-size: var(--font-size-xxl) !important }
+.fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
+.fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
+.fss   { font-size: calc(var(--font-size) - .2rem) !important }
+.fsn   { font-size: var(--font-size) !important }
+.fsl   { font-size: calc(var(--font-size) + .2rem) !important }
+.fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
+.fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
 
 .fw100 { font-weight: 100 !important }
 .fw200 { font-weight: 200 !important }
@@ -231,13 +223,13 @@ table {
     .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
-  .m\:fsxxs { font-size: var(--font-size-xxs) !important }
-  .m\:fsxs  { font-size: var(--font-size-xs)  !important }
-  .m\:fss   { font-size: var(--font-size-s)   !important }
-  .m\:fsn   { font-size: var(--font-size-n)   !important }
-  .m\:fsl   { font-size: var(--font-size-l)   !important }
-  .m\:fsxl  { font-size: var(--font-size-xl)  !important }
-  .m\:fsxxl { font-size: var(--font-size-xxl) !important }
+  .m\:fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
+  .m\:fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
+  .m\:fss   { font-size: calc(var(--font-size) - .2rem) !important }
+  .m\:fsn   { font-size: var(--font-size) !important }
+  .m\:fsl   { font-size: calc(var(--font-size) + .2rem) !important }
+  .m\:fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
+  .m\:fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
   
   .m\:fw100 { font-weight: 100 !important }
   .m\:fw200 { font-weight: 200 !important }
@@ -259,13 +251,13 @@ table {
     .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
-  .l\:fsxxs { font-size: var(--font-size-xxs) !important }
-  .l\:fsxs  { font-size: var(--font-size-xs)  !important }
-  .l\:fss   { font-size: var(--font-size-s)   !important }
-  .l\:fsn   { font-size: var(--font-size-n)   !important }
-  .l\:fsl   { font-size: var(--font-size-l)   !important }
-  .l\:fsxl  { font-size: var(--font-size-xl)  !important }
-  .l\:fsxxl { font-size: var(--font-size-xxl) !important }
+  .l\:fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
+  .l\:fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
+  .l\:fss   { font-size: calc(var(--font-size) - .2rem) !important }
+  .l\:fsn   { font-size: var(--font-size) !important }
+  .l\:fsl   { font-size: calc(var(--font-size) + .2rem) !important }
+  .l\:fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
+  .l\:fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
   
   .l\:fw100 { font-weight: 100 !important }
   .l\:fw200 { font-weight: 200 !important }
@@ -287,13 +279,13 @@ table {
     .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
   }
   
-  .xl\:fsxxs { font-size: var(--font-size-xxs) !important }
-  .xl\:fsxs  { font-size: var(--font-size-xs)  !important }
-  .xl\:fss   { font-size: var(--font-size-s)   !important }
-  .xl\:fsn   { font-size: var(--font-size-n)   !important }
-  .xl\:fsl   { font-size: var(--font-size-l)   !important }
-  .xl\:fsxl  { font-size: var(--font-size-xl)  !important }
-  .xl\:fsxxl { font-size: var(--font-size-xxl) !important }
+  .xl\:fsxxs { font-size: calc(var(--font-size) - .6rem) !important }
+  .xl\:fsxs  { font-size: calc(var(--font-size) - .4rem) !important }
+  .xl\:fss   { font-size: calc(var(--font-size) - .2rem) !important }
+  .xl\:fsn   { font-size: var(--font-size) !important }
+  .xl\:fsl   { font-size: calc(var(--font-size) + .2rem) !important }
+  .xl\:fsxl  { font-size: calc(var(--font-size) + .4rem) !important }
+  .xl\:fsxxl { font-size: calc(var(--font-size) + .6rem) !important }
   
   .xl\:fw100 { font-weight: 100 !important }
   .xl\:fw200 { font-weight: 200 !important }
