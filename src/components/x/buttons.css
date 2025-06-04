@@ -43,13 +43,13 @@ All right reserved.
   --button-font-color: #000;
   --button-transition: all .1s ease-out;
   --button-font-size: var(--font-size);
-  --button-transform: scale(1);
+  --button-transform: translate(0,0);
   --button-transform-hover: none;
-  --button-transform-active: scale(.99);
+  --button-transform-active: translate(0,.1rem);
   --button-transform-origin: center bottom;
-  --button-box-shadow: none;
-  --button-box-shadow-hover: none;
-  --button-box-shadow-active: none;
+  --button-box-shadow: 0 .1rem .1rem #00000011;
+  --button-box-shadow-hover: 0 .1rem .1rem #00000022;
+  --button-box-shadow-active: inset 0 0 .1rem #00000011;
   
   /*
     Additional variables and their default values:
@@ -212,5 +212,29 @@ All right reserved.
   & .button:nth-last-child(1 of .button:not(.hidden)) {
     border-top-right-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
     border-bottom-right-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
+  }
+}
+
+.button.button_dropdown {
+  padding-right: 1.8em;
+
+  &::after {
+    content: '⌟';
+    display: block;
+    position: absolute;
+    right: .35em;
+    font-size: 1.4em;
+    margin-top: -.35em;
+    transform: rotate(45deg);
+    transform-origin: center;
+    will-change: opacity;
+    opacity: .4;
+    transition: opacity .1s ease-out;
+  }
+}
+
+.button.button_dropdown.active {
+  &::after {
+    opacity: 1;
   }
 }
