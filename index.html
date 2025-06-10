@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.2.14</div>
+    <div class="header-version nowrap">0.2.15</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -72,7 +72,7 @@
     <div class="container">
       <div class="grid g1 m:g2 l:g3 xl:g4 gap6">
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalAnimate">Animate</a></h4>
+          <h3><a class="link" x-modal-open="modalAnimate">Animate</a></h3>
           <div x-animate='{
             "trigger": ".jsAnimateExample",
             "start": "80vh",
@@ -117,7 +117,7 @@
         </div>
 
         <div class="c1">
-          <h5><a class="link" x-modal-open="modalAppear">Appear</a></h5>
+          <h3><a class="link" x-modal-open="modalAppear">Appear</a></h3>
           <style>
             .exampleAppear1,
             .exampleAppear2 {
@@ -140,7 +140,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalDevice">Device</a></h4>
+          <h3><a class="link" x-modal-open="modalDevice">Device</a></h3>
           <div class="jsDeviceExample breakWord"></div>
 
           <script>
@@ -174,7 +174,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalForm">Form</a></h4>
+          <h3><a class="link" x-modal-open="modalForm">Form</a></h3>
           <div>Form fields binding.</div>
           <div class="flex aic gap2 my2">
             <input class="max160" type="text" name="exampleText" placeholder="Type something" />
@@ -292,7 +292,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalHover">Hover</a></h4>
+          <h3><a class="link" x-modal-open="modalHover">Hover</a></h3>
           <div>
             <a href="#1" onclick="return false" x-hover>Link</a>
             <a href="#1" onclick="return false" x-hover>Link</a>
@@ -309,7 +309,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalLazyload">Lazyload</a></h4>
+          <h3><a class="link" x-modal-open="modalLazyload">Lazyload</a></h3>
           <div>Image loaded lazy.</div>
           <div class="mt2">
             <img class="r3" src="https://seosecret.id/placeholder/800x600/ffffff/584959/Loading.../png" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
@@ -317,7 +317,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalLib">Lib</a></h4>
+          <h3><a class="link" x-modal-open="modalLib">Lib</a></h3>
           <div class="jsLibExample">
             x.lib.random(1000, 100000) → <span class="jsLibRandom"></span><br>
             x.lib.number(<span class="jsLibRandom"></span>) → <span class="jsLibNumber"></span><br>
@@ -351,7 +351,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalLoadmore">Loadmore</a></h4>
+          <h3><a class="link" x-modal-open="modalLoadmore">Loadmore</a></h3>
           <div>Load new data on content scrolling.</div>
           <div class="flex fw gap3 mt2">
             <a role="button" class="button" x-modal-open="modalExampleLoadmore">Show example posts</a>
@@ -382,7 +382,7 @@
                     let data = await response.json();
                     x.lib.hide('#postsLoader');
                     x.lib.render('#posts', () => {
-                      let result = `<h4>Page ${page}</h4>`;
+                      let result = `<h3>Page ${page}</h3>`;
                       if (data.posts.length) {
                         for (let post of data.posts) {
                           result += `<p>${post.title}</p>`
@@ -404,7 +404,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalModal">Modal</a></h4>
+          <h3><a class="link" x-modal-open="modalModal">Modal</a></h3>
 
           <div class="flex fw gap3">
             <a role="button" class="button" x-modal-open="modalExampleTest">Test modal</a>
@@ -629,11 +629,11 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalScroll">Scroll</a></h4>
+          <h3><a class="link" x-modal-open="modalScroll">Scroll</a></h3>
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalSheets">Sheets</a></h4>
+          <h3><a class="link" x-modal-open="modalSheets">Sheets</a></h3>
           <style>
             .sheets-example .button {
               opacity: .8
@@ -680,7 +680,7 @@
         </div>
 
         <div class="c1">
-          <h4><a class="link" x-modal-open="modalSlides">Slides</a></h4>
+          <h3><a class="link" x-modal-open="modalSlides">Slides</a></h3>
           <div class="max600">
             <div class="ratio4x3" x-slides='[
               "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg",
@@ -957,10 +957,10 @@ a.link_wavy</pre>
   <div x-modal="modalColors" class="modal_hash" data-window-class="max1000">
     <h2>Colors</h2>
     <div class="mt6">
-      <pre class="fs14 mono"><span class="textPrimary">.textPrimary</span>
-<span class="textSuccess">.textSuccess</span>
-<span class="textWarning">.textWarning</span>
-<span class="textDanger">.textDanger</span>
+      <pre class="fs14 mono"><span class="textPrimary">.colorPrimary</span>
+<span class="textSuccess">.colorSuccess</span>
+<span class="textWarning">.colorWarning</span>
+<span class="textDanger">.colorDanger</span>
 
 <span class="bgPrimary textWhite button button_label">.bgPrimary</span>
 <span class="bgSuccess textWhite button button_label">.bgSuccess</span>
@@ -968,7 +968,7 @@ a.link_wavy</pre>
 <span class="bgDanger textWhite button button_label">.bgDanger</span>
 <span class="bgGrey textWhite button button_label">.bgGrey</span>
 
-.text[ColorName] (d) - text color
+.color[ColorName] (d) - text color
 .bg[ColorName] (d) — background color</pre>
     </div>
     <div class="mt6">All color names here: <a class="button button_label bgBeige" href="https://147colors.com" target="_blank"><div class="strike fw700 mr1">147</div> Colors →</a></div>
@@ -999,12 +999,12 @@ a.link_wavy</pre>
 --headers-font-weight: 700;
 --headers-font-color: var(--font-color);
 
---h1-font-size: 2.5em;
---h2-font-size: 2.0em;
---h3-font-size: 1.5em;
---h4-font-size: 1.25em;
---h5-font-size: 1.125em;
---h6-font-size: 1.0em;
+--h1-font-size: 3.2rem;
+--h2-font-size: 2.4rem;
+--h3-font-size: 2.0rem;
+--h4-font-size: 1.6rem;
+--h5-font-size: 1.4rem;
+--h6-font-size: 1.2rem;
 
 --h1-line-height: 1.3;
 --h2-line-height: 1.4;

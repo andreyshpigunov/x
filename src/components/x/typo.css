@@ -30,12 +30,12 @@ All right reserved.
   --headers-font-weight: 700;
   --headers-font-color: var(--font-color);
 
-  --h1-font-size: 2.5em;
-  --h2-font-size: 2.0em;
-  --h3-font-size: 1.5em;
-  --h4-font-size: 1.25em;
-  --h5-font-size: 1.125em;
-  --h6-font-size: 1.0em;
+  --h1-font-size: 3.2rem;
+  --h2-font-size: 2.4rem;
+  --h3-font-size: 2.0rem;
+  --h4-font-size: 1.6rem;
+  --h5-font-size: 1.4rem;
+  --h6-font-size: 1.2rem;
 
   --h1-line-height: 1.2;
   --h2-line-height: 1.3;
@@ -50,7 +50,7 @@ All right reserved.
   
   --blockquote-margin: 2em 0;
   --blockquote-padding: 1em 2em;
-  --blockquote-border: solid .2em var(--font-color);
+  --blockquote-border: none;
 
   --table-padding: .5em .75em;
   --table-border: 1px solid #e4e4e4;

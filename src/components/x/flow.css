@@ -9,7 +9,7 @@ All right reserved.
 
 /*
   .flow
-  .flow.s[0-10] (m,l,xl)   - vertical space
+  .flow.s[0-12] (m,l,xl)   - vertical space
 */
 
 
@@ -18,14 +18,14 @@ All right reserved.
   
   & > * { margin: 0 }
   
-  @for $i from 0 to 10 {
+  @for $i from 0 to 12 {
     &.s$(i) > * {
       margin-bottom: var(--space-$(i));
     }
   }
   
   @media(--medium){
-    @for $i from 0 to 10 {
+    @for $i from 0 to 12 {
       &.m\:s$(i) > * {
         margin-bottom: var(--space-$(i));
       }
@@ -33,7 +33,7 @@ All right reserved.
   }
   
   @media(--large){
-    @for $i from 0 to 10 {
+    @for $i from 0 to 12 {
       &.l\:s$(i) > * {
         margin-bottom: var(--space-$(i));
       }
@@ -41,7 +41,7 @@ All right reserved.
   }
   
   @media(--xlarge){
-    @for $i from 0 to 10 {
+    @for $i from 0 to 12 {
       &.xl\:s$(i) > * {
         margin-bottom: var(--space-$(i));
       }
