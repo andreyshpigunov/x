@@ -51,6 +51,9 @@ All right reserved.
   &.jcsa { justify-content: space-around }
   &.jcse { justify-content: space-evenly }
   
+  & > .noshrink { flex-shrink: 0 }
+  & > .nogrow { flex-grow: 0 }
+  
   /* Columns */
   @for $cols from 1 to 12 {
     @for $col from 1 to $cols {
@@ -79,6 +82,9 @@ All right reserved.
     &.m\:jcsb { justify-content: space-between }
     &.m\:jcsa { justify-content: space-around }
     &.m\:jcse { justify-content: space-evenly }
+    
+    & > .m\:noshrink { flex-shrink: 0 }
+    & > .m\:nogrow { flex-grow: 0 }
     
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
@@ -109,6 +115,9 @@ All right reserved.
     &.l\:jcsa { justify-content: space-around }
     &.l\:jcse { justify-content: space-evenly }
     
+    & > .l\:noshrink { flex-shrink: 0 }
+    & > .l\:nogrow { flex-grow: 0 }
+    
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .l\:c$(col)\/$(cols) {
@@ -137,6 +146,9 @@ All right reserved.
     &.xl\:jcsb { justify-content: space-between }
     &.xl\:jcsa { justify-content: space-around }
     &.xl\:jcse { justify-content: space-evenly }
+    
+    & > .xl\:noshrink { flex-shrink: 0 }
+    & > .xl\:nogrow { flex-grow: 0 }
     
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
