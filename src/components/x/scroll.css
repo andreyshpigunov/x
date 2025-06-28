@@ -28,7 +28,7 @@ All right reserved.
 .scroll {
   flex-wrap: nowrap;
   overflow-x: scroll;
-  overflow-y: auto;
+  overflow-y: hidden;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   /* Hide scrollbar in IE and Edge */
