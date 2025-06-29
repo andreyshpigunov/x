@@ -154,9 +154,9 @@ class Scroll {
       const offset = params.offset || this.offset;
       const hash = params.hash || this.hash;
   
-      const target = typeof params === 'object'
-        ? lib.qs(params.target)
-        : lib.qs(params);
+      const target = typeof params === 'string'
+        ? lib.qs(params)
+        : lib.qs(params.target);
   
       if (!target) {
         console.error('Target not found:', target);
