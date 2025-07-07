@@ -73,3 +73,8 @@ window.x = x;
 // Query selectors shorthands
 window.qs  = x.lib.qs;
 window.qsa = x.lib.qsa;
+
+// New shortcuts for selectors
+window.x.id  = x.lib.id;
+window.x.qs  = x.lib.qs;
+window.x.qsa = x.lib.qsa;

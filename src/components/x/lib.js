@@ -72,6 +72,11 @@ class Lib {
   }
 
   // ---------- DOM Selection ----------
+  
+  /** Returns a single element by id or the element itself */
+  id(id) {
+    return document.getElementById(id);
+  }
 
   /** Returns a single element by selector or the element itself */
   qs(selector, context = document) {
