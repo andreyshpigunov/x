@@ -39,18 +39,21 @@ export function hover() {
 function handleHover(event) {
   // Ensure the event target is part of the current document
   if (!document.contains(event.target)) return;
-
+  
+  // Ensure event.target is an Element (not a Text node, etc.)
+  if (!(event.target instanceof Element)) return;
+  
   // Find the nearest ancestor with [x-hover] attribute
   const target = event.target.closest('[x-hover]');
   if (!target) return;
-
+  
   // Read the href attribute of the hovered element
   const href = target.getAttribute('href');
   if (!href) return;
-
+  
   // Determine method: add or remove class based on event type
   const method = event.type === 'mouseenter' ? 'addClass' : 'removeClass';
-
+  
   // Apply or remove 'hover' class to all elements with matching href
   lib.qsa(`[href="${CSS.escape(href)}"]`).forEach(item => {
     lib[method](item, 'hover');
