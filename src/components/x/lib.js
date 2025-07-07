@@ -439,6 +439,18 @@ class Lib {
   transitionsOff() {
     document.documentElement.classList.add('noTransitions');
   }
+  
+  // --------------- Async sleep --------------
+  
+  async sleep(ms) {
+    return new Promise((resolve, reject) => {
+      try {
+        setTimeout(resolve, ms);
+      } catch (err) {
+        reject(err);
+      }
+    });
+  }
 }
 
 export const lib = new Lib();
