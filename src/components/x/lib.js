@@ -211,7 +211,7 @@ class Lib {
   }
 
   /** Adds or removes className based on condition */
-  async switchClass(selector, condition, className, delay = 0) {
+  async switchClass(selector, className, condition, delay = 0) {
     let items = this.qsa(selector);
     if (!items || !items.length) return;
     for (let i of items) {
