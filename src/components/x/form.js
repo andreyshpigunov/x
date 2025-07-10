@@ -36,7 +36,7 @@ class Form {
     for (const element of elements) {
       const el = lib.qs(element);
       if (!el) {
-        console.error(`Element not found: ${element}`);
+        console.error('Element not found: ', element);
         continue;
       }
 
@@ -54,11 +54,12 @@ class Form {
    */
   setValue(elements, value) {
     if (!Array.isArray(elements)) elements = [elements];
-
+    
     for (const element of elements) {
       const el = lib.qs(element);
+      
       if (!el) {
-        console.error(`Element not found: ${element}`);
+        console.error('Element not found: ', element);
         continue;
       }
 
@@ -107,11 +108,10 @@ class Form {
    */
   onUpdate(elements, callback) {
     if (!Array.isArray(elements)) elements = [elements];
-
     for (const element of elements) {
       const el = lib.qs(element);
       if (!el) {
-        console.error(`Element not found: ${element}`);
+        console.error('Element not found: ', element);
         continue;
       }
 
@@ -159,7 +159,7 @@ class Form {
     for (const element of elements) {
       const el = lib.qs(element);
       if (!el) {
-        console.error(`Element not found: ${element}`);
+        console.error('Element not found: ', element);
         continue;
       }
 

@@ -51,6 +51,7 @@
 //    render(selector, data, placement)
 //    transitionsOn()
 //    transitionsOff()
+//    async sleep(ms)
 //
 
 class Lib {
@@ -73,29 +74,63 @@ class Lib {
 
   // ---------- DOM Selection ----------
   
+
   /** Returns a single element by id or the element itself */
   id(id) {
     return document.getElementById(id);
   }
 
   /** Returns a single element by selector or the element itself */
+  // qs('.item')
+  // qs(qs('.item))
+  // qs(qsa('.items)) - select first item
+  // qs(['.item-1',...]) - select first item
   qs(selector, context = document) {
+    if (!selector) return null;
+  
     if (typeof selector === 'string') {
       return context.querySelector(selector);
-    } else {
-      return selector instanceof NodeList ? selector[0] : selector;
     }
+    if (selector instanceof Node) {
+      return selector;
+    }
+    if (selector instanceof NodeList) {
+      return selector.length ? selector[0] : null;
+    }
+    if (Array.isArray(selector)) {
+      return selector.length ? context.querySelector(selector[0]) : null;
+    }
+    if (selector === window) {
+      return selector;
+    }
+    return null;
   }
 
   /** Returns all matched elements as NodeList or array */
+  // qs('.items')
+  // qs(qsa('.items))
+  // qs(qs('.item)) -> array
+  // qs(['.item-1',...])
   qsa(selector, context = document) {
+    if (!selector) return null;
+  
     if (typeof selector === 'string') {
       return context.querySelectorAll(selector);
-    } else {
-      return selector instanceof NodeList
-        ? selector
-        : Array.isArray(selector) ? selector : [selector];
     }
+    if (selector instanceof NodeList) {
+      return selector;
+    }
+    if (selector instanceof Node) {
+      return [selector];
+    }
+    if (Array.isArray(selector)) {
+      const validSelectors = selector.filter(s => typeof s === 'string');
+      return validSelectors.length ? context.querySelectorAll(validSelectors.join(',')) : null;
+    }
+    if (selector === window) {
+      return [selector];
+    }
+    return null;
   }
 
   // ---------- Visibility ----------
@@ -114,6 +149,11 @@ class Lib {
   async toggle(selector) {
     await this.toggleClass(selector, 'hidden');
   }
+  
+  // If need context, use:
+  // hide(qs('.item', context))
+  // show(qs('.item', context))
+  // toggle(qs('.item', context))
 
   // ---------- Class Handling ----------
 
