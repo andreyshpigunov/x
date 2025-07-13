@@ -26,10 +26,10 @@ class Modal {
   constructor() {
     // Z-index level counter for stacked modals
     this.modalLevel = 0;
-
+    
     // Lock counter to avoid overlapping show/hide animations
     this.lockCount = 0;
-
+    
     // Root document element (used to apply global classes)
     this.html = lib.qs('html');
   }
@@ -55,7 +55,7 @@ class Modal {
           id = item.getAttribute('x-modal'),
           classes = item.getAttribute('class') || '',
           windowClasses = item.dataset.windowClass || '';
-
+          
       placeholder.insertAdjacentHTML('beforeend', `
         <div id="${id}" class="modal ${classes}">
           <div class="modal-overlay"></div>
@@ -71,7 +71,7 @@ class Modal {
           </div>
         </div>
       `);
-
+      
       item.remove(); // Remove the original [x-modal] definition
     });
   }
@@ -83,13 +83,13 @@ class Modal {
   _setupModalLinks() {
     lib.qsa('[x-modal-open]').forEach(link => {
       let id = link.getAttribute('x-modal-open');
-
+      
       // Open modal on click
       link.addEventListener('click', e => {
         e.preventDefault();
         this.show(id);
       });
-
+      
       // Open modal on page load if URL hash matches and modal has modal_hash class
       if (window.location.hash == '#' + id) {
         let modal = lib.qs('#' + id);
@@ -120,7 +120,7 @@ class Modal {
         this.hide(e.target.closest('.modal')?.getAttribute('id'));
       }
     });
-
+    
     // Close on ESC key
     document.addEventListener('keydown', e => {
       let modalsActive = lib.qsa('.modal_active');
@@ -139,50 +139,56 @@ class Modal {
    */
   async show(id) {
     if (this.lockCount > 0) return; // lock active
-
+    
     if (this.isActive(id)) {
       this.hide(id);
       return;
     }
-
+    
     let modal = lib.qs('#' + id);
     if (!modal) return;
-
+    
     // If modal is marked as unique, close all others first
     if (modal.classList.contains('modal_uniq')) {
       await this.hideAll();
     }
-
+    
     this.lockCount++;
     
     try {
+      // Add ready class to modal
+      await lib.addClass(modal, 'modal_ready');
+      await lib.sleep(10);
+      
+      // Custom event 'modal:ready'
       modal.dispatchEvent(new CustomEvent('modal:ready'));
-  
+      
       // Update URL hash if required
       if (modal.classList.contains('modal_hash')) {
         history.replaceState(null, '', '#' + id);
       }
-  
+      
       // Add global and specific modal active classes
       lib.addClass(this.html, 'modal_active');
       lib.addClass(this.html, id + '_active');
-  
+      
       // Highlight corresponding open link
       lib.addClass('[x-modal-open=' + id + ']', 'active');
-  
+      
       // Raise z-index level
       this.modalLevel++;
       lib.addClass(modal, 'modal_z' + this.modalLevel);
-  
+      
       // Activate modal with slight delay for transition
-      await lib.addClass(modal, 'modal_active', 10);
-  
+      await lib.addClass(modal, 'modal_active');
+      
       // Scroll modal to top
       lib.qs('.modal-outer', modal)?.scrollTo(0, 1);
-  
+      
       // Wait for open animation
-      await new Promise(resolve => setTimeout(resolve, 200));
-  
+      await lib.sleep(200);
+      
+      // Custom event 'modal:open'
       modal.dispatchEvent(new CustomEvent('modal:open'));
       
     } finally {
@@ -197,12 +203,12 @@ class Modal {
    */
   async hide(id) {
     if (this.lockCount > 0) return;
-
+    
     let modal = lib.qs('#' + id);
     if (!modal) return;
-
+    
     this.lockCount++;
-
+    
     // Clear hash if modal was opened via hash
     if (
       modal.classList.contains('modal_hash') &&
@@ -210,25 +216,25 @@ class Modal {
     ) {
       history.replaceState(null, document.title, window.location.pathname + window.location.search);
     }
-
+    
     // Remove active class from trigger button
     lib.removeClass('[x-modal-open=' + id + ']', 'active');
-
+    
     // Remove active class from modal with transition
     await lib.removeClass(modal, 'modal_active', 200);
-
+    
     // Remove z-index class
     lib.removeClass(modal, 'modal_z' + this.modalLevel);
-
+    
     modal.dispatchEvent(new CustomEvent('modal:close'));
-
+    
     // Remove global modal_active flags
     lib.removeClass(this.html, id + '_active');
     this.modalLevel--;
     if (this.modalLevel === 0) {
       lib.removeClass(this.html, 'modal_active');
     }
-
+    
     this.lockCount--;
   }
 
