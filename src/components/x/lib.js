@@ -97,8 +97,12 @@ class Lib {
     if (selector instanceof NodeList) {
       return selector.length ? selector[0] : null;
     }
-    if (Array.isArray(selector)) {
-      return selector.length ? context.querySelector(selector[0]) : null;
+    if (Array.isArray(selector) && selector.length) {
+      if (selector[0] instanceof Node) {
+        return selector[0];
+      } else {
+        return context.querySelector(selector[0])
+      }
     }
     if (selector === window) {
       return selector;
@@ -123,9 +127,18 @@ class Lib {
     if (selector instanceof Node) {
       return [selector];
     }
-    if (Array.isArray(selector)) {
-      const validSelectors = selector.filter(s => typeof s === 'string');
-      return validSelectors.length ? context.querySelectorAll(validSelectors.join(',')) : null;
+    if (Array.isArray(selector) && selector.length) {
+      let arr = [];
+      for (let item of selector) {
+        if (item instanceof Node) {
+          arr.push(item);
+        } else if (item instanceof NodeList) {
+          for (let n of item) arr.push(n);
+        } else {
+          arr.push(context.querySelector(item))
+        }
+      }
+      return arr;
     }
     if (selector === window) {
       return [selector];

@@ -39,5 +39,5 @@ window.headerAnimation = (params) => {
   let scale = 1 - params.progress * 0.5;
   header.style.height = height + 'px';
   headerLogo.style.transform = 'scale(' + scale +  ')';
-  x.lib.switchClass(header, params.progress == 1, 'header_compact');
+  x.lib.switchClass(header, 'header_compact', params.progress == 1);
 }
