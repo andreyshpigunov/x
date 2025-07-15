@@ -13,10 +13,10 @@
 //    setChecked(elements, checked = false) — Set checkbox or radio input(s) checked/unchecked
 //    setValue(elements, value)             — Set value for various input types
 //    onUpdate(elements, callback)          — Attach input/change listeners to elements
-//    update(elements)                      — Manually dispatch an "update" event (input/change)
+//    update(elements)                      — Manually dispatch an 'update' event (input/change)
 //
 
-import { lib } from "./lib";
+import { lib } from './lib';
 
 class Form {
   constructor() {
@@ -30,8 +30,8 @@ class Form {
    * @param {string|HTMLElement|Array} elements - One or multiple elements/selectors.
    * @param {boolean} checked - Whether the checkbox/radio should be checked.
    */
-  setChecked(elements, checked = false) {
-    if (!Array.isArray(elements)) elements = [elements];
+  setChecked(selector, checked = false) {
+    const elements = lib.qsa(selector);
 
     for (const element of elements) {
       const el = lib.qs(element);
@@ -41,7 +41,7 @@ class Form {
       }
 
       el.checked = checked;
-      el.dispatchEvent(new Event("input")); // Trigger input event for listeners
+      el.dispatchEvent(new Event('input')); // Trigger input event for listeners
     }
   }
 
@@ -52,8 +52,8 @@ class Form {
    * @param {string|HTMLElement|Array} elements - One or multiple elements/selectors.
    * @param {*} value - The value to assign.
    */
-  setValue(elements, value) {
-    if (!Array.isArray(elements)) elements = [elements];
+  setValue(selector, value) {
+    const elements = lib.qsa(selector);
     
     for (const element of elements) {
       const el = lib.qs(element);
@@ -66,30 +66,29 @@ class Form {
       const tagName = el.tagName.toLowerCase();
 
       switch (tagName) {
-        case "input":
-          if (["checkbox", "radio"].includes(el.type)) {
+        case 'input':
+          if (['checkbox', 'radio'].includes(el.type)) {
             el.checked = !!value;
-            el.dispatchEvent(new Event("input"));
           } else {
             el.value = value;
-            el.dispatchEvent(new Event("input"));
           }
+          el.dispatchEvent(new Event('input'));
           break;
 
-        case "textarea":
+        case 'textarea':
           el.value = value;
-          el.dispatchEvent(new Event("input"));
+          el.dispatchEvent(new Event('input'));
           break;
 
-        case "select":
+        case 'select':
           el.value = value;
-          el.dispatchEvent(new Event("change"));
+          el.dispatchEvent(new Event('change'));
           break;
 
-        case "div":
+        case 'div':
           if (el.isContentEditable) {
             el.innerText = value;
-            el.dispatchEvent(new Event("input"));
+            el.dispatchEvent(new Event('input'));
             break;
           }
         // Fallthrough for unsupported types
@@ -106,8 +105,9 @@ class Form {
    * @param {string|HTMLElement|Array} elements - One or more elements/selectors.
    * @param {function} callback - Callback function to call on change.
    */
-  onUpdate(elements, callback) {
-    if (!Array.isArray(elements)) elements = [elements];
+  onUpdate(selector, callback) {
+    const elements = lib.qsa(selector);
+    
     for (const element of elements) {
       const el = lib.qs(element);
       if (!el) {
@@ -126,18 +126,18 @@ class Form {
       };
 
       switch (tagName) {
-        case "input":
-        case "textarea":
-          addOnce("input");
+        case 'input':
+        case 'textarea':
+          addOnce('input');
           break;
 
-        case "select":
-          addOnce("change");
+        case 'select':
+          addOnce('change');
           break;
 
-        case "div":
+        case 'div':
           if (el.isContentEditable) {
-            addOnce("input");
+            addOnce('input');
             break;
           }
         // Fallthrough for unsupported types
@@ -148,13 +148,13 @@ class Form {
   }
 
   /**
-   * Dispatches an "input" or "change" event manually on elements,
+   * Dispatches an 'input' or 'change' event manually on elements,
    * simulating user updates for reactivity/tracking purposes.
    *
    * @param {string|HTMLElement|Array} elements - One or more elements/selectors.
    */
-  update(elements) {
-    if (!Array.isArray(elements)) elements = [elements];
+  update(selector) {
+    const elements = lib.qsa(selector);
 
     for (const element of elements) {
       const el = lib.qs(element);
@@ -166,14 +166,14 @@ class Form {
       const tagName = el.tagName.toLowerCase();
 
       switch (tagName) {
-        case "input":
-        case "textarea":
-        case "div":
-          el.dispatchEvent(new Event("input"));
+        case 'input':
+        case 'textarea':
+        case 'div':
+          el.dispatchEvent(new Event('input'));
           break;
 
-        case "select":
-          el.dispatchEvent(new Event("change"));
+        case 'select':
+          el.dispatchEvent(new Event('change'));
           break;
 
         // Fallthrough for unsupported types
