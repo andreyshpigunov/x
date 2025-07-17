@@ -1,61 +1,107 @@
-//
-//  device.js / x
-//  Device detection utility
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-//  This module detects basic device, OS, browser, screen size,
-//  input capabilities, and sets corresponding CSS classes on <html>.
-//  Also provides basic responsive size flags.
-//
-//  Exported object includes:
-//    - js: true (always present)
-//    - os: 'windows' | 'macos' | 'linux' | 'android' | 'ios' | 'unknown'
-//    - browser: 'chrome' | 'firefox' | 'safari' | 'opera' | 'unknown'
-//    - device: 'iphone' | 'ipad' | 'android' | 'mac' | undefined
-//    - mobile: boolean
-//    - touch: boolean
-//    - width: window width
-//    - height: window height
-//    - size: { s: boolean, m: boolean, l: boolean, xl: boolean }
-//
-//  Available methods:
-//    - (internal) debounce(func, delay)
-//    - (internal) size() → returns responsive size flags
-//
+/**
+ * @fileoverview Device detection utility
+ *
+ * Detects the device type, operating system, browser, screen size, and touch capability.
+ * Automatically sets CSS classes on the <html> element for styling purposes.
+ * Also provides a singleton object with current device parameters.
+ *
+ * Exported singleton: `device`
+ *
+ * Public API (exported fields):
+ *
+ * - `device.js`        – Always `true`. Indicates that JS is enabled.
+ * - `device.os`        – Detected OS: `'windows' | 'macos' | 'linux' | 'android' | 'ios' | 'unknown'`
+ * - `device.browser`   – Detected browser: `'chrome' | 'firefox' | 'safari' | 'opera' | 'unknown'`
+ * - `device.device`    – Device type: `'iphone' | 'ipad' | 'android' | 'mac' | null`
+ * - `device.mobile`    – `true` if the device is mobile.
+ * - `device.touch`     – `true` if the device supports touch input.
+ * - `device.width`     – Current window width in pixels.
+ * - `device.height`    – Current window height in pixels.
+ * - `device.size`      – Responsive size flags:
+ *     - `xs` – width < 400px
+ *     - `s`  – width < 600px
+ *     - `m`  – 600px <= width < 1000px
+ *     - `l`  – width >= 1000px
+ *     - `xl` – width >= 1400px
+ *
+ * Example usage:
+ *
+ *   import { device } from './device.js';
+ *
+ *   if (device.mobile) {
+ *     console.log('Mobile device detected');
+ *   }
+ *
+ *   console.log('Current size:', device.size);
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
+ import { lib } from './lib';
+ 
+/**
+ * Device detection singleton.
+ *
+ * Provides a set of properties describing the current device, browser, OS, screen size, and input capabilities.
+ * Automatically applies corresponding CSS classes to the <html> element.
+ *
+ * @type {{
+ *   js: boolean,
+ *   os: string,
+ *   browser: string,
+ *   device: (string|null),
+ *   mobile: boolean,
+ *   touch: boolean,
+ *   width: number,
+ *   height: number,
+ *   size: {xs: boolean, s: boolean, m: boolean, l: boolean, xl: boolean}
+ * }}
+ */
 export const device = (function () {
 
   /**
-   * Creates a debounced version of a function.
-   * Useful for reducing frequency of resize events.
+   * Calculates responsive size flags based on the current window width.
    *
-   * @param {Function} func - Function to debounce.
-   * @param {number} delay - Delay in milliseconds.
-   * @returns {Function}
+   * @returns {{xs: boolean, s: boolean, m: boolean, l: boolean, xl: boolean}}
+   * An object representing the current responsive size.
+   * @private
    */
-  const debounce = (func, delay) => {
-    let timeout;
-    return function () {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func.apply(this, arguments), delay);
-    };
+  const _size = () => {
+    const width = window.innerWidth;
+    return {
+      xs: width < 400,
+      s:  width < 600,
+      m:  width >= 600 && width < 1000,
+      l:  width >= 1000,
+      xl: width >= 1400
+    }
   };
 
   /**
-   * Returns an object of responsive size flags based on window width.
-   * @returns {{s: boolean, m: boolean, l: boolean, xl: boolean}}
+   * Adds a CSS class to the list if it is not already present.
+   *
+   * @param {string} className - The CSS class to add.
+   * @private
    */
-  function size() {
-    const width = window.innerWidth;
-    return {
-      s: width < 600,
-      m: width >= 600 && width < 1000,
-      l: width >= 1000,
-      xl: width >= 1400
-    };
-  }
+  const _addClass = (className) => {
+    if (className && !classes.includes(className)) {
+      classes.push(className);
+    }
+  };
+
+  /**
+   * Updates the `width`, `height`, and `size` properties of the `device` singleton.
+   * Called on window resize events (debounced).
+   *
+   * @private
+   */
+  const _updateDimensions = () => {
+    fields.width = window.innerWidth;
+    fields.height = window.innerHeight;
+    fields.size = _size();
+  };
 
   // Reference to <html> element
   const html = document.documentElement;
@@ -66,7 +112,7 @@ export const device = (function () {
   // CSS classes to apply to <html>
   const classes = [];
 
-  // Main exported object that holds all detected fields
+  // Exported fields with device info
   const fields = {
     js: true,
     os: null,
@@ -76,20 +122,10 @@ export const device = (function () {
     touch: false,
     width: window.innerWidth,
     height: window.innerHeight,
-    size: size()
+    size: _size()
   };
 
-  /**
-   * Adds a class to the list if not already present.
-   * @param {string} className
-   */
-  const addClass = (className) => {
-    if (className && !classes.includes(className)) {
-      classes.push(className);
-    }
-  };
-
-  // Detect OS from user agent
+  // Detect OS
   const osMapping = {
     win: 'windows',
     linux: 'linux',
@@ -102,7 +138,7 @@ export const device = (function () {
 
   fields.os = Object.keys(osMapping).find(key => userAgent.includes(key)) || 'unknown';
 
-  // Detect browser from user agent
+  // Detect browser
   const browserMapping = {
     firefox: /mozilla/.test(userAgent) && !/(compatible|webkit)/.test(userAgent),
     safari: /safari/.test(userAgent) && !/chrome/.test(userAgent),
@@ -112,7 +148,7 @@ export const device = (function () {
 
   fields.browser = Object.keys(browserMapping).find(browser => browserMapping[browser]) || 'unknown';
 
-  // Detect device type from user agent
+  // Detect device type
   if (/ipad/.test(userAgent)) {
     fields.device = 'ipad';
   } else if (/iphone/.test(userAgent)) {
@@ -123,34 +159,24 @@ export const device = (function () {
     fields.device = 'mac';
   }
 
-  // Add detected classes
-  addClass('js');
-  addClass(fields.os);
-  addClass(fields.browser);
-  addClass(fields.device);
-  addClass(fields.mobile ? 'mobile' : 'desktop');
+  // Add detected classes to <html>
+  _addClass('js');
+  _addClass(fields.os);
+  _addClass(fields.browser);
+  _addClass(fields.device);
+  _addClass(fields.mobile ? 'mobile' : 'desktop');
 
   // Detect touch support using media query
   if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
     fields.touch = true;
-    addClass('touch');
+    _addClass('touch');
   }
 
-  /**
-   * Updates screen width/height and responsive size flags.
-   * Called on window resize.
-   */
-  const updateDimensions = () => {
-    fields.width = window.innerWidth;
-    fields.height = window.innerHeight;
-    fields.size = size();
-  };
-
-  // Debounced resize listener to update screen dimensions
-  window.addEventListener('resize', debounce(updateDimensions, 100));
+  // Listen to resize events and update dimensions
+  window.addEventListener('resize', lib.debounce(_updateDimensions, 100));
 
   // Apply all collected classes to <html>
-  classes.forEach(c => html.classList.add(c));
+  classes.forEach(cl => html.classList.add(cl));
 
   // Return the fields object as a singleton export
   return fields;

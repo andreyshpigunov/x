@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.2.29</div>
+    <div class="header-version nowrap">0.2.30</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -42,14 +42,26 @@
 
   <section class="section-header mt8 px5 m:px6 l:px8" x-appear>
     <h1 class="mxa ac max800">Small and simple CSS & JavaScript library with interesting features</h1>
-    <div id="menu" class="mt4">
-      <a x-dropdown-open class="button button_dropdown" aria-expanded="false" aria-controls="menu1">Menu</a>
-      <ul x-dropdown id="menu1" role="menu" tabindex="-1">
-        <li><a href="/admin/settings/profile/">Профиль</a></li>
-        <li><a href="/logout/">Выйти</a></li>
-        <li class="divider"></li>
-        <li><span class="op4">Version 0.5</span></li>
-      </ul>
+    
+    <div class="flex">
+      <div class="mt4 mra">
+        <button x-dropdown-open class="button button_dropdown" tabindex="1">Menu left</button>
+        <ul x-dropdown role="menu" tabindex="-1">
+          <li><a href="/admin/settings/profile/">Профильное образование в педагогическом</a></li>
+          <li><a href="/logout/">Выйти</a></li>
+          <li class="divider"></li>
+          <li><span class="op4">Version 0.5</span></li>
+        </ul>
+      </div>
+      <div class="mt4">
+        <button x-dropdown-open class="button button_dropdown" tabindex="1">Menu right</button>
+        <ul x-dropdown role="menu" tabindex="-1">
+          <li><a href="/admin/settings/profile/">Профиль</a></li>
+          <li><a href="/logout/">Выйти</a></li>
+          <li class="divider"></li>
+          <li><span class="op4">Version 0.5</span></li>
+        </ul>
+      </div>
     </div>
   </section>
 
@@ -2138,17 +2150,25 @@ a.link_wavy</pre>
     <h4><code class="fs16">async render(selector, data, placement = null)</code></h4>
     <h4><code class="fs16">[x-render]  |  Render JavaScript in 'x-render' attribute</code></h4>
   </div>
-
-
-
-
-
+  
   <footer class="p6 ac fs14">
     <a href="mailto:andrey@shpigunov.ru">andrey@shpigunov.ru</a>
     <div class="mt1" x-render="new Date().getFullYear()"></div>
   </footer>
-
-
+  
+  <div class="flex aic jcse m4">
+    <div>
+      <button x-dropdown-open class="button button_dropdown" tabindex="1">Bottom menu</button>
+      <ul x-dropdown role="menu" tabindex="-1">
+        <li><a href="/admin/settings/profile/">Профиль</a></li>
+        <li><a href="/logout/">Выйти</a></li>
+        <li><a href="/admin/settings/profile/">Профиль</a></li>
+        <li><a href="/logout/">Выйти</a></li>
+        <li class="divider"></li>
+        <li><span class="op4">Version 0.5</span></li>
+      </ul>
+    </div>
+  </div>
   <script src="dist/app.js"></script>
 </body>
 

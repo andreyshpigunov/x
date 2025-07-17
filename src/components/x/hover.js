@@ -1,61 +1,95 @@
-//
-//  hover.js / x
-//  Hover sync module
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-//  This module synchronizes hover effects across elements with the same href attribute.
-//  It listens for mouseenter and mouseleave events on elements with [x-hover].
-//
-//  When an element with [x-hover] and href is hovered,
-//  all elements with the same href will receive the .hover class.
-//
-//  Available methods:
-//    hover() — initializes global hover sync behavior
-//
+/**
+ * @fileoverview Hover synchronization module.
+ *
+ * Synchronizes hover effects across all elements with the same `href` attribute.
+ * When one `[x-hover]` element is hovered, all matching elements get the 'hover' class.
+ *
+ * Exported function: `hover`
+ *
+ * Public API:
+ *
+ * - `hover()` – Initializes global hover synchronization.
+ *
+ * Example usage:
+ *
+ * HTML:
+ * <a href="/about" x-hover>About</a>
+ * <a href="/about" x-hover>Learn More</a>
+ *
+ * JS:
+ * import { hover } from './hover.js';
+ * hover();
+ *
+ * Behavior:
+ * - When one link is hovered, all links with the same href receive `.hover` class.
+ * - When mouse leaves, all matching links lose `.hover` class.
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 import { lib } from './lib';
 
 /**
- * Initializes hover synchronization by attaching event listeners
- * for `mouseenter` and `mouseleave` to the document.
+ * Initializes global hover synchronization by attaching event listeners.
  *
- * Applies the 'hover' class to all elements with the same href when one is hovered.
+ * Listens to `mouseenter` and `mouseleave` events in the capture phase.
+ * Targets elements with `[x-hover]` and synchronizes their hover states across all elements
+ * sharing the same `href` attribute.
+ *
+ * @example
+ * hover();
  */
 export function hover() {
-  // Attach event listeners in the capture phase to ensure early detection
-  ['mouseenter', 'mouseleave'].forEach(event =>
-    document.addEventListener(event, handleHover, true)
-  );
+  document.addEventListener('mouseenter', handleHoverEnter, true);
+  document.addEventListener('mouseleave', handleHoverLeave, true);
 }
 
 /**
- * Handles mouseenter/mouseleave events and toggles the 'hover' class
- * on all elements that share the same href as the hovered [x-hover] element.
+ * Handles `mouseenter` event.
+ * Adds the 'hover' class to all elements with the same `href` as the hovered `[x-hover]` element.
  *
- * @param {MouseEvent} event - The mouse event triggered by user interaction.
+ * @param {MouseEvent} event - The mouseenter event object.
+ * @private
  */
-function handleHover(event) {
-  // Ensure the event target is part of the current document
-  if (!document.contains(event.target)) return;
-  
-  // Ensure event.target is an Element (not a Text node, etc.)
-  if (!(event.target instanceof Element)) return;
-  
-  // Find the nearest ancestor with [x-hover] attribute
+function handleHoverEnter(event) {
+  syncHover(event, true);
+}
+
+/**
+ * Handles `mouseleave` event.
+ * Removes the 'hover' class from all elements with the same `href` as the hovered `[x-hover]` element.
+ *
+ * @param {MouseEvent} event - The mouseleave event object.
+ * @private
+ */
+function handleHoverLeave(event) {
+  syncHover(event, false);
+}
+
+/**
+ * Synchronizes the hover state by toggling the 'hover' class on all elements
+ * with the same `href` as the event target.
+ *
+ * @param {MouseEvent} event - The mouse event triggering the sync.
+ * @param {boolean} isEnter - `true` for mouseenter, `false` for mouseleave.
+ * @private
+ */
+function syncHover(event, isEnter) {
   const target = event.target.closest('[x-hover]');
   if (!target) return;
-  
-  // Read the href attribute of the hovered element
+
   const href = target.getAttribute('href');
   if (!href) return;
-  
-  // Determine method: add or remove class based on event type
-  const method = event.type === 'mouseenter' ? 'addClass' : 'removeClass';
-  
-  // Apply or remove 'hover' class to all elements with matching href
-  lib.qsa(`[href="${CSS.escape(href)}"]`).forEach(item => {
-    lib[method](item, 'hover');
-  });
+
+  const elements = lib.qsa(`[href="${CSS.escape(href)}"]`);
+
+  for (const el of elements) {
+    if (isEnter) {
+      el.classList.add('hover');
+    } else {
+      el.classList.remove('hover');
+    }
+  }
 }

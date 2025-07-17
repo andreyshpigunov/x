@@ -106,7 +106,13 @@ All right reserved.
     transform: var(--button-transform);
   }
   
+  &:focus-visible {
+    outline: solid .2rem #8888;
+    transition: none;
+  }
+  
   @media (any-hover: hover) {
+    &:focus-visible,
     &:hover,
     &.hover {
       text-decoration: none;
@@ -216,21 +222,28 @@ All right reserved.
 }
 
 .button.button_dropdown {
-  padding-right: 1.8em;
+  padding-right: calc(var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff))) * 1.8);
 
   &::after {
-    content: '⌟';
+    content: '';
     display: block;
     position: absolute;
-    right: .35em;
-    font-size: 1.4em;
-    margin-top: -.35em;
+    right: var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff)));
+    width: .5em;
+    height: .5em;
+    margin-top: -.05em;
+    border-bottom: solid .15rem var(--button-font-color);
+    border-right: solid .15rem var(--button-font-color);
     transform: rotate(45deg);
     transform-origin: center;
     will-change: opacity;
     opacity: .4;
     transition: opacity .1s ease-out;
   }
+}
+.dropdown_bottom .button.button_dropdown::after {
+  transform: rotate(225deg);
+  margin-top: .3em;
 }
 
 .button.button_dropdown.active {

@@ -1,122 +1,209 @@
-//
-//  animate.js / x
-//  Animations
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-//  This module enables scroll-based animations using configurable
-//  parameters via the x-animate attribute.
-//
-//  Example:
-//  <div x-animate='{
-//    "parent": "#scroll-container",  // scroll context, default "window"
-//    "trigger": ".trigger",          // element to track, default is the element itself
-//    "start": "120vh",               // start of animation zone (e.g. in vh, %, or px)
-//    "end": "0vh",                   // end of animation zone
-//    "functionName": "coverOut",     // name of a function to execute during animation
-//    "class": "fixed",               // class to add when inside animation zone
-//    "classRemove": true             // remove class when leaving zone
-//  }'></div>
-//
-//  Available methods:
-//    init()              — Initialize and observe all [x-animate] elements
-//    _scrollHandler()    — Optimized scroll handler (requestAnimationFrame)
-//    _scroll(array)      — Calculates animation progress for each element
-//    _2px(value, parent) — Converts start/end values to pixels
-//
+/**
+ * @fileoverview Scroll-based animation controller.
+ *
+ * Observes elements with `[x-animate]` attribute and applies classes or executes functions
+ * based on the element's position in the viewport or parent container.
+ *
+ * Exported singleton: `animate`
+ *
+ * Public API:
+ *
+ * - `animate.init()` – Initialize/reinitialize animation tracking for `[x-animate]` elements.
+ *
+ * Example usage:
+ *
+ * HTML:
+ * <div x-animate='{
+ *   "parent": "#scroll-container",
+ *   "trigger": ".trigger",
+ *   "start": "120vh",
+ *   "end": "0vh",
+ *   "functionName": "coverOut",
+ *   "class": "fixed",
+ *   "classRemove": true
+ * }'></div>
+ *
+ * Behavior:
+ * - Adds/removes classes based on scroll position.
+ * - Calls custom global functions with progress parameter.
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 import { lib } from './lib';
 
+/**
+ * Scroll-based animation controller.
+ *
+ * Handles animations triggered by scroll events using `[x-animate]` attributes.
+ */
 class Animate {
 
   constructor() {
-    this.ticking = false;              // Prevents multiple requestAnimationFrame calls
-    this.animationsArray = [];         // All animation items
-    this._scrollHandler = this._scrollHandler.bind(this); // Bind context
+    /**
+     * Prevents multiple `requestAnimationFrame` calls.
+     * @type {boolean}
+     * @private
+     */
+    this._ticking = false;
+
+    /**
+     * Array of animation items parsed from `[x-animate]` elements.
+     * @type {Object[]}
+     * @private
+     */
+    this._animations = [];
+
+    /**
+     * Bound scroll handler for `requestAnimationFrame`.
+     * @type {Function}
+     * @private
+     */
+    this._scroll = this._scroll.bind(this);
+
+    /**
+     * Bound raw scroll event handler.
+     * @type {Function}
+     * @private
+     */
+    this._scrollHandler = this._scrollHandler.bind(this);
+
+    /**
+     * Indicates whether `init()` was called.
+     * @type {boolean}
+     * @private
+     */
+    this._initialized = false;
+
+    /**
+     * Set of parent elements being listened to for scroll.
+     * @type {Set<HTMLElement|Window>}
+     * @private
+     */
+    this._parents = new Set();
+
+    /**
+     * NodeList of elements with `[x-animate]`.
+     * @type {NodeListOf<HTMLElement>|null}
+     * @private
+     */
+    this._elements = null;
   }
 
   /**
-   * Initializes all elements with the [x-animate] attribute.
-   * Parses JSON configuration, stores elements, and sets up scroll listeners.
+   * Initializes or reinitializes animation tracking for `[x-animate]` elements.
+   *
+   * Parses attributes, sets up scroll listeners, and starts animation processing.
+   *
+   * @example
+   * animate.init();
    */
   init() {
-    const elements = lib.qsa('[x-animate]');
-    if (!elements.length) return;
+    this._cleanup();
 
-    elements.forEach((e) => {
-      let json;
+    this._elements = lib.qsa('[x-animate]');
+    if (!this._elements?.length) return;
+
+    this._parseElementsAnimations();
+    if (!this._animations.length) return;
+
+    this._setupListeners();
+    this._initialized = true;
+  }
+
+  /**
+   * Removes all listeners and resets internal state.
+   *
+   * @private
+   */
+  _cleanup() {
+    if (!this._initialized) return;
+
+    this._parents.forEach(parent => {
+      parent.removeEventListener('scroll', this._scrollHandler, { passive: true });
+    });
+
+    this._ticking = false;
+    this._animations = [];
+    this._parents = new Set();
+    this._elements = null;
+    this._initialized = false;
+  }
+
+  /**
+   * Parses `[x-animate]` attributes and creates animation configuration for each element.
+   *
+   * @private
+   */
+  _parseElementsAnimations() {
+    this._elements.forEach(element => {
       try {
-        json = JSON.parse(e.getAttribute('x-animate'));
-      } catch (error) {
-        console.warn('Invalid JSON in x-animate attribute:', e, error);
-        return;
-      }
-
-      const item = {
-        element: e,
-        trigger: json.trigger && lib.qs(json.trigger) ? lib.qs(json.trigger) : e,
-        parent: json.parent && lib.qs(json.parent) ? lib.qs(json.parent) : window,
-        start: json.start,
-        end: json.end || false,
-        class: json.class,
-        classRemove: json.classRemove,
-        functionName: json.functionName,
-        lockedIn: false,
-        lockedOut: false,
-        log: json.log || false
-      };
-
-      this.animationsArray.push(item);
-      e.removeAttribute('x-animate'); // Clean up DOM attribute
-    });
-
-    if (!this.animationsArray.length) return;
-
-    const parents = new Set();
-    parents.add(window);
-
-    // Add scroll listeners to each unique scroll container
-    this.animationsArray.forEach(item => {
-      if (!parents.has(item.parent)) {
-        parents.add(item.parent);
-        item.parent.addEventListener('scroll', this._scrollHandler, { passive: true });
+        const json = JSON.parse(element.getAttribute('x-animate'));
+        const item = {
+          element,
+          trigger: lib.qs(json.trigger) || element,
+          parent: lib.qs(json.parent) || window,
+          start: json.start,
+          end: json.end || false,
+          class: json.class,
+          classRemove: json.classRemove !== false,
+          functionName: json.functionName,
+          lockedIn: false,
+          lockedOut: false,
+          log: json.log || false
+        };
+        this._animations.push(item);
+      } catch (err) {
+        console.error('Invalid JSON in x-animate attribute:', element, err);
       }
     });
+  }
 
-    window.addEventListener('scroll', this._scrollHandler, { passive: true });
+  /**
+   * Sets up scroll event listeners for unique parent containers.
+   *
+   * @private
+   */
+  _setupListeners() {
+    for (const item of this._animations) {
+      if (this._parents.has(item.parent)) continue;
+      this._parents.add(item.parent);
+      item.parent.addEventListener('scroll', this._scrollHandler, { passive: true });
+    }
 
-    // Trigger initial animation evaluation after DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this._scroll(this.animationsArray));
+    if (document.readyState === 'complete') {
+      requestAnimationFrame(() => this._scroll());
     } else {
-      this._scroll(this.animationsArray);
+      document.addEventListener('DOMContentLoaded', this._scroll, { once: true });
     }
   }
 
   /**
-   * Scroll event handler optimized with requestAnimationFrame.
-   * Batches updates to improve performance.
+   * Raw scroll event handler with throttling via `requestAnimationFrame`.
+   *
    * @private
    */
   _scrollHandler() {
-    if (!this.ticking) {
-      this.ticking = true;
+    if (!this._ticking) {
+      this._ticking = true;
       window.requestAnimationFrame(() => {
-        this._scroll(this.animationsArray);
-        this.ticking = false;
+        this._scroll();
+        this._ticking = false;
       });
     }
   }
 
   /**
-   * Main animation update logic.
-   * Calculates position and progress, applies classes and calls functions.
-   * @param {Array} animationsArray - Array of configured animation items.
+   * Main animation logic executed on scroll.
+   *
+   * Calculates element position, progress, adds/removes classes, and calls custom functions.
+   *
    * @private
    */
-  _scroll(animationsArray) {
-    animationsArray.forEach(item => {
+  _scroll() {
+    this._animations.forEach(item => {
       const triggerRect = item.trigger.getBoundingClientRect();
       const parentRect = item.parent !== window ? item.parent.getBoundingClientRect() : null;
 
@@ -125,12 +212,10 @@ class Animate {
       const end = this._2px(item.end, item.parent);
       item.duration = isNaN(end) ? 0 : start - end;
 
-      if (item.log) {
-        console.log(top, start, end, item);
-      }
+      if (item.log) console.log(top, start, end, item);
 
-      // === Case: start and end defined ===
       if (!isNaN(start) && !isNaN(end)) {
+        // Case: both start and end defined
         if (top <= start && top >= end) {
           item.lockedOut = false;
           if (item.class) item.element.classList.add(item.class);
@@ -141,11 +226,7 @@ class Animate {
           }
 
         } else {
-          if (
-            item.class &&
-            item.classRemove === true &&
-            item.element.classList.contains(item.class)
-          ) {
+          if (item.class && item.classRemove === true && item.element.classList.contains(item.class)) {
             item.element.classList.remove(item.class);
           }
 
@@ -163,8 +244,8 @@ class Animate {
           }
         }
 
-      // === Case: only start defined ===
       } else if (!isNaN(start)) {
+        // Case: only start defined
         if (top <= start) {
           item.lockedOut = false;
           if (item.class) item.element.classList.add(item.class);
@@ -178,11 +259,7 @@ class Animate {
         } else {
           item.lockedIn = false;
 
-          if (
-            item.class &&
-            item.classRemove === true &&
-            item.element.classList.contains(item.class)
-          ) {
+          if (item.class && item.classRemove === true && item.element.classList.contains(item.class)) {
             item.element.classList.remove(item.class);
           }
 
@@ -200,9 +277,10 @@ class Animate {
 
   /**
    * Converts a value like '120vh', '50%' or '300' into pixels.
-   * @param {string|number} value - Value to convert.
-   * @param {HTMLElement|Window} parent - Scroll parent (for % and vh).
-   * @returns {number} Pixel equivalent.
+   *
+   * @param {string|number} value - The value to convert.
+   * @param {HTMLElement|Window} [parent=window] - The context for percentage calculations.
+   * @returns {number} Pixel value.
    * @private
    */
   _2px(value, parent = window) {
@@ -219,4 +297,8 @@ class Animate {
   }
 }
 
+/**
+ * Singleton export of the Animate controller.
+ * @type {Animate}
+ */
 export const animate = new Animate();

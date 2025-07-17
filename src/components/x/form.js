@@ -1,188 +1,180 @@
-//
-//  form.js / x
-//  Additional form element utilities
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-//  This utility module provides convenient helpers for working with forms.
-//  It allows batch setting of input values, checkbox states, value tracking,
-//  and custom input update handling.
-//
-//  Available methods:
-//    setChecked(elements, checked = false) — Set checkbox or radio input(s) checked/unchecked
-//    setValue(elements, value)             — Set value for various input types
-//    onUpdate(elements, callback)          — Attach input/change listeners to elements
-//    update(elements)                      — Manually dispatch an 'update' event (input/change)
-//
-
+/**
+ * @fileoverview Additional form utilities for inputs, checkboxes, selects, and contenteditable elements.
+ *
+ * Provides methods for setting values, managing checkboxes, attaching/removing event listeners,
+ * and manually dispatching events.
+ *
+ * Exported singleton: `form`
+ *
+ * Public API:
+ *
+ * - `form.setChecked(selector, checked)` – Set checked state of checkboxes/radios.
+ * - `form.setValue(selector, value)` – Set value of form elements or contenteditable.
+ * - `form.onUpdate(selector, callback)` – Attach listener for input/change events.
+ * - `form.offUpdate(selector)` – Remove previously added listeners (partial, due to anonymous functions).
+ * - `form.update(selector)` – Manually dispatch input/change event.
+ *
+ * Example usage:
+ *
+ *   form.setValue('.name', 'John');
+ *   form.setChecked('#agree', true);
+ *   form.onUpdate('input', el => console.log(el.value));
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
+ 
 import { lib } from './lib';
 
 class Form {
+  /**
+   * Creates a Form utility instance.
+   * Stores internal references to event listeners.
+   */
   constructor() {
-    this.listen = {
-      update: new Set(), // Track elements already listening to avoid duplicate bindings
-    };
+    /**
+     * Stores event listener references to avoid duplicates.
+     *
+     * @readonly
+     * @type {{update: Set<HTMLElement>}}
+     */
+    this.listen = Object.freeze({
+      update: new Set(),
+    });
   }
 
   /**
-   * Sets the checked state of checkbox or radio input(s).
-   * @param {string|HTMLElement|Array} elements - One or multiple elements/selectors.
-   * @param {boolean} checked - Whether the checkbox/radio should be checked.
+   * Determines the appropriate event type for an element.
+   *
+   * @param {HTMLElement} el - Target element.
+   * @returns {string} 'input' or 'change' depending on the element type.
+   * @throws {Error} If the element is unsupported.
+   */
+  getEventType(el) {
+    if (el.isContentEditable) return 'input';
+
+    const tag = el.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return 'input';
+    if (tag === 'select') return 'change';
+
+    throw new Error(`Unsupported element <${tag}>`);
+  }
+
+  /**
+   * Sets the checked state of checkboxes or radios and dispatches 'input' event if changed.
+   *
+   * @param {string} selector - CSS selector for checkboxes or radios.
+   * @param {boolean} [checked=false] - Desired checked state.
    */
   setChecked(selector, checked = false) {
-    const elements = lib.qsa(selector);
-
-    for (const element of elements) {
-      const el = lib.qs(element);
-      if (!el) {
-        console.error('Element not found: ', element);
+    for (const el of lib.qsa(selector)) {
+      if (!el?.type || (el.type !== 'checkbox' && el.type !== 'radio')) {
+        console.error('setChecked: Not a checkbox/radio', el);
         continue;
       }
 
-      el.checked = checked;
-      el.dispatchEvent(new Event('input')); // Trigger input event for listeners
+      if (el.checked !== checked) {
+        el.checked = checked;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      }
     }
   }
 
   /**
-   * Sets the value of an input, textarea, select, or contenteditable element.
-   * Automatically dispatches the appropriate input/change event.
+   * Sets the value of inputs, textareas, selects, or contenteditable elements and dispatches event.
    *
-   * @param {string|HTMLElement|Array} elements - One or multiple elements/selectors.
-   * @param {*} value - The value to assign.
+   * @param {string} selector - CSS selector for elements.
+   * @param {string|boolean|number} value - Value to set.
+   * @throws {Error} If element type is unsupported.
    */
   setValue(selector, value) {
-    const elements = lib.qsa(selector);
-    
-    for (const element of elements) {
-      const el = lib.qs(element);
-      
+    for (const el of lib.qsa(selector)) {
       if (!el) {
-        console.error('Element not found: ', element);
+        console.error('setValue: Element not found', el);
         continue;
       }
 
-      const tagName = el.tagName.toLowerCase();
+      if (el.isContentEditable) {
+        el.innerText = value;
+      } else {
+        const tag = el.tagName.toLowerCase();
+        const type = el.type;
 
-      switch (tagName) {
-        case 'input':
-          if (['checkbox', 'radio'].includes(el.type)) {
+        if (tag === 'input') {
+          if (type === 'checkbox' || type === 'radio') {
             el.checked = !!value;
           } else {
             el.value = value;
           }
-          el.dispatchEvent(new Event('input'));
-          break;
-
-        case 'textarea':
+        } else if (tag === 'textarea' || tag === 'select') {
           el.value = value;
-          el.dispatchEvent(new Event('input'));
-          break;
-
-        case 'select':
-          el.value = value;
-          el.dispatchEvent(new Event('change'));
-          break;
-
-        case 'div':
-          if (el.isContentEditable) {
-            el.innerText = value;
-            el.dispatchEvent(new Event('input'));
-            break;
-          }
-        // Fallthrough for unsupported types
-        default:
-          throw new Error(`Unsupported element: ${tagName}`);
+        } else {
+          throw new Error(`setValue: Unsupported element <${tag}>`);
+        }
       }
+
+      el.dispatchEvent(new Event(this.getEventType(el), { bubbles: true }));
     }
   }
 
   /**
-   * Attaches an input/change listener to elements.
-   * Ensures each element only has one listener bound.
+   * Attaches input/change listeners to elements, preventing duplicates.
    *
-   * @param {string|HTMLElement|Array} elements - One or more elements/selectors.
-   * @param {function} callback - Callback function to call on change.
+   * @param {string} selector - CSS selector for elements.
+   * @param {Function} callback - Function to call when input or change event fires.
    */
   onUpdate(selector, callback) {
-    const elements = lib.qsa(selector);
-    
-    for (const element of elements) {
-      const el = lib.qs(element);
+    for (const el of lib.qsa(selector)) {
       if (!el) {
-        console.error('Element not found: ', element);
+        console.error('onUpdate: Element not found', el);
         continue;
       }
 
-      const tagName = el.tagName.toLowerCase();
+      if (this.listen.update.has(el)) continue;
 
-      // Attach listener once per element
-      const addOnce = (eventType) => {
-        if (!this.listen.update.has(el)) {
-          el.addEventListener(eventType, () => callback(el));
-          this.listen.update.add(el);
-        }
-      };
-
-      switch (tagName) {
-        case 'input':
-        case 'textarea':
-          addOnce('input');
-          break;
-
-        case 'select':
-          addOnce('change');
-          break;
-
-        case 'div':
-          if (el.isContentEditable) {
-            addOnce('input');
-            break;
-          }
-        // Fallthrough for unsupported types
-        default:
-          throw new Error(`Unsupported element: ${tagName}`);
-      }
+      el.addEventListener(this.getEventType(el), () => callback(el));
+      this.listen.update.add(el);
     }
   }
 
   /**
-   * Dispatches an 'input' or 'change' event manually on elements,
-   * simulating user updates for reactivity/tracking purposes.
+   * Removes references to update listeners added by `onUpdate`.
    *
-   * @param {string|HTMLElement|Array} elements - One or more elements/selectors.
+   * Note: Actual event listeners are not removed because they were added as anonymous functions.
+   * This method only cleans the internal tracking set.
+   *
+   * @param {string} selector - CSS selector for elements.
+   */
+  offUpdate(selector) {
+    for (const el of lib.qsa(selector)) {
+      if (!el) continue;
+      if (!this.listen.update.has(el)) continue;
+
+      console.warn('offUpdate: Cannot fully remove listener because anonymous functions were used.');
+      this.listen.update.delete(el);
+    }
+  }
+
+  /**
+   * Manually dispatches 'input' or 'change' events on the selected elements.
+   *
+   * @param {string} selector - CSS selector for elements.
    */
   update(selector) {
-    const elements = lib.qsa(selector);
-
-    for (const element of elements) {
-      const el = lib.qs(element);
+    for (const el of lib.qsa(selector)) {
       if (!el) {
-        console.error('Element not found: ', element);
+        console.error('update: Element not found', el);
         continue;
       }
 
-      const tagName = el.tagName.toLowerCase();
-
-      switch (tagName) {
-        case 'input':
-        case 'textarea':
-        case 'div':
-          el.dispatchEvent(new Event('input'));
-          break;
-
-        case 'select':
-          el.dispatchEvent(new Event('change'));
-          break;
-
-        // Fallthrough for unsupported types
-        default:
-          throw new Error(`Unsupported element: ${tagName}`);
-      }
+      el.dispatchEvent(new Event(this.getEventType(el), { bubbles: true }));
     }
   }
 }
 
-// Export singleton instance
+/**
+ * Singleton export of the Form utility.
+ * @type {Form}
+ */
 export const form = new Form();

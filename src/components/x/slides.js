@@ -1,37 +1,62 @@
-//
-//  slides.js / x
-//  Slides of photos
-//
-//  Created by Andrey Shpigunov at 20.03.2025
-//  All rights reserved.
-//
-//  Simple photo slider on mouseover.
-//  <div x-slides="['photo1.jpg','photo2.jpg','photo3.jpg']">
-//    <img src="photo1.jpg"/>
-//  </div>
-//
+/**
+ * @fileoverview Simple photo slider on mouseover.
+ *
+ * Converts elements with `[x-slides]` into interactive photo sliders.
+ * Loads images lazily, supports dynamic DOM updates, and shows dot indicators.
+ *
+ * Public API:
+ *
+ * - `slides.init()` – Initializes all `[x-slides]` elements on the page.
+ *
+ * Example usage:
+ *
+ * HTML:
+ * <div x-slides="['photo1.jpg','photo2.jpg','photo3.jpg']">
+ *   <img src="photo1.jpg"/>
+ * </div>
+ *
+ * JS:
+ * slides.init();
+ *
+ * Behavior:
+ * - On mouseenter, initializes slider and preloads images.
+ * - On mousemove, changes images based on cursor position.
+ * - Shows dot indicators for each slide.
+ * - Resets to the first image on mouseout.
+ *
+ * Mobile devices skip initialization (no hover support).
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 import { device } from './device';
 import { lib } from './lib';
 
+/**
+ * Slides component controller.
+ */
 class Slides {
-  constructor() {}
+  constructor() {
+    this._preloadedImages = new Set();
+  }
 
   /**
-   * Initializes lazy loading for all [x-slides] elements.
-   * On touch devices, removes the attribute and skips initialization.
-   * Sets up DOM mutation observer to support dynamically added elements.
+   * Initializes all `[x-slides]` elements on the page.
+   *
+   * - Skips on touch devices.
+   * - Sets up lazy initialization on `mouseenter`.
+   * - Observes DOM for dynamically added `[x-slides]` elements.
    */
   init() {
-    let sliders = lib.qsa('[x-slides]');
+    const sliders = lib.qsa('[x-slides]');
 
-    // Skip initialization on touch devices
     if (device.touch) {
-      for (let slider of sliders) slider.removeAttribute('x-slides');
+      for (const slider of sliders) slider.removeAttribute('x-slides');
       return;
     }
 
-    // Set up lazy init on mouseenter
     sliders.forEach((el) => {
       el.addEventListener('mouseenter', () => {
         if (!el.dataset.slidesInited) {
@@ -41,12 +66,12 @@ class Slides {
       }, { once: true });
     });
 
-    // Watch for dynamically added elements
     this._observeDOM();
   }
 
   /**
-   * Observes DOM for dynamically added elements with x-slides attribute.
+   * Observes the DOM for dynamically added `[x-slides]` elements.
+   * @private
    */
   _observeDOM() {
     const observer = new MutationObserver(mutations => {
@@ -62,7 +87,10 @@ class Slides {
   }
 
   /**
-   * Checks if added node or its children contain x-slides and prepares lazy init.
+   * Checks if the added node or its children contain `[x-slides]` and prepares lazy init.
+   *
+   * @param {Node} node - Newly added DOM node.
+   * @private
    */
   _checkForSlides(node) {
     if (node.hasAttribute?.('x-slides')) {
@@ -76,7 +104,10 @@ class Slides {
   }
 
   /**
-   * Preloads images and sets up mouseenter event if not already initialized.
+   * Preloads images and sets up `mouseenter` event if not yet initialized.
+   *
+   * @param {HTMLElement} el - Element with `[x-slides]`.
+   * @private
    */
   _prepareLazyInit(el) {
     if (!el.dataset.slidesPreloaded) {
@@ -98,6 +129,9 @@ class Slides {
 
   /**
    * Initializes a single slider element.
+   *
+   * @param {HTMLElement} el - Element with `[x-slides]`.
+   * @private
    */
   _initSlider(el) {
     const slides = JSON.parse(el.getAttribute('x-slides'));
@@ -115,10 +149,9 @@ class Slides {
     const id = lib.makeId();
     lib.render(el, `<div id="${id}" class="slides-items"></div>`, 'beforeend');
 
-    // Create dot indicators
     for (let i = 0; i < unique.length; i++) {
-      const div = `<div class="slides-item ${i === 0 ? 'active' : ''}"></div>`;
-      lib.render('#' + id, div, 'beforeend');
+      const dot = `<div class="slides-item ${i === 0 ? 'active' : ''}"></div>`;
+      lib.render('#' + id, dot, 'beforeend');
     }
 
     const rect = el.getBoundingClientRect();
@@ -140,25 +173,36 @@ class Slides {
   }
 
   /**
-   * Binds mousemove and mouseout events to a slider.
+   * Binds `mousemove` and `mouseout` events to a slider.
+   *
+   * @param {Object} item - Slider data object.
+   * @private
    */
   _bindEvents(item) {
     item.element.addEventListener('mousemove', lib.throttle(event => {
-      item.rect = item.element.getBoundingClientRect(); // Update rect if needed
+      item.rect = item.element.getBoundingClientRect();
       this._update(event, item);
-    }, 50));
+    }, 100));
 
     item.element.addEventListener('mouseout', () => {
       this._reset(item);
     });
+
+    window.addEventListener('resize', () => {
+      item.rect = item.element.getBoundingClientRect();
+    });
   }
 
   /**
-   * Updates the image and active dot based on mouse position.
+   * Updates the image and active dot based on cursor position.
+   *
+   * @param {MouseEvent} event
+   * @param {Object} item - Slider data object.
+   * @private
    */
   _update(event, item) {
     const x = Math.max(0, event.clientX - item.rect.left);
-    let slide = Math.floor(x / (item.rect.width / item.count));
+    const slide = Math.floor(x / (item.rect.width / item.count));
 
     if (item.img.src !== item.array[slide]) {
       item.img.src = item.array[slide];
@@ -167,17 +211,23 @@ class Slides {
   }
 
   /**
-   * Resets image and active dot to the first slide.
+   * Resets the image and dots to the first slide.
+   *
+   * @param {Object} item - Slider data object.
+   * @private
    */
   _reset(item) {
-    if (item.img.src !== item.array[0]) {
-      item.img.src = item.array[0];
-      this._setActiveItem(item, 0);
-    }
+    item.img.src = item.array[0];
+    item.img.setAttribute('src', item.array[0]);
+    this._setActiveItem(item, 0);
   }
 
   /**
-   * Updates the active dot indicator.
+   * Sets active dot indicator.
+   *
+   * @param {Object} item - Slider data object.
+   * @param {number} index - Active slide index.
+   * @private
    */
   _setActiveItem(item, index) {
     lib.removeClass(item.dots, 'active');
@@ -186,14 +236,22 @@ class Slides {
 
   /**
    * Preloads an array of image URLs.
+   *
+   * @param {string[]} urls - Array of image URLs.
+   * @private
    */
   _preloadImages(urls) {
     for (const url of urls) {
+      if (this._preloadedImages.has(url)) continue;
       const img = new Image();
       img.src = url;
-      img.onerror = () => console.warn(`Image failed to load: ${url}`);
+      this._preloadedImages.add(url);
     }
   }
 }
 
+/**
+ * Singleton export of Slides.
+ * @type {Slides}
+ */
 export const slides = new Slides();

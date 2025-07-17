@@ -1,68 +1,74 @@
-//
-//  lib.js / x
-//  Utility Library for DOM, UI, and Web Helpers
-//
-//  Created by Andrey Shpigunov on 12.04.2025
-//  All rights reserved.
-//
-//  This utility library provides reusable methods for:
-//  - DOM selection and manipulation
-//  - Element visibility and transitions
-//  - Class toggling with delay support
-//  - Page navigation and URL control
-//  - Number formatting and pluralization
-//  - Data validation (email, JSON)
-//  - Unique ID/password generation
-//  - Script loading and deferred actions
-//  - Scroll/resize throttle
-//  - Lazy element appearance detection
-//  - Error displaying
-//  - DOM rendering utilities
-//
-//  Available methods:
-//    qs(selector, context)
-//    qsa(selector, context)
-//    hide(selector)
-//    show(selector)
-//    toggle(selector)
-//    addClass(selector, className, delay)
-//    removeClass(selector, className, delay)
-//    toggleClass(selector, className, delay)
-//    switchClass(selector, condition, className, delay)
-//    reload()
-//    reloadWithHash(hash)
-//    redirectTo(url)
-//    updateURL(url, title)
-//    random(a, b)
-//    price(price)
-//    number(num)
-//    numberDecline(number, nominative, genitiveSingular, genitivePlural)
-//    isEmail(email)
-//    isValidJSON(str)
-//    makeId()
-//    makePassword(length, selector)
-//    loadScript(path, callback, type)
-//    deferred(callback, delay)
-//    deffered(callback, delay) [alias]
-//    throttle(func, limit)
-//    onAppear(selector, appearCallback, disappearCallback, options)
-//    alertErrors(data)
-//    printErrors(data)
-//    render(selector, data, placement)
-//    transitionsOn()
-//    transitionsOff()
-//    async sleep(ms)
-//
+/**
+ * @fileoverview Utility library for common frontend tasks.
+ *
+ * Public API:
+ *
+ * - DOM Selection:
+ *   - `id(id)`
+ *   - `qs(selector, context)`
+ *   - `qsa(selector, context)`
+ *
+ * - Visibility & Classes:
+ *   - `hide(selector)`
+ *   - `show(selector)`
+ *   - `toggle(selector)`
+ *   - `addClass(selector, className, delay)`
+ *   - `removeClass(selector, className, delay)`
+ *   - `toggleClass(selector, className, delay)`
+ *   - `switchClass(selector, className, condition, delay)`
+ *
+ * - Navigation & URL:
+ *   - `reload()`
+ *   - `reloadWithHash(hash)`
+ *   - `redirectTo(url)`
+ *   - `updateURL(url, title)`
+ *
+ * - Number & Formatting:
+ *   - `random(a, b)`
+ *   - `price(price)`
+ *   - `number(num)`
+ *   - `numberDecline(number, nominative, genitiveSingular, genitivePlural)`
+ *
+ * - Validation:
+ *   - `isEmail(email)`
+ *   - `isValidJSON(str)`
+ *
+ * - Utilities:
+ *   - `makeId()`
+ *   - `makePassword(length, selector)`
+ *   - `loadScript(path, callback, type)`
+ *   - `deferred(callback, delay)`
+ *   - `deffered(callback, delay)` (alias)
+ *   - `throttle(fn, wait, options)`
+ *   - `debounce(fn, wait, options)`
+ *   - `onAppear(selector, appearCallback, disappearCallback, options)`
+ *   - `alertErrors(data)`
+ *   - `printErrors(data)`
+ *   - `render(selector, data, placement)`
+ *   - `transitionsOn()`
+ *   - `transitionsOff()`
+ *   - `sleep(ms)`
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 class Lib {
   constructor() {
+    /**
+     * Stores loaded script URLs to prevent duplicate loading.
+     * @type {string[]}
+     * @private
+     */
     this.loadedScripts = [];
+
     this._elementRender();
   }
 
   /**
-   * Automatically renders content into elements with [x-render] attribute.
-   * Executes after DOM is loaded.
+   * Automatically renders elements with [x-render] on DOMContentLoaded.
+   * @private
    */
   _elementRender() {
     document.addEventListener('DOMContentLoaded', () => {
@@ -72,148 +78,131 @@ class Lib {
     });
   }
 
-  // ---------- DOM Selection ----------
-  
-
-  /** Returns a single element by id or the element itself */
+  /**
+   * Returns element by ID.
+   * @param {string} id - Element ID.
+   * @returns {HTMLElement|null}
+   */
   id(id) {
     return document.getElementById(id);
   }
 
-  /** Returns a single element by selector or the element itself */
-  // qs('.item')
-  // qs(qs('.item))
-  // qs(qsa('.items)) - select first item
-  // qs(['.item-1',...]) - select first item
+  /**
+   * Returns first matching element or element itself.
+   * @param {string|Node|NodeList|Array} selector - Selector or Node.
+   * @param {HTMLElement|Document} [context=document] - Search context.
+   * @returns {HTMLElement|null}
+   */
   qs(selector, context = document) {
     if (!selector) return null;
-  
-    if (typeof selector === 'string') {
-      return context.querySelector(selector);
-    }
-    if (selector instanceof Node) {
-      return selector;
-    }
-    if (selector instanceof NodeList) {
-      return selector.length ? selector[0] : null;
-    }
+
+    if (typeof selector === 'string') return context.querySelector(selector);
+    if (selector instanceof Node) return selector;
+    if (selector instanceof NodeList) return selector.length ? selector[0] : null;
     if (Array.isArray(selector) && selector.length) {
-      if (selector[0] instanceof Node) {
-        return selector[0];
-      } else {
-        return context.querySelector(selector[0])
-      }
+      return selector[0] instanceof Node ? selector[0] : context.querySelector(selector[0]);
     }
-    if (selector === window) {
-      return selector;
-    }
+    if (selector === window) return selector;
     return null;
   }
 
-  /** Returns all matched elements as NodeList or array */
-  // qs('.items')
-  // qs(qsa('.items))
-  // qs(qs('.item)) -> array
-  // qs(['.item-1',...])
+  /**
+   * Returns all matching elements as array.
+   * @param {string|Node|NodeList|Array} selector - Selector or Node.
+   * @param {HTMLElement|Document} [context=document] - Search context.
+   * @returns {HTMLElement[]}
+   */
   qsa(selector, context = document) {
-    if (!selector) return null;
-  
-    if (typeof selector === 'string') {
-      return context.querySelectorAll(selector);
-    }
-    if (selector instanceof NodeList) {
-      return selector;
-    }
-    if (selector instanceof Node) {
-      return [selector];
-    }
+    if (!selector) return [];
+
+    if (typeof selector === 'string') return [...context.querySelectorAll(selector)];
+    if (selector instanceof NodeList) return [...selector];
+    if (selector instanceof Node) return [selector];
     if (Array.isArray(selector) && selector.length) {
-      let arr = [];
+      const arr = [];
       for (let item of selector) {
-        if (item instanceof Node) {
-          arr.push(item);
-        } else if (item instanceof NodeList) {
-          for (let n of item) arr.push(n);
-        } else {
-          arr.push(context.querySelector(item))
-        }
+        if (item instanceof Node) arr.push(item);
+        else if (item instanceof NodeList) arr.push(...item);
+        else arr.push(context.querySelector(item));
       }
       return arr;
     }
-    if (selector === window) {
-      return [selector];
-    }
-    return null;
+    if (selector === window) return [selector];
+    return [];
   }
 
-  // ---------- Visibility ----------
-
-  /** Adds .hidden class to element(s) */
+  /**
+   * Hides elements by adding `.hidden` class.
+   * @param {string|Node|NodeList|Array} selector
+   */
   async hide(selector) {
     await this.addClass(selector, 'hidden');
   }
 
-  /** Removes .hidden class from element(s) */
+  /**
+   * Shows elements by removing `.hidden` class.
+   * @param {string|Node|NodeList|Array} selector
+   */
   async show(selector) {
     await this.removeClass(selector, 'hidden');
   }
 
-  /** Toggles .hidden class on element(s) */
+  /**
+   * Toggles `.hidden` class on elements.
+   * @param {string|Node|NodeList|Array} selector
+   */
   async toggle(selector) {
     await this.toggleClass(selector, 'hidden');
   }
-  
-  // If need context, use:
-  // hide(qs('.item', context))
-  // show(qs('.item', context))
-  // toggle(qs('.item', context))
-
-  // ---------- Class Handling ----------
 
   /**
-   * Adds className to element(s) with optional delay.
-   * If delay is used, adds "_ready" class before applying main class.
+   * Adds class to elements with optional delay.
+   * Adds `_ready` class before transition if delayed.
+   *
+   * @param {string|Node|NodeList|Array} selector
+   * @param {string} className
+   * @param {number} [delay=0] - Delay in ms.
    */
   async addClass(selector, className, delay = 0) {
-    let items = this.qsa(selector);
-    if (!items || !items.length) return;
+    const items = this.qsa(selector);
+    if (!items.length) return;
+
     if (delay > 0) {
       for (let i of items) i.classList.add(className.replace(/_.*/, '') + '_ready');
-      await new Promise(resolve => {
-        setTimeout(() => {
-          for (let i of items) i.classList.add(className);
-          resolve();
-        }, delay);
-      });
-    } else {
-      for (let i of items) i.classList.add(className);
+      await new Promise(res => setTimeout(res, delay));
+    }
+
+    for (let i of items) i.classList.add(className);
+  }
+
+  /**
+   * Removes class from elements with optional delay.
+   *
+   * @param {string|Node|NodeList|Array} selector
+   * @param {string} className
+   * @param {number} [delay=0]
+   */
+  async removeClass(selector, className, delay = 0) {
+    const items = this.qsa(selector);
+    if (!items.length) return;
+
+    for (let i of items) i.classList.remove(className);
+
+    if (delay > 0) {
+      await new Promise(res => setTimeout(res, delay));
+      for (let i of items) i.classList.remove(className.replace(/_.*/, '') + '_ready');
     }
   }
 
   /**
-   * Removes className from element(s) with optional delay.
-   * If delay is used, removes main class first, then "_ready".
+   * Toggles class on elements.
+   *
+   * @param {string|Node|NodeList|Array} selector
+   * @param {string} className
+   * @param {number} [delay=0]
    */
-  async removeClass(selector, className, delay = 0) {
-    let items = this.qsa(selector);
-    if (!items || !items.length) return;
-    if (delay > 0) {
-      for (let i of items) i.classList.remove(className);
-      await new Promise(resolve => {
-        setTimeout(() => {
-          for (let i of items) i.classList.remove(className.replace(/_.*/, '') + '_ready');
-          resolve();
-        }, delay);
-      });
-    } else {
-      for (let i of items) i.classList.remove(className);
-    }
-  }
-
-  /** Toggles className on element(s) */
   async toggleClass(selector, className, delay = 0) {
-    let items = this.qsa(selector);
-    if (!items || !items.length) return;
+    const items = this.qsa(selector);
     for (let i of items) {
       if (i.classList.contains(className)) {
         await this.removeClass(i, className, delay);
@@ -223,74 +212,100 @@ class Lib {
     }
   }
 
-  /** Adds or removes className based on condition */
+  /**
+   * Switches class based on condition.
+   *
+   * @param {string|Node|NodeList|Array} selector
+   * @param {string} className
+   * @param {boolean} condition
+   * @param {number} [delay=0]
+   */
   async switchClass(selector, className, condition, delay = 0) {
-    let items = this.qsa(selector);
-    if (!items || !items.length) return;
-    for (let i of items) {
-      if (condition) {
-        await this.addClass(i, className, delay);
-      } else {
-        await this.removeClass(i, className, delay);
-      }
+    if (condition) {
+      await this.addClass(selector, className, delay);
+    } else {
+      await this.removeClass(selector, className, delay);
     }
   }
 
-  // ---------- Navigation and URL ----------
-
-  /** Reloads the page */
+  /**
+   * Reloads the page.
+   */
   reload() {
     location.reload();
   }
 
-  /** Reloads the page with updated hash */
+  /**
+   * Reloads page with new hash.
+   * @param {string} hash
+   */
   reloadWithHash(hash) {
-    window.location.hash = hash;
+    location.hash = hash;
     this.reload();
   }
 
-  /** Redirects to a given URL */
+  /**
+   * Redirects to given URL.
+   * @param {string} url
+   */
   redirectTo(url) {
-    window.location = url;
+    location.href = url;
   }
 
-  /** Updates URL and optionally sets document title */
+  /**
+   * Updates browser URL without reload.
+   * @param {string} url
+   * @param {string} [title]
+   */
   updateURL(url, title) {
-    if (typeof history.pushState !== 'undefined') {
+    if (history.pushState) {
       history.pushState(null, title, url);
     } else {
       location.href = url;
     }
   }
 
-  // ---------- Number & Formatting ----------
-
-  /** Returns random integer between a and b (inclusive) */
+  /**
+   * Returns random integer between a and b.
+   * @param {number} a
+   * @param {number} b
+   * @returns {number}
+   */
   random(a, b) {
     return Math.floor(Math.random() * (b - a + 1)) + a;
   }
 
-  /** Formats number as price with spacing and decimal handling */
+  /**
+   * Formats price with thin spaces.
+   * @param {number|string} price
+   * @returns {string}
+   */
   price(price) {
     let p = parseFloat(price).toFixed(2);
-    p = p.replace(/\d(?=(\d{3})+\.)/g, '$& ').replace('.00', '');
-    return p;
+    return p.replace(/\d(?=(\d{3})+\.)/g, '$& ').replace('.00', '');
   }
 
-  /** Formats number with thousand separators */
+  /**
+   * Formats number with thin spaces.
+   * @param {number|string} num
+   * @returns {string}
+   */
   number(num) {
-    num = parseFloat(num) + '';
-    let [x1, x2] = num.split('.');
-    x2 = x2 ? '.' + x2 : '';
-    for (let b = /(\d+)(\d{3})/; b.test(x1);) {
-      x1 = x1.replace(b, '$1 $2');
-    }
-    return x1 + x2;
+    const parts = (num + '').split('.');
+    parts[0] = parts[0].replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+    return parts.join('.');
   }
 
-  /** Returns correct word form based on number */
+  /**
+   * Returns correct word form for number.
+   * @param {number} number
+   * @param {string} nominative
+   * @param {string} genitiveSingular
+   * @param {string} genitivePlural
+   * @returns {string}
+   */
   numberDecline(number, nominative, genitiveSingular, genitivePlural) {
-    if (number > 10 && parseInt((number % 100) / 10) === 1) return genitivePlural;
+    if (number > 10 && Math.floor((number % 100) / 10) === 1) return genitivePlural;
     switch (number % 10) {
       case 1: return nominative;
       case 2:
@@ -300,51 +315,46 @@ class Lib {
     }
   }
 
-  // ---------- Validation ----------
-
-  /** Checks if email is valid */
+  /**
+   * Validates email.
+   * @param {string} email
+   * @returns {boolean}
+   */
   isEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
   }
 
-  /** Checks if string is valid JSON */
+  /**
+   * Validates JSON string.
+   * @param {string} str
+   * @returns {boolean}
+   */
   isValidJSON(str) {
     try {
       JSON.parse(str);
       return true;
-    } catch (err) {
+    } catch {
       return false;
     }
   }
 
-  // ---------- Utilities ----------
-
-  /** Generates unique DOM-safe ID */
+  /**
+   * Generates random ID.
+   * @returns {string}
+   */
   makeId() {
     return 'id' + this.random(100000, 999999);
   }
 
   /**
-   * Generates secure random password
-   * @param {number} length - Password length
-   * @param {string} selector - Optional input field selector to insert result
+   * Generates password and sets to field if selector is provided.
+   * @param {number} [length=8]
+   * @param {string} [selector]
+   * @returns {string|undefined}
    */
   makePassword(length = 8, selector) {
-    const upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    const lower = 'abcdefghijklmnopqrstuvwxyz';
-    const chars = '!@#^$%^&*()-+:,.;_';
-    const digits = '0123456789';
-    let password = '';
-
-    for (let i = 0; i < Math.ceil(length / 4); ++i) {
-      password += upper[Math.floor(Math.random() * upper.length)];
-      password += lower[Math.floor(Math.random() * lower.length)];
-      password += chars[Math.floor(Math.random() * chars.length)];
-      password += digits[Math.floor(Math.random() * digits.length)];
-    }
-
-    password = password.substring(0, length)
-      .split('').sort(() => 0.5 - Math.random()).join('');
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#^$%^&*()-+:,.;_';
+    let password = Array.from({ length }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
 
     if (selector) {
       this.qs(selector).value = password;
@@ -354,12 +364,15 @@ class Lib {
   }
 
   /**
-   * Dynamically loads an external script into the document.
+   * Loads external JS script once.
+   * @param {string} path
+   * @param {Function} callback
+   * @param {string} [type='async']
    */
   loadScript(path, callback, type = 'async') {
     if (!this.loadedScripts.includes(path)) {
-      let script = document.createElement('script');
-      script.onload = () => callback();
+      const script = document.createElement('script');
+      script.onload = callback;
       script.onerror = () => console.error(`Failed to load script: ${path}`);
       script.src = path;
       if (type) script.setAttribute(type, '');
@@ -371,7 +384,9 @@ class Lib {
   }
 
   /**
-   * Defers callback execution until user interacts or timeout hits.
+   * Defers function execution by user activity or timeout.
+   * @param {Function} callback
+   * @param {number} [delay=10000]
    */
   deferred(callback, delay = 10000) {
     const events = ['scroll', 'resize', 'click', 'keydown', 'mousemove', 'touchmove'];
@@ -388,33 +403,51 @@ class Lib {
     events.forEach(e => window.addEventListener(e, run, { once: true }));
   }
 
-  /** Deprecated alias for deferred */
+  /**
+   * Alias for deferred().
+   * @param {Function} callback
+   * @param {number} [delay=10000]
+   */
   deffered(callback, delay = 10000) {
     return this.deferred(callback, delay);
   }
 
   /**
-   * Throttles function execution to one call per [limit] ms.
+   * Creates throttled version of function.
+   * @param {Function} fn
+   * @param {number} wait
+   * @param {Object} [options]
+   * @returns {Function}
    */
-  throttle(func, limit) {
-    let inThrottle;
-    return function (...args) {
-      if (!inThrottle) {
-        func.apply(this, args);
-        inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
-      }
-    };
+  throttle(fn, wait, options = {}) {
+    // (реализация см выше - она ок, оставить как есть)
+    return this._throttle(fn, wait, options);
   }
 
   /**
-   * Watches elements and triggers callbacks when they enter or leave viewport.
+   * Creates debounced version of function.
+   * @param {Function} fn
+   * @param {number} wait
+   * @param {Object} [options]
+   * @returns {Function}
+   */
+  debounce(fn, wait, options = {}) {
+    // (реализация см выше - она ок, оставить как есть)
+    return this._debounce(fn, wait, options);
+  }
+
+  /**
+   * Watches elements with IntersectionObserver.
+   * @param {string} selector
+   * @param {Function} appearCallback
+   * @param {Function} [disappearCallback]
+   * @param {Object} [options]
    */
   onAppear(selector, appearCallback, disappearCallback = null, options = {}) {
-    let elements = this.qsa(selector);
+    const elements = this.qsa(selector);
     if (!elements.length) return;
 
-    let observer = new IntersectionObserver((entries, obs) => {
+    const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           appearCallback(entry.target);
@@ -433,9 +466,10 @@ class Lib {
     elements.forEach(el => observer.observe(el));
   }
 
-  // ---------- Error Handling ----------
-
-  /** Shows alert() with all collected errors */
+  /**
+   * Alerts error messages.
+   * @param {string|Object} data
+   */
   alertErrors(data) {
     if (!data) return;
     if (typeof data === 'string') {
@@ -445,9 +479,13 @@ class Lib {
     }
   }
 
-  /** Returns HTML string with errors inside <div>s */
+  /**
+   * Returns HTML for error messages.
+   * @param {string|Object} data
+   * @returns {string}
+   */
   printErrors(data) {
-    if (!data) return;
+    if (!data) return '';
     if (typeof data === 'string') {
       return `<div>${data}</div>`;
     } else {
@@ -457,52 +495,150 @@ class Lib {
     }
   }
 
-  // ---------- DOM Rendering ----------
-
   /**
-   * Renders string/html into target selector.
-   * Can insert or replace depending on placement.
+   * Renders content into elements.
+   * @param {string|Node|NodeList|Array} selector
+   * @param {string|Function|Promise} data
+   * @param {InsertPosition|null} [placement=null]
    */
   async render(selector, data, placement = null) {
-    let items = this.qsa(selector);
-    if (!items || !items.length) return;
-    data = typeof data === 'function' ? await data() : data;
+    const items = this.qsa(selector);
+    if (!items.length) return;
 
-    for (let i of items) {
+    const content = typeof data === 'function' ? await data() : data;
+
+    for (let el of items) {
       if (placement == null) {
-        i.innerHTML = data;
+        el.innerHTML = content;
       } else {
-        i.insertAdjacentHTML(placement, data);
+        el.insertAdjacentHTML(placement, content);
       }
     }
   }
 
-  // ---------- Global Transitions ----------
-
-  /** Enables CSS transitions globally */
+  /**
+   * Enables CSS transitions globally.
+   */
   transitionsOn() {
-    if (document.documentElement.classList.contains('noTransitions')) {
-      setTimeout(() => {
-        document.documentElement.classList.remove('noTransitions');
-      }, 10);
-    }
+    document.documentElement.classList.remove('noTransitions');
   }
 
-  /** Disables CSS transitions globally */
+  /**
+   * Disables CSS transitions globally.
+   */
   transitionsOff() {
     document.documentElement.classList.add('noTransitions');
   }
-  
-  // --------------- Async sleep --------------
-  
+
+  /**
+   * Waits for specified time.
+   * @param {number} ms
+   * @returns {Promise<void>}
+   */
   async sleep(ms) {
-    return new Promise((resolve, reject) => {
-      try {
-        setTimeout(resolve, ms);
-      } catch (err) {
-        reject(err);
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  
+  /**
+   * Creates throttled version of function.
+   * Executes at most once per wait period.
+   *
+   * @param {Function} fn
+   * @param {number} wait
+   * @param {Object} [options]
+   * @param {boolean} [options.leading=true]
+   * @param {boolean} [options.trailing=true]
+   * @returns {Function}
+   * @private
+   */
+  _throttle(fn, wait, options = {}) {
+    let timeoutId = null;
+    let lastArgs = null;
+    let lastContext = null;
+    let lastCallTime = 0;
+    const { leading = true, trailing = true } = options;
+  
+    const invoke = (time) => {
+      lastCallTime = time;
+      fn.apply(lastContext, lastArgs);
+      lastArgs = lastContext = null;
+    };
+  
+    const throttled = function (...args) {
+      const now = Date.now();
+      if (!lastCallTime && !leading) lastCallTime = now;
+  
+      lastArgs = args;
+      lastContext = this;
+  
+      const remaining = wait - (now - lastCallTime);
+      if (remaining <= 0 || remaining > wait) {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = null;
+        invoke(now);
+      } else if (!timeoutId && trailing) {
+        timeoutId = setTimeout(() => {
+          timeoutId = null;
+          if (trailing && lastArgs) invoke(Date.now());
+        }, remaining);
       }
-    });
+    };
+  
+    throttled.cancel = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = lastArgs = lastContext = null;
+      lastCallTime = 0;
+    };
+  
+    return throttled;
+  }
+  
+  /**
+   * Creates debounced version of function.
+   * Executes after inactivity period.
+   *
+   * @param {Function} fn
+   * @param {number} wait
+   * @param {Object} [options]
+   * @param {boolean} [options.leading=false]
+   * @param {boolean} [options.trailing=true]
+   * @returns {Function}
+   * @private
+   */
+  _debounce(fn, wait, options = {}) {
+    let timeoutId = null;
+    let lastArgs = null;
+    let lastContext = null;
+    const { leading = false, trailing = true } = options;
+  
+    const invoke = () => {
+      fn.apply(lastContext, lastArgs);
+      lastArgs = lastContext = null;
+    };
+  
+    const debounced = function (...args) {
+      lastArgs = args;
+      lastContext = this;
+  
+      if (timeoutId) clearTimeout(timeoutId);
+  
+      const shouldCallNow = leading && !timeoutId;
+      if (shouldCallNow) {
+        invoke();
+      }
+  
+      timeoutId = setTimeout(() => {
+        timeoutId = null;
+        if (trailing && lastArgs) invoke();
+      }, wait);
+    };
+  
+    debounced.cancel = () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      timeoutId = lastArgs = lastContext = null;
+    };
+  
+    return debounced;
   }
 }
 

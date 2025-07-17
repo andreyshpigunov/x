@@ -1,85 +1,127 @@
-//
-//  appear.js / x
-//  Element visibility observer
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-//  This module detects when elements appear in the viewport
-//  and applies CSS classes to them accordingly.
-//  Intended for triggering animations or visual effects.
-//
-//  Usage:
-//    <div x-appear>Hello!</div>
-//
-//  It will apply:
-//    - 'appeared' class once when the element first appears
-//    - 'visible' class while the element is currently visible
-//
-//  You can customize class names and behavior via init({ appearedClass, visibleClass, once })
-//
-//  Available methods:
-//    init(config)   — Initializes the observer and starts tracking elements
-//    update()       — Reapplies observer to elements (useful after DOM updates)
-//
+/**
+ * @fileoverview Element appearing and visibility observer.
+ *
+ * Detects when elements enter or leave the viewport and applies CSS classes accordingly.
+ * Intended for triggering animations, lazy loading, or visual effects.
+ *
+ * Exported singleton: `appear`
+ *
+ * Public API:
+ *
+ * - `appear.init(config)` – Initializes or reinitializes the observer.
+ *
+ * Usage example:
+ *
+ * HTML:
+ * <div x-appear>Hello!</div>
+ *
+ * Behavior:
+ * - Adds `appeared` class once when the element first appears.
+ * - Adds `visible` class while the element is currently visible.
+ *
+ * Configuration via `init()`:
+ * - `appearedClass` – Custom class for the first appearance (default: 'appeared').
+ * - `visibleClass` – Custom class for current visibility (default: 'visible').
+ * - `once` – If `true`, stops observing the element after first appearance.
+ *
+ * Events:
+ * - `visible` – Dispatched when the element becomes visible.
+ * - `invisible` – Dispatched when the element leaves the viewport.
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 import { lib } from './lib';
 
+/**
+ * Element appearing and visibility observer.
+ *
+ * Uses IntersectionObserver to track elements with [x-appear] attribute and manage classes.
+ */
 class Appear {
+
   constructor() {
-    // List of observed elements
-    this.targets = [];
+    /**
+     * List of currently observed elements.
+     * @type {HTMLElement[]}
+     * @private
+     */
+    this._targets = [];
 
-    // IntersectionObserver instance
-    this.observer = null;
+    /**
+     * Instance of IntersectionObserver.
+     * @type {IntersectionObserver|null}
+     * @private
+     */
+    this._observer = null;
 
-    // Default options
-    this.options = {
-      appearedClass: 'appeared',  // Added once when element first appears
-      visibleClass: 'visible',    // Added while element is visible
-      once: false                 // If true, stops observing after first appearance
+    /**
+     * Observer options and behavior configuration.
+     * @type {{
+     *   appearedClass: string,
+     *   visibleClass: string,
+     *   once: boolean
+     * }}
+     * @private
+     */
+    this._options = {
+      appearedClass: 'appeared',
+      visibleClass: 'visible',
+      once: false
     };
+
+    /**
+     * Indicates whether the observer has been initialized.
+     * @type {boolean}
+     * @private
+     */
+    this._initialized = false;
   }
 
   /**
-   * Initializes the IntersectionObserver and observes all [x-appear] elements.
+   * Initializes or reinitializes the observer and starts observing elements.
    *
-   * @param {Object} config - Optional configuration to override defaults.
-   * @param {string} [config.appearedClass] - Class added once when element first appears.
-   * @param {string} [config.visibleClass] - Class added/removed while element is visible/invisible.
-   * @param {boolean} [config.once=false] - If true, unobserve after first intersection.
+   * @param {Object} [config={}] - Optional configuration object.
+   * @param {string} [config.appearedClass='appeared'] - Class added once when the element first appears.
+   * @param {string} [config.visibleClass='visible'] - Class added while the element is visible.
+   * @param {boolean} [config.once=false] - If true, stops observing after first appearance.
+   *
+   * @example
+   * appear.init({ once: true });
    */
   init(config = {}) {
-    // Exit if IntersectionObserver is not supported
     if (!('IntersectionObserver' in window)) return;
 
-    // Merge default options with custom configuration
-    this.options = {
-      ...this.options,
-      ...config
-    };
+    this._options = { ...this._options, ...config };
 
-    // Select all elements with [x-appear] attribute
-    this.targets = lib.qsa('[x-appear]');
-    if (this.targets.length) {
-      // Create a new observer instance
-      this.observer = new IntersectionObserver(this._observerCallback.bind(this));
+    this._targets = lib.qsa('[x-appear]');
 
-      // Start observing each target
-      this.targets.forEach(item => this.observer.observe(item));
+    if (this._targets.length) {
+      this._observer = new IntersectionObserver(this._observerCallback.bind(this));
+
+      this._targets.forEach(item => {
+        if (this._initialized) {
+          this._observer.unobserve(item);
+        }
+        this._observer.observe(item);
+      });
     }
+
+    this._initialized = true;
   }
 
   /**
-   * Callback for IntersectionObserver when visibility of observed elements changes.
+   * IntersectionObserver callback. Handles visibility changes for tracked elements.
    *
-   * @param {IntersectionObserverEntry[]} entries - List of visibility change events.
+   * @param {IntersectionObserverEntry[]} entries - Array of observer entries.
    * @private
    */
   _observerCallback(entries) {
-    const { appearedClass, visibleClass, once } = this.options;
+    const { appearedClass, visibleClass, once } = this._options;
 
-    for (let entry of entries) {
+    for (const entry of entries) {
       const target = entry.target;
 
       const hasAppeared = appearedClass != null;
@@ -89,9 +131,9 @@ class Appear {
         // First time visibility — add appeared class
         if (hasAppeared && !target.classList.contains(appearedClass)) {
           target.classList.add(appearedClass);
+
           if (once) {
-            // Stop observing if 'once' mode is active
-            this.observer.unobserve(target);
+            this._observer.unobserve(target);
           }
         }
 
@@ -113,22 +155,10 @@ class Appear {
       }
     }
   }
-
-  /**
-   * Reapplies observation to all current [x-appear] elements.
-   * Useful when DOM has changed or new elements were added.
-   */
-  update() {
-    // Refresh target list
-    this.targets = lib.qsa('[x-appear]');
-
-    // Re-observe each target
-    this.targets.forEach(item => {
-      this.observer.unobserve(item); // Stop current observation
-      this.observer.observe(item);   // Start again
-    });
-  }
 }
 
-// Export singleton instance
+/**
+ * Singleton export of the Appear observer.
+ * @type {Appear}
+ */
 export const appear = new Appear();

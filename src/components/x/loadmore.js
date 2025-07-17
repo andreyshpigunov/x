@@ -1,54 +1,85 @@
-//
-//  loadmore.js / x
-//  Loadmore
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-//  Automatically triggers a callback function when an element becomes visible
-//  from the bottom of the viewport (infinite scroll).
-//
-//  Usage:
-//  <div x-loadmore='{"functionName": "load"}'>...</div>
-//
-//  The callback function should accept a "page" parameter:
-//  function load(page) { ... return true/false; }
-//
-//  - true → more content available, keep observing
-//  - false → stop observing this element
-//
+/**
+ * @fileoverview Infinite scroll system for dynamic content loading.
+ *
+ * Observes elements with `[x-loadmore]` attribute and automatically calls
+ * a specified function when the element becomes visible near the bottom of the viewport.
+ * Useful for implementing "Load More" or endless scroll functionality.
+ *
+ * Public API:
+ *
+ * - `loadmore.init()` – Initializes observation of `[x-loadmore]` elements.
+ *
+ * Usage example:
+ *
+ * HTML:
+ * <div x-loadmore='{"functionName": "load"}'></div>
+ *
+ * JS:
+ * function load(page) {
+ *   console.log('Load page:', page);
+ *   return true; // Continue loading
+ * }
+ *
+ * Behavior:
+ * - Calls the specified function when the element is near viewport bottom.
+ * - Passes `page` parameter to the function.
+ * - If the function returns `true`, continues observing for more pages.
+ * - If it returns `false`, stops observing that element.
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 import { lib } from './lib';
 
+/**
+ * Infinite scroll controller.
+ * Tracks elements with `[x-loadmore]` and calls callbacks when they appear.
+ */
 class Loadmore {
+  /**
+   * Creates the Loadmore instance.
+   */
   constructor() {
-    // Store tracked elements and their current page state
+    /**
+     * Stores tracked elements and their pagination state.
+     * @type {Object.<string, {el: HTMLElement, page: number}>}
+     */
     this.items = {};
 
-    // Prevents multiple triggers during concurrent load
+    /**
+     * Lock flag to prevent concurrent triggers.
+     * @type {boolean}
+     * @private
+     */
     this.locked = false;
   }
 
   /**
-   * Initializes the loadmore system by observing all [x-loadmore] elements.
-   * When the element enters the viewport (with bottom padding),
-   * calls the defined callback function.
+   * Initializes the loadmore system.
+   * Sets up IntersectionObserver to watch `[x-loadmore]` elements.
+   *
+   * Automatically calls the specified function from `x-loadmore` attribute when the element appears.
    */
   init() {
     const blocks = lib.qsa('[x-loadmore]');
     if (!blocks.length) return;
 
-    // IntersectionObserver callback
+    /**
+     * IntersectionObserver callback.
+     *
+     * @param {IntersectionObserverEntry[]} entries
+     * @param {IntersectionObserver} observer
+     */
     const callback = async (entries, observer) => {
       for (let entry of entries) {
-        // Only trigger when the element becomes visible and not locked
         if (entry.isIntersecting && !this.locked) {
           this.locked = true;
 
           const el = entry.target;
           const loadmoreAttr = el.getAttribute('x-loadmore');
 
-          // Parse and validate JSON from x-loadmore attribute
           if (lib.isValidJSON(loadmoreAttr)) {
             const json = JSON.parse(loadmoreAttr);
 
@@ -60,13 +91,13 @@ class Loadmore {
                   const id = el.id;
                   const page = this.items[id].page;
 
-                  // Execute callback with current page
+                  // Call the callback function with current page
                   const hasMore = await fn(page);
 
                   if (hasMore) {
                     this.items[id].page++;
                   } else {
-                    // Stop observing if no more pages
+                    // Stop observing if no more content
                     observer.unobserve(el);
                   }
                 } catch (error) {
@@ -82,22 +113,24 @@ class Loadmore {
             console.error('Invalid JSON in x-loadmore attribute:', loadmoreAttr);
           }
 
-          // Unlock after processing completes
           this.locked = false;
         }
       }
     };
 
-    // Observer options: trigger when element is 400px from bottom of viewport
+    /**
+     * IntersectionObserver options.
+     * Triggers when element is 400px from viewport bottom.
+     * @type {IntersectionObserverInit}
+     */
     const options = {
       rootMargin: '0px 0px 400px 0px',
       threshold: 0
     };
 
-    // Create observer
     const observer = new IntersectionObserver(callback, options);
 
-    // Observe all blocks
+    // Observe each block
     blocks.forEach(block => {
       const id = lib.makeId();
       block.setAttribute('id', id);
@@ -112,4 +145,8 @@ class Loadmore {
   }
 }
 
+/**
+ * Singleton export of Loadmore.
+ * @type {Loadmore}
+ */
 export const loadmore = new Loadmore();

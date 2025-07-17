@@ -5,118 +5,157 @@
 //  Created by Andrey Shpigunov at 12.04.2025
 //  All rights reserved.
 //
-//  This module automatically loads images when they enter the viewport,
-//  by observing elements with the `x-lazyload` attribute.
-//
-//  Available methods:
-//    init()                 — initializes lazy loading for images with [x-lazyload]
-//    _loadImage(img, obs)   — handles loading of a single image when it becomes visible
-//    _fetchImage(src, set)  — preloads an image and returns a Promise
-//
+
+/**
+ * @fileoverview Lazy loading of images using IntersectionObserver.
+ *
+ * Observes images with the `x-lazyload` attribute and loads them when they approach the viewport.
+ * Supports both `src` and `srcset` for responsive images.
+ *
+ * Exported singleton: `lazyload`
+ *
+ * Public API:
+ *
+ * - `lazyload.init()` – Initializes lazy loading for all images with `[x-lazyload]`.
+ * - `lazyload.destroy()` – Stops observing all images and disconnects the observer.
+ *
+ * @author Andrey Shpigunov
+ * @version 0.2
+ * @since 2025-07-17
+ */
 
 import { lib } from './lib';
 
+/**
+ * Lazyload class for handling image loading on viewport entry.
+ */
 class Lazyload {
-  /**
-   * Initializes the lazyload functionality.
-   * Observes all images with [x-lazyload] that haven't been loaded yet.
-   * Loads images when they approach or enter the viewport.
-   */
-  init() {
-    // Select all images with the 'x-lazyload' attribute that are not yet marked as loaded
-    const images = [...lib.qsa('[x-lazyload]')].filter(img => !img.classList.contains('loaded'));
+  constructor() {
+    /**
+     * IntersectionObserver instance.
+     * @type {IntersectionObserver|null}
+     * @private
+     */
+    this._observer = null;
 
     /**
-     * IntersectionObserver callback:
-     * When an observed image enters the viewport, trigger loading.
+     * Observer options.
+     * @type {IntersectionObserverInit}
+     * @private
      */
-    const callback = (entries, observer) => {
-      for (let entry of entries) {
-        if (entry.isIntersecting) {
-          this._loadImage(entry.target, observer);
-        }
-      }
+    this._options = {
+      root: null,
+      rootMargin: '200px',
+      threshold: 0.1
     };
-
-    // Observer options:
-    const options = {
-      root: null,             // Use the browser viewport as the root
-      rootMargin: '200px',    // Start loading when the image is near (200px away)
-      threshold: 0.1          // Trigger when 10% of the image is visible
-    };
-
-    // Create the observer instance
-    const observer = new IntersectionObserver(callback, options);
-
-    // Observe each image
-    images.forEach(image => observer.observe(image));
   }
 
   /**
-   * Preloads an image from a given src/srcset.
-   * Creates a new Image() element and resolves when it is fully loaded.
+   * Initializes the lazy loading of images.
+   * Observes all images with the `[x-lazyload]` attribute that are not yet loaded.
+   */
+  init() {
+    if (!('IntersectionObserver' in window)) {
+      console.warn('IntersectionObserver is not supported in this browser.');
+      return;
+    }
+
+    // Reuse existing observer or create a new one
+    if (!this._observer) {
+      this._observer = new IntersectionObserver(this._callback.bind(this), this._options);
+    }
+
+    const images = [...lib.qsa('[x-lazyload]')].filter(img => !img.classList.contains('loaded'));
+    images.forEach(image => this._observer.observe(image));
+  }
+
+  /**
+   * Stops all observations and disconnects the observer.
+   */
+  destroy() {
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+  }
+
+  /**
+   * IntersectionObserver callback function.
+   * Loads the image when it enters the viewport.
    *
-   * @param {string|null} src - Image source URL.
-   * @param {string|null} srcset - Image srcset string (for responsive images).
-   * @returns {Promise<void>}
+   * @param {IntersectionObserverEntry[]} entries - List of observed entries.
+   */
+  _callback(entries) {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        this._loadImage(entry.target);
+      }
+    }
+  }
+
+  /**
+   * Preloads an image from a given `src` or `srcset` using a temporary Image object.
+   *
+   * @param {string|null} src - Image `src` URL.
+   * @param {string|null} srcset - Image `srcset` attribute for responsive images.
+   * @returns {Promise<void>} Resolves when the image is fully loaded.
+   * @private
    */
   _fetchImage(src, srcset) {
     return new Promise((resolve, reject) => {
-      const image = new Image();  // Create a temporary <img> element
+      const image = new Image();
 
-      if (srcset) image.srcset = srcset; // Assign srcset if provided
-      if (src) image.src = src;          // Assign src if provided
+      if (srcset) image.srcset = srcset;
+      if (src) image.src = src;
 
-      image.onload = resolve; // Resolve when image loads successfully
-      image.onerror = () => reject(new Error(`Failed to load image: ${src || srcset}`)); // Reject on failure
+      image.onload = () => resolve();
+      image.onerror = () => reject(new Error(`Failed to load image: ${src || srcset}`));
     });
   }
 
   /**
-   * Loads a lazy image when it becomes visible in the viewport.
-   * Sets the actual src/srcset, marks it as loaded, and stops observing it.
+   * Loads an individual image when it becomes visible.
+   * Sets its `src`/`srcset`, adds the `loaded` class, and unobserves it.
    *
    * @param {HTMLImageElement} img - The image element to load.
-   * @param {IntersectionObserver} observer - The observer that triggered the load.
+   * @returns {Promise<void>}
+   * @private
    */
-  async _loadImage(img, observer) {
-    const srcset = img.dataset.srcset || null;  // Read srcset from data attribute
-    const src = img.dataset.src || null;        // Read src from data attribute
+  async _loadImage(img) {
+    const srcset = img.dataset.srcset || null;
+    const src = img.dataset.src || null;
 
-    // Warn and exit if no valid image sources are provided
     if (!src && !srcset) {
       console.warn('No source or srcset found for image:', img);
       return;
     }
 
     try {
-      // Preload the image (hidden)
       await this._fetchImage(src, srcset);
 
-      // Assign srcset if available, then remove the data-srcset attribute
       if (srcset) {
         img.srcset = srcset;
         img.removeAttribute('data-srcset');
       }
 
-      // Assign src if available, then remove the data-src attribute
       if (src) {
         img.src = src;
         img.removeAttribute('data-src');
       }
 
-      // Add 'loaded' class to mark the image as finished loading (for styles/JS)
-      if (srcset || src) {
-        await lib.addClass(img, 'loaded');
-      }
+      await Promise.resolve(lib.addClass(img, 'loaded'));
 
-      // Stop observing the image now that it has loaded
-      observer.unobserve(img);
+      if (this._observer) {
+        this._observer.unobserve(img);
+      }
     } catch (err) {
       console.error('Lazyload failed for image:', img, err);
     }
   }
 }
 
-// Export singleton instance
+/**
+ * Singleton export of Lazyload.
+ * @type {Lazyload}
+ */
 export const lazyload = new Lazyload();
