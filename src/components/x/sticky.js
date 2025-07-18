@@ -1,49 +1,81 @@
-/**
- * @fileoverview Adds the 'sticky_on' class to elements with the 'sticky' class
- * when they are no longer fully visible in the viewport using IntersectionObserver.
- *
- * Public API:
- * - `sticky.init()` — Starts observing sticky elements.
- * - `sticky.reset()` — Stops observing all tracked sticky elements.
- *
- * Usage:
- * Import and call `sticky.init()` after DOM ready to enable sticky behavior.
- *
- * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
- */
+ /**
+  * @fileoverview Sticky scroll behavior controller with events.
+  *
+  * Watches `.sticky` elements and toggles a CSS class when they scroll out of full viewport visibility.
+  * Fires `sticky:on` and `sticky:off` events on the target elements.
+  *
+  * Behavior:
+  * - Adds `sticky_on` class when element becomes sticky.
+  * - Removes `sticky_on` class when element returns to normal flow.
+  * - Dispatches `CustomEvent` (`sticky:on` / `sticky:off`) on state changes.
+  *
+  * Usage example:
+  *
+  * HTML:
+  * <div class="sticky">Header</div>
+  *
+  * JS:
+  * sticky.init();
+  *
+  * document.querySelector('.sticky').addEventListener('sticky:on', () => {
+  *   console.log('Sticky enabled');
+  * });
+  *
+  * document.querySelector('.sticky').addEventListener('sticky:off', () => {
+  *   console.log('Sticky disabled');
+  * });
+  *
+  * Public API:
+  * - `sticky.init()` – Start observing `.sticky` elements.
+  * - `sticky.reset()` – Stop observing all elements.
+  * - `sticky.destroy()` – Remove observers and clear state.
+  *
+  * @author Andrey Shpigunov
+  * @version 0.2
+  * @since 2025-07-17
+  */
 
 import { lib } from './lib';
 
 /**
- * Sticky class manages sticky elements visibility and toggles CSS class on scroll.
+ * Sticky scroll behavior controller with events.
  */
 class Sticky {
   /**
-   * Creates a new Sticky instance and sets up the IntersectionObserver.
+   * Creates Sticky instance and configures observer.
    */
   constructor() {
     /**
-     * IntersectionObserver instance for observing sticky elements.
+     * Class to apply when sticky state is active.
+     * @type {string}
+     */
+    this.activeClass = 'sticky_on';
+
+    /**
+     * Root margin for IntersectionObserver.
+     * @type {string}
+     */
+    this.rootMargin = '-1px 0px 0px 0px';
+
+    /**
+     * IntersectionObserver instance.
      * @type {IntersectionObserver}
      * @private
      */
     this._observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          // Toggle 'sticky_on' class based on visibility ratio
-          lib.switchClass(entry.target, entry.intersectionRatio < 1, 'sticky_on');
+          this._handleEntry(entry);
         }
       },
       {
         threshold: 1,
-        rootMargin: '-1px 0px 0px 0px'
+        rootMargin: this.rootMargin
       }
     );
 
     /**
-     * Flag indicating whether initialization has been done.
+     * Initialization flag.
      * @type {boolean}
      * @private
      */
@@ -51,8 +83,31 @@ class Sticky {
   }
 
   /**
-   * Initializes observation for all elements with the 'sticky' class.
-   * Adds the 'sticky_on' class when the element is partially or fully out of viewport.
+   * Handles IntersectionObserver entry.
+   * Toggles class and dispatches custom events.
+   *
+   * @param {IntersectionObserverEntry} entry
+   * @private
+   */
+  _handleEntry(entry) {
+    const isSticky = entry.intersectionRatio < 1;
+    const el = entry.target;
+
+    const wasSticky = el.classList.contains(this.activeClass);
+
+    lib.switchClass(el, isSticky, this.activeClass);
+
+    if (isSticky && !wasSticky) {
+      el.dispatchEvent(new CustomEvent('sticky:on', { bubbles: true }));
+    }
+
+    if (!isSticky && wasSticky) {
+      el.dispatchEvent(new CustomEvent('sticky:off', { bubbles: true }));
+    }
+  }
+
+  /**
+   * Initializes observation of `.sticky` elements.
    */
   init() {
     if (this._initialized) {
@@ -71,7 +126,7 @@ class Sticky {
   }
 
   /**
-   * Stops observing all currently tracked sticky elements and clears observation flags.
+   * Stops observing all sticky elements and removes dataset flags.
    */
   reset() {
     const stickies = lib.qsa('.sticky');
@@ -84,10 +139,18 @@ class Sticky {
       }
     }
   }
+
+  /**
+   * Fully disconnects observer and clears state.
+   */
+  destroy() {
+    this._observer.disconnect();
+    this._initialized = false;
+  }
 }
 
 /**
- * Singleton instance of Sticky.
+ * Singleton export of Sticky.
  * @type {Sticky}
  */
 export const sticky = new Sticky();

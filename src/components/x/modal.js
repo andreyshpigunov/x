@@ -6,7 +6,8 @@
  *
  * Public API:
  *
- * - `modal.init()` – Initializes all modal components.
+ * - `modal.init()` – Initializes all modal components. Safe for multiple calls.
+ * - `modal.destroy()` – Removes all modal-related event listeners and resets state.
  * - `modal.show(id)` – Opens modal by ID.
  * - `modal.hide(id)` – Closes modal by ID.
  * - `modal.hideAll()` – Closes all active modals.
@@ -27,6 +28,11 @@
  *   <a x-modal-open="modal">Open modal</a>
  *
  *   <script>
+ *     modal.init();
+ *     modal.show('modal');
+ *   </script>
+ *
+ *   <script>
  *     let modal = qsa('#modal');
  *     modal.addEventListener('modal:ready', event => { ... });
  *     modal.addEventListener('modal:open', event => { ... });
@@ -38,8 +44,8 @@
  *   modal.show('modal');
  *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.3
+ * @since 2025-07-18
  */
 
 import { lib } from './lib';
@@ -69,16 +75,66 @@ class Modal {
      * @type {HTMLElement}
      */
     this.html = lib.qs('html');
+
+    /**
+     * Initialization flag to control safe reinitialization.
+     * @type {boolean}
+     * @private
+     */
+    this._initialized = false;
+
+    /**
+     * Click event handler reference for removeEventListener.
+     * @type {Function|null}
+     * @private
+     */
+    this._clickHandler = null;
+
+    /**
+     * Keydown event handler reference for removeEventListener.
+     * @type {Function|null}
+     * @private
+     */
+    this._keydownHandler = null;
   }
 
   /**
-   * Initializes modal system.
-   * Renders modal HTML, sets up open links, and global listeners.
+   * Initializes the modal system.
+   * Moves `[x-modal]` into `.modal-here` or `<body>`, sets up `[x-modal-open]` links, and global listeners.
+   *
+   * Safe to call multiple times. If already initialized, automatically destroys previous listeners.
    */
   init() {
+    if (this._initialized) {
+      this.destroy();
+    }
+
     this._renderModalContents();
     this._setupModalLinks();
     this._setupGlobalListeners();
+
+    this._initialized = true;
+  }
+
+  /**
+   * Destroys modal system.
+   * Removes event listeners and resets internal state.
+   * Safe to call multiple times.
+   */
+  destroy() {
+    if (this._clickHandler) {
+      document.removeEventListener('click', this._clickHandler);
+      this._clickHandler = null;
+    }
+
+    if (this._keydownHandler) {
+      document.removeEventListener('keydown', this._keydownHandler);
+      this._keydownHandler = null;
+    }
+
+    this.modalLevel = 0;
+    this.lockCount = 0;
+    this._initialized = false;
   }
 
   /**
@@ -88,11 +144,11 @@ class Modal {
    */
   _renderModalContents() {
     lib.qsa('[x-modal]').forEach(item => {
-      let here = lib.qs('.modal-here'),
-          placeholder = here ? here : lib.qs('body'),
-          id = item.getAttribute('x-modal'),
-          classes = item.getAttribute('class') || '',
-          windowClasses = item.dataset.windowClass || '';
+      const here = lib.qs('.modal-here');
+      const placeholder = here ? here : lib.qs('body');
+      const id = item.getAttribute('x-modal');
+      const classes = item.getAttribute('class') || '';
+      const windowClasses = item.dataset.windowClass || '';
 
       placeholder.insertAdjacentHTML('beforeend', `
         <div id="${id}" class="modal ${classes}">
@@ -121,7 +177,7 @@ class Modal {
    */
   _setupModalLinks() {
     lib.qsa('[x-modal-open]').forEach(link => {
-      let id = link.getAttribute('x-modal-open');
+      const id = link.getAttribute('x-modal-open');
 
       link.addEventListener('click', e => {
         e.preventDefault();
@@ -129,8 +185,8 @@ class Modal {
       });
 
       // Auto-open if hash matches and modal has modal_hash
-      if (window.location.hash == '#' + id) {
-        let modal = lib.qs('#' + id);
+      if (window.location.hash === '#' + id) {
+        const modal = lib.qs('#' + id);
         if (modal.classList.contains('modal_hash')) {
           this.show(id);
         }
@@ -141,11 +197,12 @@ class Modal {
   /**
    * Sets up global listeners for closing modals.
    * Supports overlay click, close button, and ESC key.
+   * Saves handler references for safe removal.
    * @private
    */
   _setupGlobalListeners() {
-    document.addEventListener('click', e => {
-      let modalActive = lib.qs('.modal_active');
+    this._clickHandler = e => {
+      const modalActive = lib.qs('.modal_active');
       if (
         modalActive &&
         (
@@ -156,16 +213,19 @@ class Modal {
         e.preventDefault();
         this.hide(e.target.closest('.modal')?.getAttribute('id'));
       }
-    });
+    };
 
-    document.addEventListener('keydown', e => {
-      let modalsActive = lib.qsa('.modal_active');
-      let modalActive = modalsActive[modalsActive.length - 1];
+    this._keydownHandler = e => {
+      const modalsActive = lib.qsa('.modal_active');
+      const modalActive = modalsActive[modalsActive.length - 1];
       if (modalActive && e.key === 'Escape') {
         e.preventDefault();
         this.hide(modalActive.getAttribute('id'));
       }
-    });
+    };
+
+    document.addEventListener('click', this._clickHandler);
+    document.addEventListener('keydown', this._keydownHandler);
   }
 
   /**
@@ -183,7 +243,7 @@ class Modal {
       return;
     }
 
-    let modal = lib.qs('#' + id);
+    const modal = lib.qs('#' + id);
     if (!modal) return;
 
     if (modal.classList.contains('modal_uniq')) {
@@ -232,7 +292,7 @@ class Modal {
   async hide(id) {
     if (this.lockCount > 0) return;
 
-    let modal = lib.qs('#' + id);
+    const modal = lib.qs('#' + id);
     if (!modal) return;
 
     this.lockCount++;
@@ -288,6 +348,8 @@ class Modal {
 
 /**
  * Singleton export of Modal.
+ * Use `modal.init()` to initialize or reinitialize safely.
+ *
  * @type {Modal}
  */
 export const modal = new Modal();

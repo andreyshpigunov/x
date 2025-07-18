@@ -1,11 +1,3 @@
-//
-//  lazyload.js / x
-//  Lazyload images using IntersectionObserver
-//
-//  Created by Andrey Shpigunov at 12.04.2025
-//  All rights reserved.
-//
-
 /**
  * @fileoverview Lazy loading of images using IntersectionObserver.
  *

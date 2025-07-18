@@ -29,8 +29,8 @@
  * - `invisible` – Dispatched when the element leaves the viewport.
  *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.3
+ * @since 2025-07-18
  */
 
 import { lib } from './lib';
@@ -71,13 +71,6 @@ class Appear {
       visibleClass: 'visible',
       once: false
     };
-
-    /**
-     * Indicates whether the observer has been initialized.
-     * @type {boolean}
-     * @private
-     */
-    this._initialized = false;
   }
 
   /**
@@ -96,20 +89,21 @@ class Appear {
 
     this._options = { ...this._options, ...config };
 
+    // Disconnect previous observer to prevent leaks
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+
     this._targets = lib.qsa('[x-appear]');
 
     if (this._targets.length) {
       this._observer = new IntersectionObserver(this._observerCallback.bind(this));
 
       this._targets.forEach(item => {
-        if (this._initialized) {
-          this._observer.unobserve(item);
-        }
         this._observer.observe(item);
       });
     }
-
-    this._initialized = true;
   }
 
   /**

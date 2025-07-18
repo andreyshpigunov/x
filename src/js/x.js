@@ -46,6 +46,7 @@ class X {
   
   init() {
     if (!this.initialized) {
+      this.device.init();
       this.modal.init();
       this.animate.init();
       this.appear.init();

@@ -6,7 +6,8 @@
  *
  * Public API:
  *
- * - `slides.init()` – Initializes all `[x-slides]` elements on the page.
+ * - `slides.init()` – Initializes all `[x-slides]` elements on the page. Safe for multiple calls.
+ * - `slides.destroy()` – Removes event listeners and observers.
  *
  * Example usage:
  *
@@ -23,12 +24,11 @@
  * - On mousemove, changes images based on cursor position.
  * - Shows dot indicators for each slide.
  * - Resets to the first image on mouseout.
- *
- * Mobile devices skip initialization (no hover support).
+ * - Mobile devices skip initialization (no hover support).
  *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.4
+ * @since 2025-07-18
  */
 
 import { device } from './device';
@@ -39,17 +39,44 @@ import { lib } from './lib';
  */
 class Slides {
   constructor() {
+    /**
+     * Preloaded image URLs to avoid duplicate loading.
+     * @type {Set<string>}
+     * @private
+     */
     this._preloadedImages = new Set();
+
+    /**
+     * Active sliders with their event handlers and state.
+     * @type {Map<HTMLElement, Object>}
+     * @private
+     */
+    this._sliders = new Map();
+
+    /**
+     * MutationObserver for dynamic DOM updates.
+     * @type {MutationObserver|null}
+     * @private
+     */
+    this._observer = null;
+
+    /**
+     * Initialization flag to control safe reinitialization.
+     * @type {boolean}
+     * @private
+     */
+    this._initialized = false;
   }
 
   /**
    * Initializes all `[x-slides]` elements on the page.
-   *
-   * - Skips on touch devices.
-   * - Sets up lazy initialization on `mouseenter`.
-   * - Observes DOM for dynamically added `[x-slides]` elements.
+   * Safe for multiple calls. Automatically destroys previous listeners.
    */
   init() {
+    if (this._initialized) {
+      this.destroy();
+    }
+
     const sliders = lib.qsa('[x-slides]');
 
     if (device.touch) {
@@ -57,16 +84,37 @@ class Slides {
       return;
     }
 
-    sliders.forEach((el) => {
+    for (const el of sliders) {
       el.addEventListener('mouseenter', () => {
         if (!el.dataset.slidesInited) {
           this._initSlider(el);
           el.dataset.slidesInited = 'true';
         }
       }, { once: true });
-    });
+    }
 
     this._observeDOM();
+    this._initialized = true;
+  }
+
+  /**
+   * Destroys all event listeners and observers.
+   * Safe for multiple calls.
+   */
+  destroy() {
+    for (const [el, sliderData] of this._sliders.entries()) {
+      el.removeEventListener('mousemove', sliderData.mousemoveHandler);
+      el.removeEventListener('mouseout', sliderData.mouseoutHandler);
+      el.removeEventListener('mouseenter', sliderData.mouseenterHandler);
+    }
+
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+
+    this._sliders.clear();
+    this._initialized = false;
   }
 
   /**
@@ -74,7 +122,7 @@ class Slides {
    * @private
    */
   _observeDOM() {
-    const observer = new MutationObserver(mutations => {
+    this._observer = new MutationObserver(mutations => {
       for (const m of mutations) {
         for (const node of m.addedNodes) {
           if (node.nodeType === 1) {
@@ -83,7 +131,7 @@ class Slides {
         }
       }
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    this._observer.observe(document.body, { childList: true, subtree: true });
   }
 
   /**
@@ -157,39 +205,45 @@ class Slides {
     const rect = el.getBoundingClientRect();
     const dots = lib.qsa('div', lib.qs('#' + id));
 
-    const item = {
+    const slider = {
       element: el,
       rect,
       img,
       array: unique,
       count,
-      items: lib.qs('#' + id),
-      dots
+      dots,
+      activeIndex: 0,
+      locked: false
     };
 
-    el.dataset.slidesInited = 'true';
     el.classList.add('slides');
-    this._bindEvents(item);
-  }
 
-  /**
-   * Binds `mousemove` and `mouseout` events to a slider.
-   *
-   * @param {Object} item - Slider data object.
-   * @private
-   */
-  _bindEvents(item) {
-    item.element.addEventListener('mousemove', lib.throttle(event => {
-      item.rect = item.element.getBoundingClientRect();
-      this._update(event, item);
-    }, 100));
+    // Event handlers
+    const mousemoveHandler = lib.throttle(event => {
+      slider.rect = el.getBoundingClientRect();
+      this._update(event, slider);
+    }, 100);
 
-    item.element.addEventListener('mouseout', () => {
-      this._reset(item);
+    const mouseoutHandler = () => {
+      this._reset(slider);
+    };
+
+    const mouseenterHandler = () => {
+      slider.locked = false;
+    };
+
+    el.addEventListener('mousemove', mousemoveHandler);
+    el.addEventListener('mouseout', mouseoutHandler);
+    el.addEventListener('mouseenter', mouseenterHandler);
+    window.addEventListener('resize', () => {
+      slider.rect = el.getBoundingClientRect();
     });
 
-    window.addEventListener('resize', () => {
-      item.rect = item.element.getBoundingClientRect();
+    this._sliders.set(el, {
+      mousemoveHandler,
+      mouseoutHandler,
+      mouseenterHandler,
+      slider
     });
   }
 
@@ -197,41 +251,46 @@ class Slides {
    * Updates the image and active dot based on cursor position.
    *
    * @param {MouseEvent} event
-   * @param {Object} item - Slider data object.
+   * @param {Object} slider - Slider data object.
    * @private
    */
-  _update(event, item) {
-    const x = Math.max(0, event.clientX - item.rect.left);
-    const slide = Math.floor(x / (item.rect.width / item.count));
+  _update(event, slider) {
+    if (slider.locked) return; // Ignore updates after mouseout
 
-    if (item.img.src !== item.array[slide]) {
-      item.img.src = item.array[slide];
-      this._setActiveItem(item, slide);
+    const x = Math.max(0, event.clientX - slider.rect.left);
+    const slide = Math.floor(x / (slider.rect.width / slider.count));
+
+    if (slider.activeIndex !== slide && slide >= 0 && slide < slider.count) {
+      slider.img.src = slider.array[slide];
+      this._setActiveItem(slider, slide);
+      slider.activeIndex = slide;
     }
   }
 
   /**
    * Resets the image and dots to the first slide.
+   * Ensures that no race condition occurs with mousemove.
    *
-   * @param {Object} item - Slider data object.
+   * @param {Object} slider - Slider data object.
    * @private
    */
-  _reset(item) {
-    item.img.src = item.array[0];
-    item.img.setAttribute('src', item.array[0]);
-    this._setActiveItem(item, 0);
+  _reset(slider) {
+    slider.locked = true;
+    slider.img.src = slider.array[0];
+    this._setActiveItem(slider, 0);
+    slider.activeIndex = 0;
   }
 
   /**
    * Sets active dot indicator.
    *
-   * @param {Object} item - Slider data object.
+   * @param {Object} slider - Slider data object.
    * @param {number} index - Active slide index.
    * @private
    */
-  _setActiveItem(item, index) {
-    lib.removeClass(item.dots, 'active');
-    lib.addClass(item.dots[index], 'active');
+  _setActiveItem(slider, index) {
+    lib.removeClass(slider.dots, 'active');
+    lib.addClass(slider.dots[index], 'active');
   }
 
   /**
@@ -252,6 +311,8 @@ class Slides {
 
 /**
  * Singleton export of Slides.
+ * Use `slides.init()` to initialize or reinitialize safely.
+ *
  * @type {Slides}
  */
 export const slides = new Slides();

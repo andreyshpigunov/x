@@ -6,7 +6,8 @@
  *
  * Public API:
  *
- * - `scroll.init()` – Initializes `[x-scrollto]` links and sets up observers.
+ * - `scroll.init()` – Initializes `[x-scrollto]` links and sets up observers. Safe for multiple calls.
+ * - `scroll.destroy()` – Removes scroll observers and event listeners.
  * - `scroll.scrollTo(target | params)` – Scrolls to element by id, selector, or element with options.
  *
  * Example usage:
@@ -23,8 +24,8 @@
  * await scroll.scrollTo('#section');
  *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.3
+ * @since 2025-07-18
  */
 
 import { lib } from './lib';
@@ -67,17 +68,43 @@ class Scroll {
      * @type {Function}
      */
     this.to = this.scrollTo;
+
+    /**
+     * Internal registry of observed links and targets.
+     * @type {Object.<string, Object>}
+     * @private
+     */
+    this._linksHash = {};
+
+    /**
+     * Scroll event handlers for cleanup.
+     * @type {Map<HTMLElement|Window, Function>}
+     * @private
+     */
+    this._scrollHandlers = new Map();
+
+    /**
+     * Initialization flag to prevent duplicate setup.
+     * @type {boolean}
+     * @private
+     */
+    this._initialized = false;
   }
 
   /**
    * Initializes all `[x-scrollto]` links on the page.
    * Sets up click events and scroll observation for active class toggling.
+   * Safe to call multiple times.
    */
   init() {
+    if (this._initialized) {
+      this.destroy();
+    }
+
     const links = lib.qsa('[x-scrollto]');
     if (!links.length) return;
 
-    let linksHash = {};
+    this._linksHash = {};
 
     for (let link of links) {
       try {
@@ -93,7 +120,7 @@ class Scroll {
             item.target = lib.qs(json.target);
             item.offset = json.offset || this.offset;
             item.classActive = json.classActive || this.classActive;
-            item.hash = json.hash || this.hash;
+            item.hash = json.hash ?? this.hash; // allow false override
           } else {
             console.error('Target required in JSON or element does not exist:', json);
             continue;
@@ -113,10 +140,9 @@ class Scroll {
         }
 
         if (item) {
-          linksHash[lib.makeId()] = item;
-
-          link.removeAttribute('x-scrollto');
-
+          const id = lib.makeId();
+          this._linksHash[id] = item;
+          
           link.addEventListener('click', event => {
             event.preventDefault();
             this.scrollTo({
@@ -133,22 +159,25 @@ class Scroll {
       }
     }
 
-    if (Object.keys(linksHash).length) {
-      this._scrollObserve(linksHash);
-
-      let parents = [];
-      for (const k in linksHash) {
-        if (Object.hasOwn(linksHash[k], 'parent') && !parents.includes(linksHash[k].parent)) {
-          parents.push(linksHash[k].parent);
-        }
-      }
-      for (const parent of parents) {
-        let el = lib.qs(parent);
-        el.addEventListener('scroll', () => {
-          this._scrollObserve(linksHash);
-        }, { passive: true });
-      }
+    if (Object.keys(this._linksHash).length) {
+      this._setupScrollObservers();
     }
+
+    this._initialized = true;
+  }
+
+  /**
+   * Removes scroll listeners and resets the state.
+   * Safe to call multiple times.
+   */
+  destroy() {
+    for (const [parent, handler] of this._scrollHandlers.entries()) {
+      parent.removeEventListener('scroll', handler);
+    }
+
+    this._scrollHandlers.clear();
+    this._linksHash = {};
+    this._initialized = false;
   }
 
   /**
@@ -167,9 +196,9 @@ class Scroll {
    */
   async scrollTo(params) {
     return new Promise(resolve => {
-      const parent = lib.qs(params.parent) || this.parent;
+      const parent = typeof params.parent === 'string' ? lib.qs(params.parent) : params.parent || this.parent;
       const offset = params.offset || this.offset;
-      const hash = params.hash || this.hash;
+      const hash = params.hash ?? this.hash;
 
       const target = typeof params === 'object' && !(params instanceof Element)
         ? lib.qs(params.target)
@@ -211,30 +240,50 @@ class Scroll {
   }
 
   /**
-   * Observes scroll position to manage active classes on links and targets.
-   * Adds or removes `classActive` when target enters viewport center.
-   *
-   * @param {Object} linksHash - Map of link/target/params.
+   * Sets up scroll event listeners for all unique parents to manage active classes.
    * @private
    */
-  _scrollObserve(linksHash) {
-    Object.keys(linksHash).forEach(i => {
-      let item = linksHash[i];
-      let targetOffset = item.target.getBoundingClientRect();
+  _setupScrollObservers() {
+    const parents = new Set();
 
-      if (
-        targetOffset.top <= document.documentElement.clientHeight / 4 &&
-        targetOffset.bottom > document.documentElement.clientHeight / 4
-      ) {
+    for (const key in this._linksHash) {
+      parents.add(this._linksHash[key].parent);
+    }
+
+    for (const parent of parents) {
+      const el = parent === window ? window : lib.qs(parent);
+      if (!el) continue;
+
+      const handler = () => {
+        this._scrollObserve();
+      };
+
+      el.addEventListener('scroll', handler, { passive: true });
+      this._scrollHandlers.set(el, handler);
+    }
+
+    // Initial trigger
+    this._scrollObserve();
+  }
+
+  /**
+   * Observes scroll position to manage active classes on links and targets.
+   * Adds or removes `classActive` when target enters viewport center.
+   * @private
+   */
+  _scrollObserve() {
+    Object.keys(this._linksHash).forEach(i => {
+      const item = this._linksHash[i];
+      const rect = item.target.getBoundingClientRect();
+      const threshold = document.documentElement.clientHeight / 4;
+
+      if (rect.top <= threshold && rect.bottom > threshold) {
         if (item.classActive != null) {
           item.link.classList.add(item.classActive);
           item.target.classList.add(item.classActive);
         }
       } else {
-        if (
-          item.classActive != null &&
-          item.link.classList.contains(item.classActive)
-        ) {
+        if (item.classActive != null) {
           item.link.classList.remove(item.classActive);
           item.target.classList.remove(item.classActive);
         }
@@ -245,6 +294,8 @@ class Scroll {
 
 /**
  * Singleton export of Scroll.
+ * Use `scroll.init()` to initialize or reinitialize safely.
+ *
  * @type {Scroll}
  */
 export const scroll = new Scroll();

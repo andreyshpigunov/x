@@ -6,7 +6,8 @@
  *
  * Public API:
  *
- * - `sheets.init()` – Initializes all `[x-sheets]` components and binds events.
+ * - `sheets.init()` – Initializes all `[x-sheets]` components. Safe for multiple calls.
+ * - `sheets.destroy()` – Removes all sheets-related event listeners and resets state.
  * - `sheets.show(xSheet)` – Programmatically switches to a specific sheet.
  *
  * Example usage:
@@ -27,8 +28,8 @@
  * - Nested sheets are supported; unrelated sheets are not affected.
  *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.3
+ * @since 2025-07-18
  */
 
 import { lib } from './lib';
@@ -38,12 +39,37 @@ import { lib } from './lib';
  */
 class Sheets {
   /**
+   * Creates a Sheets instance.
+   */
+  constructor() {
+    /**
+     * Tracks all bound click handlers for cleanup.
+     * Key: Element, Value: Handler function.
+     * @type {Map<HTMLElement, Function>}
+     * @private
+     */
+    this._handlers = new Map();
+
+    /**
+     * Initialization flag to control safe reinitialization.
+     * @type {boolean}
+     * @private
+     */
+    this._initialized = false;
+  }
+
+  /**
    * Initializes all `[x-sheets]` components on the page.
    *
    * - Binds click events to `[x-sheet-open]` elements.
    * - Activates the tab with `.active` class by default.
+   * - Safe for multiple calls; previous listeners are removed.
    */
   init() {
+    if (this._initialized) {
+      this.destroy();
+    }
+
     const sheets = lib.qsa('[x-sheets]');
     if (!sheets.length) return;
 
@@ -51,10 +77,13 @@ class Sheets {
       const tabs = lib.qsa('[x-sheet-open]:not([x-sheet-open] [x-sheet-open])', sheet);
 
       for (let tab of tabs) {
-        tab.addEventListener('click', (e) => {
+        const handler = (e) => {
           e.preventDefault();
-          this.show(e.target.getAttribute('x-sheet-open'));
-        });
+          this.show(tab.getAttribute('x-sheet-open'));
+        };
+
+        tab.addEventListener('click', handler);
+        this._handlers.set(tab, handler);
       }
 
       const active = lib.qs('[x-sheet-open].active', sheet);
@@ -62,6 +91,21 @@ class Sheets {
         this.show(active.getAttribute('x-sheet-open'));
       }
     }
+
+    this._initialized = true;
+  }
+
+  /**
+   * Removes all event listeners and resets internal state.
+   * Safe to call multiple times.
+   */
+  destroy() {
+    for (const [el, handler] of this._handlers.entries()) {
+      el.removeEventListener('click', handler);
+    }
+
+    this._handlers.clear();
+    this._initialized = false;
   }
 
   /**
@@ -95,7 +139,9 @@ class Sheets {
 }
 
 /**
- * Singleton export of Sheets.
+ * Singleton export of Sheets system.
+ * Use `sheets.init()` to initialize or reinitialize safely.
+ *
  * @type {Sheets}
  */
 export const sheets = new Sheets();

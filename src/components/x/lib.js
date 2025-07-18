@@ -75,7 +75,7 @@ class Lib {
       this.qsa('[x-render]').forEach(item => {
         this.render(item, eval(item.getAttribute('x-render')));
       });
-    });
+    }, { once: true });
   }
 
   /**

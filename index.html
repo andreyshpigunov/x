@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.2.30</div>
+    <div class="header-version nowrap">0.3.0</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -161,12 +161,14 @@
                 
                 function renderDevice() {
                   let content = '';
-                  Object.keys(x.device).forEach(key => {
-                    let val = x.device[key];
-                    if (typeof val === 'object') {
-                      val = JSON.stringify(val);
-                    }
-                    content += key + ': ' + val + '<br>'
+                  Object.keys(x.device)
+                    .filter(key => !(typeof key === 'string' && key.charAt(0) === '_'))
+                    .forEach(key => {
+                      let val = x.device[key];
+                      if (typeof val === 'object') {
+                        val = JSON.stringify(val);
+                      }
+                      content += key + ': ' + val + '<br>'
                   })
                   x.lib.render('.jsDeviceExample', content)
                 }

@@ -1,184 +1,184 @@
 /**
- * @fileoverview Device detection utility
+ * @fileoverview
+ * Device detection class.
  *
- * Detects the device type, operating system, browser, screen size, and touch capability.
- * Automatically sets CSS classes on the <html> element for styling purposes.
- * Also provides a singleton object with current device parameters.
+ * Detects device type, OS, browser, screen size, and touch capability.
+ * Automatically applies CSS classes to the <html> element.
+ * Supports safe repeated initialization without leaks.
  *
- * Exported singleton: `device`
+ * Usage example:
  *
- * Public API (exported fields):
+ *   import { Device } from './device.js';
  *
- * - `device.js`        – Always `true`. Indicates that JS is enabled.
- * - `device.os`        – Detected OS: `'windows' | 'macos' | 'linux' | 'android' | 'ios' | 'unknown'`
- * - `device.browser`   – Detected browser: `'chrome' | 'firefox' | 'safari' | 'opera' | 'unknown'`
- * - `device.device`    – Device type: `'iphone' | 'ipad' | 'android' | 'mac' | null`
- * - `device.mobile`    – `true` if the device is mobile.
- * - `device.touch`     – `true` if the device supports touch input.
- * - `device.width`     – Current window width in pixels.
- * - `device.height`    – Current window height in pixels.
- * - `device.size`      – Responsive size flags:
- *     - `xs` – width < 400px
- *     - `s`  – width < 600px
- *     - `m`  – 600px <= width < 1000px
- *     - `l`  – width >= 1000px
- *     - `xl` – width >= 1400px
+ *   const device = new Device();
+ *   device.init();
  *
- * Example usage:
+ *   // Safe to call init() again to reinitialize
+ *   device.init();
  *
- *   import { device } from './device.js';
+ * Public API:
  *
- *   if (device.mobile) {
- *     console.log('Mobile device detected');
- *   }
+ * @class Device
  *
- *   console.log('Current size:', device.size);
+ * @property {boolean} js - Flag indicating JavaScript is enabled (always true)
+ * @property {string} os - Operating system (windows, macos, ios, android, linux, unknown)
+ * @property {string} browser - Browser name (chrome, firefox, safari, opera, edge, unknown)
+ * @property {string|null} device - Device type (iphone, ipad, android, mac) or 'computer'
+ * @property {boolean} mobile - Flag indicating if the device is mobile
+ * @property {boolean} touch - Flag indicating if touch support is available
+ * @property {number} width - Current window width
+ * @property {number} height - Current window height
+ * @property {{xs:boolean, s:boolean, m:boolean, l:boolean, xl:boolean}} size - Responsive size flags based on window width
+ *
+ * @method init - Initializes or re-initializes detection, CSS classes, and resize listeners
  *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.6
+ * @since 2025-07-18
  */
 
- import { lib } from './lib';
- 
-/**
- * Device detection singleton.
- *
- * Provides a set of properties describing the current device, browser, OS, screen size, and input capabilities.
- * Automatically applies corresponding CSS classes to the <html> element.
- *
- * @type {{
- *   js: boolean,
- *   os: string,
- *   browser: string,
- *   device: (string|null),
- *   mobile: boolean,
- *   touch: boolean,
- *   width: number,
- *   height: number,
- *   size: {xs: boolean, s: boolean, m: boolean, l: boolean, xl: boolean}
- * }}
- */
-export const device = (function () {
+import { lib } from './lib';
+
+export class Device {
+  constructor() {
+    this.js = true;
+    this.os = 'unknown';
+    this.browser = 'unknown';
+    this.device = null;
+    this.mobile = false;
+    this.touch = false;
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.size = this._getSizeFlags(this.width);
+
+    this._html = document.documentElement;
+
+    this._onResize = this._onResize.bind(this);
+    this._debouncedResize = lib.debounce(this._onResize, 100);
+
+    this._initialized = false;
+  }
 
   /**
-   * Calculates responsive size flags based on the current window width.
-   *
-   * @returns {{xs: boolean, s: boolean, m: boolean, l: boolean, xl: boolean}}
-   * An object representing the current responsive size.
+   * Initializes or reinitializes the device detection,
+   * removes previous listeners and CSS classes if needed,
+   * then applies new state and listeners.
+   */
+  init() {
+    if (this._initialized) {
+      // Cleanup previous state before reinit
+      this._cleanup();
+    }
+
+    this._detect();
+    this._applyHtmlClasses();
+
+    window.addEventListener('resize', this._debouncedResize);
+    this._initialized = true;
+  }
+
+  /**
+   * Internal cleanup: removes event listeners and clears added classes.
    * @private
    */
-  const _size = () => {
-    const width = window.innerWidth;
+  _cleanup() {
+    window.removeEventListener('resize', this._debouncedResize);
+
+    // Remove all previously added classes related to device detection
+    const classesToRemove = [
+      'js',
+      'windows', 'macos', 'ios', 'android', 'linux', 'unknown',
+      'chrome', 'firefox', 'safari', 'opera', 'edge',
+      'iphone', 'ipad', 'android',
+      'mobile', 'desktop',
+      'touch'
+    ];
+
+    classesToRemove.forEach(cls => {
+      this._html.classList.remove(cls);
+    });
+
+    this._initialized = false;
+  }
+
+  _getSizeFlags(width) {
     return {
       xs: width < 400,
-      s:  width < 600,
-      m:  width >= 600 && width < 1000,
-      l:  width >= 1000,
+      s: width < 600,
+      m: width >= 600 && width < 1000,
+      l: width >= 1000,
       xl: width >= 1400
-    }
-  };
-
-  /**
-   * Adds a CSS class to the list if it is not already present.
-   *
-   * @param {string} className - The CSS class to add.
-   * @private
-   */
-  const _addClass = (className) => {
-    if (className && !classes.includes(className)) {
-      classes.push(className);
-    }
-  };
-
-  /**
-   * Updates the `width`, `height`, and `size` properties of the `device` singleton.
-   * Called on window resize events (debounced).
-   *
-   * @private
-   */
-  const _updateDimensions = () => {
-    fields.width = window.innerWidth;
-    fields.height = window.innerHeight;
-    fields.size = _size();
-  };
-
-  // Reference to <html> element
-  const html = document.documentElement;
-
-  // Normalize user agent string
-  const userAgent = window.navigator.userAgent.toLowerCase();
-
-  // CSS classes to apply to <html>
-  const classes = [];
-
-  // Exported fields with device info
-  const fields = {
-    js: true,
-    os: null,
-    browser: null,
-    device: null,
-    mobile: /mobile/.test(userAgent),
-    touch: false,
-    width: window.innerWidth,
-    height: window.innerHeight,
-    size: _size()
-  };
-
-  // Detect OS
-  const osMapping = {
-    win: 'windows',
-    linux: 'linux',
-    iphone: 'ios',
-    ipad: 'ios',
-    ipod: 'ios',
-    mac: 'macos',
-    android: 'android'
-  };
-
-  fields.os = Object.keys(osMapping).find(key => userAgent.includes(key)) || 'unknown';
-
-  // Detect browser
-  const browserMapping = {
-    firefox: /mozilla/.test(userAgent) && !/(compatible|webkit)/.test(userAgent),
-    safari: /safari/.test(userAgent) && !/chrome/.test(userAgent),
-    chrome: /chrome/.test(userAgent),
-    opera: /opera/.test(userAgent)
-  };
-
-  fields.browser = Object.keys(browserMapping).find(browser => browserMapping[browser]) || 'unknown';
-
-  // Detect device type
-  if (/ipad/.test(userAgent)) {
-    fields.device = 'ipad';
-  } else if (/iphone/.test(userAgent)) {
-    fields.device = 'iphone';
-  } else if (/android/.test(userAgent)) {
-    fields.device = 'android';
-  } else if (/mac/.test(userAgent)) {
-    fields.device = 'mac';
+    };
   }
 
-  // Add detected classes to <html>
-  _addClass('js');
-  _addClass(fields.os);
-  _addClass(fields.browser);
-  _addClass(fields.device);
-  _addClass(fields.mobile ? 'mobile' : 'desktop');
-
-  // Detect touch support using media query
-  if (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) {
-    fields.touch = true;
-    _addClass('touch');
+  _onResize() {
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.size = this._getSizeFlags(this.width);
   }
 
-  // Listen to resize events and update dimensions
-  window.addEventListener('resize', lib.debounce(_updateDimensions, 100));
+  _detect() {
+    const ua = window.navigator.userAgent.toLowerCase();
 
-  // Apply all collected classes to <html>
-  classes.forEach(cl => html.classList.add(cl));
+    this.mobile = /mobile/.test(ua);
 
-  // Return the fields object as a singleton export
-  return fields;
+    const osMapping = {
+      win: 'windows',
+      linux: 'linux',
+      iphone: 'ios',
+      ipad: 'ios',
+      ipod: 'ios',
+      mac: 'macos',
+      android: 'android'
+    };
+    const osKey = Object.keys(osMapping).find(key => ua.includes(key));
+    this.os = osKey ? osMapping[osKey] : 'unknown';
 
-})();
+    if (/firefox/.test(ua)) {
+      this.browser = 'firefox';
+    } else if (/opr\//.test(ua) || /opera/.test(ua)) {
+      this.browser = 'opera';
+    } else if (/edg\//.test(ua)) {
+      this.browser = 'edge';
+    } else if (/chrome/.test(ua) && !/edg\//.test(ua) && !/opr\//.test(ua)) {
+      this.browser = 'chrome';
+    } else if (/safari/.test(ua) && !/chrome/.test(ua) && !/edg\//.test(ua)) {
+      this.browser = 'safari';
+    } else {
+      this.browser = 'unknown';
+    }
+
+    if (/ipad/.test(ua)) {
+      this.device = 'ipad';
+    } else if (/iphone/.test(ua)) {
+      this.device = 'iphone';
+    } else if (/android/.test(ua)) {
+      this.device = 'android';
+    } else if (/mac/.test(ua)) {
+      this.device = 'mac';
+    } else {
+      this.device = 'computer';
+    }
+
+    this.touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  }
+
+  _applyHtmlClasses() {
+    const classes = [
+      'js',
+      this.os,
+      this.browser,
+      this.device,
+      this.mobile ? 'mobile' : 'desktop',
+      this.touch ? 'touch' : null
+    ].filter(Boolean);
+
+    classes.forEach(c => this._html.classList.add(c));
+  }
+}
+
+/**
+ * Singleton export of the Device observer.
+ * @type {Device}
+ */
+export const device = new Device();

@@ -12,7 +12,6 @@
  *
  * Example usage:
  *
- * HTML:
  * <div x-animate='{
  *   "parent": "#scroll-container",
  *   "trigger": ".trigger",
@@ -23,21 +22,15 @@
  *   "classRemove": true
  * }'></div>
  *
- * Behavior:
- * - Adds/removes classes based on scroll position.
- * - Calls custom global functions with progress parameter.
- *
  * @author Andrey Shpigunov
- * @version 0.2
- * @since 2025-07-17
+ * @version 0.3
+ * @since 2025-07-18
  */
 
 import { lib } from './lib';
 
 /**
  * Scroll-based animation controller.
- *
- * Handles animations triggered by scroll events using `[x-animate]` attributes.
  */
 class Animate {
 
@@ -64,7 +57,7 @@ class Animate {
     this._scroll = this._scroll.bind(this);
 
     /**
-     * Bound raw scroll event handler.
+     * Bound raw scroll/resize handler.
      * @type {Function}
      * @private
      */
@@ -94,11 +87,6 @@ class Animate {
 
   /**
    * Initializes or reinitializes animation tracking for `[x-animate]` elements.
-   *
-   * Parses attributes, sets up scroll listeners, and starts animation processing.
-   *
-   * @example
-   * animate.init();
    */
   init() {
     this._cleanup();
@@ -122,8 +110,10 @@ class Animate {
     if (!this._initialized) return;
 
     this._parents.forEach(parent => {
-      parent.removeEventListener('scroll', this._scrollHandler, { passive: true });
+      parent.removeEventListener('scroll', this._scrollHandler);
     });
+
+    window.removeEventListener('resize', this._scrollHandler);
 
     this._ticking = false;
     this._animations = [];
@@ -162,7 +152,7 @@ class Animate {
   }
 
   /**
-   * Sets up scroll event listeners for unique parent containers.
+   * Sets up scroll and resize event listeners for unique parent containers.
    *
    * @private
    */
@@ -170,18 +160,20 @@ class Animate {
     for (const item of this._animations) {
       if (this._parents.has(item.parent)) continue;
       this._parents.add(item.parent);
-      item.parent.addEventListener('scroll', this._scrollHandler, { passive: true });
+      item.parent.addEventListener('scroll', this._scrollHandler);
     }
+
+    window.addEventListener('resize', this._scrollHandler);
 
     if (document.readyState === 'complete') {
       requestAnimationFrame(() => this._scroll());
     } else {
-      document.addEventListener('DOMContentLoaded', this._scroll, { once: true });
+      window.addEventListener('load', () => this._scroll(), { once: true });
     }
   }
 
   /**
-   * Raw scroll event handler with throttling via `requestAnimationFrame`.
+   * Raw scroll/resize event handler with throttling via `requestAnimationFrame`.
    *
    * @private
    */
@@ -196,7 +188,7 @@ class Animate {
   }
 
   /**
-   * Main animation logic executed on scroll.
+   * Main animation logic executed on scroll or resize.
    *
    * Calculates element position, progress, adds/removes classes, and calls custom functions.
    *
