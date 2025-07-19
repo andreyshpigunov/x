@@ -59,9 +59,12 @@ class X {
       this.slides.init();
       hover();
       
-      // Return deactivated transitions
-      this.lib.transitionsOn();
       this.initialized = true;
+      
+      // Return deactivated transitions
+      window.addEventListener('load', () => {
+        this.lib.transitionsOn();
+      }, { once: true });
     }
   }
 };
