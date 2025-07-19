@@ -519,8 +519,10 @@ class Lib {
   /**
    * Enables CSS transitions globally.
    */
-  transitionsOn() {
-    document.documentElement.classList.remove('noTransitions');
+  transitionsOn(delay = 0) {
+    setTimeout(() => {
+      document.documentElement.classList.remove('noTransitions')
+    }, delay);
   }
 
   /**

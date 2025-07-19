@@ -60,11 +60,6 @@ class X {
       hover();
       
       this.initialized = true;
-      
-      // Return deactivated transitions
-      window.addEventListener('load', () => {
-        this.lib.transitionsOn();
-      }, { once: true });
     }
   }
 };
