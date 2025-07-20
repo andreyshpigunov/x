@@ -77,7 +77,9 @@ function handleHoverLeave(event) {
  * @private
  */
 function syncHover(event, isEnter) {
-  const target = event.target.closest('[x-hover]');
+  const target = event.target instanceof Element
+    ? event.target.closest('[x-hover]')
+    : null;
   if (!target) return;
 
   const href = target.getAttribute('href');
@@ -86,10 +88,6 @@ function syncHover(event, isEnter) {
   const elements = lib.qsa(`[href="${CSS.escape(href)}"]`);
 
   for (const el of elements) {
-    if (isEnter) {
-      el.classList.add('hover');
-    } else {
-      el.classList.remove('hover');
-    }
+    el.classList.toggle('hover', isEnter);
   }
 }
