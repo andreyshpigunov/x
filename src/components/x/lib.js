@@ -123,9 +123,9 @@ class Lib {
       for (let item of selector) {
         if (item instanceof Node) arr.push(item);
         else if (item instanceof NodeList) arr.push(...item);
-        else arr.push(context.querySelector(item));
+        else arr.push(...context.querySelectorAll(item));
       }
-      return arr;
+      return arr.flat();
     }
     if (selector === window) return [selector];
     return [];
