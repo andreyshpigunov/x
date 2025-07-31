@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.3.4</div>
+    <div class="header-version nowrap">0.3.5</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -44,13 +44,21 @@
     <h1 class="mxa ac max800">Small and simple CSS & JavaScript library with interesting features</h1>
     
     <div class="flex">
-      <div class="mt4 mra">
+      <div class="mt4">
         <button x-dropdown-open class="button button_dropdown" tabindex="1">Menu left</button>
         <ul x-dropdown role="menu" tabindex="-1">
           <li><a href="/admin/settings/profile/">Профильное образование в педагогическом</a></li>
           <li><a href="/logout/">Выйти</a></li>
           <li class="divider"></li>
           <li><span class="op4">Version 0.5</span></li>
+        </ul>
+      </div>
+      <div class="mt4 mxa">
+        <input x-dropdown-open type="text"/>
+        <ul x-dropdown id="test" role="menu" tabindex="-1">
+          <li><a onclick="alert('It works!')">Test it!</a></li>
+          <li><span class="op4">Начните вводить название города</span></li>
+          <li><span class="op4">Загрузка...</span></li>
         </ul>
       </div>
       <div class="mt4">

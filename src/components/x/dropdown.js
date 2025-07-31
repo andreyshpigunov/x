@@ -141,35 +141,69 @@ class Dropdown {
    */
   _bindTrigger(parent, trigger) {
     const throttledHandler = lib.throttle(() => this._toggleDropdown(parent, trigger), 400);
-
+  
+    const isInputLike = ['INPUT', 'TEXTAREA'].includes(trigger.tagName);
+    let blurTimeout = null;
+  
     const clickListener = e => {
-      e.stopPropagation();
-      throttledHandler();
+      if (!isInputLike) {
+        e.stopPropagation();
+        throttledHandler();
+      }
     };
-
+  
     const keyListener = e => {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+      if (e.key === ' ' && isInputLike) {
+        return;
+      }
+      
+      if (!isInputLike && (e.key === 'Enter' || e.key === ' ')) {
         e.preventDefault();
         throttledHandler();
       }
-
+  
       if (e.key === 'ArrowDown') {
         e.preventDefault();
         this._open(parent, trigger);
         this._focusFirstItem(parent);
       }
-
+  
       if (e.key === 'ArrowUp') {
         e.preventDefault();
         this._open(parent, trigger);
         this._focusLastItem(parent);
       }
     };
-
-    this._handlers.set(trigger, { clickListener, keyListener });
-
+  
+    const focusListener = e => {
+      if (isInputLike) {
+        clearTimeout(blurTimeout);
+        this._open(parent, trigger);
+      } else {
+        trigger.classList.add('hover');
+      }
+    };
+  
+    const blurListener = e => {
+      if (isInputLike) {
+        blurTimeout = setTimeout(() => this._close(parent), 200);
+      } else {
+        trigger.classList.remove('hover');
+      }
+    };
+  
+    this._handlers.set(trigger, {
+      clickListener,
+      keyListener,
+      focusListener,
+      blurListener,
+      blurTimeout,
+    });
+  
     trigger.addEventListener('click', clickListener);
     trigger.addEventListener('keydown', keyListener);
+    trigger.addEventListener('focus', focusListener);
+    trigger.addEventListener('blur', blurListener);
   }
 
   /**
@@ -244,8 +278,13 @@ class Dropdown {
     this._handlers.forEach((handlers, element) => {
       if (handlers.clickListener) element.removeEventListener('click', handlers.clickListener);
       if (handlers.keyListener) element.removeEventListener('keydown', handlers.keyListener);
+      if (handlers.focusListener) element.removeEventListener('focus', handlers.focusListener);
+      if (handlers.blurListener) element.removeEventListener('blur', handlers.blurListener);
+      
       if (handlers.focusListener) element.removeEventListener('focusin', handlers.focusListener);
       if (handlers.blurListener) element.removeEventListener('focusout', handlers.blurListener);
+      
+      if (handlers.blurTimeout) clearTimeout(handlers.blurTimeout);
     });
 
     this._handlers.clear();
@@ -273,6 +312,7 @@ class Dropdown {
    * @private
    */
   async _open(parent, trigger) {
+    this.closeAllDropdowns();
     this._fireEvent(parent, 'beforeshow');
 
     const menu = parent.querySelector('[x-dropdown]');
