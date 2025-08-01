@@ -141,7 +141,9 @@ All right reserved.
       transform-origin: bottom center;
       
       &:focus-visible,
+      &.focus-visible,
       &:hover,
+      &.hover,
       &:active,
       &.active {
         color: var(--dropdown-item-font-color-hover);

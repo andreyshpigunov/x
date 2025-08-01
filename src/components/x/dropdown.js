@@ -164,20 +164,25 @@ class Dropdown {
   
       if (e.key === 'ArrowDown') {
         e.preventDefault();
-        this._open(parent, trigger);
-        this._focusFirstItem(parent);
+        if (!isInputLike) {
+          this._open(parent, trigger);
+          this._focusFirstItem(parent);
+        }
       }
   
       if (e.key === 'ArrowUp') {
         e.preventDefault();
-        this._open(parent, trigger);
-        this._focusLastItem(parent);
+        if (!isInputLike) {
+          this._open(parent, trigger);
+          this._focusLastItem(parent);
+        }
       }
     };
   
     const focusListener = e => {
       if (isInputLike) {
         clearTimeout(blurTimeout);
+        this.closeAllDropdowns();
         this._open(parent, trigger);
       } else {
         trigger.classList.add('hover');
@@ -312,7 +317,7 @@ class Dropdown {
    * @private
    */
   async _open(parent, trigger) {
-    this.closeAllDropdowns();
+    // this.closeAllDropdowns();
     this._fireEvent(parent, 'beforeshow');
 
     const menu = parent.querySelector('[x-dropdown]');
