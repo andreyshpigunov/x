@@ -400,18 +400,23 @@ class Dropdown {
    * @private
    */
   async _close(parent) {
-    const trigger = lib.qs('[x-dropdown-open]', parent);
+    if (parent._dropdownClosing) return;
+    parent._dropdownClosing = true;
+  
     this._fireEvent(parent, 'beforehide');
-
+  
+    const trigger = lib.qs('[x-dropdown-open]', parent);
     if (trigger) {
       lib.removeClass(trigger, 'active');
       trigger.setAttribute('aria-expanded', 'false');
     }
-
+  
     await lib.removeClass(parent, 'dropdown_open', 200);
     parent.classList.remove('dropdown_right', 'dropdown_bottom');
-
+  
     this._fireEvent(parent, 'afterhide');
+  
+    setTimeout(() => { parent._dropdownClosing = false }, 100);
   }
 
   /**
