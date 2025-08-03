@@ -105,6 +105,12 @@ All right reserved.
     opacity: 1;
     transform: scale(1);
   }
+  &.dropdown_wrap > [x-dropdown] li {
+    & > a,
+    & > span {
+      white-space: wrap;
+    }
+  }
 }
 
 
