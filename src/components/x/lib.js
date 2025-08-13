@@ -337,6 +337,26 @@ class Lib {
       return false;
     }
   }
+  
+  /**
+   * Validate integer
+   * @param {string|number} value
+   * @returns {boolean}
+   */
+  isInteger(value) {
+    const num = Number(value);
+    return Number.isInteger(num);
+  }
+  
+  /**
+   * Validate double
+   * @param {string|number} value
+   * @returns {boolean}
+   */
+  isDouble(value) {
+    const num = Number(value);
+    return !isNaN(num) && typeof num === 'number';
+  }
 
   /**
    * Generates random ID.
