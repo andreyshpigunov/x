@@ -163,9 +163,9 @@ class Lib {
    */
   async switch(selector, condition) {
     if (condition) {
-      await this.addClass(selector, 'hidden', delay);
+      await this.addClass(selector, 'hidden');
     } else {
-      await this.removeClass(selector, 'hidden', delay);
+      await this.removeClass(selector, 'hidden');
     }
   }
 
