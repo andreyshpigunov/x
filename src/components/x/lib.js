@@ -154,6 +154,20 @@ class Lib {
   async toggle(selector) {
     await this.toggleClass(selector, 'hidden');
   }
+  
+  /**
+   * Switches `.hidden` class based on condition.
+   *
+   * @param {string|Node|NodeList|Array} selector
+   * @param {boolean} condition
+   */
+  async switch(selector, condition) {
+    if (condition) {
+      await this.addClass(selector, 'hidden', delay);
+    } else {
+      await this.removeClass(selector, 'hidden', delay);
+    }
+  }
 
   /**
    * Adds class to elements with optional delay.
