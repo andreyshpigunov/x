@@ -12,8 +12,12 @@
  * Example usage:
  *
  * HTML:
- * <div x-slides="['photo1.jpg','photo2.jpg','photo3.jpg']">
- *   <img src="photo1.jpg"/>
+ * <div x-slides='[
+ *   {"src":"photo1.jpg","srcset":"photo1-2x.jpg 2x","sizes":"(max-width:600px) 100vw, 600px"},
+ *   {"src":"photo2.jpg","srcset":"photo2-2x.jpg 2x"},
+ *   {"src":"photo3.jpg"}
+ * ]'>
+ *   <img src="photo1.jpg" srcset="photo1@2x.jpg 2x"/>
  * </div>
  *
  * JS:
@@ -261,7 +265,7 @@ class Slides {
     const slide = Math.floor(x / (slider.rect.width / slider.count));
 
     if (slider.activeIndex !== slide && slide >= 0 && slide < slider.count) {
-      slider.img.src = slider.array[slide];
+      this._applyImage(slider.img, slider.array[slide]);
       this._setActiveItem(slider, slide);
       slider.activeIndex = slide;
     }
@@ -276,7 +280,7 @@ class Slides {
    */
   _reset(slider) {
     slider.locked = true;
-    slider.img.src = slider.array[0];
+    this._applyImage(slider.img, slider.array[0]);
     this._setActiveItem(slider, 0);
     slider.activeIndex = 0;
   }
@@ -299,12 +303,42 @@ class Slides {
    * @param {string[]} urls - Array of image URLs.
    * @private
    */
-  _preloadImages(urls) {
-    for (const url of urls) {
+  _preloadImages(items) {
+    for (const item of items) {
+      const url = typeof item === 'string' ? item : item.src;
       if (this._preloadedImages.has(url)) continue;
+  
       const img = new Image();
       img.src = url;
+  
+      if (typeof item !== 'string') {
+        if (item.srcset) img.srcset = item.srcset;
+        if (item.sizes) img.sizes = item.sizes;
+      }
+  
       this._preloadedImages.add(url);
+    }
+  }
+  
+  /**
+   * Applies image attributes (src, srcset, sizes, etc.) from slide data.
+   *
+   * @param {HTMLImageElement} img
+   * @param {string|Object} data - Slide data (string URL or object with attributes).
+   * @private
+   */
+  _applyImage(img, data) {
+    if (typeof data === 'string') {
+      img.src = data;
+      img.removeAttribute('srcset');
+      img.removeAttribute('sizes');
+    } else {
+      img.src = data.src;
+      if (data.srcset) img.srcset = data.srcset;
+      else img.removeAttribute('srcset');
+  
+      if (data.sizes) img.sizes = data.sizes;
+      else img.removeAttribute('sizes');
     }
   }
 }

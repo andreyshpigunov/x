@@ -15,7 +15,9 @@ All right reserved.
   --slides-point-color-active: #fff;
   --slides-point-size: .3rem;
   --slides-point-gap: .3rem;
-  --slides-point-side-padding: 1.6rem;
+  --slides-point-top-padding: auto;
+  --slides-point-left-padding: 1.6rem;
+  --slides-point-right-padding: 1.6rem;
   --slides-point-bottom-padding: 1rem;
 }
 
@@ -30,9 +32,10 @@ All right reserved.
   gap: var(--slides-point-gap);
   position: absolute;
   z-index: 10;
+  top: var(--slides-point-top-padding);
   bottom: var(--slides-point-bottom-padding);
-  left: var(--slides-point-side-padding);
-  right: var(--slides-point-side-padding);
+  left: var(--slides-point-left-padding);
+  right: var(--slides-point-right-padding);
   height: var(--slides-point-size);
   opacity: 0;
   
