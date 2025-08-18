@@ -70,36 +70,45 @@ export class Slider {
     const events = {};
 
     if (isTouch) {
-      // Мобильный свайп
       let startX = 0, moving = false;
-
+    
       events.touchstart = e => {
         moving = true;
         startX = e.touches[0].clientX;
-
+    
         const onMove = ev => {
           if (!moving) return;
           const x = ev.touches[0].clientX;
           const dx = x - startX;
-          wrapper.style.transform = `translateX(${-current*100 + dx / el.offsetWidth * 100}%)`;
+    
+          // Отменяем горизонтальный скролл страницы
+          if (Math.abs(dx) > 5) ev.preventDefault();
+    
+          // Запрет свайпа за крайние слайды
+          let move = dx;
+          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) move = 0;
+    
+          wrapper.style.transform = `translateX(${-current*100 + move / el.offsetWidth * 100}%)`;
         };
-
+    
         const onEnd = ev => {
           if (!moving) return;
           moving = false;
           const x = ev.changedTouches[0].clientX;
           const dx = x - startX;
-          if (dx > 50) setSlide(current-1);
-          else if (dx < -50) setSlide(current+1);
+    
+          if (dx > 50 && current > 0) setSlide(current - 1);
+          else if (dx < -50 && current < slides.length - 1) setSlide(current + 1);
           else setSlide(current);
+    
           document.removeEventListener('touchmove', onMove);
           document.removeEventListener('touchend', onEnd);
         };
-
-        document.addEventListener('touchmove', onMove);
+    
+        document.addEventListener('touchmove', onMove, { passive: false }); // важно passive:false
         document.addEventListener('touchend', onEnd);
       };
-
+    
       wrapper.addEventListener('touchstart', events.touchstart);
     } else {
       // Десктоп hover по секциям
