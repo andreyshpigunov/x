@@ -322,7 +322,8 @@ html.touch .touch-hide { display: none }
   & > object,
   & > embed,
   & > img,
-  & > a {
+  & > a,
+  & > a > img {
     position: absolute;
     top: 0;
     left: 0;
