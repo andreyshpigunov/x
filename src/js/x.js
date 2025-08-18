@@ -22,6 +22,7 @@ import { lib          }  from "../components/x/lib";
 import { form         }  from "../components/x/form";
 import { sticky       }  from "../components/x/sticky";
 import { slides       }  from "../components/x/slides";
+import { slider       }  from "../components/x/slider";
 
 
 class X {
@@ -42,6 +43,7 @@ class X {
     this.form         = form;
     this.sticky       = sticky;
     this.slides       = slides;
+    this.slider       = slider;
     
     this.initialized = false;
   }
@@ -59,6 +61,7 @@ class X {
       this.scroll.init();
       this.sticky.init();
       this.slides.init();
+      this.slider.init();
       hover();
       
       this.initialized = true;

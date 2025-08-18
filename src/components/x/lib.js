@@ -454,7 +454,6 @@ class Lib {
    * @returns {Function}
    */
   throttle(fn, wait, options = {}) {
-    // (реализация см выше - она ок, оставить как есть)
     return this._throttle(fn, wait, options);
   }
 
@@ -466,7 +465,6 @@ class Lib {
    * @returns {Function}
    */
   debounce(fn, wait, options = {}) {
-    // (реализация см выше - она ок, оставить как есть)
     return this._debounce(fn, wait, options);
   }
 

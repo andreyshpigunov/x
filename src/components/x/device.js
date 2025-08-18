@@ -1,9 +1,11 @@
 /**
  * @fileoverview
- * Device detection class.
+ * Device detection and breakpoint observer.
  *
  * Detects device type, OS, browser, screen size, and touch capability.
  * Automatically applies CSS classes to the <html> element.
+ * Adds a custom `breakpointchange` event on `window` when the responsive
+ * breakpoint changes (e.g. s → m, m → l, etc).
  * Supports safe repeated initialization without leaks.
  *
  * Usage example:
@@ -13,14 +15,16 @@
  *   const device = new Device();
  *   device.init();
  *
- *   // Safe to call init() again to reinitialize
- *   device.init();
+ *   // Listen for breakpoint changes
+ *   window.addEventListener('breakpointchange', e => {
+ *     console.log('Breakpoint changed:', e.detail);
+ *   });
  *
  * Public API:
  *
  * @class Device
  *
- * @property {boolean} js - Flag indicating JavaScript is enabled (always true)
+ * @property {boolean} js - Always true, indicates JS is enabled
  * @property {string} os - Operating system (windows, macos, ios, android, linux, unknown)
  * @property {string} browser - Browser name (chrome, firefox, safari, opera, edge, unknown)
  * @property {string|null} device - Device type (iphone, ipad, android, mac) or 'computer'
@@ -28,12 +32,19 @@
  * @property {boolean} touch - Flag indicating if touch support is available
  * @property {number} width - Current window width
  * @property {number} height - Current window height
- * @property {{xs:boolean, s:boolean, m:boolean, l:boolean, xl:boolean}} size - Responsive size flags based on window width
+ * @property {string} breakpoint - Current responsive breakpoint (s, m, l, xl)
+ * @property {{s:boolean, m:boolean, l:boolean, xl:boolean}} size - Flags for each breakpoint
  *
  * @method init - Initializes or re-initializes detection, CSS classes, and resize listeners
  *
+ * @event window.breakpointchange - Fired when the breakpoint changes
+ *   @detail.prev {string} - Previous breakpoint
+ *   @detail.current {string} - Current breakpoint
+ *   @detail.width {number} - Current window width
+ *   @detail.height {number} - Current window height
+ *
  * @author Andrey Shpigunov
- * @version 0.6
+ * @version 0.7
  * @since 2025-07-18
  */
 
@@ -41,20 +52,28 @@ import { lib } from './lib';
 
 export class Device {
   constructor() {
+    // Basic feature flags
     this.js = true;
     this.os = 'unknown';
     this.browser = 'unknown';
     this.device = null;
     this.mobile = false;
     this.touch = false;
+
+    // Current viewport dimensions
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-    this.size = this._getSizeFlags(this.width);
 
+    // Initial breakpoint state
+    this.breakpoint = this._getBreakpointName(this.width);
+    this.size = this._getSizeFlags(this.breakpoint);
+
+    // Internal references
     this._html = document.documentElement;
 
+    // Bind and debounce resize handler
     this._onResize = this._onResize.bind(this);
-    this._debouncedResize = lib.debounce(this._onResize, 100);
+    this._debouncedResize = lib.debounce(this._onResize, 200);
 
     this._initialized = false;
   }
@@ -66,7 +85,6 @@ export class Device {
    */
   init() {
     if (this._initialized) {
-      // Cleanup previous state before reinit
       this._cleanup();
     }
 
@@ -84,7 +102,6 @@ export class Device {
   _cleanup() {
     window.removeEventListener('resize', this._debouncedResize);
 
-    // Remove all previously added classes related to device detection
     const classesToRemove = [
       'js',
       'windows', 'macos', 'ios', 'android', 'linux', 'unknown',
@@ -101,22 +118,82 @@ export class Device {
     this._initialized = false;
   }
 
-  _getSizeFlags(width) {
+  /**
+   * Returns a breakpoint name based on current width.
+   * Breakpoint map:
+   *   - s: < 600px
+   *   - m: ≥600px and <1000px
+   *   - l: ≥1000px and <1400px
+   *   - xl: ≥1400px
+   *
+   * @param {number} width - Current viewport width
+   * @return {'s'|'m'|'l'|'xl'}
+   * @private
+   */
+  _getBreakpointName(width) {
+    if (width >= 1400) return 'xl';
+    if (width >= 1000) return 'l';
+    if (width >= 600) return 'm';
+    return 's';
+  }
+
+  /**
+   * Converts breakpoint string into boolean flags for convenience.
+   *
+   * @param {'s'|'m'|'l'|'xl'} bp - Breakpoint name
+   * @return {{s:boolean,m:boolean,l:boolean,xl:boolean}}
+   * @private
+   */
+  _getSizeFlags(bp) {
     return {
-      xs: width < 400,
-      s: width < 600,
-      m: width >= 600 && width < 1000,
-      l: width >= 1000,
-      xl: width >= 1400
+      s: bp === 's',
+      m: bp === 'm',
+      l: bp === 'l',
+      xl: bp === 'xl'
     };
   }
 
+  /**
+   * Handles resize events, updates internal state,
+   * and dispatches `breakpointchange` if breakpoint changed.
+   *
+   * @private
+   */
   _onResize() {
+    const prevBreakpoint = this.breakpoint;
+
+    // Update dimensions
     this.width = window.innerWidth;
     this.height = window.innerHeight;
-    this.size = this._getSizeFlags(this.width);
+
+    // Calculate new breakpoint
+    const newBreakpoint = this._getBreakpointName(this.width);
+
+    // Fire event only if breakpoint changed
+    if (prevBreakpoint !== newBreakpoint) {
+      this.breakpoint = newBreakpoint;
+      this.size = this._getSizeFlags(newBreakpoint);
+
+      const event = new CustomEvent('breakpointchange', {
+        detail: {
+          prev: prevBreakpoint,
+          current: newBreakpoint,
+          width: this.width,
+          height: this.height
+        }
+      });
+      window.dispatchEvent(event);
+    } else {
+      // Just refresh size flags (safe update)
+      this.breakpoint = newBreakpoint;
+      this.size = this._getSizeFlags(newBreakpoint);
+    }
   }
 
+  /**
+   * Detects operating system, browser, device type, and touch support.
+   * @private
+   */
   _detect() {
     const ua = window.navigator.userAgent.toLowerCase();
 
@@ -163,6 +240,10 @@ export class Device {
     this.touch = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   }
 
+  /**
+   * Applies detected CSS classes to the <html> element.
+   * @private
+   */
   _applyHtmlClasses() {
     const classes = [
       'js',

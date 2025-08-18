@@ -171,30 +171,28 @@
               if (x.device) {
                 
                 function renderDevice() {
-                  let content = '';
-                  Object.keys(x.device)
-                    .filter(key => !(typeof key === 'string' && key.charAt(0) === '_'))
-                    .forEach(key => {
-                      let val = x.device[key];
-                      if (typeof val === 'object') {
-                        val = JSON.stringify(val);
-                      }
-                      content += key + ': ' + val + '<br>'
-                  })
-                  x.lib.render('.jsDeviceExample', content)
+                  setTimeout(() => {
+                    let content = '';
+                    Object.keys(x.device)
+                      .filter(key => !(typeof key === 'string' && key.charAt(0) === '_'))
+                      .forEach(key => {
+                        let val = x.device[key];
+                        if (typeof val === 'object') {
+                          val = JSON.stringify(val);
+                        }
+                        content += key + ': ' + val + '<br>'
+                    })
+                    x.lib.render('.jsDeviceExample', content)
+                  }, 200)
                 }
                 
-                renderDevice();
+                renderDevice(x.device);
                 
-                let renderTimeout;
-                window.addEventListener('resize', () => {
-                  clearTimeout(renderTimeout);
-                  renderTimeout = setTimeout(() => {
-                    renderDevice()
-                  }, 100)
-                })
+                const debouncedRenderDevice = x.lib.debounce(renderDevice, 200);
+                window.addEventListener('resize', debouncedRenderDevice)
               }
             })
+            
           </script>
         </div>
 
@@ -706,6 +704,19 @@
 
         <div class="c1">
           <h3><a class="link" x-modal-open="modalSlides">Slides</a></h3>
+          
+          <div x-slider class="ratio4x3">
+            <div class="slider-wrapper">
+              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg" alt=""></div>
+              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg" alt=""></div>
+              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg" alt=""></div>
+              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg" alt=""></div>
+              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg" alt=""></div>
+            </div>
+            <div class="slider-indicators"></div>
+          </div>
+          
+          
           <div class="max600">
             <div class="ratio4x3" x-slides='[
               "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg",

@@ -1,0 +1,36 @@
+[x-slider] {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+[x-slider] .slider-wrapper {
+  display: flex;
+  transition: transform 0.3s ease-out;
+}
+[x-slider] .slide {
+  min-width: 100%;
+  flex-shrink: 0;
+}
+[x-slider] img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+[x-slider] .slider-indicators {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+}
+[x-slider] .slider-indicators span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.5);
+  transition: background 0.2s;
+}
+[x-slider] .slider-indicators span.active {
+  background: rgba(255,255,255,1);
+}
