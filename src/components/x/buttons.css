@@ -19,6 +19,7 @@ All right reserved.
   .button_danger
   .button_white
   .button_black
+  .button_clear
 */
 
 
@@ -200,6 +201,12 @@ All right reserved.
 .button_black {
   --button-color: #111;
   --button-font-color: #fff;
+}
+.button_clear {
+  --button-color: transparent;
+  --button-box-shadow: none;
+  --button-box-shadow-hover: none;
+  --button-box-shadow-active: none;
 }
 
 .button_tabs {
