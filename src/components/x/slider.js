@@ -4,9 +4,40 @@ export class Slider {
     this.sliders = [];
     this.instances = new Map();
     this.io = null;
+    this.mo = null; // MutationObserver
   }
 
   init() {
+    this.observeSliders();
+
+    // MutationObserver для динамических вставок
+    this.mo = new MutationObserver(mutations => {
+      for (const mutation of mutations) {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeType === 1 && node.hasAttribute?.('x-slider')) {
+            this.io.observe(node);
+          }
+        });
+      }
+    });
+    this.mo.observe(document.body, { childList: true, subtree: true });
+  }
+
+  destroy() {
+    this.instances.forEach((data, el) => {
+      if (data.touch) {
+        data.wrapper.removeEventListener('touchstart', data.events.touchstart);
+        data.wrapper.removeEventListener('touchend', data.events.touchend);
+      } else {
+        el.removeEventListener('mousemove', data.events.mousemove);
+      }
+    });
+    if (this.io) this.io.disconnect();
+    if (this.mo) this.mo.disconnect();
+    this.instances.clear();
+  }
+
+  observeSliders() {
     this.sliders = document.querySelectorAll('[x-slider]');
     this.io = new IntersectionObserver(entries => {
       entries.forEach(entry => {
@@ -18,21 +49,6 @@ export class Slider {
     this.sliders.forEach(slider => this.io.observe(slider));
   }
 
-  destroy() {
-    this.instances.forEach((data, el) => {
-      if (data.touch) {
-        data.wrapper.removeEventListener('touchstart', data.events.touchstart);
-      } else {
-        el.removeEventListener('mousemove', data.events.mousemove);
-      }
-    });
-    if (this.io) {
-      this.io.disconnect();
-      this.io = null;
-    }
-    this.instances.clear();
-  }
-
   initSlider(el) {
     const wrapper = el.querySelector('.slider-wrapper');
     const slides = [...el.querySelectorAll('.slide')];
@@ -40,7 +56,7 @@ export class Slider {
     const isTouch = 'ontouchstart' in window;
     let current = 0;
 
-    // Создаём индикаторы
+    // Индикаторы
     slides.forEach((_, i) => {
       const span = document.createElement('span');
       if (i === 0) span.classList.add('active');
@@ -49,8 +65,7 @@ export class Slider {
     const indicators = [...indicatorsContainer.querySelectorAll('span')];
 
     const loadSlide = i => {
-      // Подгружаем текущий и соседние слайды
-      [i-1, i, i+1].forEach(idx => {
+      [i - 1, i, i + 1].forEach(idx => {
         if (idx >= 0 && idx < slides.length) {
           const img = slides[idx].querySelector('img');
           if (img && img.dataset.src && !img.src) img.src = img.dataset.src;
@@ -60,9 +75,10 @@ export class Slider {
 
     const setSlide = i => {
       current = Math.max(0, Math.min(i, slides.length - 1));
-      wrapper.style.transform = `translateX(-${current*100}%)`;
+      wrapper.style.transition = 'transform 0.3s ease-out';
+      wrapper.style.transform = `translateX(-${current * 100}%)`;
       loadSlide(current);
-      indicators.forEach((span, idx) => span.classList.toggle('active', idx===current));
+      indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
     };
 
     setSlide(0);
@@ -70,48 +86,38 @@ export class Slider {
     const events = {};
 
     if (isTouch) {
-      let startX = 0, moving = false;
-    
+      let startX = 0, startY = 0, isMoving = false;
+
       events.touchstart = e => {
-        moving = true;
-        startX = e.touches[0].clientX;
-    
-        const onMove = ev => {
-          if (!moving) return;
-          const x = ev.touches[0].clientX;
-          const dx = x - startX;
-    
-          // Отменяем горизонтальный скролл страницы
-          if (Math.abs(dx) > 5) ev.preventDefault();
-    
-          // Запрет свайпа за крайние слайды
-          let move = dx;
-          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) move = 0;
-    
-          wrapper.style.transform = `translateX(${-current*100 + move / el.offsetWidth * 100}%)`;
-        };
-    
-        const onEnd = ev => {
-          if (!moving) return;
-          moving = false;
-          const x = ev.changedTouches[0].clientX;
-          const dx = x - startX;
-    
-          if (dx > 50 && current > 0) setSlide(current - 1);
-          else if (dx < -50 && current < slides.length - 1) setSlide(current + 1);
-          else setSlide(current);
-    
-          document.removeEventListener('touchmove', onMove);
-          document.removeEventListener('touchend', onEnd);
-        };
-    
-        document.addEventListener('touchmove', onMove, { passive: false }); // важно passive:false
-        document.addEventListener('touchend', onEnd);
+        const t = e.touches[0];
+        startX = t.clientX;
+        startY = t.clientY;
+        isMoving = true;
       };
-    
+
+      events.touchend = e => {
+        if (!isMoving) return;
+        isMoving = false;
+
+        const t = e.changedTouches[0];
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        // Игнорируем вертикальные свайпы
+        if (Math.abs(dy) > Math.abs(dx)) return;
+
+        const THRESHOLD = 50; // px
+        if (dx > THRESHOLD && current > 0) {
+          setSlide(current - 1);
+        } else if (dx < -THRESHOLD && current < slides.length - 1) {
+          setSlide(current + 1);
+        }
+      };
+
       wrapper.addEventListener('touchstart', events.touchstart);
+      wrapper.addEventListener('touchend', events.touchend);
     } else {
-      // Десктоп hover по секциям
+      // Навигация мышью по секторам
       events.mousemove = e => {
         const rect = el.getBoundingClientRect();
         const x = e.clientX - rect.left;
@@ -126,5 +132,4 @@ export class Slider {
   }
 }
 
-// Экспорт singleton
 export const slider = new Slider();
