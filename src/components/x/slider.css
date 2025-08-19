@@ -1,89 +1,60 @@
-[x-slider] {
+:root {
+  --slider-point-color: #ffffff66;
+  --slider-point-color-active: #fff;
+  --slider-point-size: .3rem;
+  --slider-point-gap: .3rem;
+  --slider-point-top-padding: auto;
+  --slider-point-left-padding: 1.2rem;
+  --slider-point-right-padding: 1.2rem;
+  --slider-point-bottom-padding: 1rem;
+  --slider-indicators-init-opacity: 0;
+}
+
+.slider {
+  display: flex;
   position: relative;
   overflow: hidden;
   cursor: pointer;
 }
-[x-slider] .slider-wrapper {
-  display: flex;
-  /* transition: transform 0.3s ease-out; */
-  /* will-change: transform; */
-  touch-action: pan-y; /* позволяем вертикальный скролл странице */
+.slider-wrapper {
+  touch-action: pan-y;
 }
-[x-slider] .slide {
+.slider-item {
+  display: flex;
+  position: relative;
   min-width: 100%;
-  flex-shrink: 0;
   flex: 0 0 100%,
 }
-[x-slider] img {
-  display: block;
+.slider-item img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
 }
-[x-slider] .slider-indicators {
-  position: absolute;
-  bottom: 8px;
-  left: 50%;
-  transform: translateX(-50%);
+.slider-indicators {
   display: flex;
-  gap: 4px;
-}
-[x-slider] .slider-indicators span {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.5);
-  transition: background 0.2s;
-}
-[x-slider] .slider-indicators span.active {
-  background: rgba(255,255,255,1);
-}
-
-
-/* :root {
-  --slides-point-color: #ffffff66;
-  --slides-point-color-active: #fff;
-  --slides-point-size: .3rem;
-  --slides-point-gap: .3rem;
-  --slides-point-top-padding: auto;
-  --slides-point-left-padding: 1.6rem;
-  --slides-point-right-padding: 1.6rem;
-  --slides-point-bottom-padding: 1rem;
-}
-
-
-[x-slider] {
-  position: relative;
-}
-[x-slider] .slider-indicators {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--slides-point-gap);
   position: absolute;
-  z-index: 10;
-  top: var(--slides-point-top-padding);
-  bottom: var(--slides-point-bottom-padding);
-  left: var(--slides-point-left-padding);
-  right: var(--slides-point-right-padding);
-  height: var(--slides-point-size);
-  opacity: 0;
-  
+  left: var(--slider-point-left-padding);
+  right: var(--slider-point-right-padding);
+  bottom: var(--slider-point-bottom-padding);
+  height: var(--slider-point-size);
+  gap: var(--slider-point-gap);
+  opacity: var(--slider-indicators-init-opacity);
   will-change: opacity;
-  transition: opacity .25s ease-out;
+  transition: opacity .2s ease-out;
 }
-[x-slider] .slider-indicators span {
+.slider-indicators span {
   display: flex;
   flex: 1;
-  align-items: center;
-  justify-content: center;
-  width: var(--slides-point-size);
-  height: var(--slides-point-size);
-  border-radius: var(--slides-point-size);
-  background: var(--slides-point-color);
+  width: var(--slider-point-size);
+  height: var(--slider-point-size);
+  border-radius: var(--slider-point-size);
+  background: var(--slider-point-color);
+  transition: background .1s ease-out;
 }
-[x-slider] .slider-indicators span.active {
-  background: var(--slides-point-color-active);
+.slider-indicators span.active {
+  background: var(--slider-point-color-active);
 }
-[x-slider]:hover .slider-indicators {
+html.touch .slider .slider-indicators,
+.slider:hover .slider-indicators {
   opacity: 1;
-} */
+}

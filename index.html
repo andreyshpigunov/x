@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.3.17-1</div>
+    <div class="header-version nowrap">0.3.18</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -703,42 +703,19 @@
         </div>
 
         <div class="c1">
-          <h3><a class="link" x-modal-open="modalSlides">Slides</a></h3>
-          
-          <div x-slider class="ratio4x3">
-            <div class="slider-wrapper">
-              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg" alt=""></div>
-              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg" alt=""></div>
-              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg" alt=""></div>
-              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg" alt=""></div>
-              <div class="slide ratio4x3"><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg" alt=""></div>
-            </div>
-            <div class="slider-indicators"></div>
-          </div>
-          
-          
-          <div class="max600">
-            <div class="ratio4x3" x-slides='[
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0420.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0451.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0482.jpg",
-              "https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0485.jpg"
-            ]'>
-              <img class="r3" src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg" width="800" height="600" />
-            </div>
+          <h3><a class="link" x-modal-open="modalSlider">Slider</a></h3>
+          <div x-slider='{"gap":2}' class="ratio4x3 r3">
+            <div><img data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg 2x" alt=""></div>
+            <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg" alt=""></div>
+            <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg" alt=""></div>
+            <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0450.jpg" alt=""></div>
+            <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0405.jpg" alt=""></div>
           </div>
           <div class="mt2 touch-hide">Move cursor on photo.</div>
-          <div class="mt2 touch-show">Not working on mobile :)</div>
+          <div class="mt2 touch-show">Drag left or right</div>
 
-          <div x-modal="modalSlides">
-            <div class="h1">Slides</div>
+          <div x-modal="modalSlider">
+            <div class="h1">Slider</div>
             <p>Hover and mouseover photos slider.</p>
             <p>Working only on desktops.</p>
             <p><code>✍🏻 Documentation in progress</code></p>
@@ -784,7 +761,7 @@
             <li><a class="link" x-modal-open="modalModal">Modal</a></li>
             <li><a class="link" x-modal-open="modalScroll">Scroll</a></li>
             <li><a class="link" x-modal-open="modalSheets">Sheets</a></li>
-            <li><a class="link" x-modal-open="modalSlides">Slider</a></li>
+            <li><a class="link" x-modal-open="modalSlider">Slider</a></li>
             <li><a class="link" x-modal-open="modalSticky">Sticky</a></li>
           </ul>
         </div>
