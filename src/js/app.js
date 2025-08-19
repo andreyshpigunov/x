@@ -42,6 +42,6 @@ window.headerAnimation = (params) => {
   x.lib.switchClass(header, 'header_compact', params.progress == 1);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+window.onload = () => {
   x.lib.transitionsOn()
-});
+}
