@@ -27,7 +27,6 @@ export class Slider {
     this.instances.forEach((data, el) => {
       if (data.touch) {
         data.wrapper.removeEventListener('touchstart', data.events.touchstart);
-        data.wrapper.removeEventListener('touchend', data.events.touchend);
       } else {
         el.removeEventListener('mousemove', data.events.mousemove);
       }
@@ -73,9 +72,9 @@ export class Slider {
       });
     };
 
-    const setSlide = i => {
+    const setSlide = (i, instant = false) => {
       current = Math.max(0, Math.min(i, slides.length - 1));
-      wrapper.style.transition = 'transform 0.3s ease-out';
+      wrapper.style.transition = instant ? 'none' : 'transform 0.2s ease-out';
       wrapper.style.transform = `translateX(-${current * 100}%)`;
       loadSlide(current);
       indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
@@ -86,44 +85,52 @@ export class Slider {
     const events = {};
 
     if (isTouch) {
-      let startX = 0, startY = 0, isMoving = false;
-
+      let startX = 0, moving = false;
+    
       events.touchstart = e => {
-        const t = e.touches[0];
-        startX = t.clientX;
-        startY = t.clientY;
-        isMoving = true;
+        moving = true;
+        startX = e.touches[0].clientX;
+        wrapper.style.transition = 'none'; // убираем плавность на drag
+    
+        const onMove = ev => {
+          if (!moving) return;
+          const x = ev.touches[0].clientX;
+          const dx = x - startX;
+    
+          if (Math.abs(dx) > 5) ev.preventDefault();
+    
+          let move = dx;
+          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) move = 0;
+    
+          wrapper.style.transform = `translateX(${-current * 100 + move / el.offsetWidth * 100}%)`;
+        };
+    
+        const onEnd = ev => {
+          if (!moving) return;
+          moving = false;
+          const x = ev.changedTouches[0].clientX;
+          const dx = x - startX;
+    
+          if (dx > 50 && current > 0) setSlide(current - 1);
+          else if (dx < -50 && current < slides.length - 1) setSlide(current + 1);
+          else setSlide(current);
+
+          document.removeEventListener('touchmove', onMove);
+          document.removeEventListener('touchend', onEnd);
+        };
+    
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', onEnd);
       };
-
-      events.touchend = e => {
-        if (!isMoving) return;
-        isMoving = false;
-
-        const t = e.changedTouches[0];
-        const dx = t.clientX - startX;
-        const dy = t.clientY - startY;
-
-        // Игнорируем вертикальные свайпы
-        if (Math.abs(dy) > Math.abs(dx)) return;
-
-        const THRESHOLD = 50; // px
-        if (dx > THRESHOLD && current > 0) {
-          setSlide(current - 1);
-        } else if (dx < -THRESHOLD && current < slides.length - 1) {
-          setSlide(current + 1);
-        }
-      };
-
+    
       wrapper.addEventListener('touchstart', events.touchstart);
-      wrapper.addEventListener('touchend', events.touchend);
     } else {
-      // Навигация мышью по секторам
       events.mousemove = e => {
         const rect = el.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const sectionWidth = rect.width / slides.length;
         const idx = Math.floor(x / sectionWidth);
-        if (idx !== current) setSlide(idx);
+        if (idx !== current) setSlide(idx, true); // без анимации
       };
       el.addEventListener('mousemove', events.mousemove);
     }

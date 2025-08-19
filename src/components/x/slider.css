@@ -6,12 +6,13 @@
 [x-slider] .slider-wrapper {
   display: flex;
   /* transition: transform 0.3s ease-out; */
-  will-change: transform;
+  /* will-change: transform; */
   touch-action: pan-y; /* позволяем вертикальный скролл странице */
 }
 [x-slider] .slide {
   min-width: 100%;
   flex-shrink: 0;
+  flex: 0 0 100%,
 }
 [x-slider] img {
   display: block;

@@ -41,3 +41,7 @@ window.headerAnimation = (params) => {
   headerLogo.style.transform = 'scale(' + scale +  ')';
   x.lib.switchClass(header, 'header_compact', params.progress == 1);
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  x.lib.transitionsOn()
+});
