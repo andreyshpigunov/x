@@ -4,7 +4,7 @@
 
 // Example usage:
 //
-// <div x-slider='{"gap": 10}'>
+// <div x-slider='{"gap": 0}'>
 //   <div><img data-src="image1.jpg" alt="Slide 1"></div>
 //   <div><img data-src="image2.jpg" alt="Slide 2"></div>
 //   <div><img data-src="image3.jpg" alt="Slide 3"></div>
@@ -193,13 +193,17 @@ export class Slider {
           // Vertical scroll detection
           if (Math.abs(dy) > Math.abs(dx)) return;
         
-          // Prevent dragging beyond first/last slide
-          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) {
-            return; // do nothing
+          const slideWidth = updateSlideWidth();
+          
+          // Ограничиваем движение на краях
+          let offset = -current * slideWidth + dx;
+          if (current === 0 && dx > 0) {
+            offset = -current * slideWidth + dx * 0.1; // небольшой "резиновый" отскок
+          } else if (current === slides.length - 1 && dx < 0) {
+            offset = -current * slideWidth + dx * 0.1;
           }
         
-          const slideWidth = updateSlideWidth();
-          wrapper.style.transform = `translateX(${-current * slideWidth + dx}px)`;
+          wrapper.style.transform = `translateX(${offset}px)`;
           e.preventDefault(); // prevent vertical scroll during horizontal swipe
         };
 
