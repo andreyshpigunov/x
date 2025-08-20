@@ -16,15 +16,10 @@
   overflow: hidden;
   cursor: pointer;
   overscroll-behavior: none;
-  
-  touch-action: pan-y !important; /* явно говорим: вертикальный скролл ок, горизонт тачим сами */
-  -webkit-user-drag: none;
-  -webkit-touch-callout: none;
-  -webkit-tap-highlight-color: transparent;
-  overscroll-behavior: none;
+  touch-action: pan-y;
 }
 .slider-wrapper {
-  /* touch-action: pan-y; */
+  /* ... */
 }
 .slider-item {
   display: flex;

@@ -166,28 +166,24 @@ export class Slider {
 
     // Set active slide
     const setSlide = (i, instant = false) => {
-      // Clamp index to valid range
       current = Math.max(0, Math.min(i, slides.length - 1));
       const slideWidth = updateSlideWidth();
-    
-      // Apply transition (or disable if instant)
       wrapper.style.transition = instant ? 'none' : 'transform 0.25s ease-out';
       wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
-    
-      // iOS Safari sometimes keeps "dragging" state if a transition is still applied.
-      // To avoid "frozen" touch events, reset transition to 'none' after the animation ends.
-      if (!instant) {
-        wrapper.addEventListener('transitionend', () => {
-          wrapper.style.transition = 'none';
-        }, { once: true });
-      }
-    
-      // Lazy-load current and neighboring slides
       loadSlide(current);
-    
-      // Update indicators
       if (indicators.length) {
         indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
+      }
+      
+      // Перепривязать события после смены слайда
+      if (data.touch) {
+          wrapper.removeEventListener('touchstart', events.touchstart);
+          wrapper.removeEventListener('touchmove', events.touchmove);
+          wrapper.removeEventListener('touchend', events.touchend);
+          
+          wrapper.addEventListener('touchstart', events.touchstart, { passive: false });
+          wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
+          wrapper.addEventListener('touchend', events.touchend);
       }
     };
 
