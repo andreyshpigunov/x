@@ -15,6 +15,7 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  overscroll-behavior: none;
 }
 .slider-wrapper {
   /* touch-action: pan-y; */
