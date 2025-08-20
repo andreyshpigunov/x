@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.3.20-11</div>
+    <div class="header-version nowrap">0.3.20-12</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -703,6 +703,109 @@
         </div>
 
         <div class="c1">
+          <script>
+            function initTestSlider(el) {
+              const slides = [...el.children];
+              if (slides.length < 2) return;
+            
+              el.style.overflow = 'hidden';
+              el.style.touchAction = 'pan-y';
+              el.style.webkitUserSelect = 'none';
+              el.style.webkitTouchCallout = 'none';
+              el.style.webkitTapHighlightColor = 'transparent';
+              el.style.overscrollBehavior = 'none';
+            
+              const wrapper = document.createElement('div');
+              wrapper.style.display = 'flex';
+              wrapper.style.transition = 'transform 0.25s ease-out';
+              slides.forEach(slide => wrapper.appendChild(slide));
+              el.appendChild(wrapper);
+            
+              let current = 0;
+              let startX = 0, startY = 0, moving = false, activeId = null;
+            
+              const slideWidth = () => slides[0].offsetWidth;
+            
+              const setSlide = i => {
+                current = Math.max(0, Math.min(i, slides.length - 1));
+                wrapper.style.transition = 'transform 0.25s ease-out';
+                wrapper.style.transform = `translateX(${-current * slideWidth()}px)`;
+                console.log('[test] setSlide', current);
+              };
+            
+              const findTouch = (list, id) => {
+                for (let i = 0; i < list.length; i++) if (list[i].identifier === id) return list[i];
+                return null;
+              };
+            
+              wrapper.addEventListener('touchstart', e => {
+                const t = e.changedTouches[0];
+                activeId = t.identifier;
+                startX = t.clientX;
+                startY = t.clientY;
+                moving = true;
+                wrapper.style.transition = 'none';
+                console.log('[test] touchstart', {id: activeId, x: startX, y: startY});
+              }, { passive: false });
+            
+              wrapper.addEventListener('touchmove', e => {
+                if (!moving || activeId == null) return;
+                const t = findTouch(e.touches, activeId);
+                if (!t) return;
+            
+                const dx = t.clientX - startX;
+                const dy = t.clientY - startY;
+                console.log('[test] touchmove', {dx, dy});
+            
+                if (Math.abs(dy) > Math.abs(dx)) return;
+                e.preventDefault();
+            
+                wrapper.style.transform = `translateX(${-current * slideWidth() + dx}px)`;
+              }, { passive: false });
+            
+              wrapper.addEventListener('touchend', e => {
+                if (!moving) return;
+                moving = false;
+            
+                const t = findTouch(e.changedTouches, activeId) || e.changedTouches[0];
+                activeId = null;
+            
+                const dx = t.clientX - startX;
+                const dy = t.clientY - startY;
+                console.log('[test] touchend', {dx, dy});
+            
+                if (Math.abs(dy) > Math.abs(dx)) {
+                  setSlide(current);
+                  return;
+                }
+            
+                const THRESHOLD = slideWidth() * 0.2;
+                if (dx > THRESHOLD && current > 0) setSlide(current - 1);
+                else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
+                else setSlide(current);
+              });
+            
+              wrapper.addEventListener('touchcancel', () => {
+                console.log('[test] touchcancel');
+                moving = false;
+                activeId = null;
+                setSlide(current);
+              });
+            
+              setSlide(0);
+            }
+          </script>
+          
+          <div id="slider">
+            <div style="min-width:100%;background:red;height:200px"></div>
+            <div style="min-width:100%;background:green;height:200px"></div>
+            <div style="min-width:100%;background:blue;height:200px"></div>
+          </div>
+          
+          <script>
+            initTestSlider(document.getElementById('slider'));
+          </script>
+        
           <h3><a class="link" x-modal-open="modalSlider">Slider</a></h3>
           <style>
             .slider .slider-item:first-child img {
