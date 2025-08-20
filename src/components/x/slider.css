@@ -15,11 +15,12 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  overscroll-behavior: none;
-  touch-action: pan-y;
+  touch-action: pan-y !important;  /* разрешаем только вертикальные жесты браузеру */
+  overscroll-behavior: contain;    /* не отдаём overscroll родителю */
 }
 .slider-wrapper {
-  /* ... */
+  touch-action: manipulation;
+  contain: strict;
 }
 .slider-item {
   display: flex;

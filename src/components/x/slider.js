@@ -87,8 +87,7 @@ export class Slider {
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
-    // el.style.touchAction = 'pan-y';
-    el.style.touchAction = 'manipulation';
+    el.style.touchAction = 'pan-y';
 
     // Read config (gap + rubber)
     let gap = 0;
@@ -167,13 +166,33 @@ export class Slider {
 
     // Set active slide
     const setSlide = (i, instant = false) => {
+      // Clamp index
       current = Math.max(0, Math.min(i, slides.length - 1));
       const slideWidth = updateSlideWidth();
+    
+      // Apply transition (or skip if instant)
       wrapper.style.transition = instant ? 'none' : 'transform 0.25s ease-out';
       wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+    
+      // Lazy-load current and neighbor slides
       loadSlide(current);
+    
+      // Update indicators
       if (indicators.length) {
-        indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
+        indicators.forEach((span, idx) =>
+          span.classList.toggle('active', idx === current)
+        );
+      }
+    
+      // iOS Safari fix: reset transition after animation ends
+      if (!instant) {
+        wrapper.addEventListener(
+          'transitionend',
+          () => {
+            wrapper.style.transition = 'none';
+          },
+          { once: true }
+        );
       }
     };
 
