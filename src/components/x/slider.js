@@ -191,7 +191,7 @@ export class Slider {
           const dy = e.touches[0].clientY - startY;
         
           // Vertical scroll detection
-          // if (Math.abs(dy) > Math.abs(dx)) return;
+          if (Math.abs(dy) > Math.abs(dx)) return;
         
           const slideWidth = updateSlideWidth();
           
@@ -204,7 +204,7 @@ export class Slider {
           }
         
           wrapper.style.transform = `translateX(${offset}px)`;
-          e.preventDefault(); // prevent vertical scroll during horizontal swipe
+          // e.preventDefault(); prevent vertical scroll during horizontal swipe
         };
 
         events.touchend = e => {
