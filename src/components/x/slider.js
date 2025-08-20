@@ -185,7 +185,7 @@ export class Slider {
         };
 
         events.touchmove = e => {
-          // if (!moving) return;
+          if (!moving) return;
           const x = e.touches[0].clientX;
           const dx = x - startX;
           const dy = e.touches[0].clientY - startY;
@@ -204,11 +204,11 @@ export class Slider {
           }
         
           wrapper.style.transform = `translateX(${offset}px)`;
-          // e.preventDefault(); // prevent vertical scroll during horizontal swipe
+          e.preventDefault(); // prevent vertical scroll during horizontal swipe
         };
 
         events.touchend = e => {
-          if (!moving) return;
+          // if (!moving) return;
           moving = false;
           const dx = e.changedTouches[0].clientX - startX;
           const dy = e.changedTouches[0].clientY - startY;
