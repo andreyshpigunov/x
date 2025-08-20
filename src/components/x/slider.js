@@ -214,7 +214,7 @@ export class Slider {
           const dy = e.changedTouches[0].clientY - startY;
           if (Math.abs(dy) > Math.abs(dx)) {
             setSlide(current);
-            return;
+            // return;
           }
 
           const THRESHOLD = 50;
