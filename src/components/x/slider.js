@@ -185,57 +185,42 @@ export class Slider {
         };
 
         events.touchmove = e => {
-          if (!moving) return;
+          // if (!moving) return;
           const x = e.touches[0].clientX;
           const dx = x - startX;
           const dy = e.touches[0].clientY - startY;
         
-          // Если движение больше по вертикали — отдаем управление скроллу
+          // Vertical scroll detection
           if (Math.abs(dy) > Math.abs(dx)) return;
         
-          e.preventDefault(); // блокируем скролл только при горизонтальном свайпе
-        
           const slideWidth = updateSlideWidth();
-        
-          // Ограничиваем движение на краях слайдов (резиновый эффект)
+          
+          // Ограничиваем движение на краях
           let offset = -current * slideWidth + dx;
           if (current === 0 && dx > 0) {
-            offset = -current * slideWidth + dx * 0.1;
+            offset = -current * slideWidth + dx * 0.1; // небольшой "резиновый" отскок
           } else if (current === slides.length - 1 && dx < 0) {
             offset = -current * slideWidth + dx * 0.1;
           }
         
           wrapper.style.transform = `translateX(${offset}px)`;
+          e.preventDefault(); // prevent vertical scroll during horizontal swipe
         };
-        
+
         events.touchend = e => {
           if (!moving) return;
           moving = false;
           const dx = e.changedTouches[0].clientX - startX;
           const dy = e.changedTouches[0].clientY - startY;
-        
-          // Вертикальный свайп → откатываем назад
           if (Math.abs(dy) > Math.abs(dx)) {
             setSlide(current);
             return;
           }
-        
-          const slideWidth = updateSlideWidth();
-          const THRESHOLD = slideWidth * 0.2; // 20% ширины
-        
-          // На краях всегда откат
-          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) {
-            setSlide(current);
-            return;
-          }
-        
-          if (dx > THRESHOLD && current > 0) {
-            setSlide(current - 1);
-          } else if (dx < -THRESHOLD && current < slides.length - 1) {
-            setSlide(current + 1);
-          } else {
-            setSlide(current);
-          }
+
+          const THRESHOLD = 50;
+          if (dx > THRESHOLD && current > 0) setSlide(current - 1);
+          else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
+          else setSlide(current);
         };
 
         wrapper.addEventListener('touchstart', events.touchstart);
