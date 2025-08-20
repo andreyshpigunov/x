@@ -49,10 +49,12 @@ export class Slider {
    */
   destroy() {
     this.instances.forEach((data, el) => {
+      const target = data.listenerTarget || data.wrapper || el;
       if (data.touch) {
-        data.wrapper.removeEventListener('touchstart', data.events.touchstart);
-        data.wrapper.removeEventListener('touchmove', data.events.touchmove);
-        data.wrapper.removeEventListener('touchend', data.events.touchend);
+        target.removeEventListener('touchstart', data.events.touchstart, true);
+        target.removeEventListener('touchmove',  data.events.touchmove,  true);
+        target.removeEventListener('touchend',   data.events.touchend,   true);
+        target.removeEventListener('touchcancel',data.events.touchcancel,true);
       } else {
         el.removeEventListener('mousemove', data.events.mousemove);
       }
@@ -82,12 +84,14 @@ export class Slider {
    * @param {HTMLElement} el
    */
   initSlider(el) {
-    const rawSlides = [...el.children];
+    const rawSlides = [...el.children].map(node => node.cloneNode(true));
     if (rawSlides.length === 0) return;
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
     el.style.touchAction = 'pan-y';
+    // iOS: минимизируем перехват браузером
+    el.style.overscrollBehavior = 'contain';
 
     // Read config (gap + rubber)
     let gap = 0;
@@ -143,6 +147,9 @@ export class Slider {
     const slides = rawSlides;
     const isTouch = 'ontouchstart' in window;
     let current = 0;
+    
+    const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
+    (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 
     // Get slide width (including gap)
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
@@ -189,13 +196,21 @@ export class Slider {
     
       // iOS Safari fix: reset transition after animation ends
       if (!instant) {
-        wrapper.addEventListener(
-          'transitionend',
-          () => {
-            wrapper.style.transition = 'none';
-          },
-          { once: true }
-        );
+        wrapper.addEventListener('transitionend', () => {
+          // Снимаем transition, чтобы iOS не думал, что элемент «в процессе»
+          wrapper.style.transition = 'none';
+      
+          // Доп. трюк для iOS: кратко выключаем pointer-events и возвращаем.
+          // Это «пробуждает» доставку новых touchstart.
+          if (isiOS) {
+            wrapper.style.pointerEvents = 'none';
+            requestAnimationFrame(() => {
+              // форсируем reflow
+              void wrapper.offsetWidth;
+              wrapper.style.pointerEvents = 'auto';
+            });
+          }
+        }, { once: true });
       }
     };
 
@@ -234,7 +249,7 @@ export class Slider {
           if (Math.abs(dy) > Math.abs(dx)) return;
     
           // Горизонт: блокируем скролл страницы
-          e.preventDefault();
+          if (e.cancelable) e.preventDefault();
     
           const slideWidth = updateSlideWidth();
     
@@ -286,10 +301,10 @@ export class Slider {
           setSlide(current);
         };
     
-        wrapper.addEventListener('touchstart', events.touchstart, { passive: false });
-        wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
-        wrapper.addEventListener('touchend', events.touchend);
-        wrapper.addEventListener('touchcancel', events.touchcancel);
+        el.addEventListener('touchstart', events.touchstart, { passive: false, capture: true });
+        el.addEventListener('touchmove',  events.touchmove,  { passive: false, capture: true });
+        el.addEventListener('touchend',   events.touchend,   { capture: true });
+        el.addEventListener('touchcancel',events.touchcancel,{ capture: true });
       } else {
         // Desktop hover navigation (как было)
         events.mousemove = e => {
@@ -303,7 +318,7 @@ export class Slider {
       }
     }
 
-    this.instances.set(el, { wrapper, slides, events, touch: isTouch });
+    this.instances.set(el, { wrapper, slides, events, touch: isTouch, listenerTarget: el });
   }
 }
 
