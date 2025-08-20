@@ -142,15 +142,7 @@ export class Slider {
     let current = 0;
 
     // Get slide width (including gap)
-    // const updateSlideWidth = () => slides[0].offsetWidth + gap;
-    const updateSlideWidth = () => {
-        const slideWidth = slides[0].offsetWidth + gap;
-        if (!slideWidth) {
-            console.warn('Некорректная ширина слайда');
-            return 0;
-        }
-        return slideWidth;
-    };
+    const updateSlideWidth = () => slides[0].offsetWidth + gap;
 
     // Lazy-load slide images
     const loadSlide = i => {
@@ -263,6 +255,21 @@ export class Slider {
           if (dx > THRESHOLD && current > 0) setSlide(current - 1);
           else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
           else setSlide(current);
+          
+          // Дополнительная проверка на корректность завершения жеста
+          if (Math.abs(dx) < THRESHOLD) {
+              setSlide(current);
+              return;
+          }
+          
+          // Перепривязать события
+          wrapper.removeEventListener('touchstart', events.touchstart);
+          wrapper.removeEventListener('touchmove', events.touchmove);
+          wrapper.removeEventListener('touchend', events.touchend);
+          
+          wrapper.addEventListener('touchstart', events.touchstart, { passive: false });
+          wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
+          wrapper.addEventListener('touchend', events.touchend);
         };
     
         events.touchcancel = () => {
