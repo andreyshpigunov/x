@@ -114,13 +114,16 @@ export class Slider {
     wrapper.style.display = 'flex';
     wrapper.style.gap = gap + 'px';
 
-    // Move slides inside wrapper
+    // Clear container first
+    el.innerHTML = '';
+    
+    // Move slides into wrapper
     rawSlides.forEach(node => {
       node.classList.add('slider-item');
       wrapper.appendChild(node);
     });
-
-    el.innerHTML = '';
+    
+    // Append wrapper into container
     el.appendChild(wrapper);
 
     // Create indicators
