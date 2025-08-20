@@ -87,7 +87,8 @@ export class Slider {
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
-    el.style.touchAction = 'pan-y';
+    // el.style.touchAction = 'pan-y';
+    el.style.touchAction = 'manipulation';
 
     // Read config (gap + rubber)
     let gap = 0;
@@ -255,21 +256,6 @@ export class Slider {
           if (dx > THRESHOLD && current > 0) setSlide(current - 1);
           else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
           else setSlide(current);
-          
-          // Дополнительная проверка на корректность завершения жеста
-          if (Math.abs(dx) < THRESHOLD) {
-              setSlide(current);
-              return;
-          }
-          
-          // Перепривязать события
-          wrapper.removeEventListener('touchstart', events.touchstart);
-          wrapper.removeEventListener('touchmove', events.touchmove);
-          wrapper.removeEventListener('touchend', events.touchend);
-          
-          wrapper.addEventListener('touchstart', events.touchstart, { passive: false });
-          wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
-          wrapper.addEventListener('touchend', events.touchend);
         };
     
         events.touchcancel = () => {
