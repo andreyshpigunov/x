@@ -115,7 +115,6 @@ export class Slider {
     // Create wrapper
     const wrapper = document.createElement('div');
     wrapper.className = 'slider-wrapper';
-    wrapper.style.display = 'flex';
     wrapper.style.gap = gap + 'px';
 
     // Clear container first
