@@ -185,13 +185,13 @@ export class Slider {
         };
 
         events.touchmove = e => {
-          // if (!moving) return;
+          if (!moving) return;
           const x = e.touches[0].clientX;
           const dx = x - startX;
           const dy = e.touches[0].clientY - startY;
         
           // Vertical scroll detection
-          if (Math.abs(dy) > Math.abs(dx)) return;
+          // if (Math.abs(dy) > Math.abs(dx)) return;
         
           const slideWidth = updateSlideWidth();
           
