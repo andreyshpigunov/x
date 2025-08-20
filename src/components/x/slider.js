@@ -166,11 +166,26 @@ export class Slider {
 
     // Set active slide
     const setSlide = (i, instant = false) => {
+      // Clamp index to valid range
       current = Math.max(0, Math.min(i, slides.length - 1));
       const slideWidth = updateSlideWidth();
+    
+      // Apply transition (or disable if instant)
       wrapper.style.transition = instant ? 'none' : 'transform 0.25s ease-out';
       wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+    
+      // iOS Safari sometimes keeps "dragging" state if a transition is still applied.
+      // To avoid "frozen" touch events, reset transition to 'none' after the animation ends.
+      if (!instant) {
+        wrapper.addEventListener('transitionend', () => {
+          wrapper.style.transition = 'none';
+        }, { once: true });
+      }
+    
+      // Lazy-load current and neighboring slides
       loadSlide(current);
+    
+      // Update indicators
       if (indicators.length) {
         indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
       }
@@ -197,63 +212,67 @@ export class Slider {
           startY = t.clientY;
           moving = true;
           wrapper.style.transition = 'none';
-          console.log('[slider] touchstart', {id: activeId, x: startX, y: startY});
         };
-        
+    
         events.touchmove = e => {
           if (!moving || activeId == null) return;
           const t = findTouchById(e.touches, activeId);
-          if (!t) {
-            console.log('[slider] touchmove skipped, active touch not found');
-            return;
-          }
-        
+          if (!t) return; // активный палец ушёл — ждём touchend/cancel
+    
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
-          console.log('[slider] touchmove', {dx, dy});
-        
+    
+          // Если движение больше по вертикали — отдаём управление странице
           if (Math.abs(dy) > Math.abs(dx)) return;
+    
+          // Горизонт: блокируем скролл страницы
           e.preventDefault();
-        
+    
           const slideWidth = updateSlideWidth();
+    
+          // Блок/смягчение на краях
           let effDx = dx;
-          if (current === 0 && dx > 0) effDx = rubber ? dx * 0.1 : 0;
-          else if (current === slides.length - 1 && dx < 0) effDx = rubber ? dx * 0.1 : 0;
-        
-          wrapper.style.transform = `translateX(${-current * slideWidth + effDx}px)`;
+          if (current === 0 && dx > 0) {
+            effDx = rubber ? dx * 0.1 : 0; // наружу влево
+          } else if (current === slides.length - 1 && dx < 0) {
+            effDx = rubber ? dx * 0.1 : 0; // наружу вправо
+          }
+    
+          const offset = -current * slideWidth + effDx;
+          wrapper.style.transform = `translateX(${offset}px)`;
         };
-        
+    
         events.touchend = e => {
           if (!moving) return;
           moving = false;
-        
+    
           const t = findTouchById(e.changedTouches, activeId) || e.changedTouches[0];
           activeId = null;
-        
+    
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
-          console.log('[slider] touchend', {dx, dy});
-        
+    
+          // Вертикальный жест — откат
           if (Math.abs(dy) > Math.abs(dx)) {
             setSlide(current);
             return;
           }
-        
+    
           const slideWidth = updateSlideWidth();
           const THRESHOLD = slideWidth * 0.2;
-        
+    
+          // Наружу на краях — всегда откат
           if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) {
             setSlide(current);
             return;
           }
-        
+    
           if (dx > THRESHOLD && current > 0) setSlide(current - 1);
           else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
           else setSlide(current);
         };
-        
+    
         events.touchcancel = () => {
-          console.log('[slider] touchcancel');
           moving = false;
           activeId = null;
           setSlide(current);
