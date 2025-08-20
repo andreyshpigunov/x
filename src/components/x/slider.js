@@ -142,7 +142,15 @@ export class Slider {
     let current = 0;
 
     // Get slide width (including gap)
-    const updateSlideWidth = () => slides[0].offsetWidth + gap;
+    // const updateSlideWidth = () => slides[0].offsetWidth + gap;
+    const updateSlideWidth = () => {
+        const slideWidth = slides[0].offsetWidth + gap;
+        if (!slideWidth) {
+            console.warn('Некорректная ширина слайда');
+            return 0;
+        }
+        return slideWidth;
+    };
 
     // Lazy-load slide images
     const loadSlide = i => {
@@ -173,17 +181,6 @@ export class Slider {
       loadSlide(current);
       if (indicators.length) {
         indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
-      }
-      
-      // Перепривязать события после смены слайда
-      if (data.touch) {
-          wrapper.removeEventListener('touchstart', events.touchstart);
-          wrapper.removeEventListener('touchmove', events.touchmove);
-          wrapper.removeEventListener('touchend', events.touchend);
-          
-          wrapper.addEventListener('touchstart', events.touchstart, { passive: false });
-          wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
-          wrapper.addEventListener('touchend', events.touchend);
       }
     };
 
