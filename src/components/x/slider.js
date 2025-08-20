@@ -263,7 +263,7 @@ export class Slider {
           setSlide(current);
         };
     
-        wrapper.addEventListener('touchstart', events.touchstart, { passive: true });
+        wrapper.addEventListener('touchstart', events.touchstart, { passive: false });
         wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
         wrapper.addEventListener('touchend', events.touchend);
         wrapper.addEventListener('touchcancel', events.touchcancel);
