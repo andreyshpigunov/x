@@ -86,14 +86,23 @@ export class Slider {
     if (rawSlides.length === 0) return;
 
     el.classList.add('slider');
+    el.style.overflow = 'hidden';
+    el.style.touchAction = 'pan-y';
 
-    // Read gap from JSON config
+    // Read config (gap + rubber)
     let gap = 0;
+    let rubber = false;
     try {
       const config = el.getAttribute('x-slider');
       if (config) {
         const parsed = JSON.parse(config);
-        if (parsed.gap) gap = Number(parsed.gap) || 0;
+        if (Object.prototype.hasOwnProperty.call(parsed, 'gap')) {
+          const g = Number(parsed.gap);
+          gap = Number.isFinite(g) ? g : 0;
+        }
+        if (Object.prototype.hasOwnProperty.call(parsed, 'rubber')) {
+          rubber = Boolean(parsed.rubber);
+        }
       }
     } catch (err) {
       console.warn('Invalid x-slider JSON', err);
@@ -174,60 +183,92 @@ export class Slider {
     // Touch or mouse behavior
     if (slides.length > 1) {
       if (isTouch) {
-        let startX = 0, startY = 0, moving = false;
-
+        let startX = 0, startY = 0, moving = false, activeId = null;
+    
+        const findTouchById = (list, id) => {
+          for (let i = 0; i < list.length; i++) if (list[i].identifier === id) return list[i];
+          return null;
+        };
+    
         events.touchstart = e => {
-          const t = e.touches[0];
+          const t = e.changedTouches[0];
+          activeId = t.identifier;
           startX = t.clientX;
           startY = t.clientY;
           moving = true;
           wrapper.style.transition = 'none';
         };
-
+    
         events.touchmove = e => {
-          if (!moving) return;
-          const x = e.touches[0].clientX;
-          const dx = x - startX;
-          const dy = e.touches[0].clientY - startY;
-        
-          // Vertical scroll detection
+          if (!moving || activeId == null) return;
+          const t = findTouchById(e.touches, activeId);
+          if (!t) return; // активный палец ушёл — ждём touchend/cancel
+    
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
+    
+          // Если движение больше по вертикали — отдаём управление странице
           if (Math.abs(dy) > Math.abs(dx)) return;
-        
+    
+          // Горизонт: блокируем скролл страницы
+          e.preventDefault();
+    
           const slideWidth = updateSlideWidth();
-          
-          // Ограничиваем движение на краях
-          let offset = -current * slideWidth + dx;
+    
+          // Блок/смягчение на краях
+          let effDx = dx;
           if (current === 0 && dx > 0) {
-            offset = -current * slideWidth + dx * 0.1; // небольшой "резиновый" отскок
+            effDx = rubber ? dx * 0.1 : 0; // наружу влево
           } else if (current === slides.length - 1 && dx < 0) {
-            offset = -current * slideWidth + dx * 0.1;
+            effDx = rubber ? dx * 0.1 : 0; // наружу вправо
           }
-        
+    
+          const offset = -current * slideWidth + effDx;
           wrapper.style.transform = `translateX(${offset}px)`;
-          e.preventDefault(); // prevent vertical scroll during horizontal swipe
         };
-
+    
         events.touchend = e => {
-          // if (!moving) return;
+          if (!moving) return;
           moving = false;
-          const dx = e.changedTouches[0].clientX - startX;
-          const dy = e.changedTouches[0].clientY - startY;
+    
+          const t = findTouchById(e.changedTouches, activeId) || e.changedTouches[0];
+          activeId = null;
+    
+          const dx = t.clientX - startX;
+          const dy = t.clientY - startY;
+    
+          // Вертикальный жест — откат
           if (Math.abs(dy) > Math.abs(dx)) {
             setSlide(current);
-            // return;
+            return;
           }
-
-          const THRESHOLD = 50;
+    
+          const slideWidth = updateSlideWidth();
+          const THRESHOLD = slideWidth * 0.2;
+    
+          // Наружу на краях — всегда откат
+          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) {
+            setSlide(current);
+            return;
+          }
+    
           if (dx > THRESHOLD && current > 0) setSlide(current - 1);
           else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
           else setSlide(current);
         };
-
-        wrapper.addEventListener('touchstart', events.touchstart);
+    
+        events.touchcancel = () => {
+          moving = false;
+          activeId = null;
+          setSlide(current);
+        };
+    
+        wrapper.addEventListener('touchstart', events.touchstart, { passive: true });
         wrapper.addEventListener('touchmove', events.touchmove, { passive: false });
         wrapper.addEventListener('touchend', events.touchend);
+        wrapper.addEventListener('touchcancel', events.touchcancel);
       } else {
-        // Desktop hover navigation
+        // Desktop hover navigation (как было)
         events.mousemove = e => {
           const rect = el.getBoundingClientRect();
           const x = e.clientX - rect.left;

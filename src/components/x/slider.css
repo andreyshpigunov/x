@@ -17,7 +17,7 @@
   cursor: pointer;
 }
 .slider-wrapper {
-  touch-action: pan-y;
+  /* touch-action: pan-y; */
 }
 .slider-item {
   display: flex;
@@ -41,6 +41,7 @@
   opacity: var(--slider-indicators-init-opacity);
   will-change: opacity;
   transition: opacity .2s ease-out;
+  pointer-events: none;
 }
 .slider-indicators span {
   display: flex;
