@@ -184,7 +184,7 @@ export class Slider {
     const setSlide = (i, instant = false) => {
       // Clamp index
       const targetIndex = Math.max(0, Math.min(i, slides.length - 1));
-      if (targetIndex === current) return;
+      // if (targetIndex === current) return;
     
       const slideWidth = updateSlideWidth();
       const targetSlide = slides[targetIndex];
@@ -312,15 +312,15 @@ export class Slider {
     
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
+          
+          const slideWidth = updateSlideWidth();
+          const THRESHOLD = slideWidth * 0.2;
     
           // Вертикальный жест — откат
           if (Math.abs(dy) > Math.abs(dx)) {
             setSlide(current);
             return;
           }
-    
-          const slideWidth = updateSlideWidth();
-          const THRESHOLD = slideWidth * 0.2;
     
           // Наружу на краях — всегда откат
           if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) {
