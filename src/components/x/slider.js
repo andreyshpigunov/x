@@ -57,6 +57,9 @@ export class Slider {
         target.removeEventListener('touchcancel',data.events.touchcancel,true);
       } else {
         el.removeEventListener('mousemove', data.events.mousemove);
+        if (data.events.mouseout) {
+          el.removeEventListener('mouseleave', data.events.mouseout);
+        }
       }
     });
     if (this.io) this.io.disconnect();
@@ -93,9 +96,10 @@ export class Slider {
     // iOS: минимизируем перехват браузером
     el.style.overscrollBehavior = 'contain';
 
-    // Read config (gap + rubber)
+    // Read config
     let gap = 0;
     let rubber = false;
+    let resetOnMouseout = false;
     try {
       const config = el.getAttribute('x-slider');
       if (config) {
@@ -106,6 +110,9 @@ export class Slider {
         }
         if (Object.prototype.hasOwnProperty.call(parsed, 'rubber')) {
           rubber = Boolean(parsed.rubber);
+        }
+        if (Object.prototype.hasOwnProperty.call(parsed, 'resetOnMouseout')) {
+          resetOnMouseout = Boolean(parsed.resetOnMouseout);
         }
       }
     } catch (err) {
@@ -176,43 +183,75 @@ export class Slider {
     // Set active slide
     const setSlide = (i, instant = false) => {
       // Clamp index
-      current = Math.max(0, Math.min(i, slides.length - 1));
+      const targetIndex = Math.max(0, Math.min(i, slides.length - 1));
+      if (targetIndex === current) return;
+    
       const slideWidth = updateSlideWidth();
+      const targetSlide = slides[targetIndex];
+      const img = targetSlide.querySelector('img');
     
-      // Apply transition (or skip if instant)
-      wrapper.style.transition = instant ? 'none' : 'transform 0.25s ease-out';
-      wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+      // --- DESKTOP FIX: wait until image is loaded ---
+      if (!isTouch && img) {
+        const ensureLoaded = (cb) => {
+          if (img.complete && img.naturalWidth !== 0) {
+            cb();
+          } else {
+            img.addEventListener('load', cb, { once: true });
+            img.addEventListener('error', cb, { once: true }); // fallback
+          }
+        };
     
-      // Lazy-load current and neighbor slides
-      loadSlide(current);
+        // If image still lazy, trigger load
+        if (img.dataset.src && !img.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+        if (img.dataset.srcset && !img.srcset) {
+          img.srcset = img.dataset.srcset;
+          img.removeAttribute('data-srcset');
+        }
     
-      // Update indicators
-      if (indicators.length) {
-        indicators.forEach((span, idx) =>
-          span.classList.toggle('active', idx === current)
-        );
+        // Wait until loaded, then switch
+        ensureLoaded(() => doSwitch(targetIndex, instant));
+        return;
       }
     
-      // iOS Safari fix: reset transition after animation ends
-      if (!instant) {
-        wrapper.addEventListener('transitionend', () => {
-          // Снимаем transition, чтобы iOS не думал, что элемент «в процессе»
-          wrapper.style.transition = 'none';
-      
-          // Доп. трюк для iOS: кратко выключаем pointer-events и возвращаем.
-          // Это «пробуждает» доставку новых touchstart.
-          if (isiOS) {
-            wrapper.style.pointerEvents = 'none';
-            requestAnimationFrame(() => {
-              // форсируем reflow
-              void wrapper.offsetWidth;
-              wrapper.style.pointerEvents = 'auto';
-            });
-          }
-        }, { once: true });
+      // Default behavior (mobile or already loaded)
+      doSwitch(targetIndex, instant);
+    
+      function doSwitch(idx, instant) {
+        current = idx;
+        wrapper.style.transition = instant ? 'none' : 'transform 0.25s ease-out';
+        wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+    
+        // Lazy-load current and neighbor slides
+        loadSlide(current);
+    
+        // Update indicators
+        if (indicators.length) {
+          indicators.forEach((span, idx2) =>
+            span.classList.toggle('active', idx2 === current)
+          );
+        }
+    
+        // iOS Safari fix (оставляем как было)
+        if (!instant) {
+          wrapper.addEventListener('transitionend', () => {
+            wrapper.style.transition = 'none';
+            if (isiOS) {
+              wrapper.style.pointerEvents = 'none';
+              requestAnimationFrame(() => {
+                void wrapper.offsetWidth;
+                wrapper.style.pointerEvents = 'auto';
+              });
+            }
+          }, { once: true });
+        }
       }
     };
 
+    // Force-load first slide before showing
+    loadSlide(0);
     setSlide(0, true);
 
     const events = {};
@@ -314,6 +353,13 @@ export class Slider {
           if (idx !== current) setSlide(idx, true);
         };
         el.addEventListener('mousemove', events.mousemove);
+        
+        if (resetOnMouseout) {
+          events.mouseout = () => {
+            setSlide(0, true); // возвращаем на первый кадр
+          };
+          el.addEventListener('mouseleave', events.mouseout);
+        }
       }
     }
 
