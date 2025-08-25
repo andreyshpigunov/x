@@ -111,6 +111,7 @@ export class Slider {
     let gap = 0;
     let rubber = true;
     let resetOnMouseout = false;
+    let touch = true;
     try {
       const config = el.getAttribute('x-slider');
       if (config) {
@@ -124,6 +125,9 @@ export class Slider {
         }
         if (Object.prototype.hasOwnProperty.call(parsed, 'resetOnMouseout')) {
           resetOnMouseout = Boolean(parsed.resetOnMouseout);
+        }
+        if (Object.prototype.hasOwnProperty.call(parsed, 'touch')) {
+          touch = Boolean(parsed.disableOnTouch);
         }
       }
     } catch (err) {
@@ -163,6 +167,11 @@ export class Slider {
 
     const slides = rawSlides;
     const isTouch = 'ontouchstart' in window;
+    if (isTouch && disableOnTouch) {
+      // просто показываем первый слайд без навигации
+      slides[0]?.classList.add('active');
+      return;
+    }
     let current = 0;
     
     const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
