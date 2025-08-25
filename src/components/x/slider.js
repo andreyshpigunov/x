@@ -38,6 +38,10 @@ export class Slider {
           if (node.nodeType === 1 && node.hasAttribute?.('x-slider')) {
             this.io.observe(node);
           }
+          // NEW: observe nested [x-slider] inside inserted subtree
+          if (node.nodeType === 1) {
+            node.querySelectorAll?.('[x-slider]')?.forEach(n => this.io.observe(n));
+          }
         });
       }
     });
@@ -59,6 +63,9 @@ export class Slider {
         el.removeEventListener('mousemove', data.events.mousemove);
         if (data.events.mouseout) {
           el.removeEventListener('mouseleave', data.events.mouseout);
+        }
+        if (data.events.mouseenter) {
+          el.removeEventListener('mouseenter', data.events.mouseenter);
         }
         if (data.events.resize) {
           window.removeEventListener('resize', data.events.resize);
@@ -164,22 +171,28 @@ export class Slider {
     // Get slide width (including gap)
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
 
-    // Lazy-load slide images
+    // Helpers for robust lazy-load (Safari 18 safe)
+    const hasAttr = (el, name) => el.getAttribute(name) != null && el.getAttribute(name) !== '';
+    const primeLazy = (img) => {
+      if (!img) return;
+      if (img.dataset?.src && !hasAttr(img, 'src')) {
+        img.setAttribute('src', img.dataset.src);
+        img.removeAttribute('data-src');
+      }
+      if (img.dataset?.srcset && !hasAttr(img, 'srcset')) {
+        img.setAttribute('srcset', img.dataset.srcset);
+        img.removeAttribute('data-srcset');
+      }
+    };
+
+    // Lazy-load neighbor slides
     const loadSlide = i => {
       [i - 1, i, i + 1].forEach(idx => {
         if (idx >= 0 && idx < slides.length) {
           const img = slides[idx].querySelector('img');
           if (!img) return;
 
-          if (img.dataset.src && !img.src) {
-            img.src = img.dataset.src;
-            img.removeAttribute('data-src');
-          }
-
-          if (img.dataset.srcset && !img.srcset) {
-            img.srcset = img.dataset.srcset;
-            img.removeAttribute('data-srcset');
-          }
+          primeLazy(img);
         }
       });
     };
@@ -194,31 +207,8 @@ export class Slider {
       const targetSlide = slides[targetIndex];
       const img = targetSlide.querySelector('img');
     
-      // --- DESKTOP FIX: wait until image is loaded ---
-      if (!isTouch && img) {
-        const ensureLoaded = (cb) => {
-          if (img.complete && img.naturalWidth !== 0) {
-            cb();
-          } else {
-            img.addEventListener('load', cb, { once: true });
-            img.addEventListener('error', cb, { once: true }); // fallback
-          }
-        };
-    
-        // If image still lazy, trigger load
-        if (img.dataset.src && !img.src) {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        }
-        if (img.dataset.srcset && !img.srcset) {
-          img.srcset = img.dataset.srcset;
-          img.removeAttribute('data-srcset');
-        }
-    
-        // Wait until loaded, then switch
-        ensureLoaded(() => doSwitch(targetIndex, instant));
-        return;
-      }
+      // DESKTOP: do not block on image load — kick off lazy load and move instantly
+      if (!isTouch && img) primeLazy(img);
     
       // Default behavior (mobile or already loaded)
       doSwitch(targetIndex, instant);
@@ -378,10 +368,11 @@ export class Slider {
         el.addEventListener('mousemove', events.mousemove);
         
         // Пересчёт при повторном входе курсора (Safari после зума)
-        el.addEventListener('mouseenter', e => {
+        events.mouseenter = e => {
           handleResize();
           events.mousemove(e)
-        });
+        };
+        el.addEventListener('mouseenter', events.mouseenter);
         
         if (resetOnMouseout) {
           events.mouseout = () => setSlide(0, true);
