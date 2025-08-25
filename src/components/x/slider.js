@@ -60,6 +60,10 @@ export class Slider {
         if (data.events.mouseout) {
           el.removeEventListener('mouseleave', data.events.mouseout);
         }
+        if (data.events.resize) {
+          window.removeEventListener('resize', data.events.resize);
+          window.removeEventListener('orientationchange', data.events.resize);
+        }
       }
     });
     if (this.io) this.io.disconnect();
@@ -221,7 +225,7 @@ export class Slider {
     
       function doSwitch(idx, instant) {
         current = idx;
-        wrapper.style.transition = instant ? 'none' : 'transform 0.25s ease-out';
+        wrapper.style.transition = instant ? 'none' : 'transform 0.25s';
         wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
     
         // Lazy-load current and neighbor slides
@@ -315,6 +319,11 @@ export class Slider {
           
           const slideWidth = updateSlideWidth();
           const THRESHOLD = slideWidth * 0.2;
+          
+          // Плавность
+          const distance = Math.abs(dx) / slideWidth; // 0..1
+          const duration = 200 + 200 * distance; // 200–400ms
+          wrapper.style.transition = `transform ${duration}ms ease-out`;
     
           // Вертикальный жест — откат
           if (Math.abs(dy) > Math.abs(dx)) {
@@ -344,24 +353,48 @@ export class Slider {
         el.addEventListener('touchend',   events.touchend,   { capture: true });
         el.addEventListener('touchcancel',events.touchcancel,{ capture: true });
       } else {
-        // Desktop hover navigation (как было)
+        // Desktop hover navigation — равномерные зоны без перекоса краёв
         events.mousemove = e => {
           const rect = el.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const sectionWidth = rect.width / slides.length;
-          const idx = Math.floor(x / sectionWidth);
+          // Ширина в тех же координатах, что и clientX (CSS px):
+          let w = rect.width || el.offsetWidth;
+          if (w <= 0) return;
+        
+          // Положение курсора внутри контейнера [0, w)
+          let x = e.clientX - rect.left;
+        
+          // Нормализуем, чтобы исключить x === w (крайний пиксель)
+          if (x <= 0) x = 0;
+          else if (x >= w) x = w - 1e-7; // epsilon, чтобы не получить индекс N
+        
+          // Равномерное разбиение на N интервалов: [0, 1/N, 2/N, ... , (N-1)/N)
+          const idx = Math.floor((x / w) * slides.length);
+        
           if (idx !== current) setSlide(idx, true);
         };
         el.addEventListener('mousemove', events.mousemove);
         
+        // Пересчёт при повторном входе курсора (Safari после зума)
+        el.addEventListener('mouseenter', e => events.mousemove(e));
+        
         if (resetOnMouseout) {
-          events.mouseout = () => {
-            setSlide(0, true); // возвращаем на первый кадр
-          };
+          events.mouseout = () => setSlide(0, true);
           el.addEventListener('mouseleave', events.mouseout);
         }
       }
     }
+    
+    // --- Handle resize / zoom ---
+    const handleResize = () => {
+      const slideWidth = updateSlideWidth();
+      wrapper.style.transition = 'none'; // без анимации при ресайзе
+      wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+    };
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
+    
+    // Сохраним, чтобы потом корректно удалить при destroy()
+    events.resize = handleResize;
 
     this.instances.set(el, { wrapper, slides, events, touch: isTouch, listenerTarget: el });
   }
