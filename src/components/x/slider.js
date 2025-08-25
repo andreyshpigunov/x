@@ -4,7 +4,7 @@
 
 // Example usage:
 //
-// <div x-slider='{"gap": 0}'>
+// <div x-slider='{"gap": 0, "rubber": false}'>
 //   <div><img data-src="image1.jpg" alt="Slide 1"></div>
 //   <div><img data-src="image2.jpg" alt="Slide 2"></div>
 //   <div><img data-src="image3.jpg" alt="Slide 3"></div>
@@ -102,7 +102,7 @@ export class Slider {
 
     // Read config
     let gap = 0;
-    let rubber = false;
+    let rubber = true;
     let resetOnMouseout = false;
     try {
       const config = el.getAttribute('x-slider');
@@ -357,8 +357,11 @@ export class Slider {
         events.mousemove = e => {
           const rect = el.getBoundingClientRect();
           // Ширина в тех же координатах, что и clientX (CSS px):
-          let w = rect.width || el.offsetWidth;
-          if (w <= 0) return;
+          let w = Math.round(el.offsetWidth);
+          if (w <= 0) {
+            handleResize();
+            return;
+          }
         
           // Положение курсора внутри контейнера [0, w)
           let x = e.clientX - rect.left;
@@ -375,7 +378,10 @@ export class Slider {
         el.addEventListener('mousemove', events.mousemove);
         
         // Пересчёт при повторном входе курсора (Safari после зума)
-        el.addEventListener('mouseenter', e => events.mousemove(e));
+        el.addEventListener('mouseenter', e => {
+          handleResize();
+          events.mousemove(e)
+        });
         
         if (resetOnMouseout) {
           events.mouseout = () => setSlide(0, true);
