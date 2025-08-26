@@ -252,8 +252,8 @@ export class Slider {
 
           const slideWidth = updateSlideWidth();
           let effDx = dx;
-          if (current === 0 && dx > 0) effDx = rubber ? dx*0.1 : 0;
-          if (current === slides.length-1 && dx < 0) effDx = rubber ? dx*0.1 : 0;
+          if (current === 0 && dx > 0) effDx = rubber ? dx*0.05 : 0;
+          if (current === slides.length-1 && dx < 0) effDx = rubber ? dx*0.05 : 0;
 
           wrapper.style.transform = `translateX(${-current*slideWidth + effDx}px)`;
         };
