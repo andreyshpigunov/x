@@ -252,8 +252,8 @@ export class Slider {
 
           const slideWidth = updateSlideWidth();
           let effDx = dx;
-          if (current === 0 && dx > 0) effDx = rubber ? dx*0.05 : 0;
-          if (current === slides.length-1 && dx < 0) effDx = rubber ? dx*0.05 : 0;
+          if (current === 0 && dx > 0) effDx = rubber ? dx*0.15 : 0;
+          if (current === slides.length-1 && dx < 0) effDx = rubber ? dx*0.15 : 0;
 
           wrapper.style.transform = `translateX(${-current*slideWidth + effDx}px)`;
         };
@@ -266,7 +266,7 @@ export class Slider {
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
           const slideWidth = updateSlideWidth();
-          const THRESHOLD = slideWidth*0.2;
+          const THRESHOLD = slideWidth*0.1;
 
           if (Math.abs(dy) > Math.abs(dx)) { setSlide(current); return; }
           if ((current === 0 && dx>0) || (current===slides.length-1 && dx<0)) { setSlide(current); return; }
