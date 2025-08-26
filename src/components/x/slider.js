@@ -25,24 +25,25 @@ export class Slider {
     // очередь для отложенных прелоадов
     this.preloadQueue = [];
     this.preloadTimer = null;
-  }
-  
-  schedulePreload(fn) {
-    this.preloadQueue.push(fn);
-    if (!this.preloadTimer) {
+    this.maxParallelPreload = 5;
+    this.activePreloads = 0;
+    
+    this.schedulePreload = (fn) => {
+      this.preloadQueue.push(fn);
       this.runPreloadQueue();
-    }
-  }
-  
-  runPreloadQueue() {
-    if (this.preloadQueue.length === 0) {
-      this.preloadTimer = null;
-      return;
-    }
-    const fn = this.preloadQueue.shift();
-    fn();
-    // бережно: одна задача каждые 100мс
-    this.preloadTimer = setTimeout(() => this.runPreloadQueue(), 100);
+    };
+    
+    this.runPreloadQueue = () => {
+      while (this.activePreloads < this.maxParallelPreload && this.preloadQueue.length) {
+        const fn = this.preloadQueue.shift();
+        this.activePreloads++;
+        Promise.resolve().then(() => {
+          fn();
+          this.activePreloads--;
+          this.runPreloadQueue();
+        });
+      }
+    };
   }
 
   /**
