@@ -21,6 +21,28 @@ export class Slider {
     this.instances = new Map();
     this.io = null;
     this.mo = null;
+    
+    // очередь для отложенных прелоадов
+    this.preloadQueue = [];
+    this.preloadTimer = null;
+  }
+  
+  schedulePreload(fn) {
+    this.preloadQueue.push(fn);
+    if (!this.preloadTimer) {
+      this.runPreloadQueue();
+    }
+  }
+  
+  runPreloadQueue() {
+    if (this.preloadQueue.length === 0) {
+      this.preloadTimer = null;
+      return;
+    }
+    const fn = this.preloadQueue.shift();
+    fn();
+    // бережно: одна задача каждые 100мс
+    this.preloadTimer = setTimeout(() => this.runPreloadQueue(), 100);
   }
 
   /**
@@ -257,8 +279,13 @@ export class Slider {
     };
 
     // Force-load first slide before showing
-    loadSlide(0);
+    loadSlide(0, 0);
     setSlide(0, true);
+    
+    // Отложенный прелоад соседей — добавляем в очередь
+    this.schedulePreload(() => {
+      loadSlide(0, isTouch ? 1 : 3);
+    });
 
     const events = {};
 
