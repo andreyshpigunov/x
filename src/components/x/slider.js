@@ -198,16 +198,15 @@ export class Slider {
     // Get slide width (including gap)
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
 
-    // Lazy-load neighbor slides
-    const loadSlide = i => {
-      [i - 1, i, i + 1].forEach(idx => {
+    // Lazy-load current and neighbors (+ forward lookahead)
+    const loadSlide = (i, lookahead = 1) => {
+      for (let offset = -1; offset <= lookahead; offset++) {
+        const idx = i + offset;
         if (idx >= 0 && idx < slides.length) {
           const img = slides[idx].querySelector('img');
-          if (!img) return;
-
-          primeLazy(img);
+          if (img) primeLazy(img);
         }
-      });
+      }
     };
 
     // Set active slide
@@ -232,7 +231,7 @@ export class Slider {
         wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
     
         // Lazy-load current and neighbor slides
-        loadSlide(current);
+        loadSlide(current, isTouch ? 1 : 3);
     
         // Update indicators
         if (indicators.length) {
