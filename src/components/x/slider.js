@@ -127,7 +127,7 @@ export class Slider {
           resetOnMouseout = Boolean(parsed.resetOnMouseout);
         }
         if (Object.prototype.hasOwnProperty.call(parsed, 'touch')) {
-          touch = Boolean(parsed.disableOnTouch);
+          touch = Boolean(parsed.touch);
         }
       }
     } catch (err) {
@@ -167,7 +167,7 @@ export class Slider {
 
     const slides = rawSlides;
     const isTouch = 'ontouchstart' in window;
-    if (isTouch && disableOnTouch) {
+    if (isTouch && !touch) {
       // просто показываем первый слайд без навигации
       slides[0]?.classList.add('active');
       return;
