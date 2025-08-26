@@ -150,10 +150,12 @@ export class Slider {
     
     // Append wrapper into container
     el.appendChild(wrapper);
+    
+    const isTouch = 'ontouchstart' in window;
 
     // Create indicators
     let indicators = [];
-    if (rawSlides.length > 1) {
+    if (rawSlides.length > 1 && (!isTouch || touch)) {
       const indicatorsContainer = document.createElement('div');
       indicatorsContainer.className = 'slider-indicators';
       rawSlides.forEach((_, i) => {
@@ -164,22 +166,7 @@ export class Slider {
       el.appendChild(indicatorsContainer);
       indicators = [...indicatorsContainer.querySelectorAll('span')];
     }
-
-    const slides = rawSlides;
-    const isTouch = 'ontouchstart' in window;
-    if (isTouch && !touch) {
-      // просто показываем первый слайд без навигации
-      slides[0]?.classList.add('active');
-      return;
-    }
-    let current = 0;
     
-    const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
-    (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
-
-    // Get slide width (including gap)
-    const updateSlideWidth = () => slides[0].offsetWidth + gap;
-
     // Helpers for robust lazy-load (Safari 18 safe)
     const hasAttr = (el, name) => el.getAttribute(name) != null && el.getAttribute(name) !== '';
     const primeLazy = (img) => {
@@ -193,6 +180,23 @@ export class Slider {
         img.removeAttribute('data-srcset');
       }
     };
+
+    const slides = rawSlides;
+    if (isTouch && !touch) {
+      // Show first slide without navigation
+      const targetSlide = slides[0];
+      const img = targetSlide.querySelector('img');
+      targetSlide.classList.add('active');
+      primeLazy(img);
+      return;
+    }
+    let current = 0;
+    
+    const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
+    (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+
+    // Get slide width (including gap)
+    const updateSlideWidth = () => slides[0].offsetWidth + gap;
 
     // Lazy-load neighbor slides
     const loadSlide = i => {
