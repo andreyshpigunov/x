@@ -1,19 +1,22 @@
 // slider.js
-// A lightweight, dependency-free slider with support for touch and mouse.
-// Features: lazy-loading via data-src/data-srcset, configurable gap, auto-init with IntersectionObserver.
+// Lightweight, dependency-free slider with touch and mouse support.
+// Uses native lazy-loading via loading="lazy" and removes manual primeLazy/loadSlide logic.
+// Designed for modern browsers (no old Safari/IE support).
 
-// Example usage:
-//
-// <div x-slider='{"gap": 0, "rubber": false}'>
-//   <div><img data-src="image1.jpg" alt="Slide 1"></div>
-//   <div><img data-src="image2.jpg" alt="Slide 2"></div>
-//   <div><img data-src="image3.jpg" alt="Slide 3"></div>
-// </div>
-//
-// <script type="module">
-//   import { slider } from './slider.js';
-//   slider.init();
-// </script>
+/*
+Example usage:
+
+<div x-slider='{"gap":0,"rubber":false,"touch":true}'>
+  <div><img src="image1.jpg" srcset="..." alt="Slide 1"></div>
+  <div><img src="image2.jpg" alt="Slide 2"></div>
+  <div><img src="image3.jpg" alt="Slide 3"></div>
+</div>
+
+<script type="module">
+  import { slider } from './slider.js';
+  slider.init();
+</script>
+*/
 
 export class Slider {
   constructor() {
@@ -21,47 +24,22 @@ export class Slider {
     this.instances = new Map();
     this.io = null;
     this.mo = null;
-    
-    // очередь для отложенных прелоадов
-    this.preloadQueue = [];
-    this.preloadTimer = null;
-    this.maxParallelPreload = 5;
-    this.activePreloads = 0;
-    
-    this.schedulePreload = (fn) => {
-      this.preloadQueue.push(fn);
-      this.runPreloadQueue();
-    };
-    
-    this.runPreloadQueue = () => {
-      while (this.activePreloads < this.maxParallelPreload && this.preloadQueue.length) {
-        const fn = this.preloadQueue.shift();
-        this.activePreloads++;
-        Promise.resolve().then(() => {
-          fn();
-          this.activePreloads--;
-          this.runPreloadQueue();
-        });
-      }
-    };
   }
 
   /**
-   * Initialize global slider observer
-   * - Observes DOM mutations for new [x-slider] elements
-   * - Initializes sliders when they enter the viewport
+   * Initialize all sliders and set up observers for dynamically added sliders
    */
   init() {
     this.observeSliders();
 
-    // Observe dynamically inserted sliders
+    // Observe DOM mutations to catch newly added sliders
     this.mo = new MutationObserver(mutations => {
       for (const mutation of mutations) {
         mutation.addedNodes.forEach(node => {
           if (node.nodeType === 1 && node.hasAttribute?.('x-slider')) {
             this.io.observe(node);
           }
-          // NEW: observe nested [x-slider] inside inserted subtree
+          // Also check for nested sliders inside added subtree
           if (node.nodeType === 1) {
             node.querySelectorAll?.('[x-slider]')?.forEach(n => this.io.observe(n));
           }
@@ -84,12 +62,8 @@ export class Slider {
         target.removeEventListener('touchcancel',data.events.touchcancel,true);
       } else {
         el.removeEventListener('mousemove', data.events.mousemove);
-        if (data.events.mouseout) {
-          el.removeEventListener('mouseleave', data.events.mouseout);
-        }
-        if (data.events.mouseenter) {
-          el.removeEventListener('mouseenter', data.events.mouseenter);
-        }
+        if (data.events.mouseout) el.removeEventListener('mouseleave', data.events.mouseout);
+        if (data.events.mouseenter) el.removeEventListener('mouseenter', data.events.mouseenter);
         if (data.events.resize) {
           window.removeEventListener('resize', data.events.resize);
           window.removeEventListener('orientationchange', data.events.resize);
@@ -102,7 +76,7 @@ export class Slider {
   }
 
   /**
-   * Find all [x-slider] elements and observe them with IntersectionObserver
+   * Find all [x-slider] elements in DOM and observe them via IntersectionObserver
    */
   observeSliders() {
     this.sliders = document.querySelectorAll('[x-slider]');
@@ -113,6 +87,7 @@ export class Slider {
         }
       });
     }, { threshold: 0.1 });
+
     this.sliders.forEach(slider => this.io.observe(slider));
   }
 
@@ -122,36 +97,23 @@ export class Slider {
    */
   initSlider(el) {
     const rawSlides = [...el.children].map(node => node.cloneNode(true));
-    if (rawSlides.length === 0) return;
+    if (!rawSlides.length) return;
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
     el.style.touchAction = 'pan-y';
-    // iOS: минимизируем перехват браузером
-    el.style.overscrollBehavior = 'contain';
+    el.style.overscrollBehavior = 'contain'; // iOS touch behavior fix
 
-    // Read config
-    let gap = 0;
-    let rubber = true;
-    let resetOnMouseout = false;
-    let touch = true;
+    // Read configuration from x-slider attribute
+    let gap = 0, rubber = true, resetOnMouseout = false, touch = true;
     try {
       const config = el.getAttribute('x-slider');
       if (config) {
         const parsed = JSON.parse(config);
-        if (Object.prototype.hasOwnProperty.call(parsed, 'gap')) {
-          const g = Number(parsed.gap);
-          gap = Number.isFinite(g) ? g : 0;
-        }
-        if (Object.prototype.hasOwnProperty.call(parsed, 'rubber')) {
-          rubber = Boolean(parsed.rubber);
-        }
-        if (Object.prototype.hasOwnProperty.call(parsed, 'resetOnMouseout')) {
-          resetOnMouseout = Boolean(parsed.resetOnMouseout);
-        }
-        if (Object.prototype.hasOwnProperty.call(parsed, 'touch')) {
-          touch = Boolean(parsed.touch);
-        }
+        if ('gap' in parsed) gap = Number(parsed.gap) || 0;
+        if ('rubber' in parsed) rubber = Boolean(parsed.rubber);
+        if ('resetOnMouseout' in parsed) resetOnMouseout = Boolean(parsed.resetOnMouseout);
+        if ('touch' in parsed) touch = Boolean(parsed.touch);
       }
     } catch (err) {
       console.warn('Invalid x-slider JSON', err);
@@ -162,21 +124,25 @@ export class Slider {
     wrapper.className = 'slider-wrapper';
     wrapper.style.gap = gap + 'px';
 
-    // Clear container first
+    // Clear container
     el.innerHTML = '';
-    
-    // Move slides into wrapper
+
+    // Move slides into wrapper and set lazy-loading
     rawSlides.forEach(node => {
       node.classList.add('slider-item');
+      const img = node.querySelector('img');
+      if (img) img.setAttribute('loading', 'lazy'); // native lazy-load
+      // Prioritize first slide
+      if(node === rawSlides[0]) img.setAttribute('fetchpriority','high');
       wrapper.appendChild(node);
     });
-    
-    // Append wrapper into container
+
+    // Append wrapper to container
     el.appendChild(wrapper);
-    
+
     const isTouch = 'ontouchstart' in window;
 
-    // Create indicators
+    // Create indicators (only for non-touch or enabled touch)
     let indicators = [];
     if (rawSlides.length > 1 && (!isTouch || touch)) {
       const indicatorsContainer = document.createElement('div');
@@ -189,117 +155,65 @@ export class Slider {
       el.appendChild(indicatorsContainer);
       indicators = [...indicatorsContainer.querySelectorAll('span')];
     }
-    
-    // Helpers for robust lazy-load (Safari 18 safe)
-    const hasAttr = (el, name) => el.getAttribute(name) != null && el.getAttribute(name) !== '';
-    const primeLazy = (img) => {
-      if (!img) return;
-      if (img.dataset?.src && !hasAttr(img, 'src')) {
-        img.setAttribute('src', img.dataset.src);
-        img.removeAttribute('data-src');
-      }
-      if (img.dataset?.srcset && !hasAttr(img, 'srcset')) {
-        img.setAttribute('srcset', img.dataset.srcset);
-        img.removeAttribute('data-srcset');
-      }
-    };
 
     const slides = rawSlides;
     if (isTouch && !touch) {
-      // Show first slide without navigation
-      const targetSlide = slides[0];
-      const img = targetSlide.querySelector('img');
-      targetSlide.classList.add('active');
-      primeLazy(img);
+      // Show first slide only
+      slides[0].classList.add('active');
       return;
     }
+
     let current = 0;
-    
     const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
-    (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+                   (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 
-    // Get slide width (including gap)
+    // Get slide width including gap
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
-
-    // Lazy-load current and neighbors (+ forward lookahead)
-    const loadSlide = (i, lookahead = 1) => {
-      for (let offset = -1; offset <= lookahead; offset++) {
-        const idx = i + offset;
-        if (idx >= 0 && idx < slides.length) {
-          const img = slides[idx].querySelector('img');
-          if (img) primeLazy(img);
-        }
-      }
-    };
 
     // Set active slide
     const setSlide = (i, instant = false) => {
-      // Clamp index
       const targetIndex = Math.max(0, Math.min(i, slides.length - 1));
-      // if (targetIndex === current) return;
-    
       const slideWidth = updateSlideWidth();
       const targetSlide = slides[targetIndex];
-      const img = targetSlide.querySelector('img');
-    
-      // DESKTOP: do not block on image load — kick off lazy load and move instantly
-      if (!isTouch && img) primeLazy(img);
-    
-      // Default behavior (mobile or already loaded)
-      doSwitch(targetIndex, instant);
-    
-      function doSwitch(idx, instant) {
-        current = idx;
-        wrapper.style.transition = instant ? 'none' : 'transform 0.25s';
-        wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
-    
-        // Lazy-load current and neighbor slides
-        loadSlide(current, isTouch ? 1 : 3);
-    
-        // Update indicators
-        if (indicators.length) {
-          indicators.forEach((span, idx2) =>
-            span.classList.toggle('active', idx2 === current)
-          );
-        }
-    
-        // iOS Safari fix (оставляем как было)
-        if (!instant) {
-          wrapper.addEventListener('transitionend', () => {
-            wrapper.style.transition = 'none';
-            if (isiOS) {
-              wrapper.style.pointerEvents = 'none';
-              requestAnimationFrame(() => {
-                void wrapper.offsetWidth;
-                wrapper.style.pointerEvents = 'auto';
-              });
-            }
-          }, { once: true });
-        }
+
+      current = targetIndex;
+      wrapper.style.transition = instant ? 'none' : 'transform 0.25s';
+      wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+
+      // Update indicators
+      if (indicators.length) {
+        indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
+      }
+
+      // iOS Safari fix
+      if (!instant) {
+        wrapper.addEventListener('transitionend', () => {
+          wrapper.style.transition = 'none';
+          if (isiOS) {
+            wrapper.style.pointerEvents = 'none';
+            requestAnimationFrame(() => {
+              void wrapper.offsetWidth;
+              wrapper.style.pointerEvents = 'auto';
+            });
+          }
+        }, { once: true });
       }
     };
 
-    // Force-load first slide before showing
-    loadSlide(0, 0);
+    // Initialize first slide
     setSlide(0, true);
-    
-    // Отложенный прелоад соседей — добавляем в очередь
-    this.schedulePreload(() => {
-      loadSlide(0, isTouch ? 1 : 3);
-    });
 
     const events = {};
 
-    // Touch or mouse behavior
+    // Touch behavior
     if (slides.length > 1) {
       if (isTouch) {
         let startX = 0, startY = 0, moving = false, activeId = null;
-    
         const findTouchById = (list, id) => {
           for (let i = 0; i < list.length; i++) if (list[i].identifier === id) return list[i];
           return null;
         };
-    
+
         events.touchstart = e => {
           const t = e.changedTouches[0];
           activeId = t.identifier;
@@ -308,133 +222,85 @@ export class Slider {
           moving = true;
           wrapper.style.transition = 'none';
         };
-    
         events.touchmove = e => {
           if (!moving || activeId == null) return;
           const t = findTouchById(e.touches, activeId);
-          if (!t) return; // активный палец ушёл — ждём touchend/cancel
-    
+          if (!t) return;
+
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
-    
-          // Если движение больше по вертикали — отдаём управление странице
-          if (Math.abs(dy) > Math.abs(dx)) return;
-    
-          // Горизонт: блокируем скролл страницы
+          if (Math.abs(dy) > Math.abs(dx)) return; // vertical swipe
+
           if (e.cancelable) e.preventDefault();
-    
+
           const slideWidth = updateSlideWidth();
-    
-          // Блок/смягчение на краях
           let effDx = dx;
-          if (current === 0 && dx > 0) {
-            effDx = rubber ? dx * 0.1 : 0; // наружу влево
-          } else if (current === slides.length - 1 && dx < 0) {
-            effDx = rubber ? dx * 0.1 : 0; // наружу вправо
-          }
-    
-          const offset = -current * slideWidth + effDx;
-          wrapper.style.transform = `translateX(${offset}px)`;
+          if (current === 0 && dx > 0) effDx = rubber ? dx*0.1 : 0;
+          if (current === slides.length-1 && dx < 0) effDx = rubber ? dx*0.1 : 0;
+
+          wrapper.style.transform = `translateX(${-current*slideWidth + effDx}px)`;
         };
-    
         events.touchend = e => {
           if (!moving) return;
           moving = false;
-    
+
           const t = findTouchById(e.changedTouches, activeId) || e.changedTouches[0];
           activeId = null;
-    
+
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
-          
           const slideWidth = updateSlideWidth();
-          const THRESHOLD = slideWidth * 0.2;
-          
-          // Плавность
-          const distance = Math.abs(dx) / slideWidth; // 0..1
-          const duration = 200 + 200 * distance; // 200–400ms
-          wrapper.style.transition = `transform ${duration}ms ease-out`;
-    
-          // Вертикальный жест — откат
-          if (Math.abs(dy) > Math.abs(dx)) {
-            setSlide(current);
-            return;
-          }
-    
-          // Наружу на краях — всегда откат
-          if ((current === 0 && dx > 0) || (current === slides.length - 1 && dx < 0)) {
-            setSlide(current);
-            return;
-          }
-    
-          if (dx > THRESHOLD && current > 0) setSlide(current - 1);
-          else if (dx < -THRESHOLD && current < slides.length - 1) setSlide(current + 1);
+          const THRESHOLD = slideWidth*0.2;
+
+          if (Math.abs(dy) > Math.abs(dx)) { setSlide(current); return; }
+          if ((current === 0 && dx>0) || (current===slides.length-1 && dx<0)) { setSlide(current); return; }
+          if (dx>THRESHOLD && current>0) setSlide(current-1);
+          else if (dx<-THRESHOLD && current<slides.length-1) setSlide(current+1);
           else setSlide(current);
         };
-    
-        events.touchcancel = () => {
-          moving = false;
-          activeId = null;
-          setSlide(current);
-        };
-    
-        el.addEventListener('touchstart', events.touchstart, { passive: false, capture: true });
-        el.addEventListener('touchmove',  events.touchmove,  { passive: false, capture: true });
-        el.addEventListener('touchend',   events.touchend,   { capture: true });
-        el.addEventListener('touchcancel',events.touchcancel,{ capture: true });
+        events.touchcancel = () => { moving=false; activeId=null; setSlide(current); };
+
+        el.addEventListener('touchstart', events.touchstart, { passive:false, capture:true });
+        el.addEventListener('touchmove',  events.touchmove,  { passive:false, capture:true });
+        el.addEventListener('touchend',   events.touchend,   { capture:true });
+        el.addEventListener('touchcancel',events.touchcancel,{ capture:true });
       } else {
-        // Desktop hover navigation — равномерные зоны без перекоса краёв
+        // Desktop hover navigation
         events.mousemove = e => {
           const rect = el.getBoundingClientRect();
-          // Ширина в тех же координатах, что и clientX (CSS px):
           let w = Math.round(el.offsetWidth);
-          if (w <= 0) {
-            handleResize();
-            return;
-          }
-        
-          // Положение курсора внутри контейнера [0, w)
+          if (w <= 0) return;
           let x = e.clientX - rect.left;
-        
-          // Нормализуем, чтобы исключить x === w (крайний пиксель)
-          if (x <= 0) x = 0;
-          else if (x >= w) x = w - 1e-7; // epsilon, чтобы не получить индекс N
-        
-          // Равномерное разбиение на N интервалов: [0, 1/N, 2/N, ... , (N-1)/N)
+          if (x<0) x=0; else if (x>=w) x=w-1e-7;
           const idx = Math.floor((x / w) * slides.length);
-        
-          if (idx !== current) setSlide(idx, true);
+          if (idx!==current) setSlide(idx,true);
         };
         el.addEventListener('mousemove', events.mousemove);
-        
-        // Пересчёт при повторном входе курсора (Safari после зума)
-        events.mouseenter = e => {
-          handleResize();
-          events.mousemove(e)
-        };
+
+        events.mouseenter = e => { events.mousemove(e); };
         el.addEventListener('mouseenter', events.mouseenter);
-        
+
         if (resetOnMouseout) {
-          events.mouseout = () => setSlide(0, true);
+          events.mouseout = () => setSlide(0,true);
           el.addEventListener('mouseleave', events.mouseout);
         }
       }
     }
-    
-    // --- Handle resize / zoom ---
+
+    // Resize handling
     const handleResize = () => {
       const slideWidth = updateSlideWidth();
-      wrapper.style.transition = 'none'; // без анимации при ресайзе
-      wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
+      wrapper.style.transition = 'none';
+      wrapper.style.transform = `translateX(${-current*slideWidth}px)`;
     };
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleResize);
-    
-    // Сохраним, чтобы потом корректно удалить при destroy()
     events.resize = handleResize;
 
-    this.instances.set(el, { wrapper, slides, events, touch: isTouch, listenerTarget: el });
+    // Save instance for later destroy
+    this.instances.set(el, { wrapper, slides, events, touch:isTouch, listenerTarget:el });
   }
 }
 
+// Export singleton instance
 export const slider = new Slider();
