@@ -1,22 +1,22 @@
 // slider.js
 // Lightweight, dependency-free slider with touch and mouse support.
-// Uses native lazy-loading via loading="lazy" and removes manual primeLazy/loadSlide logic.
-// Designed for modern browsers (no old Safari/IE support).
-
-/*
-Example usage:
-
-<div x-slider='{"gap":0,"rubber":false,"touch":true}'>
-  <div><img src="image1.jpg" srcset="..." alt="Slide 1"></div>
-  <div><img src="image2.jpg" alt="Slide 2"></div>
-  <div><img src="image3.jpg" alt="Slide 3"></div>
-</div>
-
-<script type="module">
-  import { slider } from './slider.js';
-  slider.init();
-</script>
-*/
+// Deferred image loading:
+// - First slide loads immediately
+// - Other slides load only on first interaction (hover on desktop, touchstart on touch devices)
+//
+// Example usage:
+//
+// <div x-slider='{"gap":0,"rubber":false,"touch":true}'>
+//   <div><img data-src="image1.jpg" data-srcset="..." alt="Slide 1"></div>
+//   <div><img data-src="image2.jpg" data-srcset="..." alt="Slide 2"></div>
+//   <div><img data-src="image3.jpg" alt="Slide 3"></div>
+// </div>
+//
+// <script type="module">
+//   import { slider } from './slider.js';
+//   slider.init();
+// </script>
+//
 
 export class Slider {
   constructor() {
@@ -26,20 +26,15 @@ export class Slider {
     this.mo = null;
   }
 
-  /**
-   * Initialize all sliders and set up observers for dynamically added sliders
-   */
   init() {
     this.observeSliders();
 
-    // Observe DOM mutations to catch newly added sliders
     this.mo = new MutationObserver(mutations => {
       for (const mutation of mutations) {
         mutation.addedNodes.forEach(node => {
           if (node.nodeType === 1 && node.hasAttribute?.('x-slider')) {
             this.io.observe(node);
           }
-          // Also check for nested sliders inside added subtree
           if (node.nodeType === 1) {
             node.querySelectorAll?.('[x-slider]')?.forEach(n => this.io.observe(n));
           }
@@ -49,9 +44,6 @@ export class Slider {
     this.mo.observe(document.body, { childList: true, subtree: true });
   }
 
-  /**
-   * Destroy all slider instances and disconnect observers
-   */
   destroy() {
     this.instances.forEach((data, el) => {
       const target = data.listenerTarget || data.wrapper || el;
@@ -75,9 +67,6 @@ export class Slider {
     this.instances.clear();
   }
 
-  /**
-   * Find all [x-slider] elements in DOM and observe them via IntersectionObserver
-   */
   observeSliders() {
     this.sliders = document.querySelectorAll('[x-slider]');
     this.io = new IntersectionObserver(entries => {
@@ -91,10 +80,6 @@ export class Slider {
     this.sliders.forEach(slider => this.io.observe(slider));
   }
 
-  /**
-   * Initialize a single slider instance
-   * @param {HTMLElement} el
-   */
   initSlider(el) {
     const rawSlides = [...el.children].map(node => node.cloneNode(true));
     if (!rawSlides.length) return;
@@ -102,9 +87,8 @@ export class Slider {
     el.classList.add('slider');
     el.style.overflow = 'hidden';
     el.style.touchAction = 'pan-y';
-    el.style.overscrollBehavior = 'contain'; // iOS touch behavior fix
+    el.style.overscrollBehavior = 'contain';
 
-    // Read configuration from x-slider attribute
     let gap = 0, rubber = true, resetOnMouseout = false, touch = true;
     try {
       const config = el.getAttribute('x-slider');
@@ -119,31 +103,36 @@ export class Slider {
       console.warn('Invalid x-slider JSON', err);
     }
 
-    // Create wrapper
     const wrapper = document.createElement('div');
     wrapper.className = 'slider-wrapper';
     wrapper.style.gap = gap + 'px';
-
-    // Clear container
     el.innerHTML = '';
 
-    // Move slides into wrapper and set lazy-loading
-    rawSlides.forEach(node => {
+    // Prepare slides
+    rawSlides.forEach((node, i) => {
       node.classList.add('slider-item');
       const img = node.querySelector('img');
-      if (img) img.setAttribute('loading', 'lazy'); // native lazy-load
-      // Prioritize first slide
-      if(node === rawSlides[0]) img.setAttribute('fetchpriority','high');
+      if (img && i === 0) {
+        // First slide loads immediately
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+        if (img.dataset.srcset) {
+          img.srcset = img.dataset.srcset;
+          img.removeAttribute('data-srcset');
+        }
+        img.setAttribute('loading','eager');
+      }
       wrapper.appendChild(node);
     });
 
-    // Append wrapper to container
     el.appendChild(wrapper);
 
     const isTouch = 'ontouchstart' in window;
-
-    // Create indicators (only for non-touch or enabled touch)
     let indicators = [];
+
+    // Indicators
     if (rawSlides.length > 1 && (!isTouch || touch)) {
       const indicatorsContainer = document.createElement('div');
       indicatorsContainer.className = 'slider-indicators';
@@ -158,34 +147,28 @@ export class Slider {
 
     const slides = rawSlides;
     if (isTouch && !touch) {
-      // Show first slide only
       slides[0].classList.add('active');
       return;
     }
 
     let current = 0;
     const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
-                   (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
+                  (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
 
-    // Get slide width including gap
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
 
-    // Set active slide
     const setSlide = (i, instant = false) => {
       const targetIndex = Math.max(0, Math.min(i, slides.length - 1));
       const slideWidth = updateSlideWidth();
-      const targetSlide = slides[targetIndex];
-
       current = targetIndex;
+
       wrapper.style.transition = instant ? 'none' : 'transform 0.25s';
       wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
 
-      // Update indicators
       if (indicators.length) {
         indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
       }
 
-      // iOS Safari fix
       if (!instant) {
         wrapper.addEventListener('transitionend', () => {
           wrapper.style.transition = 'none';
@@ -200,19 +183,54 @@ export class Slider {
       }
     };
 
-    // Initialize first slide
     setSlide(0, true);
 
     const events = {};
+    let allLoaded = false;
+    let cursorX = null;
 
-    // Touch behavior
+    const loadAllImages = () => {
+      if (allLoaded) return;
+      allLoaded = true;
+
+      slides.forEach((slide, i) => {
+        const img = slide.querySelector('img');
+        if (!img) return;
+        if (i === 0) return; // first already loaded
+
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+        if (img.dataset.srcset) {
+          img.srcset = img.dataset.srcset;
+          img.removeAttribute('data-srcset');
+        }
+
+        if (!isTouch && (!img.complete || img.naturalWidth === 0)) {
+          img.addEventListener('load', () => {
+            if (cursorX != null) {
+              const rect = el.getBoundingClientRect();
+              const w = el.offsetWidth;
+              const idx = Math.floor(((cursorX - rect.left)/w) * slides.length);
+              if (idx === i) setSlide(i, true);
+            }
+          }, { once: true });
+        }
+      });
+    };
+
     if (slides.length > 1) {
       if (isTouch) {
+        // --- Touch ---
         let startX = 0, startY = 0, moving = false, activeId = null;
-        const findTouchById = (list, id) => {
-          for (let i = 0; i < list.length; i++) if (list[i].identifier === id) return list[i];
-          return null;
+        const findTouchById = (list, id) => [...list].find(t => t.identifier === id) || null;
+
+        const firstTouch = () => {
+          loadAllImages();
+          el.removeEventListener('touchstart', firstTouch);
         };
+        el.addEventListener('touchstart', firstTouch, { passive:false, capture:true });
 
         events.touchstart = e => {
           const t = e.changedTouches[0];
@@ -229,8 +247,7 @@ export class Slider {
 
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
-          if (Math.abs(dy) > Math.abs(dx)) return; // vertical swipe
-
+          if (Math.abs(dy) > Math.abs(dx)) return;
           if (e.cancelable) e.preventDefault();
 
           const slideWidth = updateSlideWidth();
@@ -243,7 +260,6 @@ export class Slider {
         events.touchend = e => {
           if (!moving) return;
           moving = false;
-
           const t = findTouchById(e.changedTouches, activeId) || e.changedTouches[0];
           activeId = null;
 
@@ -264,21 +280,32 @@ export class Slider {
         el.addEventListener('touchmove',  events.touchmove,  { passive:false, capture:true });
         el.addEventListener('touchend',   events.touchend,   { capture:true });
         el.addEventListener('touchcancel',events.touchcancel,{ capture:true });
+
       } else {
-        // Desktop hover navigation
+        // --- Desktop ---
+        const firstHover = e => {
+          cursorX = e.clientX;
+          loadAllImages();
+          el.removeEventListener('mouseenter', firstHover);
+        };
+        el.addEventListener('mouseenter', firstHover);
+
         events.mousemove = e => {
+          cursorX = e.clientX;
           const rect = el.getBoundingClientRect();
-          let w = Math.round(el.offsetWidth);
+          const w = el.offsetWidth;
           if (w <= 0) return;
           let x = e.clientX - rect.left;
-          if (x<0) x=0; else if (x>=w) x=w-1e-7;
+          if (x < 0) x = 0; else if (x >= w) x = w-1e-7;
           const idx = Math.floor((x / w) * slides.length);
-          if (idx!==current) setSlide(idx,true);
+
+          const img = slides[idx].querySelector('img');
+          if (idx !== current && (!img || img.complete || img.naturalWidth > 0)) {
+            setSlide(idx,true);
+          }
         };
         el.addEventListener('mousemove', events.mousemove);
-
-        events.mouseenter = e => { events.mousemove(e); };
-        el.addEventListener('mouseenter', events.mouseenter);
+        el.addEventListener('mouseenter', e => events.mousemove(e));
 
         if (resetOnMouseout) {
           events.mouseout = () => setSlide(0,true);
@@ -287,7 +314,6 @@ export class Slider {
       }
     }
 
-    // Resize handling
     const handleResize = () => {
       const slideWidth = updateSlideWidth();
       wrapper.style.transition = 'none';
@@ -297,10 +323,8 @@ export class Slider {
     window.addEventListener('orientationchange', handleResize);
     events.resize = handleResize;
 
-    // Save instance for later destroy
     this.instances.set(el, { wrapper, slides, events, touch:isTouch, listenerTarget:el });
   }
 }
 
-// Export singleton instance
 export const slider = new Slider();
