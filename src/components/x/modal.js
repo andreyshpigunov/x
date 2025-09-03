@@ -112,6 +112,7 @@ class Modal {
     this._renderModalContents();
     this._setupModalLinks();
     this._setupGlobalListeners();
+    this._setupPullToClose();
 
     this._initialized = true;
   }
@@ -226,6 +227,98 @@ class Modal {
 
     document.addEventListener('click', this._clickHandler);
     document.addEventListener('keydown', this._keydownHandler);
+  }
+  
+  /**
+   * Sets up pull-to-close gesture for touch devices.
+   * Works when modal is scrolled to bottom.
+   * @private
+   */
+  _setupPullToClose() {
+    if (!('ontouchstart' in window) && !window.matchMedia('(pointer: coarse)').matches) {
+      // Нет поддержки touch или coarse pointer — выходим
+      return;
+    }
+  
+    let startY = 0;
+    let deltaY = 0;
+    let dragging = false;
+    let canClose = false;
+    const threshold = 80;
+  
+    const getTopModal = () => {
+      const modals = lib.qsa('.modal.modal_active');
+      return modals.length ? modals[modals.length - 1] : null;
+    };
+  
+    const getParts = (modal) => {
+      if (!modal) return {};
+      return {
+        outer: lib.qs('.modal-outer', modal),
+        window: lib.qs('.modal-window', modal),
+        overlay: lib.qs('.modal-overlay', modal)
+      };
+    };
+  
+    const start = (y, target) => {
+      const modal = getTopModal();
+      if (!modal) return;
+      const { outer } = getParts(modal);
+      if (!outer || !target.closest('.modal-outer')) return;
+  
+      startY = y;
+      deltaY = 0;
+      dragging = true;
+      canClose = outer.scrollTop + outer.clientHeight >= outer.scrollHeight - 1;
+    };
+  
+    const move = (y, e) => {
+      if (!dragging || !canClose) return;
+      deltaY = y - startY;
+  
+      if (deltaY > 0) {
+        const modal = getTopModal();
+        if (!modal) return;
+        const { window: win, overlay } = getParts(modal);
+  
+        if (win) {
+          if (e && e.preventDefault) e.preventDefault();
+          win.style.transform = `translateY(${deltaY}px)`;
+          win.style.transition = 'none';
+          if (overlay) overlay.style.opacity = `${Math.max(0, 1 - deltaY / 300)}`;
+        }
+      }
+    };
+  
+    const end = () => {
+      if (!dragging) return;
+      dragging = false;
+  
+      const modal = getTopModal();
+      if (!modal) return;
+      const { window: win, overlay } = getParts(modal);
+  
+      if (!win) return;
+  
+      win.style.transition = 'transform 0.25s ease';
+  
+      if (canClose && deltaY > threshold) {
+        // закрываем модалку
+        if (overlay) overlay.style.opacity = '';
+        win.style.transform = '';
+        this.hide(modal.getAttribute('id'));
+      } else {
+        // возвращаем обратно
+        win.style.transform = 'translateY(0)';
+        if (overlay) overlay.style.opacity = '1';
+        setTimeout(() => { win.style.transition = ''; }, 300);
+      }
+    };
+  
+    // Touch события
+    document.addEventListener('touchstart', (e) => start(e.touches[0].clientY, e.target), { passive: true });
+    document.addEventListener('touchmove', (e) => move(e.touches[0].clientY, e), { passive: false });
+    document.addEventListener('touchend', end);
   }
 
   /**
