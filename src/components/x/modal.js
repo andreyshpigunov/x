@@ -112,7 +112,6 @@ class Modal {
     this._renderModalContents();
     this._setupModalLinks();
     this._setupGlobalListeners();
-    this._setupPullToClose();
 
     this._initialized = true;
   }
@@ -227,110 +226,6 @@ class Modal {
 
     document.addEventListener('click', this._clickHandler);
     document.addEventListener('keydown', this._keydownHandler);
-  }
-  
-  /**
-   * Pull-to-close for touch devices with long modals.
-   * Only triggers when scrolled to bottom. Adds rubber-band effect.
-   * @private
-   */
-  _setupPullToClose() {
-    // Проверка на touch device или coarse pointer
-    if (!('ontouchstart' in window) && !window.matchMedia('(pointer: coarse)').matches) return;
-  
-    let startY = 0;
-    let deltaY = 0;
-    let dragging = false;
-    const threshold = 100; // Порог закрытия, px
-  
-    const getTopModal = () => {
-      const modals = lib.qsa('.modal.modal_active');
-      return modals.length ? modals[modals.length - 1] : null;
-    };
-  
-    const getParts = (modal) => {
-      if (!modal) return {};
-      return {
-        outer: lib.qs('.modal-outer', modal),
-        window: lib.qs('.modal-window', modal),
-        overlay: lib.qs('.modal-overlay', modal)
-      };
-    };
-  
-    const start = (y, target) => {
-      const modal = getTopModal();
-      if (!modal) return;
-  
-      const { outer } = getParts(modal);
-      if (!outer || !target.closest('.modal-outer')) return;
-  
-      startY = y;
-      deltaY = 0;
-      dragging = true;
-    };
-  
-    const move = (y, e) => {
-      if (!dragging) return;
-  
-      const modal = getTopModal();
-      if (!modal) return;
-  
-      const { outer, window: win, overlay } = getParts(modal);
-      if (!outer || !win) return;
-  
-      // Считаем delta
-      deltaY = y - startY;
-  
-      // Если модалка длинная, но скролл еще не внизу → скроллим контент
-      const scrolledToBottom = outer.scrollTop + outer.clientHeight >= outer.scrollHeight - 1;
-  
-      if (deltaY > 0 && scrolledToBottom) {
-        // Останавливаем нативный scroll
-        if (e && e.preventDefault) e.preventDefault();
-  
-        // Ограничиваем смещение для плавного rubber-band эффекта
-        const maxDelta = Math.min(deltaY, window.innerHeight * 0.9);
-        win.style.transform = `translateY(${maxDelta}px)`;
-  
-        if (overlay) overlay.style.opacity = `${Math.max(0, 1 - maxDelta / 300)}`;
-      }
-    };
-  
-    const end = () => {
-      if (!dragging) return;
-      dragging = false;
-  
-      const modal = getTopModal();
-      if (!modal) return;
-  
-      const { window: win, overlay } = getParts(modal);
-      if (!win) return;
-  
-      win.style.transition = 'transform 0.25s ease';
-      const shouldClose = deltaY > threshold;
-  
-      if (shouldClose) {
-        // Плавное закрытие вниз
-        const moveOut = window.innerHeight;
-        win.style.transform = `translateY(${moveOut}px)`;
-        if (overlay) overlay.style.opacity = '0';
-        setTimeout(() => {
-          win.style.transform = '';
-          if (overlay) overlay.style.opacity = '';
-          this.hide(modal.getAttribute('id'));
-        }, 250);
-      } else {
-        // Возврат на место
-        win.style.transform = 'translateY(0)';
-        if (overlay) overlay.style.opacity = '1';
-        setTimeout(() => { win.style.transition = ''; }, 250);
-      }
-    };
-  
-    // Touch события
-    document.addEventListener('touchstart', (e) => start(e.touches[0].clientY, e.target), { passive: true });
-    document.addEventListener('touchmove', (e) => move(e.touches[0].clientY, e), { passive: false });
-    document.addEventListener('touchend', end);
   }
 
   /**
