@@ -6,7 +6,7 @@
 //
 // Example usage:
 //
-// <div x-slider='{"gap":0,"rubber":false,"touch":true}'>
+// <div x-slider='{"gap":0,"rubber":true,"resetOnMouseout":true,"touch":true}'>
 //   <div><img data-src="image1.jpg" data-srcset="..." alt="Slide 1"></div>
 //   <div><img data-src="image2.jpg" data-srcset="..." alt="Slide 2"></div>
 //   <div><img data-src="image3.jpg" alt="Slide 3"></div>
@@ -89,7 +89,7 @@ export class Slider {
     el.style.touchAction = 'pan-y';
     el.style.overscrollBehavior = 'contain';
 
-    let gap = 0, rubber = true, resetOnMouseout = false, touch = true;
+    let gap = 0, rubber = true, resetOnMouseout = true, touch = true;
     try {
       const config = el.getAttribute('x-slider');
       if (config) {
