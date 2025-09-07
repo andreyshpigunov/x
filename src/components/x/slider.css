@@ -47,6 +47,7 @@
 }
 .slider-indicators {
   display: flex;
+  align-items: center;
   position: absolute;
   left: var(--slider-point-left-padding);
   right: var(--slider-point-right-padding);
