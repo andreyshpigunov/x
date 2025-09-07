@@ -80,6 +80,7 @@ All right reserved.
   font-family: var(--button-font-family, var(--font-family));
   font-size: var(--button-font-size);
   font-weight: var(--button-font-weight, 400);
+  line-height: 1;
   vertical-align: bottom;
   white-space: nowrap;
   text-align: center;
@@ -98,6 +99,10 @@ All right reserved.
   user-select: none;
   appearance: none;
   box-shadow: var(--button-box-shadow);
+  
+  & svg {
+    transform: translateZ(0);
+  }
   
   &:link,
   &:visited {
