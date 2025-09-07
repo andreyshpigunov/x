@@ -13,7 +13,7 @@
 		"jest-environment-jsdom": "^29.7.0",
 		"jsdoc": "^4.0.4",
 		"parcel": "^2.0.1",
-		"postcss": "^8.2.1",
+		"postcss": "^8.5",
 		"postcss-cli": "^8.3.0",
 		"postcss-custom-media": "^11.0.1",
 		"postcss-custom-selectors": "^8.0.1",
@@ -48,7 +48,6 @@
 		"@andreyshpigunov:registry": "https://npm.pkg.github.com"
 	},
 	"dependencies": {
-		"@andreyshpigunov/x": "^0.3.44",
 		"alpinejs": "^3.14.1"
 	}
 }

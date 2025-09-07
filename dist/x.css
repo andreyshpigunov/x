@@ -13,7 +13,7 @@
 /* !- Figure  */figure{margin:var(--figure-margin)}figcaption{color:var(--figcaption-color);font-size:var(--figcaption-font-size);margin-bottom:calc(var(--figcaption-margin-top)*-1);margin-top:var(--figcaption-margin-top)}
 
 
-/* !- Blockquote */blockquote{border-left:var(--blockquote-border);font-style:italic;-webkit-hyphens:auto;hyphens:auto;margin:var(--blockquote-margin);padding:var(--blockquote-padding)}
+/* !- Blockquote */blockquote{border-left:var(--blockquote-border);font-style:italic;hyphens:auto;margin:var(--blockquote-margin);padding:var(--blockquote-padding)}
 
 
 /* !- Preformatted */pre{font-family:inherit}
@@ -46,7 +46,7 @@
 /* !- Unselectable, unclickable */.unselectable{-webkit-user-select:none;-moz-user-select:none;user-select:none}.unclickable{pointer-events:none}
 
 
-/* !- Text helpers */.upper{letter-spacing:.0625em;text-transform:uppercase}.lower{text-transform:lowercase}.capitalize{text-transform:capitalize}.nowrap{white-space:nowrap}.hyphens{-webkit-hyphens:auto;hyphens:auto}.pointer{cursor:pointer}
+/* !- Text helpers */.upper{letter-spacing:.0625em;text-transform:uppercase}.lower{text-transform:lowercase}.capitalize{text-transform:capitalize}.nowrap{white-space:nowrap}.hyphens{hyphens:auto}.pointer{cursor:pointer}
 
 
 /* !- Text overflow ellipsis */.toe{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
