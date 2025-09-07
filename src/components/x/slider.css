@@ -63,6 +63,7 @@
   display: flex;
   flex: 1;
   width: var(--slider-point-size);
+  min-width: var(--slider-point-size);
   height: var(--slider-point-size);
   border-radius: var(--slider-point-size);
   background: var(--slider-point-color);
