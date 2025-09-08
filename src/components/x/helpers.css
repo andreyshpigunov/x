@@ -333,7 +333,7 @@ html.touch .touch-hide { display: none }
     height: 100%;
   }
   & > img {
-    object-fit: cover;
+    /* object-fit: cover; */
   }
 }
 
