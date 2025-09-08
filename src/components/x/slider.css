@@ -8,6 +8,7 @@
   --slider-point-right-padding: 1.2rem;
   --slider-point-bottom-padding: 1rem;
   --slider-indicators-init-opacity: 0;
+  --slider-object-fit: cover;
 }
 
 .slider {
@@ -42,7 +43,7 @@
   width: 100%;
   max-width: none;
   height: 100%;
-  object-fit: cover;
+  object-fit: var(--slider-object-fit);
   pointer-events: auto;
 }
 .slider-indicators {
