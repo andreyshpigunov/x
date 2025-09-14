@@ -2,11 +2,13 @@
   --slider-point-color: #ffffff66;
   --slider-point-color-active: #fff;
   --slider-point-size: .3rem;
-  --slider-point-gap: .3rem;
-  --slider-point-top-padding: auto;
-  --slider-point-left-padding: 1.2rem;
-  --slider-point-right-padding: 1.2rem;
-  --slider-point-bottom-padding: 1rem;
+  --slider-indicators-gap: .3rem;
+  --slider-indicators-top: auto;
+  --slider-indicators-left: 1.2rem;
+  --slider-indicators-right: 1.2rem;
+  --slider-indicators-bottom: 1rem;
+  --slider-indicators-width: auto;
+  --slider-indicators-height: var(--slider-point-size);
   --slider-indicators-init-opacity: 0;
   --slider-object-fit: cover;
 }
@@ -50,11 +52,13 @@
   display: flex;
   align-items: center;
   position: absolute;
-  left: var(--slider-point-left-padding);
-  right: var(--slider-point-right-padding);
-  bottom: var(--slider-point-bottom-padding);
-  height: var(--slider-point-size);
-  gap: var(--slider-point-gap);
+  left: var(--slider-indicators-left);
+  right: var(--slider-indicators-right);
+  top: var(--slider-indicators-top);
+  bottom: var(--slider-indicators-bottom);
+  width: var(--slider-indicators-width);
+  height: var(--slider-indicators-height);
+  gap: var(--slider-indicators-gap);
   opacity: var(--slider-indicators-init-opacity);
   will-change: opacity;
   transition: opacity .2s ease-out;
