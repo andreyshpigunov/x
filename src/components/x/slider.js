@@ -75,7 +75,7 @@ export class Slider {
           this.initSlider(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, { rootMargin: '60px 0px 60px 0px', threshold: 0 });
 
     this.sliders.forEach(slider => this.io.observe(slider));
   }
