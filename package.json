@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.3.50",
+	"version": "0.3.51",
 	"devDependencies": {
 		"@babel/preset-env": "^7.26.9",
 		"@jest/globals": "^29.7.0",
