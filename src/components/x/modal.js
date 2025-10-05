@@ -154,19 +154,7 @@ class Modal {
       const modal = document.createElement('div');
       modal.id = id;
       modal.className = `modal ${classes}`;
-      modal.innerHTML = `
-        <div class="modal-overlay"></div>
-        <div class="modal-outer">
-          <div class="modal-inner">
-            <div class="modal-window ${windowClasses}">
-              ${html}
-              <div class="modal-rail">
-                <a role="button" class="modal-close"></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      `.trim();
+      modal.innerHTML = `<div class="modal-overlay"></div><div class="modal-outer"><div class="modal-inner"><div class="modal-window ${windowClasses}">${html}<div class="modal-rail"><a role="button" class="modal-close"></a></div></div></div></div>`;
       
       placeholder.appendChild(modal);
       item.remove();
