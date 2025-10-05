@@ -148,7 +148,8 @@ class Modal {
       const placeholder = here ? here : lib.qs('body');
       const id = item.getAttribute('x-modal');
       const classes = item.getAttribute('class') || '';
-      const windowClasses = item.dataset.windowClass || '';
+      const windowClasses = (item.dataset.windowClass || '').replace(/\s+/g, ' ').trim();
+      const html = item.innerHTML;
 
       placeholder.insertAdjacentHTML('beforeend', `
         <div id="${id}" class="modal ${classes}">
@@ -156,7 +157,7 @@ class Modal {
           <div class="modal-outer">
             <div class="modal-inner">
               <div class="modal-window ${windowClasses}">
-                ${item.innerHTML}
+                ${html}
                 <div class="modal-rail">
                   <a role="button" class="modal-close"></a>
                 </div>
