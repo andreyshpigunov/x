@@ -166,7 +166,7 @@ class Modal {
             </div>
           </div>
         </div>
-      `;
+      `.trim();
       
       placeholder.appendChild(modal);
       item.remove();
