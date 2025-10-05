@@ -150,23 +150,25 @@ class Modal {
       const classes = item.getAttribute('class') || '';
       const windowClasses = (item.dataset.windowClass || '').replace(/\s+/g, ' ').trim();
       const html = item.innerHTML;
-
-      placeholder.insertAdjacentHTML('beforeend', `
-        <div id="${id}" class="modal ${classes}">
-          <div class="modal-overlay"></div>
-          <div class="modal-outer">
-            <div class="modal-inner">
-              <div class="modal-window ${windowClasses}">
-                ${html}
-                <div class="modal-rail">
-                  <a role="button" class="modal-close"></a>
-                </div>
+      
+      const modal = document.createElement('div');
+      modal.id = id;
+      modal.className = `modal ${classes}`;
+      modal.innerHTML = `
+        <div class="modal-overlay"></div>
+        <div class="modal-outer">
+          <div class="modal-inner">
+            <div class="modal-window ${windowClasses}">
+              ${html}
+              <div class="modal-rail">
+                <a role="button" class="modal-close"></a>
               </div>
             </div>
           </div>
         </div>
-      `);
-
+      `;
+      
+      placeholder.appendChild(modal);
       item.remove();
     });
   }
