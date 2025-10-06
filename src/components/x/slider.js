@@ -123,7 +123,6 @@ export class Slider {
           img.removeAttribute('data-src');
         }
         img.setAttribute('loading','eager');
-        img.setAttribute('fetchpriority','high');
       }
       wrapper.appendChild(node);
     });
