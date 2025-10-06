@@ -114,13 +114,13 @@ export class Slider {
       const img = node.querySelector('img');
       if (img && i === 0) {
         // First slide loads immediately
-        if (img.dataset.src) {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        }
         if (img.dataset.srcset) {
           img.srcset = img.dataset.srcset;
           img.removeAttribute('data-srcset');
+        }
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
         }
         img.setAttribute('loading','eager');
       }
@@ -198,13 +198,13 @@ export class Slider {
         if (!img) return;
         if (i === 0) return; // first already loaded
 
-        if (img.dataset.src) {
-          img.src = img.dataset.src;
-          img.removeAttribute('data-src');
-        }
         if (img.dataset.srcset) {
           img.srcset = img.dataset.srcset;
           img.removeAttribute('data-srcset');
+        }
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
         }
 
         if (!isTouch && (!img.complete || img.naturalWidth === 0)) {
