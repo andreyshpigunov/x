@@ -34,7 +34,8 @@ All right reserved.
   .t[0-12]   (m,l,xl)
   .b[0-12]   (m,l,xl)
   .z[0-12]   (m,l,xl)
-  .op[0-10]  (m,l,xl)
+  .op[0-10]  (m,l)
+  .op[0-10]:hover  (m,l)
   .ratio1x1  (m,l,xl)
   .ratio2x1  (m,l,xl)
   .ratio3x1  (m,l,xl)
@@ -281,20 +282,18 @@ html.touch .touch-hide { display: none }
 /* !- Opacity */
 @for $i from 0 to 10 {
   .op$(i) { opacity: calc($(i) / 10) !important }
+  .op$(i):hover { opacity: calc($(i) / 10) !important }
 }
 @media (--medium) {
   @for $i from 0 to 10 {
     .m\:op$(i) { opacity: calc($(i) / 10) !important }
+    .m\:op$(i):hover { opacity: calc($(i) / 10) !important }
   }
 }
 @media (--large) {
   @for $i from 0 to 10 {
     .l\:op$(i) { opacity: calc($(i) / 10) !important }
-  }
-}
-@media (--xlarge) {
-  @for $i from 0 to 10 {
-    .xl\:op$(i) { opacity: calc($(i) / 10) !important }
+    .l\:op$(i):hover { opacity: calc($(i) / 10) !important }
   }
 }
 
