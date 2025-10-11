@@ -281,18 +281,18 @@ html.touch .touch-hide { display: none }
 /* !- Opacity */
 @for $i from 0 to 10 {
   .op$(i) { opacity: calc($(i) / 10) !important }
-  .hover\:op$(i) { opacity: calc($(i) / 10) !important }
+  .hover\:op$(i):hover { opacity: calc($(i) / 10) !important }
 }
 @media (--medium) {
   @for $i from 0 to 10 {
     .m\:op$(i) { opacity: calc($(i) / 10) !important }
-    .hover\:m\:op$(i) { opacity: calc($(i) / 10) !important }
+    .hover\:m\:op$(i):hover { opacity: calc($(i) / 10) !important }
   }
 }
 @media (--large) {
   @for $i from 0 to 10 {
     .l\:op$(i) { opacity: calc($(i) / 10) !important }
-    .hover\:l\:op$(i) { opacity: calc($(i) / 10) !important }
+    .hover\:l\:op$(i):hover { opacity: calc($(i) / 10) !important }
   }
 }
 
