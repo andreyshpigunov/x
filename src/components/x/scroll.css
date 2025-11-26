@@ -88,12 +88,13 @@ All right reserved.
 
 .scroll_x-proximity,
 .scroll_x-mandatory {
-  scroll-snap-align: start;
-  
-  &.scroll_align-center {
+  & > * {
+    scroll-snap-align: start;
+  }
+  &.scroll_align-center > * {
     scroll-snap-align: center;
   }
-  &.scroll_align-end {
+  &.scroll_align-end > * {
     scroll-snap-align: end;
   }
 }
