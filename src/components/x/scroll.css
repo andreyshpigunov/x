@@ -29,7 +29,6 @@ All right reserved.
   flex-wrap: nowrap;
   overflow-x: scroll;
   overflow-y: auto;
-  scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   /* Hide scrollbar in IE and Edge */
   -ms-overflow-style: none;
@@ -85,4 +84,16 @@ All right reserved.
 }
 .scroll_x-mandatory {
   scroll-snap-type: x mandatory;
+}
+
+.scroll_x-proximity,
+.scroll_x-mandatory {
+  scroll-snap-align: start;
+  
+  &.scroll_align-center {
+    scroll-snap-align: center;
+  }
+  &.scroll_align-end {
+    scroll-snap-align: end;
+  }
 }
