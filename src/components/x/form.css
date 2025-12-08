@@ -9,7 +9,7 @@ All right reserved.
 
 :root {
   --form-width: 40rem;
-  --form-height-coeff: 2.5;
+  --form-height-coeff: 2.6;
   --form-side-padding: 1rem;
 
   --form-font-size: var(--font-size);
@@ -18,8 +18,8 @@ All right reserved.
   --form-font-color-disabled: #666;
   --form-font-color-placeholder: #ccc;
 
-  --form-border-width: 0.1rem;
-  --form-border-radius: 0.8rem;
+  --form-border-width: .1rem;
+  --form-border-radius: .8rem;
   --form-border-color: #d4d4d4;
   --form-border-color-focused: #8cf;
   --form-border-color-error: #f00;
