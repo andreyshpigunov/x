@@ -17,8 +17,8 @@ All right reserved.
   --modal-margin-right: 3vw;
   --modal-padding-top: clamp(2.5rem, 4vw, 5rem);
   --modal-padding-bottom: clamp(2.5rem, 4vw, 5rem);
-  --modal-padding-left: clamp(4rem, 4vw, 5rem);
-  --modal-padding-right: clamp(4rem, 4vw, 5rem);
+  --modal-padding-left: clamp(2.5rem, 4vw, 5rem);
+  --modal-padding-right: clamp(2.5rem, 4vw, 5rem);
   --modal-background: #fff;
   --modal-box-shadow: 0 1rem 4rem #00000033;
   --modal-border-radius: 1.6rem;
