@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.3.71",
+	"version": "0.3.72",
 	"devDependencies": {
 		"@babel/preset-env": "^7.26.9",
 		"@jest/globals": "^29.7.0",
@@ -44,9 +44,6 @@
 	"browserslist": [
 		"defaults"
 	],
-	"publishConfig": {
-		"@andreyshpigunov:registry": "https://npm.pkg.github.com"
-	},
 	"dependencies": {
 		"alpinejs": "^3.14.1"
 	}
