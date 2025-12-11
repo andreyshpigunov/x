@@ -95,7 +95,7 @@ class Sticky {
 
     const wasSticky = el.classList.contains(this.activeClass);
 
-    lib.switchClass(el, isSticky, this.activeClass);
+    lib.switchClass(el, this.activeClass, isSticky);
 
     if (isSticky && !wasSticky) {
       el.dispatchEvent(new CustomEvent('sticky:on', { bubbles: true }));
