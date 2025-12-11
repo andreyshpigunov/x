@@ -1,6 +1,6 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.3.74",
+	"version": "0.3.75",
 	"devDependencies": {
 		"@babel/preset-env": "^7.26.9",
 		"@jest/globals": "^29.7.0",
@@ -33,7 +33,7 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/andreyshpigunov/x.git"
+		"url": "git+https://github.com/andreyshpigunov/x.git"
 	},
 	"author": "Andrey Shpigunov",
 	"license": "MIT",
