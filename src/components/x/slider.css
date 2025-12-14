@@ -18,7 +18,7 @@
   position: relative;
   overflow: hidden;
   cursor: pointer;
-  touch-action: auto; /* по умолчанию не блокируем жесты; класс `.slider--touch` включает pan-y */
+  touch-action: auto; /* по умолчанию не блокируем жесты; класс `.slider_touch` включает pan-y */
   overscroll-behavior: contain;    /* не отдаём overscroll родителю */
 }
 .slider_touch {

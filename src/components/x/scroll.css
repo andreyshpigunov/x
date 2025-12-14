@@ -34,6 +34,7 @@ All right reserved.
   -ms-overflow-style: none;
   /* Hide scrollbar in Firefox */
   scrollbar-width: none;
+  touch-action: pan-x !important;
 
   &::-webkit-scrollbar {
     width: var(--scroll-scrollbar-size);
@@ -68,11 +69,13 @@ All right reserved.
 .scroll.scroll_x {
   overflow-x: scroll;
   overflow-y: hidden;
+  touch-action: pan-x !important;
 }
 
 .scroll.scroll_y {
   overflow-x: hidden;
   overflow-y: scroll;
+  touch-action: pan-y !important;
 }
 
 .scroll_contain {
