@@ -83,12 +83,12 @@ export class Slider {
   initSlider(el) {
     const rawSlides = [...el.children].map(node => node.cloneNode(true));
     if (!rawSlides.length) return;
-  
+
     el.classList.add('slider');
     el.style.overflow = 'hidden';
-    el.style.touchAction = 'pan-y'; // важно, чтобы родительский горизонтальный свайп работал
+    el.style.touchAction = 'pan-y';
     el.style.overscrollBehavior = 'contain';
-  
+
     let gap = 0, rubber = true, resetOnMouseout = true, touch = true;
     try {
       const config = el.getAttribute('x-slider');
@@ -102,29 +102,37 @@ export class Slider {
     } catch (err) {
       console.warn('Invalid x-slider JSON', err);
     }
-  
+
     const wrapper = document.createElement('div');
     wrapper.className = 'slider-wrapper';
     wrapper.style.gap = gap + 'px';
     el.innerHTML = '';
-  
+
+    // Prepare slides
     rawSlides.forEach((node, i) => {
       node.classList.add('slider-item');
       const img = node.querySelector('img');
       if (img && i === 0) {
-        if (img.dataset.srcset) { img.srcset = img.dataset.srcset; img.removeAttribute('data-srcset'); }
-        if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
+        // First slide loads immediately
+        if (img.dataset.srcset) {
+          img.srcset = img.dataset.srcset;
+          img.removeAttribute('data-srcset');
+        }
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
         img.setAttribute('loading','eager');
       }
       wrapper.appendChild(node);
     });
-  
+
     el.appendChild(wrapper);
-  
+
     const isTouch = 'ontouchstart' in window;
     let indicators = [];
-  
-    // --- Индикаторы ---
+
+    // Indicators
     if (rawSlides.length > 1 && (!isTouch || touch)) {
       const indicatorsContainer = document.createElement('div');
       indicatorsContainer.className = 'slider-indicators';
@@ -136,71 +144,103 @@ export class Slider {
       el.appendChild(indicatorsContainer);
       indicators = [...indicatorsContainer.querySelectorAll('span')];
     }
-  
+
     const slides = rawSlides;
-  
-    // --- Touch отключен: не навешиваем свайпы, первый слайд активен ---
     if (isTouch && !touch) {
+      // Touch interactions for sliding are disabled by config.
+      // Do not attach slider touch handlers, but do not fully block
+      // touch events for other handlers — reset `touchAction` to allow
+      // normal event propagation and default behaviors where needed.
       slides[0].classList.add('active');
-      return; // пропускаем всю логику свайпов
+      try {
+        el.style.touchAction = 'auto';
+      } catch (err) {
+        // ignore if unable to set style
+      }
+      return;
     }
-  
+
     let current = 0;
     const isiOS = /iP(ad|hone|od)/.test(navigator.platform) ||
                   (navigator.userAgent.includes('Mac') && 'ontouchend' in document);
-  
+
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
-  
+
     const setSlide = (i, instant = false) => {
       const targetIndex = Math.max(0, Math.min(i, slides.length - 1));
       const slideWidth = updateSlideWidth();
       current = targetIndex;
-  
+
       wrapper.style.transition = instant ? 'none' : 'transform 0.25s';
       wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
-  
+
       if (indicators.length) {
         indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
       }
-  
+
       if (!instant) {
         wrapper.addEventListener('transitionend', () => {
           wrapper.style.transition = 'none';
           if (isiOS) {
             wrapper.style.pointerEvents = 'none';
-            requestAnimationFrame(() => { void wrapper.offsetWidth; wrapper.style.pointerEvents = 'auto'; });
+            requestAnimationFrame(() => {
+              void wrapper.offsetWidth;
+              wrapper.style.pointerEvents = 'auto';
+            });
           }
         }, { once: true });
       }
     };
-  
+
     setSlide(0, true);
-  
+
     const events = {};
     let allLoaded = false;
     let cursorX = null;
-  
+
     const loadAllImages = () => {
       if (allLoaded) return;
       allLoaded = true;
+
       slides.forEach((slide, i) => {
         const img = slide.querySelector('img');
-        if (!img || i === 0) return;
-        if (img.dataset.srcset) { img.srcset = img.dataset.srcset; img.removeAttribute('data-srcset'); }
-        if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
+        if (!img) return;
+        if (i === 0) return; // first already loaded
+
+        if (img.dataset.srcset) {
+          img.srcset = img.dataset.srcset;
+          img.removeAttribute('data-srcset');
+        }
+        if (img.dataset.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+
+        if (!isTouch && (!img.complete || img.naturalWidth === 0)) {
+          img.addEventListener('load', () => {
+            if (cursorX != null) {
+              const rect = el.getBoundingClientRect();
+              const w = el.offsetWidth;
+              const idx = Math.floor(((cursorX - rect.left)/w) * slides.length);
+              if (idx === i) setSlide(i, true);
+            }
+          }, { once: true });
+        }
       });
     };
-  
-    // --- Слайдер активен только если больше 1 слайда ---
+
     if (slides.length > 1) {
-      if (isTouch && touch) {
-        // --- Touch-enabled slider ---
+      if (isTouch) {
+        // --- Touch ---
         let startX = 0, startY = 0, moving = false, activeId = null;
         const findTouchById = (list, id) => [...list].find(t => t.identifier === id) || null;
-  
-        const firstTouch = () => { loadAllImages(); el.removeEventListener('touchstart', firstTouch); };
+
+        const firstTouch = () => {
+          loadAllImages();
+          el.removeEventListener('touchstart', firstTouch);
+        };
         el.addEventListener('touchstart', firstTouch, { passive:false, capture:true });
-  
+
         events.touchstart = e => {
           const t = e.changedTouches[0];
           activeId = t.identifier;
@@ -213,14 +253,17 @@ export class Slider {
           if (!moving || activeId == null) return;
           const t = findTouchById(e.touches, activeId);
           if (!t) return;
+
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
           if (Math.abs(dy) > Math.abs(dx)) return;
           if (e.cancelable) e.preventDefault();
+
           const slideWidth = updateSlideWidth();
           let effDx = dx;
           if (current === 0 && dx > 0) effDx = rubber ? dx*0.15 : 0;
           if (current === slides.length-1 && dx < 0) effDx = rubber ? dx*0.15 : 0;
+
           wrapper.style.transform = `translateX(${-current*slideWidth + effDx}px)`;
         };
         events.touchend = e => {
@@ -228,10 +271,12 @@ export class Slider {
           moving = false;
           const t = findTouchById(e.changedTouches, activeId) || e.changedTouches[0];
           activeId = null;
+
           const dx = t.clientX - startX;
           const dy = t.clientY - startY;
           const slideWidth = updateSlideWidth();
           const THRESHOLD = slideWidth*0.1;
+
           if (Math.abs(dy) > Math.abs(dx)) { setSlide(current); return; }
           if ((current === 0 && dx>0) || (current===slides.length-1 && dx<0)) { setSlide(current); return; }
           if (dx>THRESHOLD && current>0) setSlide(current-1);
@@ -239,17 +284,21 @@ export class Slider {
           else setSlide(current);
         };
         events.touchcancel = () => { moving=false; activeId=null; setSlide(current); };
-  
+
         el.addEventListener('touchstart', events.touchstart, { passive:false, capture:true });
         el.addEventListener('touchmove',  events.touchmove,  { passive:false, capture:true });
         el.addEventListener('touchend',   events.touchend,   { capture:true });
         el.addEventListener('touchcancel',events.touchcancel,{ capture:true });
-  
+
       } else {
-        // --- Desktop hover slider ---
-        const firstHover = e => { cursorX = e.clientX; loadAllImages(); el.removeEventListener('mouseenter', firstHover); };
+        // --- Desktop ---
+        const firstHover = e => {
+          cursorX = e.clientX;
+          loadAllImages();
+          el.removeEventListener('mouseenter', firstHover);
+        };
         el.addEventListener('mouseenter', firstHover);
-  
+
         events.mousemove = e => {
           cursorX = e.clientX;
           const rect = el.getBoundingClientRect();
@@ -258,19 +307,22 @@ export class Slider {
           let x = e.clientX - rect.left;
           if (x < 0) x = 0; else if (x >= w) x = w-1e-7;
           const idx = Math.floor((x / w) * slides.length);
+
           const img = slides[idx].querySelector('img');
-          if (idx !== current && (!img || img.complete || img.naturalWidth > 0)) setSlide(idx,true);
+          if (idx !== current && (!img || img.complete || img.naturalWidth > 0)) {
+            setSlide(idx,true);
+          }
         };
         el.addEventListener('mousemove', events.mousemove);
         el.addEventListener('mouseenter', e => events.mousemove(e));
-  
+
         if (resetOnMouseout) {
           events.mouseout = () => setSlide(0,true);
           el.addEventListener('mouseleave', events.mouseout);
         }
       }
     }
-  
+
     const handleResize = () => {
       const slideWidth = updateSlideWidth();
       wrapper.style.transition = 'none';
@@ -279,10 +331,9 @@ export class Slider {
     window.addEventListener('resize', handleResize);
     window.addEventListener('orientationchange', handleResize);
     events.resize = handleResize;
-  
+
     this.instances.set(el, { wrapper, slides, events, touch:isTouch, listenerTarget:el });
   }
-
 }
 
 export const slider = new Slider();
