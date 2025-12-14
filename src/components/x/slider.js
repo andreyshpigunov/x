@@ -148,7 +148,7 @@ export class Slider {
     const slides = rawSlides;
     if (isTouch && !touch) {
       slides[0].classList.add('active');
-      return;
+      // return;
     }
 
     let current = 0;
