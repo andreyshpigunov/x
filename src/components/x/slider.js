@@ -86,7 +86,6 @@ export class Slider {
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
-    el.style.touchAction = 'pan-y';
     el.style.overscrollBehavior = 'contain';
 
     let gap = 0, rubber = true, resetOnMouseout = true, touch = true;
@@ -146,17 +145,17 @@ export class Slider {
     }
 
     const slides = rawSlides;
+    // manage touch-action via class so stylesheet can control behavior
+    if (isTouch && touch) {
+      el.classList.add('slider_touch');
+    } else {
+      el.classList.remove('slider_touch');
+    }
+
     if (isTouch && !touch) {
       // Touch interactions for sliding are disabled by config.
-      // Do not attach slider touch handlers, but do not fully block
-      // touch events for other handlers — reset `touchAction` to allow
-      // normal event propagation and default behaviors where needed.
+      // Do not attach slider touch handlers; other handlers should receive touch events.
       slides[0].classList.add('active');
-      try {
-        el.style.touchAction = 'auto';
-      } catch (err) {
-        // ignore if unable to set style
-      }
       return;
     }
 
