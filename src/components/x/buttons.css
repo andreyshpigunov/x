@@ -74,7 +74,7 @@ All right reserved.
   align-items: center;
   justify-content: center;
   width: auto;
-  height: var(--button-height, calc(var(--button-font-size) * var(--button-height-coeff)));
+  min-height: var(--button-height, calc(var(--button-font-size) * var(--button-height-coeff)));
   padding: 0 var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff)));
   color: var(--button-font-color);
   font-family: var(--button-font-family, var(--font-family));
