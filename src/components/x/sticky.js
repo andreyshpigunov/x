@@ -90,7 +90,7 @@ class Sticky {
    * @private
    */
   _handleEntry(entry) {
-    const isSticky = entry.intersectionRatio < 1 && window.scrollY >= 1;
+    const isSticky = entry.intersectionRatio < 1;
     const el = entry.target;
 
     const wasSticky = el.classList.contains(this.activeClass);
