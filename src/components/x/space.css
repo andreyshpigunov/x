@@ -7,40 +7,14 @@ All right reserved.
 ----------------------------------------*/
 
 
-/* !- Spaces variables */
-
-
-/* .space[0-12] (m,l) — vertical spacer */
-
-
-:root {
-  /* Spaces */
-  --space-0:  0;
-  /* ↓ +0.4 */
-  --space-1:  0.4rem;
-  --space-2:  0.8rem;
-  --space-3:  1.2rem;
-  --space-4:  1.6rem;
-  /* ↓ +0.8 */
-  --space-5:  2.4rem;
-  --space-6:  3.2rem;
-  --space-7:  4.0rem;
-  --space-8:  4.8rem;
-  /* ↓ +1.6 */
-  --space-9:  6.4rem;
-  --space-10: 8.0rem;
-  --space-11: 9.6rem;
-  --space-12: 11.2rem;
-}
-
-@for $i from 0 to 12 {
+@for $i from 0 to 10 {
   .space$(i) {
     height: var(--space-$(i));
   }
 }
 
 @media (--medium) {
-  @for $i from 0 to 12 {
+  @for $i from 0 to 10 {
     .m\:space$(i) {
       height: var(--space-$(i));
     }
@@ -48,7 +22,7 @@ All right reserved.
 }
 
 @media (--large) {
-  @for $i from 0 to 12 {
+  @for $i from 0 to 10 {
     .l\:space$(i) {
       height: var(--space-$(i));
     }

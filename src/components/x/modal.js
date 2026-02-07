@@ -1,47 +1,144 @@
 /**
- * @fileoverview Modal window management system.
+ * @fileoverview Modal window management system with stacking, animations, and URL hash support.
  *
- * Handles modal initialization, open/close actions, stacking, global classes, and URL hash integration.
- * Supports unique modals, nested modals, ESC and overlay close, and custom events.
+ * Handles modal initialization, open/close actions, stacking (z-index management), global classes,
+ * and URL hash integration. Supports unique modals, nested modals, ESC and overlay close, and custom events.
+ *
+ * Exported singleton: `modal`
+ *
+ * Usage:
+ *
+ * Basic setup:
+ *   import { modal } from './modal.js';
+ *   modal.init();
+ *
+ * HTML structure:
+ *   <div x-modal="myModal" class="modal--hash" data-window-class="max800">
+ *     <h2>Modal Title</h2>
+ *     <p>Modal content goes here</p>
+ *     <button class="modal-close">Close</button>
+ *   </div>
+ *
+ *   <a href="#myModal" x-modal-open="myModal">Open Modal</a>
+ *
+ * Open/close programmatically:
+ *   modal.show('myModal');
+ *   modal.hide('myModal');
+ *   modal.hideAll();
+ *
+ * Check if modal is active:
+ *   if (modal.isActive('myModal')) {
+ *     console.log('Modal is open');
+ *   }
+ *
+ * Event listeners:
+ *   const modalElement = document.querySelector('#myModal');
+ *   modalElement.addEventListener('modal:ready', () => {
+ *     console.log('Modal is ready');
+ *   });
+ *   modalElement.addEventListener('modal:open', () => {
+ *     console.log('Modal opened');
+ *   });
+ *   modalElement.addEventListener('modal:close', () => {
+ *     console.log('Modal closed');
+ *   });
  *
  * Public API:
  *
- * - `modal.init()` – Initializes all modal components. Safe for multiple calls.
- * - `modal.destroy()` – Removes all modal-related event listeners and resets state.
- * - `modal.show(id)` – Opens modal by ID.
- * - `modal.hide(id)` – Closes modal by ID.
- * - `modal.hideAll()` – Closes all active modals.
- * - `modal.isActive(id)` – Checks if modal is currently active.
+ * @method init() - Initializes all modal components.
+ *   Moves [x-modal] elements into modal containers, sets up [x-modal-open] links,
+ *   and attaches global event listeners. Safe to call multiple times.
+ *   @example
+ *     modal.init();
+ *
+ * @method destroy() - Removes all modal-related event listeners and resets state.
+ *   Safe to call multiple times.
+ *   @example
+ *     modal.destroy();
+ *
+ * @method show(id) - Opens modal by ID.
+ *   Handles stacking, URL hash, and custom events. Returns Promise.
+ *   @param {string} id - Modal ID
+ *   @returns {Promise<void>}
+ *   @example
+ *     await modal.show('myModal');
+ *
+ * @method hide(id) - Closes modal by ID.
+ *   Handles transitions, z-index cleanup, and custom events. Returns Promise.
+ *   @param {string} id - Modal ID
+ *   @returns {Promise<void>}
+ *   @example
+ *     await modal.hide('myModal');
+ *
+ * @method hideAll() - Closes all active modals.
+ *   Useful for unique modals or global cleanup. Returns Promise.
+ *   @returns {Promise<void>}
+ *   @example
+ *     await modal.hideAll();
+ *
+ * @method isActive(id) - Checks if modal is currently active.
+ *   @param {string} id - Modal ID
+ *   @returns {boolean}
+ *   @example
+ *     if (modal.isActive('myModal')) { ... }
  *
  * Custom Events:
  *
- * - `modal:ready` – Fired after modal is prepared but before shown.
- * - `modal:open` – Fired after modal open transition.
- * - `modal:close` – Fired after modal close transition.
+ * - `modal:ready` - Fired after modal is prepared but before shown
+ * - `modal:open` - Fired after modal open transition completes
+ * - `modal:close` - Fired after modal close transition completes
  *
- * Example usage:
+ * Modal classes and attributes:
  *
- *   <div x-modal="modal" class="[custom-classes]" data-window-class="[window-classes]">
- *     <h1>Hello modal!</h1>
- *     <p><a class="button modal-close">Close</a></p> — optional
- *   </div>
- *   <a x-modal-open="modal">Open modal</a>
+ * - `x-modal="id"` - Required attribute to define modal
+ * - `x-modal-open="id"` - Attribute for links/buttons that open modal
+ * - `modal--hash` - Class to enable URL hash integration (#id)
+ * - `modal--uniq` - Class to close other modals when this one opens
+ * - `data-window-class` - Attribute to add classes to modal window
  *
- *   <script>
- *     modal.init();
- *     modal.show('modal');
- *   </script>
+ * Features:
  *
- *   <script>
- *     let modal = qsa('#modal');
- *     modal.addEventListener('modal:ready', event => { ... });
- *     modal.addEventListener('modal:open', event => { ... });
- *     modal.addEventListener('modal:close', event => { ... });
- *   </script>
+ * - Automatic z-index stacking for nested modals
+ * - ESC key to close topmost modal
+ * - Click overlay to close
+ * - Click .modal-close button to close
+ * - URL hash integration (modal--hash class)
+ * - Unique modal mode (modal--uniq class)
+ * - Lock mechanism to prevent overlapping animations
+ * - Global classes on <html> element
  *
- *   const m = document.querySelector('#modal');
- *   m.addEventListener('modal:open', () => console.log('Opened'));
- *   modal.show('modal');
+ * SECURITY WARNINGS:
+ *
+ * 1. innerHTML in _renderModalContents():
+ *    - Modal content is inserted via innerHTML
+ *    - Only use trusted content in [x-modal] elements
+ *    - Sanitize user-generated content before rendering
+ *
+ * 2. ID validation:
+ *    - Modal IDs are used in selectors and URL hash
+ *    - Validate IDs to prevent XSS through selectors
+ *    - IDs should only contain alphanumeric characters, hyphens, underscores
+ *
+ * 3. URL hash manipulation:
+ *    - history.replaceState is used with modal ID
+ *    - Ensure IDs are safe for URL usage
+ *
+ * Best practices:
+ *
+ * - Always validate modal IDs before calling show/hide
+ * - Sanitize content before placing in [x-modal] elements
+ * - Use Content Security Policy (CSP) headers
+ * - Test modal behavior with nested modals
+ * - Handle errors in event listeners gracefully
+ *
+ * Next.js: call modal.init() in useEffect; call modal.destroy() in cleanup (e.g. on unmount).
+ * SSR-safe: init/destroy and DOM methods no-op when document/window is undefined.
+ *
+ * @example
+ * useEffect(() => {
+ *   modal.init();
+ *   return () => modal.destroy();
+ * }, []);
  *
  * @author Andrey Shpigunov
  * @version 0.3
@@ -58,131 +155,136 @@ class Modal {
    * Creates a Modal instance.
    */
   constructor() {
-    /**
-     * Z-index level counter for stacked modals.
-     * @type {number}
-     */
     this.modalLevel = 0;
-
-    /**
-     * Lock counter to prevent overlapping animations.
-     * @type {number}
-     */
     this.lockCount = 0;
-
-    /**
-     * Root document element.
-     * @type {HTMLElement}
-     */
-    this.html = lib.qs('html');
-
-    /**
-     * Initialization flag to control safe reinitialization.
-     * @type {boolean}
-     * @private
-     */
+    /** @type {HTMLElement|null} */
+    this.html = null;
+    /** @type {boolean} @private */
     this._initialized = false;
-
-    /**
-     * Click event handler reference for removeEventListener.
-     * @type {Function|null}
-     * @private
-     */
+    /** @type {function(Event): void | null} @private */
     this._clickHandler = null;
-
-    /**
-     * Keydown event handler reference for removeEventListener.
-     * @type {Function|null}
-     * @private
-     */
+    /** @type {function(Event): void | null} @private */
     this._keydownHandler = null;
   }
 
   /**
-   * Initializes the modal system.
-   * Moves `[x-modal]` into `.modal-here` or `<body>`, sets up `[x-modal-open]` links, and global listeners.
-   *
-   * Safe to call multiple times. If already initialized, automatically destroys previous listeners.
+   * Initializes the modal system. SSR-safe: no-op when document/window undefined.
+   * Safe to call multiple times; destroys previous listeners first.
    */
   init() {
-    if (this._initialized) {
-      this.destroy();
-    }
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
+    if (this._initialized) this.destroy();
 
+    this.html = lib.qs('html');
     this._renderModalContents();
     this._setupModalLinks();
     this._setupGlobalListeners();
-
     this._initialized = true;
   }
 
   /**
-   * Destroys modal system.
-   * Removes event listeners and resets internal state.
+   * Destroys modal system. SSR-safe: no-op when window undefined.
    * Safe to call multiple times.
    */
   destroy() {
+    if (typeof document === 'undefined') return;
     if (this._clickHandler) {
       document.removeEventListener('click', this._clickHandler);
       this._clickHandler = null;
     }
-
     if (this._keydownHandler) {
       document.removeEventListener('keydown', this._keydownHandler);
       this._keydownHandler = null;
     }
-
     this.modalLevel = 0;
     this.lockCount = 0;
+    this.html = null;
     this._initialized = false;
+  }
+
+  /**
+   * Validates modal ID to prevent XSS attacks.
+   * Only allows alphanumeric characters, hyphens, and underscores.
+   * @param {string} id - Modal ID to validate
+   * @returns {boolean} - True if valid
+   * @private
+   */
+  _isValidId(id) {
+    if (typeof id !== 'string' || !id) return false;
+    return /^[a-zA-Z0-9_-]+$/.test(id);
+  }
+
+  /**
+   * Escapes HTML for safe attribute use. SSR-safe: uses string replace when document undefined.
+   * @param {string} text
+   * @returns {string}
+   * @private
+   */
+  _escapeHtml(text) {
+    if (text == null) return '';
+    const s = String(text);
+    if (typeof document !== 'undefined') {
+      const div = document.createElement('div');
+      div.textContent = s;
+      return div.innerHTML;
+    }
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
   /**
    * Moves [x-modal] definitions into modal containers.
    * Creates modal structure and appends to `.modal-here` or `<body>`.
+   * SECURITY: Validates IDs and escapes window classes to prevent XSS.
    * @private
    */
   _renderModalContents() {
-    lib.qsa('[x-modal]').forEach(item => {
-      const here = lib.qs('.modal-here');
-      const placeholder = here ? here : lib.qs('body');
+    const items = lib.qsa('[x-modal]');
+    const placeholder = lib.qs('.modal-here') || lib.qs('body');
+    if (!placeholder) return;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
       const id = item.getAttribute('x-modal');
+      if (!id || !this._isValidId(id)) continue;
+      if (lib.qs('#' + id)) continue;
+
       const classes = item.getAttribute('class') || '';
-      const windowClasses = (item.dataset.windowClass || '').replace(/\s+/g, ' ').trim();
+      const windowClasses = (item.getAttribute('data-window-class') || '').replace(/\s+/g, ' ').trim();
+      const safeWindowClasses = this._escapeHtml(windowClasses);
       const html = item.innerHTML;
-      
+
       const modal = document.createElement('div');
       modal.id = id;
-      modal.className = `modal ${classes}`;
-      modal.innerHTML = `<div class="modal-overlay"></div><div class="modal-outer"><div class="modal-inner"><div class="modal-window ${windowClasses}">${html}<div class="modal-rail"><a role="button" class="modal-close"></a></div></div></div></div>`;
-      
+      modal.className = 'modal ' + classes;
+      modal.innerHTML = '<div class="modal-overlay"></div><div class="modal-outer"><div class="modal-inner"><div class="modal-window ' + safeWindowClasses + '">' + html + '<div class="modal-rail"><a role="button" class="modal-close"></a></div></div></div></div>';
       placeholder.appendChild(modal);
       item.remove();
-    });
+    }
   }
 
   /**
    * Sets up all `[x-modal-open]` links.
    * Opens modal on click and handles hash-based auto-open.
+   * SECURITY: Validates IDs before use.
    * @private
    */
   _setupModalLinks() {
-    lib.qsa('[x-modal-open]').forEach(link => {
+    const links = lib.qsa('[x-modal-open]');
+    for (let i = 0; i < links.length; i++) {
+      const link = links[i];
       const id = link.getAttribute('x-modal-open');
+      if (!id || !this._isValidId(id)) continue;
 
       link.addEventListener('click', e => {
         e.preventDefault();
         this.show(id);
       });
 
-      // Auto-open if hash matches and modal has modal_hash
       if (window.location.hash === '#' + id) {
-        const modal = lib.qs('#' + id);
-        if (modal.classList.contains('modal_hash')) {
-          this.show(id);
-        }
+        const el = lib.qs('#' + id);
+        if (el && el.classList.contains('modal--hash')) this.show(id);
       }
-    });
+    }
   }
 
   /**
@@ -193,25 +295,26 @@ class Modal {
    */
   _setupGlobalListeners() {
     this._clickHandler = e => {
-      const modalActive = lib.qs('.modal_active');
-      if (
-        modalActive &&
-        (
-          e.target.classList.contains('modal-close') ||
-          !e.target.closest('.modal-window')
-        )
-      ) {
-        e.preventDefault();
-        this.hide(e.target.closest('.modal')?.getAttribute('id'));
-      }
+      if (!lib.qs('.modal--active')) return;
+      const target = e.target;
+      const isClose = target.classList && target.classList.contains('modal-close');
+      const isOverlay = !target.closest || !target.closest('.modal-window');
+      if (!isClose && !isOverlay) return;
+      e.preventDefault();
+      const modal = target.closest('.modal');
+      const id = modal ? modal.getAttribute('id') : null;
+      if (id && this._isValidId(id)) this.hide(id);
     };
 
     this._keydownHandler = e => {
-      const modalsActive = lib.qsa('.modal_active');
-      const modalActive = modalsActive[modalsActive.length - 1];
-      if (modalActive && e.key === 'Escape') {
+      if (e.key !== 'Escape') return;
+      const modals = lib.qsa('.modal--active');
+      const len = modals.length;
+      if (!len) return;
+      const id = modals[len - 1].getAttribute('id');
+      if (id && this._isValidId(id)) {
         e.preventDefault();
-        this.hide(modalActive.getAttribute('id'));
+        this.hide(id);
       }
     };
 
@@ -222,52 +325,48 @@ class Modal {
   /**
    * Opens modal by ID.
    * Handles stacking, URL hash, and custom events.
+   * SECURITY: Validates ID before use.
    *
    * @param {string} id - Modal ID.
    * @returns {Promise<void>}
    */
   async show(id) {
+    if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return;
     if (this.lockCount > 0) return;
 
     if (this.isActive(id)) {
-      this.hide(id);
+      await this.hide(id);
       return;
     }
 
     const modal = lib.qs('#' + id);
     if (!modal) return;
 
-    if (modal.classList.contains('modal_uniq')) {
-      await this.hideAll();
-    }
+    if (modal.classList.contains('modal--uniq')) await this.hideAll();
 
     this.lockCount++;
-
     try {
-      await lib.addClass(modal, 'modal_ready');
+      await lib.addClass(modal, 'modal--ready');
       await lib.sleep(10);
-
       modal.dispatchEvent(new CustomEvent('modal:ready'));
 
-      if (modal.classList.contains('modal_hash')) {
-        history.replaceState(null, '', '#' + id);
+      if (modal.classList.contains('modal--hash')) history.replaceState(null, '', '#' + id);
+
+      if (this.html) {
+        lib.addClass(this.html, 'modal--active');
+        lib.addClass(this.html, id + '--active');
       }
-
-      lib.addClass(this.html, 'modal_active');
-      lib.addClass(this.html, id + '_active');
       lib.addClass('[x-modal-open=' + id + ']', 'active');
-
       this.modalLevel++;
-      lib.addClass(modal, 'modal_z' + this.modalLevel);
+      lib.addClass(modal, 'modal--z' + this.modalLevel);
+      await lib.addClass(modal, 'modal--active');
 
-      await lib.addClass(modal, 'modal_active');
-
-      lib.qs('.modal-outer', modal)?.scrollTo(0, 1);
+      const modalOuter = lib.qs('.modal-outer', modal);
+      if (modalOuter) modalOuter.scrollTo(0, 1);
 
       await lib.sleep(200);
-
       modal.dispatchEvent(new CustomEvent('modal:open'));
-
+    } catch (_) {
     } finally {
       this.lockCount--;
     }
@@ -276,40 +375,34 @@ class Modal {
   /**
    * Closes modal by ID.
    * Handles transitions, z-index cleanup, and custom events.
+   * SECURITY: Validates ID before use.
    *
    * @param {string} id - Modal ID.
    * @returns {Promise<void>}
    */
   async hide(id) {
+    if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return;
     if (this.lockCount > 0) return;
 
     const modal = lib.qs('#' + id);
     if (!modal) return;
 
     this.lockCount++;
-
-    if (
-      modal.classList.contains('modal_hash') &&
-      window.location.hash === '#' + id
-    ) {
-      history.replaceState(null, document.title, window.location.pathname + window.location.search);
+    try {
+      if (modal.classList.contains('modal--hash') && window.location.hash === '#' + id) {
+        history.replaceState(null, document.title, window.location.pathname + window.location.search);
+      }
+      lib.removeClass('[x-modal-open=' + id + ']', 'active');
+      await lib.removeClass(modal, 'modal--active', 200);
+      lib.removeClass(modal, 'modal--z' + this.modalLevel);
+      modal.dispatchEvent(new CustomEvent('modal:close'));
+      if (this.html) lib.removeClass(this.html, id + '--active');
+      this.modalLevel--;
+      if (this.modalLevel === 0 && this.html) lib.removeClass(this.html, 'modal--active');
+    } catch (_) {
+    } finally {
+      this.lockCount--;
     }
-
-    lib.removeClass('[x-modal-open=' + id + ']', 'active');
-
-    await lib.removeClass(modal, 'modal_active', 200);
-    lib.removeClass(modal, 'modal_z' + this.modalLevel);
-
-    modal.dispatchEvent(new CustomEvent('modal:close'));
-
-    lib.removeClass(this.html, id + '_active');
-
-    this.modalLevel--;
-    if (this.modalLevel === 0) {
-      lib.removeClass(this.html, 'modal_active');
-    }
-
-    this.lockCount--;
   }
 
   /**
@@ -319,21 +412,23 @@ class Modal {
    * @returns {Promise<void>}
    */
   async hideAll() {
-    const modals = lib.qsa('.modal_active');
-    if (!modals.length) return;
-    for (const modal of modals) {
-      await this.hide(modal.getAttribute('id'));
+    if (typeof document === 'undefined') return;
+    const modals = lib.qsa('.modal--active');
+    for (let i = 0; i < modals.length; i++) {
+      const id = modals[i].getAttribute('id');
+      if (id) await this.hide(id);
     }
   }
 
   /**
-   * Checks if modal is currently active.
-   *
-   * @param {string} id - Modal ID.
+   * Checks if modal is currently active. SSR-safe: returns false when document undefined.
+   * @param {string} id
    * @returns {boolean}
    */
   isActive(id) {
-    return lib.qs('#' + id)?.classList.contains('modal_active') ?? false;
+    if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return false;
+    const modal = lib.qs('#' + id);
+    return modal ? modal.classList.contains('modal--active') : false;
   }
 }
 
@@ -344,3 +439,4 @@ class Modal {
  * @type {Modal}
  */
 export const modal = new Modal();
+

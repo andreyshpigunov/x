@@ -9,46 +9,52 @@ All right reserved.
 
 /* !- CSS reset */
 
-
 /*
   PostCSS media query min-width:
   ---------------------------
   |  s  |  m  |  l   |  xl  |  - main breakpoints
   ---------------------------
-  |  0  | 600 | 1000 | 1400 |  - min viewport size
+  | 640 | 768 | 1024 | 1440 |  - min viewport size
   ---------------------------
   All queries are mobile first.
-  [s] - default size.
 */
 
 
 :root {
   /* Base variables */
-  --line-height: 1.5;
-  --font-color: #000;
-  --font-size-base: 62.5%;
-  --font-scale: 1;
-  --font-size: 1.6rem;
   --font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
                  "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   --font-family-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
+  --line-height: 1.5;
+  --font-size-base: 62.5%;
+  --font-size: 1.6rem;
+  --font-scale: 1;
+  --font-color: #000;
   --background-color: #fff;
+
+  /* Spaces */
+  --space-0:  0;
+  --space-1:  0.4rem;
+  --space-2:  0.8rem;
+  --space-3:  1.2rem;
+  --space-4:  1.6rem;
+  --space-5:  2.0rem;
+  --space-6:  2.4rem;
+  --space-7:  3.2rem;
+  --space-8:  4.0rem;
+  --space-9:  4.8rem;
+  --space-10: 6.4rem;
 }
 
 
 /* PostCSS custom media */
-
 /* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
-@custom-media --small-max  (max-width: 599px);
-@custom-media --medium-min (min-width: 600px);
-@custom-media --medium-max (max-width: 999px);
-@custom-media --large-min  (min-width: 1000px);
-@custom-media --xlarge-min (min-width: 1400px);
+
 /* Breakpoints */
-@custom-media --small  (min-width: 0px);     /* Small screen  [s] (DEFAULT) */
-@custom-media --medium (min-width: 600px);   /* Medium screen [m]  */
-@custom-media --large  (min-width: 1000px);  /* Large screen  [l]  */
-@custom-media --xlarge (min-width: 1400px);  /* XLarge screen [xl] */
+@custom-media --small  (min-width: 640px);   /* Small screen  [s]  */
+@custom-media --medium (min-width: 768px);   /* Medium screen [m]  */
+@custom-media --large  (min-width: 1024px);  /* Large screen  [l]  */
+@custom-media --xlarge (min-width: 1440px);  /* XLarge screen [xl] */
 /* Dark mode */
 @custom-media --dark (prefers-color-scheme: dark);
 
@@ -91,12 +97,13 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: #00000000;
-  -moz-font-feature-settings: 'liga', 'kern';
+  font-feature-settings: 'liga', 'kern';
   color: var(--font-color);
   scroll-behavior: smooth;
   scroll-padding-top: 10vh;
   scroll-padding-bottom: 10vh;
-  
+
+  /* !- Scaling */
   &.scale5n { --font-scale: 0.75 }
   &.scale4n { --font-scale: 0.80 }
   &.scale3n { --font-scale: 0.85 }
@@ -109,8 +116,13 @@ html {
   &.scale4  { --font-scale: 1.20 }
   &.scale5  { --font-scale: 1.25 }
   
-  &.noTransitions * {
+  &.no-transitions * {
     transition: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 body {
@@ -121,7 +133,6 @@ blockquote, q {
   
   &:before,
   &:after {
-    content: '';
     content: none;
   }
 }
@@ -153,6 +164,16 @@ textarea {
 a, button, .button,
 input[type=button] {
   touch-action: manipulation;
+}
+:focus {
+  outline: 0;
+}
+:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+[hidden] {
+  display: none !important;
 }
 hr {
   display: block;

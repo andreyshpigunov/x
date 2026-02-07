@@ -23,14 +23,37 @@
  * - `appearedClass` – Custom class for the first appearance (default: 'appeared').
  * - `visibleClass` – Custom class for current visibility (default: 'visible').
  * - `once` – If `true`, stops observing the element after first appearance.
+ * - `rootMargin` – IntersectionObserver rootMargin (e.g. '50px' to trigger earlier).
+ * - `threshold` – IntersectionObserver threshold, 0–1 (default: 0).
+ * - `root` – IntersectionObserver root (null = viewport; element = scroll container).
  *
  * Events:
  * - `visible` – Dispatched when the element becomes visible.
  * - `invisible` – Dispatched when the element leaves the viewport.
  *
+ * Next.js: call init() in useEffect(); on route change call destroy() in cleanup and init() after mount.
+ * SSR-safe: init/destroy no-op when window is undefined.
+ *
+ * @example
+ * // Next.js — _app.tsx or layout
+ * import { useEffect } from 'react';
+ * import { usePathname } from 'next/navigation';
+ * import { appear } from '@andreyshpigunov/x/appear';
+ *
+ * export default function App({ Component, pageProps }) {
+ *   const pathname = usePathname();
+ *
+ *   useEffect(() => {
+ *     appear.init(); // or appear.init({ once: true, rootMargin: '50px' })
+ *     return () => appear.destroy();
+ *   }, [pathname]);
+ *
+ *   return <Component {...pageProps} />;
+ * }
+ *
  * @author Andrey Shpigunov
- * @version 0.3
- * @since 2025-07-18
+ * @version 0.4
+ * @since 2026-02-02
  */
 
 import { lib } from './lib';
@@ -43,34 +66,17 @@ import { lib } from './lib';
 class Appear {
 
   constructor() {
-    /**
-     * List of currently observed elements.
-     * @type {HTMLElement[]}
-     * @private
-     */
     this._targets = [];
-
-    /**
-     * Instance of IntersectionObserver.
-     * @type {IntersectionObserver|null}
-     * @private
-     */
     this._observer = null;
-
-    /**
-     * Observer options and behavior configuration.
-     * @type {{
-     *   appearedClass: string,
-     *   visibleClass: string,
-     *   once: boolean
-     * }}
-     * @private
-     */
     this._options = {
       appearedClass: 'appeared',
       visibleClass: 'visible',
-      once: false
+      once: false,
+      root: null,
+      rootMargin: '0px',
+      threshold: 0
     };
+    this._observerCallback = this._observerCallback.bind(this);
   }
 
   /**
@@ -85,25 +91,36 @@ class Appear {
    * appear.init({ once: true });
    */
   init(config = {}) {
+    if (typeof window === 'undefined') return;
     if (!('IntersectionObserver' in window)) return;
 
     this._options = { ...this._options, ...config };
 
-    // Disconnect previous observer to prevent leaks
     if (this._observer) {
       this._observer.disconnect();
       this._observer = null;
     }
 
     this._targets = lib.qsa('[x-appear]');
+    if (!this._targets.length) return;
 
-    if (this._targets.length) {
-      this._observer = new IntersectionObserver(this._observerCallback.bind(this));
-
-      this._targets.forEach(item => {
-        this._observer.observe(item);
-      });
+    const { root, rootMargin, threshold } = this._options;
+    this._observer = new IntersectionObserver(this._observerCallback, { root: root || null, rootMargin, threshold });
+    for (let i = 0; i < this._targets.length; i++) {
+      this._observer.observe(this._targets[i]);
     }
+  }
+
+  /**
+   * Stops observing all elements and resets state. Use when unmounting (e.g. SPA).
+   */
+  destroy() {
+    if (typeof window === 'undefined') return;
+    if (this._observer) {
+      this._observer.disconnect();
+      this._observer = null;
+    }
+    this._targets = [];
   }
 
   /**
@@ -114,37 +131,24 @@ class Appear {
    */
   _observerCallback(entries) {
     const { appearedClass, visibleClass, once } = this._options;
+    const observer = this._observer;
 
-    for (const entry of entries) {
+    for (let i = 0; i < entries.length; i++) {
+      const entry = entries[i];
       const target = entry.target;
-
-      const hasAppeared = appearedClass != null;
-      const hasVisible = visibleClass != null;
-
       if (entry.isIntersecting) {
-        // First time visibility — add appeared class
-        if (hasAppeared && !target.classList.contains(appearedClass)) {
+        if (appearedClass && !target.classList.contains(appearedClass)) {
           target.classList.add(appearedClass);
-
-          if (once) {
-            this._observer.unobserve(target);
-          }
+          if (once && observer) observer.unobserve(target);
         }
-
-        // While visible — add visible class and dispatch event
-        if (hasVisible) {
+        if (visibleClass && !target.classList.contains(visibleClass)) {
           target.classList.add(visibleClass);
-          target.dispatchEvent(new CustomEvent('visible', {
-            detail: { appeared: true }
-          }));
+          target.dispatchEvent(new CustomEvent('visible', { detail: { appeared: true } }));
         }
       } else {
-        // When leaving viewport — remove visible class and dispatch event
-        if (hasVisible && target.classList.contains(visibleClass)) {
+        if (visibleClass && target.classList.contains(visibleClass)) {
           target.classList.remove(visibleClass);
-          target.dispatchEvent(new CustomEvent('invisible', {
-            detail: { appeared: true }
-          }));
+          target.dispatchEvent(new CustomEvent('invisible', { detail: { appeared: true } }));
         }
       }
     }

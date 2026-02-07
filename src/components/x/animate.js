@@ -22,9 +22,29 @@
  *   "classRemove": true
  * }'></div>
  *
+ * Next.js: call init() in useEffect(); on route change call destroy() in cleanup and init() after mount.
+ * SSR-safe: init/destroy no-op when window is undefined.
+ *
+ * @example
+ * // Next.js — _app.tsx or layout
+ * import { useEffect } from 'react';
+ * import { usePathname } from 'next/navigation';
+ * import { animate } from '@andreyshpigunov/x/animate';
+ *
+ * export default function App({ Component, pageProps }) {
+ *   const pathname = usePathname();
+ *
+ *   useEffect(() => {
+ *     animate.init();
+ *     return () => animate.destroy();
+ *   }, [pathname]);
+ *
+ *   return <Component {...pageProps} />;
+ * }
+ *
  * @author Andrey Shpigunov
- * @version 0.3
- * @since 2025-07-18
+ * @version 0.4
+ * @since 2026-02-02
  */
 
 import { lib } from './lib';
@@ -89,6 +109,8 @@ class Animate {
    * Initializes or reinitializes animation tracking for `[x-animate]` elements.
    */
   init() {
+    if (typeof window === 'undefined') return;
+
     this._cleanup();
 
     this._elements = lib.qsa('[x-animate]');
@@ -108,11 +130,11 @@ class Animate {
    */
   _cleanup() {
     if (!this._initialized) return;
+    if (typeof window === 'undefined') return;
 
     this._parents.forEach(parent => {
       parent.removeEventListener('scroll', this._scrollHandler);
     });
-
     window.removeEventListener('resize', this._scrollHandler);
 
     this._ticking = false;
@@ -123,15 +145,24 @@ class Animate {
   }
 
   /**
+   * Stops observing and resets state. Use when unmounting (e.g. Next.js route change).
+   */
+  destroy() {
+    if (typeof window === 'undefined') return;
+    this._cleanup();
+  }
+
+  /**
    * Parses `[x-animate]` attributes and creates animation configuration for each element.
    *
    * @private
    */
   _parseElementsAnimations() {
-    this._elements.forEach(element => {
+    this._animations = [];
+    for (const element of this._elements) {
       try {
         const json = JSON.parse(element.getAttribute('x-animate'));
-        const item = {
+        this._animations.push({
           element,
           trigger: lib.qs(json.trigger) || element,
           parent: lib.qs(json.parent) || window,
@@ -140,15 +171,15 @@ class Animate {
           class: json.class,
           classRemove: json.classRemove !== false,
           functionName: json.functionName,
+          fn: null,
           lockedIn: false,
           lockedOut: false,
           log: json.log || false
-        };
-        this._animations.push(item);
+        });
       } catch (err) {
         console.error('Invalid JSON in x-animate attribute:', element, err);
       }
-    });
+    }
   }
 
   /**
@@ -158,17 +189,18 @@ class Animate {
    */
   _setupListeners() {
     for (const item of this._animations) {
-      if (this._parents.has(item.parent)) continue;
-      this._parents.add(item.parent);
-      item.parent.addEventListener('scroll', this._scrollHandler);
+      if (!this._parents.has(item.parent)) {
+        this._parents.add(item.parent);
+        item.parent.addEventListener('scroll', this._scrollHandler);
+      }
     }
-
     window.addEventListener('resize', this._scrollHandler);
 
+    const runScroll = () => requestAnimationFrame(() => this._scroll());
     if (document.readyState === 'complete') {
-      requestAnimationFrame(() => this._scroll());
+      runScroll();
     } else {
-      window.addEventListener('load', () => this._scroll(), { once: true });
+      window.addEventListener('load', runScroll, { once: true });
     }
   }
 
@@ -195,76 +227,69 @@ class Animate {
    * @private
    */
   _scroll() {
-    this._animations.forEach(item => {
+    for (let i = 0; i < this._animations.length; i++) {
+      const item = this._animations[i];
+      if (!item.element.isConnected || !item.trigger.isConnected) continue;
+      if (!item.fn && item.functionName && typeof window[item.functionName] === 'function') {
+        item.fn = window[item.functionName];
+      }
       const triggerRect = item.trigger.getBoundingClientRect();
-      const parentRect = item.parent !== window ? item.parent.getBoundingClientRect() : null;
-
-      const top = triggerRect.top - (parentRect ? parentRect.top : 0);
-      const start = this._2px(item.start, item.parent);
-      const end = this._2px(item.end, item.parent);
-      item.duration = isNaN(end) ? 0 : start - end;
+      const parent = item.parent;
+      const parentTop = parent === window ? 0 : parent.getBoundingClientRect().top;
+      const top = triggerRect.top - parentTop;
+      const start = this._2px(item.start, parent);
+      const end = this._2px(item.end, parent);
+      const hasStart = !isNaN(start);
+      const hasEnd = !isNaN(end);
+      const fn = item.fn;
 
       if (item.log) console.log(top, start, end, item);
 
-      if (!isNaN(start) && !isNaN(end)) {
-        // Case: both start and end defined
-        if (top <= start && top >= end) {
+      if (hasStart && hasEnd) {
+        item.duration = start - end;
+        const inRange = top <= start && top >= end;
+        if (inRange) {
           item.lockedOut = false;
-          if (item.class) item.element.classList.add(item.class);
-
-          if (typeof window[item.functionName] === 'function') {
+          if (item.class && !item.element.classList.contains(item.class)) item.element.classList.add(item.class);
+          if (fn) {
             item.progress = ((start - top) / item.duration).toFixed(4);
-            window[item.functionName](item);
+            fn(item);
           }
-
         } else {
-          if (item.class && item.classRemove === true && item.element.classList.contains(item.class)) {
-            item.element.classList.remove(item.class);
-          }
-
-          if (!item.lockedOut && typeof window[item.functionName] === 'function') {
+          if (item.class && item.classRemove && item.element.classList.contains(item.class)) item.element.classList.remove(item.class);
+          if (!item.lockedOut && fn) {
             if (top >= start) {
               item.progress = 0;
-              window[item.functionName](item);
+              fn(item);
               item.lockedOut = true;
-            }
-            if (top <= end) {
+            } else if (top <= end) {
               item.progress = 1;
-              window[item.functionName](item);
+              fn(item);
               item.lockedOut = true;
             }
           }
         }
-
-      } else if (!isNaN(start)) {
-        // Case: only start defined
-        if (top <= start) {
+      } else if (hasStart) {
+        const pastStart = top <= start;
+        if (pastStart) {
           item.lockedOut = false;
-          if (item.class) item.element.classList.add(item.class);
-
-          if (!item.lockedIn && typeof window[item.functionName] === 'function') {
+          if (item.class && !item.element.classList.contains(item.class)) item.element.classList.add(item.class);
+          if (!item.lockedIn && fn) {
             item.progress = 1;
-            window[item.functionName](item);
+            fn(item);
             item.lockedIn = true;
           }
-
         } else {
           item.lockedIn = false;
-
-          if (item.class && item.classRemove === true && item.element.classList.contains(item.class)) {
-            item.element.classList.remove(item.class);
-          }
-
-          if (!item.lockedOut && typeof window[item.functionName] === 'function') {
-            if (top >= start) {
-              item.progress = 0;
-              window[item.functionName](item);
-              item.lockedOut = true;
-            }
+          if (item.class && item.classRemove && item.element.classList.contains(item.class)) item.element.classList.remove(item.class);
+          if (!item.lockedOut && fn && top >= start) {
+            item.progress = 0;
+            fn(item);
+            item.lockedOut = true;
           }
         }
       }
-    });
+    }
   }
 
   /**
@@ -276,16 +301,14 @@ class Animate {
    * @private
    */
   _2px(value, parent = window) {
-    if (/(%|vh)/.test(value)) {
-      const height = parent === window
-        ? document.documentElement.clientHeight
-        : parent.clientHeight;
-
-      value = value.replace(/(vh|%)/, '');
-      return (height * parseFloat(value)) / 100;
-    } else {
-      return parseFloat(value);
-    }
+    if (typeof value === 'number') return value;
+    if (typeof value !== 'string') return NaN;
+    const num = parseFloat(value);
+    if (!/[%vh]/.test(value)) return num;
+    const height = value.includes('vh')
+      ? document.documentElement.clientHeight
+      : (parent === window ? document.documentElement.clientHeight : parent.clientHeight);
+    return (height * num) / 100;
   }
 }
 

@@ -48,12 +48,12 @@ All right reserved.
   .ratio2x3  (m,l,xl)
   .ratio3x4  (m,l,xl)
   .ratio9x16 (m,l,xl)
-  .breakWord
-  .visuallyHidden
+  .break-word
+  .visually-hidden
   .invisible
-  .scrollResponsive
+  .scroll-responsive
   .hidden     =(s,m,l)
-  .hiddenNext =(s,m,l)
+  .hidden-next =(s,m,l)
   .dark:hidden  =(s,m,l)
   .light:hidden =(s,m,l)
   .fullscreen
@@ -69,7 +69,7 @@ All right reserved.
   .min[400-1600] step 100 (m,l,xl)
   .block       (m,l,xl)
   .inline      (m,l,xl)
-  .inlineBlock (m,l,xl)
+  .inline-block (m,l,xl)
   .al (m,l,xl)
   .ar (m,l,xl)
   .ac (m,l,xl)
@@ -102,7 +102,7 @@ All right reserved.
   .r100 (m,l,xl)
   .sh[0-10] (m,l)
   .o[0-10] (m,l,xl)
-  .noPrint
+  .no-print
 */
 
 
@@ -411,11 +411,11 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Break word, invisible, scroll */
-.breakWord {
+.break-word {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-.visuallyHidden {
+.visually-hidden {
   position: absolute;
   top: 0;
   left: 0;
@@ -430,30 +430,30 @@ html.touch .touch-hide { display: none }
 .invisible {
   visibility: hidden !important;
 }
-.scrollResponsive {
+.scroll-responsive {
   overflow-x: auto;
 }
 
 
 /* !- Hidden */
 .hidden,
-.hiddenNext + * { display: none !important }
+.hidden-next + * { display: none !important }
 
 @media (--small-max) {
   .s\:hidden,
-  .s\:hiddenNext + * { display: none !important }
+  .s\:hidden-next + * { display: none !important }
 }
 @media (--medium-min) and (--medium-max) {
   .m\:hidden,
-  .m\:hiddenNext + * { display: none !important }
+  .m\:hidden-next + * { display: none !important }
 }
 @media (--large-min) {
   .l\:hidden,
-  .l\:hiddenNext + * { display: none !important }
+  .l\:hidden-next + * { display: none !important }
 }
 @media (--xlarge-min) {
   .xl\:hidden,
-  .xl\:hiddenNext + * { display: none !important }
+  .xl\:hidden-next + * { display: none !important }
 }
 
 
@@ -922,7 +922,7 @@ html.touch .touch-hide { display: none }
 
 /* !- Print */
 @media print {
-  .noPrint {
+  .no-print {
     display: none;
   }
 }

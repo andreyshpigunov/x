@@ -9,17 +9,14 @@ All right reserved.
 
 /*
   .button
-  .button_fs[10-19] step 1 (m,l) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
-  .button_fs[20-40] step 2 (m,l) - size in rem - 2.0, 2.2, 2.4, ..., 4.0
-  
-  .button_label
-  .button_primary
-  .button_success
-  .button_warning
-  .button_danger
-  .button_white
-  .button_black
-  .button_clear
+  .button--label
+  .button--primary
+  .button--success
+  .button--warning
+  .button--danger
+  .button--white
+  .button--black
+  .button--clear
 */
 
 
@@ -41,7 +38,9 @@ All right reserved.
   --button-height-coeff: 2.5;
   --button-side-padding-coeff: 1.25;
   --button-color: var(--color-grey);
+  --button-font-family: var(--font-family);
   --button-font-color: #000;
+  --button-font-weight: 400;
   --button-transition: all .1s ease-out;
   --button-font-size: var(--font-size);
   --button-transform: translate(0,0);
@@ -51,24 +50,32 @@ All right reserved.
   --button-box-shadow: 0 .1rem .1rem #00000011;
   --button-box-shadow-hover: 0 .1rem .1rem #00000022;
   --button-box-shadow-active: inset 0 0 .1rem #00000011;
+  --button-disabled-opacity: .5;
+
+  /* Strength of hover (lighten) / active (darken). Override on :root or .button--* to tune. */
+  --button-hover-lighten: 10%;
+  --button-active-darken: 5%;
+
+  --button-border-radius: calc(var(--button-font-size) * 0.6);
   
   /*
     Additional variables and their default values:
     --button-height: 4rem;
     --button-side-padding: 2rem;
-    --button-font-family: var(--font-family);
-    --button-font-weight: 400;
-    --button-disabled-opacity: .5;
-    --button-border-radius: calc(var(--button-font-size) * 0.6);
-    --button-color-hover: auto;
-    --button-color-active: auto;
-    --button-font-color-hover: auto;
-    --button-font-color-active: auto;
+    --button-hover-lighten: 20%  (how much white to mix on hover);
+    --button-active-darken: 20%  (how much black to mix on active).
+    Override --button-color-hover / --button-color-active for custom behaviour (e.g. .button--clear).
   */
 }
 
 
 .button, [type=submit] {
+  /* Computed on the element so var(--button-color) respects .button--primary etc. */
+  --button-color-hover: color-mix(in oklab, var(--button-color) calc(100% - var(--button-hover-lighten)), white var(--button-hover-lighten));
+  --button-color-active: color-mix(in oklab, var(--button-color) calc(100% - var(--button-active-darken)), black var(--button-active-darken));
+  --button-font-color-hover: var(--button-font-color);
+  --button-font-color-active: var(--button-font-color);
+
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -77,9 +84,9 @@ All right reserved.
   min-height: var(--button-height, calc(var(--button-font-size) * var(--button-height-coeff)));
   padding: 0 var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff)));
   color: var(--button-font-color);
-  font-family: var(--button-font-family, var(--font-family));
+  font-family: var(--button-font-family);
   font-size: var(--button-font-size);
-  font-weight: var(--button-font-weight, 400);
+  font-weight: var(--button-font-weight);
   line-height: 1;
   vertical-align: bottom;
   white-space: nowrap;
@@ -91,7 +98,7 @@ All right reserved.
   cursor: pointer;
   overflow: hidden;
   border: none;
-  border-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
+  border-radius: var(--button-border-radius);
   background-color: var(--button-color);
   transition: var(--button-transition);
   transform: var(--button-transform);
@@ -122,8 +129,8 @@ All right reserved.
     &:hover,
     &.hover {
       text-decoration: none;
-      color: var(--button-font-color-hover, var(--button-font-color));
-      background-color: var(--button-color-hover, color(from var(--button-color) display-p3 calc(r - 0.02) calc(g - 0.02) calc(b - 0.02)));
+      color: var(--button-font-color-hover);
+      background-color: var(--button-color-hover);
       transform: var(--button-transform-hover);
       box-shadow: var(--button-box-shadow-hover);
     }
@@ -132,50 +139,23 @@ All right reserved.
   &:active,
   &.active {
     text-decoration: none;
-    color: var(--button-font-color-active, var(--button-font-color));
-    background-color: var(--button-color-active, color(from var(--button-color) display-p3 calc(r - 0.04) calc(g - 0.04) calc(b - 0.04)));
+    color: var(--button-font-color-active);
+    background-color: var(--button-color-active);
     transform: var(--button-transform-active);
     box-shadow: var(--button-box-shadow-active);
   }
 
   &[disabled],
   &.disabled {
-    opacity: var(--button-disabled-opacity, .5);
+    opacity: var(--button-disabled-opacity);
     pointer-events: none;
   }
 }
 
 
-/* Button font sizes */
-
-@for $i from 10 to 19 {
-  .button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
-}
-@for $i from 20 to 80 by 2 {
-  .button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
-}
-
-@media (--medium) {
-  @for $i from 10 to 19 {
-    .m\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
-  }
-  @for $i from 20 to 40 by 2 {
-    .m\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
-  }
-}
-
-@media (--large) {
-  @for $i from 10 to 19 {
-    .l\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
-  }
-  @for $i from 20 to 40 by 2 {
-    .l\:button_fs$(i) { --button-font-size: calc($(i)rem / 10) }
-  }
-}
-
 /* Predefined styles */
 
-.button_label {
+.button--label {
   --button-height: calc(var(--line-height) * 1em);
   --button-side-padding: .5em;
   --button-font-size: inherit;
@@ -183,38 +163,38 @@ All right reserved.
   vertical-align: baseline;
 }
 
-.button_primary {
+.button--primary {
   --button-color: var(--color-primary);
   --button-font-color: #fff;
 }
-.button_success {
+.button--success {
   --button-color: var(--color-success);
   --button-font-color: #fff;
 }
-.button_warning {
+.button--warning {
   --button-color: var(--color-warning);
   --button-font-color: #fff;
 }
-.button_danger {
+.button--danger {
   --button-color: var(--color-danger);
   --button-font-color: #fff;
 }
-.button_white {
+.button--white {
   --button-color: #fff;
   --button-font-color: #000;
 }
-.button_black {
+.button--black {
   --button-color: #111;
   --button-font-color: #fff;
 }
-.button_clear {
+.button--clear {
   --button-color: transparent;
   --button-box-shadow: none;
   --button-box-shadow-hover: none;
   --button-box-shadow-active: none;
 }
 
-.button_tabs {
+.button--tabs {
   display: flex;
   gap: calc(var(--space-1) / 2);
   
@@ -223,18 +203,19 @@ All right reserved.
   }
   
   & .button:nth-child(1 of .button:not(.hidden)) {
-    border-top-left-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
-    border-bottom-left-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
+    border-top-left-radius: var(--button-border-radius);
+    border-bottom-left-radius: var(--button-border-radius);
   }
   
   & .button:nth-last-child(1 of .button:not(.hidden)) {
-    border-top-right-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
-    border-bottom-right-radius: var(--button-border-radius, calc(var(--button-font-size) * 0.6));
+    border-top-right-radius: var(--button-border-radius);
+    border-bottom-right-radius: var(--button-border-radius);
   }
 }
 
-.button.button_dropdown {
-  padding-right: calc(var(--button-side-padding, calc(var(--button-font-size) * var(--button-side-padding-coeff))) * 1.8);
+.button.button--dropdown {
+  --button-padding-calculated: calc(var(--button-font-size) * var(--button-side-padding-coeff));
+  padding-right: calc(var(--button-side-padding, var(--button-padding-calculated)) * 1.8);
 
   &::after {
     content: '';
@@ -253,12 +234,12 @@ All right reserved.
     transition: opacity .1s ease-out;
   }
 }
-.dropdown_bottom .button.button_dropdown::after {
+.dropdown--bottom .button.button--dropdown::after {
   transform: rotate(225deg);
   margin-top: .3em;
 }
 
-.button.button_dropdown.active {
+.button.button--dropdown.active {
   &::after {
     opacity: 1;
   }

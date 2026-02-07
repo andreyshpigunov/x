@@ -1,34 +1,31 @@
 {
 	"name": "@andreyshpigunov/x",
-	"version": "0.3.86",
+	"version": "0.3.87",
 	"devDependencies": {
 		"@babel/preset-env": "^7.26.9",
 		"@jest/globals": "^29.7.0",
-		"@parcel/logger": "*",
-		"autoprefixer": "^10.1.0",
 		"babel-jest": "^29.7.0",
-		"cssnano": "^5.0.2",
 		"docdash": "^2.0.2",
 		"jest": "^29.7.0",
 		"jest-environment-jsdom": "^29.7.0",
 		"jsdoc": "^4.0.4",
-		"parcel": "^2.0.1",
 		"postcss": "^8.5",
 		"postcss-cli": "^8.3.0",
 		"postcss-custom-media": "^11.0.1",
-		"postcss-custom-selectors": "^8.0.1",
 		"postcss-each": "^1.1.0",
 		"postcss-extend": "^1.0.5",
 		"postcss-for": "^2.1.1",
 		"postcss-import": "^14.0.2",
+		"postcss-lightningcss": "^1.0.2",
 		"postcss-nesting": "^10.2.0",
-		"postcss-simple-vars": "^7.0.1"
+		"postcss-simple-vars": "^7.0.1",
+		"vite": "^6.0.0"
 	},
 	"type": "module",
 	"scripts": {
-		"build-css": "postcss src/css/*.css -u postcss-import -u postcss-nesting -u postcss-custom-media -u postcss-custom-selectors -u postcss-extend -u postcss-for -u postcss-each -u autoprefixer -u cssnano --no-map -d dist/",
-		"build-js": "parcel build src/js/*.js --no-source-maps --no-cache --dist-dir dist/",
-		"build": "npm run build-css && npm run build-js",
+		"dev": "vite",
+		"build": "vite build && postcss src/css/x.css -o dist/x.css --no-map",
+		"build-css": "postcss src/css/*.css -d dist/ --no-map",
 		"test": "exit 0"
 	},
 	"repository": {
@@ -43,8 +40,5 @@
 	"homepage": "https://andreyshpigunov.github.io/x/",
 	"browserslist": [
 		"defaults"
-	],
-	"dependencies": {
-		"alpinejs": "^3.14.1"
-	}
+	]
 }

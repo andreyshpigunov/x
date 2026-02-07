@@ -12,9 +12,9 @@ All right reserved.
 
 /*
   .scroll
-  .scroll_contain
-  .scroll_x-proximity
-  .scroll_x-mandatory
+  .scroll--contain
+  .scroll--x-proximity
+  .scroll--x-mandatory
 */
 
 
@@ -66,38 +66,38 @@ All right reserved.
   }
 }
 
-.scroll.scroll_x {
+.scroll.scroll--x {
   overflow-x: scroll;
   overflow-y: hidden;
   touch-action: pan-x !important;
 }
 
-.scroll.scroll_y {
+.scroll.scroll--y {
   overflow-x: hidden;
   overflow-y: scroll;
   touch-action: pan-y !important;
 }
 
-.scroll_contain {
+.scroll--contain {
   overscroll-behavior: contain;
 }
 
-.scroll_x-proximity {
+.scroll--x-proximity {
   scroll-snap-type: x proximity;
 }
-.scroll_x-mandatory {
+.scroll--x-mandatory {
   scroll-snap-type: x mandatory;
 }
 
-.scroll_x-proximity,
-.scroll_x-mandatory {
+.scroll--x-proximity,
+.scroll--x-mandatory {
   & > * {
     scroll-snap-align: start;
   }
-  &.scroll_align-center > * {
+  &.scroll--align-center > * {
     scroll-snap-align: center;
   }
-  &.scroll_align-end > * {
+  &.scroll--align-end > * {
     scroll-snap-align: end;
   }
 }

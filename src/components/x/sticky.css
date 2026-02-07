@@ -18,6 +18,9 @@ All right reserved.
   top: 0;
 }
 @media (--medium) {
+  .s\:sticky { position: sticky !important; top: 0 }
+}
+@media (--medium) {
   .m\:sticky { position: sticky !important; top: 0 }
 }
 @media (--large) {

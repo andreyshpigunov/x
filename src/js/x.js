@@ -42,10 +42,10 @@ class X {
     this.form         = form;
     this.sticky       = sticky;
     this.slider       = slider;
-    
+
     this.initialized = false;
   }
-  
+
   init() {
     if (!this.initialized) {
       this.device.init();
@@ -59,8 +59,8 @@ class X {
       this.scroll.init();
       this.sticky.init();
       this.slider.init();
-      hover();
-      
+      hover.init();
+
       this.initialized = true;
     }
   }

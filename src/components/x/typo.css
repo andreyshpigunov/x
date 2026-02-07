@@ -16,7 +16,7 @@ All right reserved.
   .italic
   .strike
   .fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
-  .fs[20-80] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 8.0
+  .fs[20-64] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 6.4
   .fw[100-900] step 100 (m,l,xl)
   .ls[0-4] (m,l,xl)
   .lh[0-9] (m,l,xl)  - values: 1.0-1.9
@@ -51,9 +51,11 @@ All right reserved.
   --blockquote-margin: 2em 0;
   --blockquote-padding: 1em 2em;
   --blockquote-border: none;
+  --blockquote-font-style: italic;
 
   --table-padding: .5em .75em;
   --table-border: 1px solid #e4e4e4;
+  --table-caption-font-weight: 700;
   --table-header-font-weight: 700;
 }
 
@@ -81,7 +83,6 @@ h6, .h6 {
 }
 
 h1, .h1 {
-  margin-bottom: var(--headers-margin-bottom);
   line-height: var(--h1-line-height);
   font-size: var(--h1-font-size);
 }
@@ -116,17 +117,19 @@ figure {
 }
 figcaption {
   margin-top: var(--figcaption-margin-top);
+  /* Negative margin pulls next block closer (optical balance) */
   margin-bottom: calc(var(--figcaption-margin-top) * -1);
   font-size: var(--figcaption-font-size);
   color: var(--figcaption-color);
 }
+
 
 /* !- Blockquote */
 
 blockquote {
   margin: var(--blockquote-margin);
   padding: var(--blockquote-padding);
-  font-style: italic;
+  font-style: var(--blockquote-font-style);
   hyphens: auto;
   border-left: var(--blockquote-border);
 }
@@ -136,17 +139,22 @@ blockquote {
 
 pre {
   margin: var(--paragraph-margin) 0;
-  font-family: inherit;
+  font-family: var(--font-family-mono, monospace);
 }
 
 
 /* !- Lists */
 
-ul, ol, dl {
+ul, 
+ol, 
+dl {
   margin: var(--paragraph-margin) 0;
   padding-left: calc(var(--paragraph-margin) * 1.5);
   
-  & ul, & ol, & dl, & li {
+  & ul, 
+  & ol, 
+  & dl, 
+  & li {
     margin: var(--space-1) 0;
   }
 }
@@ -168,8 +176,11 @@ table {
   & caption {
     margin-bottom: var(--space-1);
     padding: 0 var(--space-3);
-    font-weight: 700;
+    font-weight: var(--table-caption-font-weight);
     text-align: left;
+  }
+  & tr th {
+    font-weight: var(--table-header-font-weight);
   }
   & tr th,
   & tr td {
@@ -177,142 +188,128 @@ table {
     border: var(--table-border);
     vertical-align: top;
   }
-  & tr th {
-    font-weight: var(--table-header-font-weight);
-  }
 }
 
 
 /* !- Font styles */
 
-.mono { font-family: monospace }
+.mono   { font-family: var(--font-family-mono, monospace) }
 .italic { font-style: italic }
 .strike { text-decoration: line-through }
 
+
+/* !- Font sizes */
+
 @for $i from 10 to 19 {
-  .fs$(i) { font-size: calc($(i)rem / 10) !important }
+  .fs$(i) { font-size: calc($(i)rem / 10) }
 }
-@for $i from 20 to 80 by 2 {
-  .fs$(i) { font-size: calc($(i)rem / 10) !important }
+@for $i from 20 to 64 by 2 {
+  .fs$(i) { font-size: calc($(i)rem / 10) }
+}
+@for $i from 100 to 900 by 100 {
+  .fw$(i) { font-weight: $(i) }
 }
 
-.fw100 { font-weight: 100 !important }
-.fw200 { font-weight: 200 !important }
-.fw300 { font-weight: 300 !important }
-.fw400 { font-weight: 400 !important }
-.fw500 { font-weight: 500 !important }
-.fw600 { font-weight: 600 !important }
-.fw700 { font-weight: 700 !important }
-.fw800 { font-weight: 800 !important }
-.fw900 { font-weight: 900 !important }
+@media (--small) {
+  @for $i from 10 to 19 {
+    .s\:fs$(i) { font-size: calc($(i)rem / 10) }
+  }
+  @for $i from 20 to 64 by 2 {
+    .s\:fs$(i) { font-size: calc($(i)rem / 10) }
+  }
+  @for $i from 100 to 900 by 100 {
+    .s\:fw$(i) { font-weight: $(i) }
+  }
+}
 
 @media (--medium) {
-  
   @for $i from 10 to 19 {
-    .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
+    .m\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
-  @for $i from 20 to 80 by 2 {
-    .m\:fs$(i) { font-size: calc($(i)rem / 10) !important }
+  @for $i from 20 to 64 by 2 {
+    .m\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
-  
-  .m\:fw100 { font-weight: 100 !important }
-  .m\:fw200 { font-weight: 200 !important }
-  .m\:fw300 { font-weight: 300 !important }
-  .m\:fw400 { font-weight: 400 !important }
-  .m\:fw500 { font-weight: 500 !important }
-  .m\:fw600 { font-weight: 600 !important }
-  .m\:fw700 { font-weight: 700 !important }
-  .m\:fw800 { font-weight: 800 !important }
-  .m\:fw900 { font-weight: 900 !important }
+  @for $i from 100 to 900 by 100 {
+    .m\:fw$(i) { font-weight: $(i) }
+  }
 }
 
 @media (--large) {
-  
   @for $i from 10 to 19 {
-    .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
+    .l\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
-  @for $i from 20 to 80 by 2 {
-    .l\:fs$(i) { font-size: calc($(i)rem / 10) !important }
+  @for $i from 20 to 64 by 2 {
+    .l\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
-  
-  .l\:fw100 { font-weight: 100 !important }
-  .l\:fw200 { font-weight: 200 !important }
-  .l\:fw300 { font-weight: 300 !important }
-  .l\:fw400 { font-weight: 400 !important }
-  .l\:fw500 { font-weight: 500 !important }
-  .l\:fw600 { font-weight: 600 !important }
-  .l\:fw700 { font-weight: 700 !important }
-  .l\:fw800 { font-weight: 800 !important }
-  .l\:fw900 { font-weight: 900 !important }
+  @for $i from 100 to 900 by 100 {
+    .l\:fw$(i) { font-weight: $(i) }
+  }
 }
 
 @media (--xlarge) {
-  
   @for $i from 10 to 19 {
-    .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
+    .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
-  @for $i from 20 to 80 by 2 {
-    .xl\:fs$(i) { font-size: calc($(i)rem / 10) !important }
+  @for $i from 20 to 64 by 2 {
+    .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
-  
-  .xl\:fw100 { font-weight: 100 !important }
-  .xl\:fw200 { font-weight: 200 !important }
-  .xl\:fw300 { font-weight: 300 !important }
-  .xl\:fw400 { font-weight: 400 !important }
-  .xl\:fw500 { font-weight: 500 !important }
-  .xl\:fw600 { font-weight: 600 !important }
-  .xl\:fw700 { font-weight: 700 !important }
-  .xl\:fw800 { font-weight: 800 !important }
-  .xl\:fw900 { font-weight: 900 !important }
+  @for $i from 100 to 900 by 100 {
+    .xl\:fw$(i) { font-weight: $(i) }
+  }
 }
 
-/* Letter spacing */
-.ls0  { letter-spacing: 0 !important }
-.ls1  { letter-spacing: .0625em !important }
-.ls2  { letter-spacing: .125em !important }
-.ls3  { letter-spacing: .25em !important }
-.ls4  { letter-spacing: .5em !important }
 
+/* !- Letter spacing */
+
+@for $i from 0 to 4 {
+  .ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+}
+
+@media (--small) {
+  @for $i from 0 to 4 {
+    .s\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  }
+}
 @media (--medium) {
-  .m\:ls0  { letter-spacing: 0 !important }
-  .m\:ls1  { letter-spacing: .0625em !important }
-  .m\:ls2  { letter-spacing: .125em !important }
-  .m\:ls3  { letter-spacing: .25em !important }
-  .m\:ls4  { letter-spacing: .5em !important }
+  @for $i from 0 to 4 {
+    .m\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  }
 }
 @media (--large) {
-  .l\:ls0  { letter-spacing: 0 !important }
-  .l\:ls1  { letter-spacing: .0625em !important }
-  .l\:ls2  { letter-spacing: .125em !important }
-  .l\:ls3  { letter-spacing: .25em !important }
-  .l\:ls4  { letter-spacing: .5em !important }
+  @for $i from 0 to 4 {
+    .l\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  }
 }
 @media (--xlarge) {
-  .xl\:ls0  { letter-spacing: 0 !important }
-  .xl\:ls1  { letter-spacing: .0625em !important }
-  .xl\:ls2  { letter-spacing: .125em !important }
-  .xl\:ls3  { letter-spacing: .25em !important }
-  .xl\:ls4  { letter-spacing: .5em !important }
+  @for $i from 0 to 4 {
+    .xl\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  }
 }
 
 
-/* Line height */
+/* !- Line height */
+
 @for $i from 0 to 9 {
-  .lh$(i)  { line-height: 1.$(i) !important }
+  .lh$(i)  { line-height: 1.$(i) }
 }
 
+@media (--small) {
+  @for $i from 0 to 9 {
+    .s\:lh$(i)  { line-height: 1.$(i) }
+  }
+}
 @media (--medium) {
   @for $i from 0 to 9 {
-    .m\:lh$(i)  { line-height: 1.$(i) !important }
+    .m\:lh$(i)  { line-height: 1.$(i) }
   }
 }
 @media (--large) {
   @for $i from 0 to 9 {
-    .l\:lh$(i)  { line-height: 1.$(i) !important }
+    .l\:lh$(i)  { line-height: 1.$(i) }
   }
 }
 @media (--xlarge) {
   @for $i from 0 to 9 {
-    .xl\:lh$(i)  { line-height: 1.$(i) !important }
+    .xl\:lh$(i)  { line-height: 1.$(i) }
   }
 }

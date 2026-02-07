@@ -15,11 +15,11 @@ All right reserved.
   a.link
   a.hover
   a.active
-  a.link_noline
-  a.link_underline
-  a.link_dashed
-  a.link_dotted
-  a.link_wavy
+  a.link--noline
+  a.link--underline
+  a.link--dashed
+  a.link--dotted
+  a.link--wavy
 */
 
 
@@ -86,19 +86,19 @@ a {
   
   /* Link predefined styles */
   
-  &.link_noline {
+  &.link--noline {
     --link-decoration-line: none;
   }
-  &.link_underline {
+  &.link--underline {
     --link-decoration-line: underline;
   }
-  &.link_dashed {
+  &.link--dashed {
     --link-decoration-style: dashed;
   }
-  &.link_dotted {
+  &.link--dotted {
     --link-decoration-style: dotted;
   }
-  &.link_wavy {
+  &.link--wavy {
     --link-decoration-style: wavy;
   }
 }

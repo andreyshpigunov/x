@@ -10,7 +10,9 @@
   <link rel="shortcut icon" href="https://andreyshpigunov.github.io/x/favicon.ico">
   <link rel="icon" href="https://andreyshpigunov.github.io/x/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="https://andreyshpigunov.github.io/x/assets/apple-touch-icon.png">
-  <link rel="stylesheet" href="/src/css/app.css"/>
+  <script type="module" crossorigin src="./app.js"></script>
+  <link rel="modulepreload" crossorigin href="./x.js">
+  <link rel="stylesheet" crossorigin href="./app.css">
 </head>
 
 <body id="top" x-animate='{
@@ -22,7 +24,7 @@
     <div class="header-version nowrap">0.3.86</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
-        <img src="assets/logo.png" alt="x" />
+        <img src="./logo.png" alt="x" />
       </a>
     </div>
     <div class="header-github">
@@ -141,23 +143,7 @@
 
         <div class="c1">
           <h3><a class="link" x-modal-open="modalAppear">Appear</a></h3>
-          <style>
-            .exampleAppear1,
-            .exampleAppear2 {
-              opacity: 0;
-              will-change: opacity;
-              transition: opacity 1s ease-out;
-              transition-delay: .4s;
-            }
-            .exampleAppear2 {
-              transition-delay: 1s;
-            }
-            .exampleAppear1.appeared,
-            .exampleAppear2.visible {
-              opacity: 1;
-              background: var(--color-grey);
-            }
-          </style>
+          <style>.exampleAppear1,.exampleAppear2{opacity:0;will-change:opacity;transition:opacity 1s ease-out .4s}.exampleAppear2{transition-delay:1s}.exampleAppear1.appeared,.exampleAppear2.visible{opacity:1;background:var(--color-grey)}</style>
           <div class="exampleAppear1 flex jcc py5 r3" x-appear>Appeared</div>
           <div class="exampleAppear2 flex jcc py5 mt2 r3" x-appear>Visible</div>
         </div>
@@ -696,14 +682,7 @@
 
         <div class="c1">
           <h3><a class="link" x-modal-open="modalSlider">Slider</a></h3>
-          <style>
-            .slider .slider-item:first-child img {
-              border-radius: var(--space-3) 0 0 var(--space-3);
-            }
-            .slider .slider-item:last-child img {
-              border-radius: 0 var(--space-3) var(--space-3) 0;
-            }
-          </style>
+          <style>.slider .slider-item:first-child img{border-radius:var(--space-3)0 0 var(--space-3)}.slider .slider-item:last-child img{border-radius:0 var(--space-3)var(--space-3)0}</style>
           <div x-slider='{"gap":2}' class="ratio4x3 r3">
             <div><img data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg 2x" alt=""></div>
             <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg" alt=""></div>
@@ -2198,7 +2177,6 @@ a.link--wavy</pre>
       </ul>
     </div>
   </div>
-  <script type="module" src="/src/js/app.js"></script>
 </body>
 
 </html>

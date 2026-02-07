@@ -1,44 +1,187 @@
-// slider.js
-// Lightweight, dependency-free slider with touch and mouse support.
-// Deferred image loading:
-// - First slide loads immediately
-// - Other slides load only on first interaction (hover on desktop, touchstart on touch devices)
-//
-// Example usage:
-//
-// <div x-slider='{"gap":0,"rubber":true,"resetOnMouseout":true,"touch":true}'>
-//   <div><img data-src="image1.jpg" data-srcset="..." alt="Slide 1"></div>
-//   <div><img data-src="image2.jpg" data-srcset="..." alt="Slide 2"></div>
-//   <div><img data-src="image3.jpg" alt="Slide 3"></div>
-// </div>
-//
-// <script type="module">
-//   import { slider } from './slider.js';
-//   slider.init();
-// </script>
-//
+/**
+ * @fileoverview Lightweight, dependency-free slider with touch and mouse support.
+ *
+ * Provides smooth sliding functionality with deferred image loading, touch gestures, mouse interaction,
+ * and automatic initialization via IntersectionObserver. Supports multiple independent sliders on the page.
+ *
+ * Features:
+ * - Touch and mouse support
+ * - Deferred image loading (first slide loads immediately, others on interaction)
+ * - Rubber band effect at boundaries
+ * - Automatic indicators for multiple slides
+ * - Responsive to window resize and orientation changes
+ * - Lazy initialization via IntersectionObserver
+ *
+ * Exported singleton: `slider`
+ *
+ * Usage:
+ *
+ * Basic setup:
+ *   import { slider } from './slider.js';
+ *   slider.init();
+ *
+ * HTML structure:
+ *   <div x-slider>
+ *     <div><img data-src="slide1.jpg" alt="Slide 1"></div>
+ *     <div><img data-src="slide2.jpg" alt="Slide 2"></div>
+ *     <div><img data-src="slide3.jpg" alt="Slide 3"></div>
+ *   </div>
+ *
+ * With configuration:
+ *   <div x-slider='{"gap":20,"rubber":true,"resetOnMouseout":true,"touch":true}'>
+ *     <div><img data-src="slide1.jpg" alt="Slide 1"></div>
+ *     <div><img data-src="slide2.jpg" alt="Slide 2"></div>
+ *   </div>
+ *
+ * With responsive images:
+ *   <div x-slider>
+ *     <div>
+ *       <img data-src="small.jpg"
+ *            data-srcset="small.jpg 300w, medium.jpg 600w, large.jpg 1200w"
+ *            alt="Slide 1">
+ *     </div>
+ *   </div>
+ *
+ * Public API:
+ *
+ * @method init() - Initializes slider system.
+ *   Observes [x-slider] elements and initializes them when they enter viewport.
+ *   Sets up MutationObserver to handle dynamically added sliders.
+ *   Safe to call multiple times.
+ *   @example
+ *     slider.init();
+ *
+ * @method destroy() - Destroys all slider instances.
+ *   Removes all event listeners and observers.
+ *   Safe to call multiple times.
+ *   @example
+ *     slider.destroy();
+ *
+ * Configuration (x-slider attribute JSON):
+ *
+ * {
+ *   "gap": number,              // Gap between slides in pixels (default: 0)
+ *   "rubber": boolean,          // Enable rubber band effect at boundaries (default: true)
+ *   "resetOnMouseout": boolean, // Reset to first slide on mouse leave (default: true)
+ *   "touch": boolean            // Enable touch interactions (default: true)
+ * }
+ *
+ * Behavior:
+ *
+ * Desktop (mouse):
+ * - Hover over slider to navigate between slides
+ * - Mouse position determines active slide
+ * - Optionally resets to first slide on mouse leave
+ * - First slide loads immediately, others on first hover
+ *
+ * Touch devices:
+ * - Swipe left/right to navigate
+ * - Rubber band effect at first/last slide (if enabled)
+ * - First slide loads immediately, others on first touch
+ *
+ * Image loading:
+ * - First slide image loads immediately (eager loading)
+ * - Other slides load on first interaction (hover or touch)
+ * - Supports data-src and data-srcset for lazy loading
+ *
+ * CSS classes:
+ *
+ * - `.slider` - Added to slider container
+ * - `.slider-wrapper` - Wrapper for slides
+ * - `.slider-item` - Individual slide
+ * - `.slider-indicators` - Container for indicators
+ * - `.slider_touch` - Added when touch is enabled
+ * - `.active` - Active indicator dot
+ *
+ * SECURITY WARNINGS:
+ *
+ * 1. JSON parsing:
+ *    - JSON from x-slider attribute is parsed
+ *    - Only use trusted content in x-slider attributes
+ *    - Invalid JSON is caught and logged
+ *
+ * 2. innerHTML usage:
+ *    - innerHTML is used to clear container (safe: el.innerHTML = '')
+ *    - Content is cloned from existing DOM nodes (safe)
+ *
+ * 3. Image sources:
+ *    - Images use data-src and data-srcset attributes
+ *    - Validate image URLs to prevent XSS
+ *
+ * Best practices:
+ *
+ * - Use descriptive alt text for images
+ * - Optimize images for web (appropriate sizes)
+ * - Test touch interactions on real devices
+ * - Consider accessibility (keyboard navigation, ARIA labels)
+ * - Use appropriate gap values for your design
+ *
+ * Browser support:
+ *
+ * - Modern browsers with IntersectionObserver support
+ * - Touch events support for mobile devices
+ * - CSS transforms and transitions
+ *
+ * @author Andrey Shpigunov
+ * @version 0.3
+ * @since 2025-07-18
+ */
+
+import { lib } from './lib';
 
 export class Slider {
   constructor() {
+    /**
+     * NodeList of all slider elements.
+     * @type {NodeListOf<HTMLElement>}
+     */
     this.sliders = [];
+
+    /**
+     * Map of slider instances with their event handlers and data.
+     * Key: HTMLElement, Value: { wrapper, slides, events, touch, listenerTarget }
+     * @type {Map<HTMLElement, Object>}
+     */
     this.instances = new Map();
+
+    /**
+     * IntersectionObserver instance for lazy initialization.
+     * @type {IntersectionObserver|null}
+     */
     this.io = null;
+
+    /**
+     * MutationObserver instance for dynamic content.
+     * @type {MutationObserver|null}
+     */
     this.mo = null;
   }
 
   init() {
     this.observeSliders();
 
+    if (!('MutationObserver' in window)) {
+      console.warn('slider: MutationObserver is not supported');
+      return;
+    }
+
     this.mo = new MutationObserver(mutations => {
       for (const mutation of mutations) {
-        mutation.addedNodes.forEach(node => {
-          if (node.nodeType === 1 && node.hasAttribute?.('x-slider')) {
-            this.io.observe(node);
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === 1 && node instanceof HTMLElement) {
+            if (node.hasAttribute('x-slider') && this.io) {
+              this.io.observe(node);
+            }
+            const sliders = node.querySelectorAll?.('[x-slider]');
+            if (sliders && this.io) {
+              for (const slider of sliders) {
+                if (slider && !this.instances.has(slider)) {
+                  this.io.observe(slider);
+                }
+              }
+            }
           }
-          if (node.nodeType === 1) {
-            node.querySelectorAll?.('[x-slider]')?.forEach(n => this.io.observe(n));
-          }
-        });
+        }
       }
     });
     this.mo.observe(document.body, { childList: true, subtree: true });
@@ -68,21 +211,82 @@ export class Slider {
   }
 
   observeSliders() {
+    if (!('IntersectionObserver' in window)) {
+      console.warn('slider: IntersectionObserver is not supported');
+      return;
+    }
+
     this.sliders = document.querySelectorAll('[x-slider]');
     this.io = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !this.instances.has(entry.target)) {
+      for (const entry of entries) {
+        if (entry.isIntersecting && entry.target && !this.instances.has(entry.target)) {
           this.initSlider(entry.target);
         }
-      });
+      }
     }, { rootMargin: '60px 0px 60px 0px', threshold: 0 });
 
-    this.sliders.forEach(slider => this.io.observe(slider));
+    for (const slider of this.sliders) {
+      if (slider) {
+        this.io.observe(slider);
+      }
+    }
   }
 
+  /**
+   * Validates slider configuration values.
+   * @param {Object} config - Configuration object
+   * @returns {Object} - Validated configuration
+   * @private
+   */
+  _validateConfig(config) {
+    const validated = {
+      gap: 0,
+      rubber: true,
+      resetOnMouseout: true,
+      touch: true
+    };
+
+    if (!config || typeof config !== 'object') {
+      return validated;
+    }
+
+    if ('gap' in config) {
+      const gapValue = Number(config.gap);
+      validated.gap = isNaN(gapValue) || gapValue < 0 ? 0 : gapValue;
+    }
+
+    if ('rubber' in config) {
+      validated.rubber = Boolean(config.rubber);
+    }
+
+    if ('resetOnMouseout' in config) {
+      validated.resetOnMouseout = Boolean(config.resetOnMouseout);
+    }
+
+    if ('touch' in config) {
+      validated.touch = Boolean(config.touch);
+    }
+
+    return validated;
+  }
+
+  /**
+   * Initializes a single slider instance.
+   * SECURITY: Validates configuration before use.
+   * @param {HTMLElement} el - Slider container element
+   * @private
+   */
   initSlider(el) {
+    if (!el || !(el instanceof HTMLElement)) {
+      console.error('slider.initSlider: Invalid element');
+      return;
+    }
+
     const rawSlides = [...el.children].map(node => node.cloneNode(true));
-    if (!rawSlides.length) return;
+    if (!rawSlides.length) {
+      console.warn('slider.initSlider: No slides found', el);
+      return;
+    }
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
@@ -90,16 +294,21 @@ export class Slider {
 
     let gap = 0, rubber = true, resetOnMouseout = true, touch = true;
     try {
-      const config = el.getAttribute('x-slider');
-      if (config) {
-        const parsed = JSON.parse(config);
-        if ('gap' in parsed) gap = Number(parsed.gap) || 0;
-        if ('rubber' in parsed) rubber = Boolean(parsed.rubber);
-        if ('resetOnMouseout' in parsed) resetOnMouseout = Boolean(parsed.resetOnMouseout);
-        if ('touch' in parsed) touch = Boolean(parsed.touch);
+      const configAttr = el.getAttribute('x-slider');
+      if (configAttr) {
+        if (!lib.isValidJSON(configAttr)) {
+          console.warn('slider.initSlider: Invalid JSON in x-slider attribute:', configAttr);
+        } else {
+          const parsed = JSON.parse(configAttr);
+          const validated = this._validateConfig(parsed);
+          gap = validated.gap;
+          rubber = validated.rubber;
+          resetOnMouseout = validated.resetOnMouseout;
+          touch = validated.touch;
+        }
       }
     } catch (err) {
-      console.warn('Invalid x-slider JSON', err);
+      console.warn('slider.initSlider: Error parsing x-slider JSON', err);
     }
 
     const wrapper = document.createElement('div');
@@ -108,7 +317,10 @@ export class Slider {
     el.innerHTML = '';
 
     // Prepare slides
-    rawSlides.forEach((node, i) => {
+    for (let i = 0; i < rawSlides.length; i++) {
+      const node = rawSlides[i];
+      if (!node) continue;
+
       node.classList.add('slider-item');
       const img = node.querySelector('img');
       if (img && i === 0) {
@@ -121,10 +333,10 @@ export class Slider {
           img.src = img.dataset.src;
           img.removeAttribute('data-src');
         }
-        img.setAttribute('loading','eager');
+        img.setAttribute('loading', 'eager');
       }
       wrapper.appendChild(node);
-    });
+    }
 
     el.appendChild(wrapper);
 
@@ -135,11 +347,11 @@ export class Slider {
     if (rawSlides.length > 1 && (!isTouch || touch)) {
       const indicatorsContainer = document.createElement('div');
       indicatorsContainer.className = 'slider-indicators';
-      rawSlides.forEach((_, i) => {
+      for (let i = 0; i < rawSlides.length; i++) {
         const span = document.createElement('span');
         if (i === 0) span.classList.add('active');
         indicatorsContainer.appendChild(span);
-      });
+      }
       el.appendChild(indicatorsContainer);
       indicators = [...indicatorsContainer.querySelectorAll('span')];
     }
@@ -174,7 +386,12 @@ export class Slider {
       wrapper.style.transform = `translateX(${-current * slideWidth}px)`;
 
       if (indicators.length) {
-        indicators.forEach((span, idx) => span.classList.toggle('active', idx === current));
+        for (let idx = 0; idx < indicators.length; idx++) {
+          const span = indicators[idx];
+          if (span) {
+            span.classList.toggle('active', idx === current);
+          }
+        }
       }
 
       if (!instant) {
@@ -201,10 +418,12 @@ export class Slider {
       if (allLoaded) return;
       allLoaded = true;
 
-      slides.forEach((slide, i) => {
+      for (let i = 0; i < slides.length; i++) {
+        const slide = slides[i];
+        if (!slide) continue;
+
         const img = slide.querySelector('img');
-        if (!img) return;
-        if (i === 0) return; // first already loaded
+        if (!img || i === 0) continue; // first already loaded
 
         if (img.dataset.srcset) {
           img.srcset = img.dataset.srcset;
@@ -220,12 +439,14 @@ export class Slider {
             if (cursorX != null) {
               const rect = el.getBoundingClientRect();
               const w = el.offsetWidth;
-              const idx = Math.floor(((cursorX - rect.left)/w) * slides.length);
-              if (idx === i) setSlide(i, true);
+              if (w > 0) {
+                const idx = Math.floor(((cursorX - rect.left) / w) * slides.length);
+                if (idx === i) setSlide(i, true);
+              }
             }
           }, { once: true });
         }
-      });
+      }
     };
 
     if (slides.length > 1) {

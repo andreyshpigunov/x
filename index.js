@@ -1,1 +1,17 @@
 import './dist/x.js';
+
+export { modal } from './src/components/x/modal';
+export { animate } from './src/components/x/animate';
+export { appear } from './src/components/x/appear';
+export { lazyload } from './src/components/x/lazyload';
+export { loadmore } from './src/components/x/loadmore';
+export { sheets } from './src/components/x/sheets';
+export { dropdown } from './src/components/x/dropdown';
+export { autocomplete } from './src/components/x/autocomplete';
+export { scroll } from './src/components/x/scroll';
+export { hover } from './src/components/x/hover';
+export { device } from './src/components/x/device';
+export { form } from './src/components/x/form';
+export { sticky } from './src/components/x/sticky';
+export { slider } from './src/components/x/slider';
+export { lib } from './src/components/x/lib';

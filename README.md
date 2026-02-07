@@ -35,3 +35,6 @@ And several CSS styles for fast prototyping or usage as base styles.
 
 ## Install from NPM
 ```npm i @andreyshpigunov/x@version```
+
+## Docs
+
