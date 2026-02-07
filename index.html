@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.3.86</div>
+    <div class="header-version nowrap">0.3.88</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/logo.png" alt="x" />
@@ -29,7 +29,7 @@
       <a href="https://github.com/andreyshpigunov/x" target="_blank"></a>
     </div>
   </header>
-  
+
   <div class="element3" x-animate='{
     "start": "50vh",
     "end": "-100px",
@@ -42,7 +42,7 @@
 
   <section class="section-header mt8 px5 m:px6 l:px8" x-appear>
     <h1 class="mxa ac max800">Small and simple CSS & JavaScript library with interesting features</h1>
-    
+
     <div class="flex">
       <div class="mt4">
         <button x-dropdown-open class="button button--dropdown" tabindex="1">Menu left</button>
@@ -85,8 +85,8 @@
   }'>
     <div class="element2-figure"></div>
   </div>
-  
-  
+
+
   <section class="section-header mt6 px5 m:px6 l:px8">
     <h2 class="ac">JS plugins</h2>
   </section>
@@ -169,7 +169,7 @@
           <script>
             document.addEventListener('DOMContentLoaded', () => {
               if (x.device) {
-                
+
                 function renderDevice() {
                   setTimeout(() => {
                     let content = '';
@@ -185,14 +185,14 @@
                     x.lib.render('.jsDeviceExample', content)
                   }, 200)
                 }
-                
+
                 renderDevice(x.device);
-                
+
                 const debouncedRenderDevice = x.lib.debounce(renderDevice, 200);
                 window.addEventListener('resize', debouncedRenderDevice)
               }
             })
-            
+
           </script>
         </div>
 
@@ -667,8 +667,8 @@
             <div class="mt3">
               <div x-sheet="sheetA">Once I saw a little bird outside my window. It was chirping happily and looking for food. I put some seeds on the windowsill, and it ate them right away.</div>
               <div x-sheet="sheetB">Once I saw a ship on the sea. It was sailing smoothly and leaving a trail in the water. The sun was setting, making the scene even more beautiful.
-                
-                
+
+
                 <div x-sheets class="sheets-example mt3">
                   <div class="button--tabs">
                     <a class="button" x-sheet-open="sheetA1">Bird</a>
@@ -773,7 +773,7 @@
       </div>
     </div>
   </section>
-  
+
   <section class="section-header mt8 px5 m:px6 l:px8">
     <h2 class="ac">Start usage</h2>
   </section>
@@ -838,8 +838,8 @@
       <hr class="my7" />
     </div>
   </section>
-  
-  
+
+
   <div x-modal="modalBreakpoints" class="modal--hash" data-window-class="max1000">
       <h2>Breakpoints</h2>
       <p>Mobile first breakpoints</p>
@@ -852,17 +852,17 @@
 ---------------------------
 |  0  | 600 | 1000 | 1400 |
 ---------------------------</pre>
-    
+
     <p>
       <code>s</code> - default size, not using prefix <code>s:</code><br>
       <code>m</code> - medium size<br>
       <code>l</code> - large size<br>
       <code>xl</code> - xlarge size
     </p>
-    
+
     <h3>Custom media</h3>
     <p>X use <a href="https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media" target="_blank">PostCSS custom media plugin</a> for compiling styles.</p>
-    
+
     <pre class="fs14 mono">
 <span class="op4">/* Setting for PostCSS custom media plugin */</span>
 @custom-media --small  (min-width: 0px);
@@ -876,7 +876,7 @@
   <div x-modal="modalReset" class="modal--hash" data-window-class="max1000">
     <h2>Reset</h2>
     <p>Global styles reset and base variables.</p>
-    
+
     <h3>Variables</h3>
     <pre class="fs14 mono">
 --line-height: 1.5;
@@ -887,8 +887,8 @@
 --font-family-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
 --background-color: #fff;</pre>
   </div>
-  
-  
+
+
   <div x-modal="modalSpaces" class="modal--hash" data-window-class="max1000">
     <h2>Spaces</h2>
     <p>Global spaces.</p>
@@ -896,7 +896,7 @@
       1rem = 10px by default (16px * var(--font-size-coeff)<br>
       16px - default font size in most browsers
     </p>
-    
+
     <h3>Variables</h3>
     <pre class="fs14 mono">
 --space-0:  0;
@@ -916,7 +916,7 @@
   <div x-modal="modalLinks" class="modal--hash" data-window-class="max1000">
     <h2>Links</h2>
     <p>Links styling.</p>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 a
@@ -937,7 +937,7 @@ a.link--wavy</pre>
       <a class="link link--dotted">dotted</a>
       <a class="link link--wavy">wavy</a>
     </div>
-    
+
     <h3>Variables</h3>
     <pre class="fs14 mono">
 --link-color: #0060bb;
@@ -956,8 +956,8 @@ a.link--wavy</pre>
 --link-underline-offset: .25em;
 --link-transition: all .1s ease-out;</pre>
   </div>
-  
-  
+
+
   <div x-modal="modalIcons" class="modal--hash" data-window-class="max1000">
     <h2>Icons</h2>
     <div class="mt6">
@@ -965,8 +965,8 @@ a.link--wavy</pre>
 .icon--[10-60] step 2 (m,l) - modifier with size in px</pre>
     </div>
   </div>
-  
-  
+
+
   <div x-modal="modalColors" class="modal--hash" data-window-class="max1000">
     <h2>Colors</h2>
     <div class="mt6">
@@ -991,7 +991,7 @@ a.link--wavy</pre>
 
   <div x-modal="modalTypo" class="modal--hash" data-window-class="max1000">
     <h2>Typo</h2>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .h[1-6]
@@ -1003,7 +1003,7 @@ a.link--wavy</pre>
 .fw[100-900] step 100 (m,l,xl)
 .ls[0-4] (m,l,xl)
 .lh[0-9] (m,l,xl)  - values: 1.0-1.9</pre>
-    
+
     <h3>Variables</h3>
     <pre class="fs14 mono">
 --headers-margin-top: 1em;
@@ -1042,11 +1042,11 @@ a.link--wavy</pre>
   <div x-modal="modalForms" class="modal--hash" data-window-class="max1000">
     <h2>Forms</h2>
     <p>Form elements.</p>
-    
+
     <h3>Modifiers</h3>
     <pre class="fs14 mono">
 .error</pre>
-    
+
     <h3>Variables</h3>
     <pre class="fs14 mono">
 --forms-width: 400px;
@@ -1075,7 +1075,7 @@ a.link--wavy</pre>
 
   <div x-modal="modalButtons" class="modal--hash" data-window-class="max1000">
     <h2>Buttons</h2>
-    
+
     <div class="flow s4">
       <div class="flex fw gap4">
         <button class="button button--label">Label</button>
@@ -1128,7 +1128,7 @@ a.link--wavy</pre>
         <button class="button fs24 button--clear">Button</button>
       </div>
     </div>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .button
@@ -1141,7 +1141,7 @@ a.link--wavy</pre>
 .button--white
 .button--black
 .button--clear</pre>
-  
+
   <h3>Variables</h3>
   <pre class="fs14 mono"><span class="op4">/* Required variables */</span>
 --button-height-coeff: 2.5;
@@ -1173,7 +1173,7 @@ a.link--wavy</pre>
   <div x-modal="modalFlex" class="modal--hash" data-window-class="max1000">
     <h2>Flex</h2>
     <p>Flexbox.</p>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .flex
@@ -1204,7 +1204,7 @@ a.link--wavy</pre>
   <div x-modal="modalGrid" class="modal--hash" data-window-class="max1000">
     <h2>Grid</h2>
     <p>Multicolumn adaptive grid (1–12 columns).</p>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .grid
@@ -1217,7 +1217,7 @@ a.link--wavy</pre>
   <div x-modal="modalFlow" class="modal--hash" data-window-class="max1000">
     <h2>Flow</h2>
     <p>Vertical flow of elements with equal spaces between them.</p>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .flow
@@ -1230,7 +1230,7 @@ a.link--wavy</pre>
   <div x-modal="modalHelpers" class="modal--hash" data-window-class="max1000">
     <h2>Helpers</h2>
     <p>Helper classes.</p>
-    
+
     <h3>Elements</h3>
     <pre class="fs14 mono">
 .container
@@ -1343,7 +1343,7 @@ a.link--wavy</pre>
 
 .o[0-12] (m,l,xl) | order
 .noPrint</pre>
-    
+
     <h3>Variables</h3>
     <pre class="fs14 mono">
 --container-max-width: 1600px;
@@ -1358,7 +1358,7 @@ a.link--wavy</pre>
 --shadow-8:  0 16px 32px #00000018;
 --shadow-9:  0 18px 36px #00000018;
 --shadow-10: 0 20px 40px #00000018;</pre>
-  
+
     <h3>Shadows</h3>
     <div class="grid g1 m:g2 l:g3 gap6">
       <div class="c1 p6 r4 sh1">
@@ -1393,9 +1393,9 @@ a.link--wavy</pre>
       </div>
     </div>
   </div>
-  
-  
-  
+
+
+
   <div x-modal="modalModal" class="modal--hash" data-window-class="max1000">
     <h2>Modals</h2>
 
@@ -2036,7 +2036,7 @@ a.link--wavy</pre>
 
 
   <div x-modal="modalLib" class="modal--hash" data-window-class="max1000">
-    
+
     <h2>Lib</h2>
 
     <p>Набор полезных методов.</p>
@@ -2179,12 +2179,12 @@ a.link--wavy</pre>
     <h4><code class="fs16">async render(selector, data, placement = null)</code></h4>
     <h4><code class="fs16">[x-render]  |  Render JavaScript in 'x-render' attribute</code></h4>
   </div>
-  
+
   <footer class="p6 ac fs14">
     <a href="mailto:andrey@shpigunov.ru">andrey@shpigunov.ru</a>
     <div class="mt1" x-render="new Date().getFullYear()"></div>
   </footer>
-  
+
   <div class="flex aic jcse m4">
     <div>
       <button x-dropdown-open class="button button--dropdown" tabindex="4">Bottom menu</button>

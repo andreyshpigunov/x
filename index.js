@@ -1,5 +1,3 @@
-import './dist/x.js';
-
 export { modal } from './src/components/x/modal';
 export { animate } from './src/components/x/animate';
 export { appear } from './src/components/x/appear';
