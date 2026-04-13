@@ -33,8 +33,8 @@ window.headerAnimation = (params) => {
   // console.log(x.device.size.s);
   let _height = 100;
   // console.log(_height);
-  let header = qs('.header');
-  let headerLogo = qs('.header-logo img');
+  let header = x.qs('.header');
+  let headerLogo = x.qs('.header-logo img');
   let height = _height - params.progress * _height / 2;
   let scale = 1 - params.progress * 0.5;
   header.style.height = height + 'px';

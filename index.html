@@ -234,27 +234,27 @@
               });
 
               x.form.onUpdate('[name=exampleSelect]', (el) => {
-                qs('[name=exampleSelectValue]').value = el.value;
-                qs('#radio' + el.value).checked = true;
+                x.qs('[name=exampleSelectValue]').value = el.value;
+                x.qs('#radio' + el.value).checked = true;
               });
 
               x.form.onUpdate('[name=exampleSelectValue]', (el) => {
                 var val = ['', '1', '2', '3'].includes(el.value) ? el.value : 1;
                 el.value = val;
-                qs('[name=exampleSelect]').value = val;
+                x.qs('[name=exampleSelect]').value = val;
                 // Reset radio buttons
-                let radio = qsa('[name=exampleSelectRadio]');
+                let radio = x.qsa('[name=exampleSelectRadio]');
                 for (let rad of radio) rad.checked = false;
                 // Select radio button
-                if (el.value != '') qs('#radio' + el.value).checked = true;
+                if (el.value != '') x.qs('#radio' + el.value).checked = true;
               });
 
-              let radio = qsa('[name=exampleSelectRadio]');
+              let radio = x.qsa('[name=exampleSelectRadio]');
               for (let rad of radio) {
                 x.form.onUpdate(rad, (el) => {
-                  let val = qs('[name=exampleSelectRadio]:checked').value;
-                  qs('[name=exampleSelect]').value = el.value;
-                  qs('[name=exampleSelectValue]').value = el.value;
+                  let val = x.qs('[name=exampleSelectRadio]:checked').value;
+                  x.qs('[name=exampleSelect]').value = el.value;
+                  x.qs('[name=exampleSelectValue]').value = el.value;
                 });
               }
 
@@ -265,8 +265,8 @@
               x.form.onUpdate(fields, calc);
 
               function calc() {
-                let val1 = qs('[name=exampleVal1]').value || 0;
-                let val2 = qs('[name=exampleVal2]').value || 0;
+                let val1 = x.qs('[name=exampleVal1]').value || 0;
+                let val2 = x.qs('[name=exampleVal2]').value || 0;
                 let sum = parseInt(val1) + parseInt(val2);
                 x.form.setValue('[name=exampleSum]', sum);
               }
@@ -370,7 +370,7 @@
               }
 
               libExample();
-              qs('.jsLibExampleUpdate').addEventListener('click', libExample);
+              x.qs('.jsLibExampleUpdate').addEventListener('click', libExample);
             })
           </script>
         </div>
@@ -830,7 +830,7 @@
       <h3>Project on GitHub</h3>
       <p><a href="https://github.com/andreyshpigunov/x">https://github.com/andreyshpigunov/x</a></p>
       <hr class="my7" />
-      
+
       <p><a href="https://andreyshpigunov.github.io/x/cheatsheet.html">CSS cheatsheet</a></p>
     </div>
   </section>
@@ -2040,8 +2040,8 @@ a.link--wavy</pre>
     <h3>Шорткаты</h3>
 
     <div class="codeBlock">
-      <code>qs: (s, o = document) => o.querySelector(s)</code>
-      <code>qsa: (s, o = document) => o.querySelectorAll(s)</code>
+      <code>x.qs: (s, o = document) => o.querySelector(s)</code>
+      <code>x.qsa: (s, o = document) => o.querySelectorAll(s)</code>
     </div>
 
     <p>Пример использования:</p>
