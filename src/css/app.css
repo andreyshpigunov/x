@@ -115,10 +115,10 @@ All right reserved.
         height: 40px;
         background-position: center;
         background-size: cover;
-        background-image: url(/assets/img/github-mark.png);
+        background-image: url(assets/img/github-mark.png);
 
         @media (prefers-color-scheme: dark) {
-            background-image: url(/assets/img/github-mark-white.png);
+            background-image: url(assets/img/github-mark-white.png);
         }
     }
 }
