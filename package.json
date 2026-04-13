@@ -1,48 +1,53 @@
 {
-	"name": "@andreyshpigunov/x",
-	"version": "0.3.89",
-	"devDependencies": {
-		"@babel/preset-env": "^7.26.9",
-		"@jest/globals": "^29.7.0",
-		"babel-jest": "^29.7.0",
-		"docdash": "^2.0.2",
-		"jest": "^29.7.0",
-		"jest-environment-jsdom": "^29.7.0",
-		"jsdoc": "^4.0.4",
-		"postcss": "^8.5",
-		"postcss-cli": "^8.3.0",
-		"postcss-custom-media": "^11.0.1",
-		"postcss-each": "^1.1.0",
-		"postcss-extend": "^1.0.5",
-		"postcss-for": "^2.1.1",
-		"postcss-import": "^14.0.2",
-		"postcss-lightningcss": "^1.0.2",
-		"postcss-nesting": "^10.2.0",
-		"postcss-simple-vars": "^7.0.1",
-		"vite": "^6.0.0"
-	},
-	"type": "module",
-	"scripts": {
-		"dev": "vite",
-		"build": "vite build && postcss src/css/x.css -o dist/x.css --no-map",
-		"build-css": "postcss src/css/*.css -d dist/ --no-map",
-		"test": "exit 0"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/andreyshpigunov/x.git"
-	},
-	"author": "Andrey Shpigunov",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/andreyshpigunov/x/issues"
-	},
-	"homepage": "https://andreyshpigunov.github.io/x/",
-	"browserslist": [
-		"defaults"
-	],
-	"exports": {
-		".": "./index.js",
-    "./x.css": "./dist/x.css"
-	}
+  "name": "@andreyshpigunov/x",
+  "version": "0.4.0",
+  "x-js": "dist/x.js",
+  "app-js": "assets/js/app.js",
+  "targets": {
+    "x-js": {
+      "source": "src/js/x.js",
+      "context": "browser",
+      "optimize": true,
+      "sourceMap": false
+    },
+    "app-js": {
+      "source": "src/js/app.js",
+      "context": "browser",
+      "optimize": true,
+      "sourceMap": false
+    }
+  },
+  "devDependencies": {
+    "parcel": "^2.16.4",
+    "postcss": "^8.5.9",
+    "postcss-cli": "^11.0.1",
+    "postcss-each": "^1.1.0",
+    "postcss-for": "^2.1.1",
+    "postcss-import": "^16.1.1",
+    "postcss-lightningcss": "^1.1.0",
+    "postcss-nesting": "^14.0.0"
+  },
+  "type": "module",
+  "scripts": {
+    "build": "rm -rf dist assets/css assets/js && mkdir -p dist assets/css assets/js && parcel build --no-content-hash && postcss src/css/x.css -o dist/x.css --no-map && postcss src/css/app.css -o assets/css/app.css --no-map",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andreyshpigunov/x.git"
+  },
+  "author": "Andrey Shpigunov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/andreyshpigunov/x/issues"
+  },
+  "homepage": "https://andreyshpigunov.github.io/x/",
+  "browserslist": [
+    "defaults"
+  ],
+  "exports": {
+    ".": "./index.js",
+    "./x.css": "./dist/x.css",
+    "./x.js": "./dist/x.js"
+  }
 }

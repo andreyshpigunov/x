@@ -21,7 +21,7 @@ All right reserved.
 }
 
 
-@media (--dark) {
+@media (prefers-color-scheme: dark) {
     :root {
       /* x */
         --font-color: #ddd;
@@ -66,7 +66,7 @@ All right reserved.
   grid-area: copyright;
 }
 
-@media (--medium) {
+@media (min-width: 768px) {
   .foot {
     grid-template-rows: 1fr;
     grid-template-columns: 140px 1fr 200px;
@@ -82,7 +82,7 @@ All right reserved.
     height: 100px;
     will-change: height;
     
-    @media (--medium) {
+    @media (min-width: 768px) {
         height: 120px;
     }
 }
@@ -103,23 +103,22 @@ All right reserved.
         max-width: 100px;
         will-change: transform;
         
-        @media (--medium) {
+        @media (min-width: 768px) {
             max-width: 120px;
         }
     }
 }
 .header-github {
-    
     & a {
         display: block;
         width: 40px;
         height: 40px;
-        background-image: url('../assets/github-mark.png');
         background-position: center;
         background-size: cover;
-        
+        background-image: url(/assets/img/github-mark.png);
+
         @media (prefers-color-scheme: dark) {
-            background-image: url('../assets/github-mark-white.png');
+            background-image: url(/assets/img/github-mark-white.png);
         }
     }
 }
