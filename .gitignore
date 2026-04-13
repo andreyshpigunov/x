@@ -12,3 +12,5 @@ logo.pxd
 *.log
 
 node_modules
+
+docs

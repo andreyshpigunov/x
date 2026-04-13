@@ -15,7 +15,7 @@ Small and simple Javascript library with interesting features.
 - Modal
 - Scroll
 - Sheets
-- Slides
+- Slider
 - Sticky
 
 And several CSS styles for fast prototyping or usage as base styles.

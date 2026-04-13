@@ -47,7 +47,7 @@
  *   @example
  *     scroll.destroy();
  *
- * @method scrollTo(target | params) - Scrolls to element by id, selector, or element with options.
+ * @method scrollTo - Scrolls to element by id, selector, or options object.
  *   @param {string|HTMLElement|Object} params - Target element, selector, or options object.
  *   Options format:
  *   {
