@@ -21,7 +21,6 @@ All right reserved.
   --dropdown-divider-color: var(--color-grey);
 }
 
-
 [x-dropdown] {
   display: none;
   list-style: none;
@@ -47,8 +46,8 @@ All right reserved.
   pointer-events: none;
   overscroll-behavior: contain;
   
-  @media (--medium) {
-    --dropdown-max-width: 32rem;
+  @media (min-width: 768px) {
+    max-width: calc(var(--dropdown-max-width) * 1.2);
   }
   
   & > li {

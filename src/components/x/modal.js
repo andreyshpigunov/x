@@ -131,14 +131,23 @@
  * - Test modal behavior with nested modals
  * - Handle errors in event listeners gracefully
  *
- * Next.js: call modal.init() in useEffect; call modal.destroy() in cleanup (e.g. on unmount).
  * SSR-safe: init/destroy and DOM methods no-op when document/window is undefined.
  *
  * @example
- * useEffect(() => {
- *   modal.init();
- *   return () => modal.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <div x-modal="myModal" class="modal--hash" data-window-class="max800">
+ * //   <h2>Title</h2>
+ * //   <p>Content</p>
+ * //   <button type="button" class="modal-close">Close</button>
+ * // </div>
+ * // <a href="#myModal" x-modal-open="myModal">Open</a>
+ * //
+ * // <script type="module">
+ * //   import { modal } from './src/components/x/modal.js';
+ * //   window.addEventListener('DOMContentLoaded', () => modal.init());
+ * //   window.addEventListener('pagehide', () => modal.destroy());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.3

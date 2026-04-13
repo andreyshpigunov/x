@@ -14,11 +14,10 @@ All right reserved.
   ---------------------------
   |  s  |  m  |  l   |  xl  |  - main breakpoints
   ---------------------------
-  | 640 | 768 | 1024 | 1440 |  - min viewport size
+  | 640 | 768 | 1024 | 1280 |  - min viewport size
   ---------------------------
   All queries are mobile first.
 */
-
 
 :root {
   /* Base variables */
@@ -45,19 +44,6 @@ All right reserved.
   --space-9:  4.8rem;
   --space-10: 6.4rem;
 }
-
-
-/* PostCSS custom media */
-/* https://github.com/csstools/postcss-plugins/tree/main/plugins/postcss-custom-media */
-
-/* Breakpoints */
-@custom-media --small  (min-width: 640px);   /* Small screen  [s]  */
-@custom-media --medium (min-width: 768px);   /* Medium screen [m]  */
-@custom-media --large  (min-width: 1024px);  /* Large screen  [l]  */
-@custom-media --xlarge (min-width: 1440px);  /* XLarge screen [xl] */
-/* Dark mode */
-@custom-media --dark (prefers-color-scheme: dark);
-
 
 html, body, main, div, span, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

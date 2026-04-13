@@ -89,14 +89,23 @@
  * - Use `data-srcset` for responsive images to reduce bandwidth
  * - Images are automatically unobserved after loading to reduce overhead
  *
- * Next.js: call lazyload.init() in useEffect; in cleanup call lazyload.destroy().
- *
  * @example
- * // Next.js — layout or _app
- * useEffect(() => {
- *   lazyload.init();
- *   return () => lazyload.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <img
+ * //   x-lazyload
+ * //   width="800"
+ * //   height="450"
+ * //   src="placeholder.jpg"
+ * //   data-src="image.jpg"
+ * //   alt="Lazy image"
+ * // />
+ * //
+ * // <script type="module">
+ * //   import { lazyload } from './src/components/x/lazyload.js';
+ * //   window.addEventListener('DOMContentLoaded', () => lazyload.init());
+ * //   window.addEventListener('pagehide', () => lazyload.destroy());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.2
@@ -149,7 +158,7 @@ class Lazyload {
   }
 
   /**
-   * Disconnects observer and clears reference. Use on SPA unmount or Next.js cleanup.
+   * Disconnects observer and clears reference. Use on SPA unmount / page change.
    * SSR-safe: no-op when window is undefined.
    */
   destroy() {

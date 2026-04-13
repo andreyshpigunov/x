@@ -7,9 +7,6 @@ All right reserved.
 ----------------------------------------*/
 
 
-/* !- Typo */
-
-
 /*
   .h[1-6]
   .mono
@@ -21,7 +18,6 @@ All right reserved.
   .ls[0-4] (m,l,xl)
   .lh[0-9] (m,l,xl)  - values: 1.0-1.9
 */
-
 
 :root {
   --headers-margin-top: 1em;
@@ -145,15 +141,15 @@ pre {
 
 /* !- Lists */
 
-ul, 
-ol, 
+ul,
+ol,
 dl {
   margin: var(--paragraph-margin) 0;
   padding-left: calc(var(--paragraph-margin) * 1.5);
   
-  & ul, 
-  & ol, 
-  & dl, 
+  & ul,
+  & ol,
+  & dl,
   & li {
     margin: var(--space-1) 0;
   }
@@ -210,19 +206,7 @@ table {
   .fw$(i) { font-weight: $(i) }
 }
 
-@media (--small) {
-  @for $i from 10 to 19 {
-    .s\:fs$(i) { font-size: calc($(i)rem / 10) }
-  }
-  @for $i from 20 to 64 by 2 {
-    .s\:fs$(i) { font-size: calc($(i)rem / 10) }
-  }
-  @for $i from 100 to 900 by 100 {
-    .s\:fw$(i) { font-weight: $(i) }
-  }
-}
-
-@media (--medium) {
+@media (min-width: 768px) {
   @for $i from 10 to 19 {
     .m\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
@@ -234,7 +218,7 @@ table {
   }
 }
 
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 10 to 19 {
     .l\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
@@ -246,7 +230,7 @@ table {
   }
 }
 
-@media (--xlarge) {
+@media (min-width: 1280px) {
   @for $i from 10 to 19 {
     .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
   }
@@ -265,22 +249,17 @@ table {
   .ls$(i) { letter-spacing: calc($(i)em * 0.625) }
 }
 
-@media (--small) {
-  @for $i from 0 to 4 {
-    .s\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
-  }
-}
-@media (--medium) {
+@media (min-width: 768px) {
   @for $i from 0 to 4 {
     .m\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
   }
 }
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 0 to 4 {
     .l\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
   }
 }
-@media (--xlarge) {
+@media (min-width: 1280px) {
   @for $i from 0 to 4 {
     .xl\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
   }
@@ -293,22 +272,17 @@ table {
   .lh$(i)  { line-height: 1.$(i) }
 }
 
-@media (--small) {
-  @for $i from 0 to 9 {
-    .s\:lh$(i)  { line-height: 1.$(i) }
-  }
-}
-@media (--medium) {
+@media (min-width: 768px) {
   @for $i from 0 to 9 {
     .m\:lh$(i)  { line-height: 1.$(i) }
   }
 }
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 0 to 9 {
     .l\:lh$(i)  { line-height: 1.$(i) }
   }
 }
-@media (--xlarge) {
+@media (min-width: 1280px) {
   @for $i from 0 to 9 {
     .xl\:lh$(i)  { line-height: 1.$(i) }
   }

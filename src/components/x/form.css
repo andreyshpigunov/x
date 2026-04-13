@@ -80,7 +80,7 @@ select {
     color: var(--form-font-color-disabled);
     border-color: var(--form-border-color-disabled);
     background-color: var(--form-background-color-disabled);
-    cursor: not-allowed !important;
+    cursor: not-allowed;
     box-shadow: none;
   }
 
@@ -99,9 +99,9 @@ select {
 
 select {
   padding-right: calc(var(--form-side-padding) * 2.6);
-  background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down"%3E%3Cpath d="m7 15 5 5 5-5"/%3E%3Cpath d="m7 9 5-5 5 5"/%3E%3C/svg%3E');
-  background-repeat: no-repeat;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' class='lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down'%3E%3Cpath d='m7 15 5 5 5-5M7 9l5-5 5 5'/%3E%3C/svg%3E");
   background-position: right calc(var(--form-side-padding) - 4px) top 52%, 0 0;
+  background-repeat: no-repeat;
   background-size: 1.6rem;
 }
 

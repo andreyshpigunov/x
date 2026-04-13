@@ -9,7 +9,7 @@ All right reserved.
 
 /*
   .icon - base icon style
-  .icon--[10-60] step 2 (m,l) - icon size in px
+  .icon.s[10-60] step 2 (m,l) - icon size in px
 */
 
 .icon,
@@ -27,30 +27,30 @@ All right reserved.
 }
 
 @for $i from 10 to 60 by 2 {
-  .icon--$(i),
-  .icon--$(i) > svg,
-  .icon--$(i) > img {
+  .icon.s$(i),
+  .icon.s$(i) > svg,
+  .icon.s$(i) > img {
     width: calc($(i)rem / 10);
     height: calc($(i)rem / 10);
   }
 }
 
-@media (--medium) {
+@media (min-width: 768px) {
   @for $i from 10 to 60 by 2 {
-    .m\:icon--$(i),
-    .m\:icon--$(i) > svg,
-    .m\:icon--$(i) > img {
+    .m\:icon.s$(i),
+    .m\:icon.s$(i) > svg,
+    .m\:icon.s$(i) > img {
       width: calc($(i)rem / 10);
       height: calc($(i)rem / 10);
     }
   }
 }
 
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 10 to 60 by 2 {
-    .l\:icon--$(i),
-    .l\:icon--$(i) > svg,
-    .l\:icon--$(i) > img {
+    .l\:icon.s$(i),
+    .l\:icon.s$(i) > svg,
+    .l\:icon.s$(i) > img {
       width: calc($(i)rem / 10);
       height: calc($(i)rem / 10);
     }

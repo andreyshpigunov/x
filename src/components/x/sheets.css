@@ -7,9 +7,6 @@ All right reserved.
 ----------------------------------------*/
 
 
-/* !- Sheets */
-
-
 [x-sheet]:not(.active) {
   display: none;
 }

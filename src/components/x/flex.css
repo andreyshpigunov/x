@@ -6,54 +6,36 @@ Created by Andrey Shpigunov at 20.03.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /*
-  .flex
+  .flex     (s,m,l,xl)
   
-  .flex.fr  (m,l,xl)  - flex row
-  .flex.fc  (m,l,xl)  - flex column
-  .flex.fw  (m,l,xl)  - flex wrap
-  .flex.fnw (m,l,xl)  - flex nowrap
+  .flex.fr  (s,m,l,xl)  - flex row
+  .flex.fc  (s,m,l,xl)  - flex column
+  .flex.fw  (s,m,l,xl)  - flex wrap
+  .flex.fnw (s,m,l,xl)  - flex nowrap
   
-  .flex.ais  (m,l,xl)  - stretch
-  .flex.aifs (m,l,xl)  - flex start
-  .flex.aic  (m,l,xl)  - center
-  .flex.aife (m,l,xl)  - flex end
+  .flex.ais  (s,m,l,xl)  - stretch
+  .flex.aifs (s,m,l,xl)  - flex start
+  .flex.aic  (s,m,l,xl)  - center
+  .flex.aife (s,m,l,xl)  - flex end
   
-  .flex.jcfs (m,l,xl)  - flex start
-  .flex.jcc  (m,l,xl)  - center
-  .flex.jcfe (m,l,xl)  - flex end
-  .flex.jcsb (m,l,xl)  - space between
-  .flex.jcsa (m,l,xl)  - space around
-  .flex.jcse (m,l,xl)  - space evenly
+  .flex.jcfs (s,m,l,xl)  - flex start
+  .flex.jcc  (s,m,l,xl)  - center
+  .flex.jcfe (s,m,l,xl)  - flex end
+  .flex.jcsb (s,m,l,xl)  - space between
+  .flex.jcsa (s,m,l,xl)  - space around
+  .flex.jcse (s,m,l,xl)  - space evenly
   
-  .flex > .c[1-12]/[1-12] (m,l,xl) - column width "column/columns"
+  .flex > .c[1-12]/[1-12] (s,m,l,xl) - column width "column/columns"
 */
 
+.flex { display: flex }
+@media (min-width: 640px)  { .s\:flex { display: flex } }
+@media (min-width: 768px)  { .m\:flex { display: flex } }
+@media (min-width: 1024px) { .l\:flex { display: flex } }
+@media (min-width: 1280px) { .xl\:flex { display: flex } }
 
-.flex {
-  display: flex;
-  
-  &.fr  { flex-direction: row }
-  &.fc  { flex-direction: column }
-  &.fw  { flex-wrap: wrap }
-  &.fnw { flex-wrap: nowrap }
-  
-  &.ais  { align-items: stretch }
-  &.aifs { align-items: flex-start }
-  &.aic  { align-items: center }
-  &.aife { align-items: flex-end }
-  
-  &.jcfs { justify-content: flex-start }
-  &.jcc  { justify-content: center }
-  &.jcfe { justify-content: flex-end }
-  &.jcsb { justify-content: space-between }
-  &.jcsa { justify-content: space-around }
-  &.jcse { justify-content: space-evenly }
-  
-  & > .noshrink { flex-shrink: 0 }
-  & > .nogrow { flex-grow: 0 }
-  
+[class*=flex] {
   /* Columns */
   @for $cols from 1 to 12 {
     @for $col from 1 to $cols {
@@ -64,28 +46,18 @@ All right reserved.
     }
   }
   
-  @media (--medium) {
-    
-    &.m\:fr  { flex-direction: row }
-    &.m\:fc  { flex-direction: column }
-    &.m\:fw  { flex-wrap: wrap }
-    &.m\:fnw { flex-wrap: nowrap }
-    
-    &.m\:ais  { align-items: stretch }
-    &.m\:aifs { align-items: flex-start }
-    &.m\:aic  { align-items: center }
-    &.m\:aife { align-items: flex-end }
-    
-    &.m\:jcfs { justify-content: flex-start }
-    &.m\:jcc  { justify-content: center }
-    &.m\:jcfe { justify-content: flex-end }
-    &.m\:jcsb { justify-content: space-between }
-    &.m\:jcsa { justify-content: space-around }
-    &.m\:jcse { justify-content: space-evenly }
-    
-    & > .m\:noshrink { flex-shrink: 0 }
-    & > .m\:nogrow { flex-grow: 0 }
-    
+  @media (min-width: 640px) {
+    @for $cols from 1 to 12 {
+      @for $col from 1 to $cols {
+        & > .s\:c$(col)\/$(cols) {
+          flex-basis: calc($(col) / $(cols) * 100%);
+          max-width: calc($(col) / $(cols) * 100%);
+        }
+      }
+    }
+  }
+  
+  @media (min-width: 768px) {
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .m\:c$(col)\/$(cols) {
@@ -96,28 +68,7 @@ All right reserved.
     }
   }
   
-  @media (--large) {
-    
-    &.l\:fr  { flex-direction: row }
-    &.l\:fc  { flex-direction: column }
-    &.l\:fw  { flex-wrap: wrap }
-    &.l\:fnw { flex-wrap: nowrap }
-    
-    &.l\:ais  { align-items: stretch }
-    &.l\:aifs { align-items: flex-start }
-    &.l\:aic  { align-items: center }
-    &.l\:aife { align-items: flex-end }
-    
-    &.l\:jcfs { justify-content: flex-start }
-    &.l\:jcc  { justify-content: center }
-    &.l\:jcfe { justify-content: flex-end }
-    &.l\:jcsb { justify-content: space-between }
-    &.l\:jcsa { justify-content: space-around }
-    &.l\:jcse { justify-content: space-evenly }
-    
-    & > .l\:noshrink { flex-shrink: 0 }
-    & > .l\:nogrow { flex-grow: 0 }
-    
+  @media (min-width: 1024px) {
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .l\:c$(col)\/$(cols) {
@@ -128,28 +79,7 @@ All right reserved.
     }
   }
   
-  @media (--xlarge) {
-    
-    &.xl\:fr  { flex-direction: row }
-    &.xl\:fc  { flex-direction: column }
-    &.xl\:fw  { flex-wrap: wrap }
-    &.xl\:fnw { flex-wrap: nowrap }
-    
-    &.xl\:ais  { align-items: stretch }
-    &.xl\:aifs { align-items: flex-start }
-    &.xl\:aic  { align-items: center }
-    &.xl\:aife { align-items: flex-end }
-    
-    &.xl\:jcfs { justify-content: flex-start }
-    &.xl\:jcc  { justify-content: center }
-    &.xl\:jcfe { justify-content: flex-end }
-    &.xl\:jcsb { justify-content: space-between }
-    &.xl\:jcsa { justify-content: space-around }
-    &.xl\:jcse { justify-content: space-evenly }
-    
-    & > .xl\:noshrink { flex-shrink: 0 }
-    & > .xl\:nogrow { flex-grow: 0 }
-    
+  @media (min-width: 1280px) {
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
         & > .xl\:c$(col)\/$(cols) {
@@ -159,5 +89,112 @@ All right reserved.
       }
     }
   }
+}
+
+.fr  { flex-direction: row }
+.fc  { flex-direction: column }
+.fw  { flex-wrap: wrap }
+.fnw { flex-wrap: nowrap }
+
+.ais  { align-items: stretch }
+.aifs { align-items: flex-start }
+.aic  { align-items: center }
+.aife { align-items: flex-end }
+
+.jcfs { justify-content: flex-start }
+.jcc  { justify-content: center }
+.jcfe { justify-content: flex-end }
+.jcsb { justify-content: space-between }
+.jcsa { justify-content: space-around }
+.jcse { justify-content: space-evenly }
+
+.no-shrink { flex-shrink: 0 }
+.no-grow { flex-grow: 0 }
+
+@media (min-width: 640px) {
+  .s\:fr  { flex-direction: row }
+  .s\:fc  { flex-direction: column }
+  .s\:fw  { flex-wrap: wrap }
+  .s\:fnw { flex-wrap: nowrap }
   
+  .s\:ais  { align-items: stretch }
+  .s\:aifs { align-items: flex-start }
+  .s\:aic  { align-items: center }
+  .s\:aife { align-items: flex-end }
+  
+  .s\:jcfs { justify-content: flex-start }
+  .s\:jcc  { justify-content: center }
+  .s\:jcfe { justify-content: flex-end }
+  .s\:jcsb { justify-content: space-between }
+  .s\:jcsa { justify-content: space-around }
+  .s\:jcse { justify-content: space-evenly }
+  
+  .s\:no-shrink { flex-shrink: 0 }
+  .s\:no-grow { flex-grow: 0 }
+}
+
+@media (min-width: 768px) {
+  .m\:fr  { flex-direction: row }
+  .m\:fc  { flex-direction: column }
+  .m\:fw  { flex-wrap: wrap }
+  .m\:fnw { flex-wrap: nowrap }
+  
+  .m\:ais  { align-items: stretch }
+  .m\:aifs { align-items: flex-start }
+  .m\:aic  { align-items: center }
+  .m\:aife { align-items: flex-end }
+  
+  .m\:jcfs { justify-content: flex-start }
+  .m\:jcc  { justify-content: center }
+  .m\:jcfe { justify-content: flex-end }
+  .m\:jcsb { justify-content: space-between }
+  .m\:jcsa { justify-content: space-around }
+  .m\:jcse { justify-content: space-evenly }
+  
+  .m\:no-shrink { flex-shrink: 0 }
+  .m\:no-grow { flex-grow: 0 }
+}
+
+@media (min-width: 1024px) {
+  .l\:fr  { flex-direction: row }
+  .l\:fc  { flex-direction: column }
+  .l\:fw  { flex-wrap: wrap }
+  .l\:fnw { flex-wrap: nowrap }
+  
+  .l\:ais  { align-items: stretch }
+  .l\:aifs { align-items: flex-start }
+  .l\:aic  { align-items: center }
+  .l\:aife { align-items: flex-end }
+  
+  .l\:jcfs { justify-content: flex-start }
+  .l\:jcc  { justify-content: center }
+  .l\:jcfe { justify-content: flex-end }
+  .l\:jcsb { justify-content: space-between }
+  .l\:jcsa { justify-content: space-around }
+  .l\:jcse { justify-content: space-evenly }
+  
+  .l\:no-shrink { flex-shrink: 0 }
+  .l\:no-grow { flex-grow: 0 }
+}
+
+@media (min-width: 1280px) {
+  .xl\:fr  { flex-direction: row }
+  .xl\:fc  { flex-direction: column }
+  .xl\:fw  { flex-wrap: wrap }
+  .xl\:fnw { flex-wrap: nowrap }
+  
+  .xl\:ais  { align-items: stretch }
+  .xl\:aifs { align-items: flex-start }
+  .xl\:aic  { align-items: center }
+  .xl\:aife { align-items: flex-end }
+  
+  .xl\:jcfs { justify-content: flex-start }
+  .xl\:jcc  { justify-content: center }
+  .xl\:jcfe { justify-content: flex-end }
+  .xl\:jcsb { justify-content: space-between }
+  .xl\:jcsa { justify-content: space-around }
+  .xl\:jcse { justify-content: space-evenly }
+  
+  .xl\:no-shrink { flex-shrink: 0 }
+  .xl\:no-grow { flex-grow: 0 }
 }

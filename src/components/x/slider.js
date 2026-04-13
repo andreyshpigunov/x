@@ -122,6 +122,21 @@
  * - Touch events support for mobile devices
  * - CSS transforms and transitions
  *
+ * @example
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <div x-slider='{"gap":16,"rubber":true,"resetOnMouseout":true,"touch":true}'>
+ * //   <div><img data-src="slide1.jpg" alt="Slide 1"></div>
+ * //   <div><img data-src="slide2.jpg" alt="Slide 2"></div>
+ * //   <div><img data-src="slide3.jpg" alt="Slide 3"></div>
+ * // </div>
+ * //
+ * // <script type="module">
+ * //   import { slider } from './src/components/x/slider.js';
+ * //   window.addEventListener('DOMContentLoaded', () => slider.init());
+ * //   window.addEventListener('pagehide', () => slider.destroy());
+ * // </script>
+ *
  * @author Andrey Shpigunov
  * @version 0.3
  * @since 2025-07-18

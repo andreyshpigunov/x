@@ -59,7 +59,7 @@
  *   Attaches event listeners to the document for mouseenter and mouseleave events.
  *   Safe to call multiple times (no-op after first call). SSR-safe: no-op when document is undefined.
  *
- * @method destroy() - Removes document listeners and resets state. Use on SPA unmount / Next.js.
+ * @method destroy() - Removes document listeners and resets state. Use on SPA unmount / page change.
  *
  *   @example
  *     import { hover } from './hover.js';
@@ -85,14 +85,25 @@
  * - Efficient CSS selector matching with `CSS.escape()` for special characters
  * - Minimal DOM manipulation (only toggles class on matching elements)
  *
- * Next.js: call hover.init() in useEffect; in cleanup call hover.destroy().
- *
  * @example
- * // Next.js — layout or _app
- * useEffect(() => {
- *   hover.init();
- *   return () => hover.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <nav>
+ * //   <a href="/about" x-hover>About</a>
+ * // </nav>
+ * // <footer>
+ * //   <a href="/about" x-hover>Learn More</a>
+ * // </footer>
+ * //
+ * // <style>
+ * //   a.hover { text-decoration: underline; }
+ * // </style>
+ * //
+ * // <script type="module">
+ * //   import { hover } from './src/components/x/hover.js';
+ * //   window.addEventListener('DOMContentLoaded', () => hover.init());
+ * //   window.addEventListener('pagehide', () => hover.destroy());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.3
@@ -129,7 +140,7 @@ export class Hover {
   }
 
   /**
-   * Removes document listeners and resets state. Use on SPA unmount or Next.js cleanup.
+   * Removes document listeners and resets state. Use on SPA unmount / page change.
    * SSR-safe: no-op when document is undefined.
    */
   destroy() {

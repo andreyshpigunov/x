@@ -21,7 +21,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.3.88</div>
+    <div class="header-version nowrap">0.3.89</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="./logo.png" alt="x" />
@@ -47,7 +47,9 @@
 
     <div class="flex">
       <div class="mt4">
-        <button x-dropdown-open class="button button--dropdown" tabindex="1">Menu left</button>
+        <button x-dropdown-open class="button button--dropdown button--spacy" tabindex="1">
+          Menu left
+        </button>
         <ul x-dropdown>
           <li><a href="/admin/settings/profile/">Профильное образование в педагогическом</a></li>
           <li><a href="/logout/">Выйти</a></li>
@@ -144,8 +146,8 @@
         <div class="c1">
           <h3><a class="link" x-modal-open="modalAppear">Appear</a></h3>
           <style>.exampleAppear1,.exampleAppear2{opacity:0;will-change:opacity;transition:opacity 1s ease-out .4s}.exampleAppear2{transition-delay:1s}.exampleAppear1.appeared,.exampleAppear2.visible{opacity:1;background:var(--color-grey)}</style>
-          <div class="exampleAppear1 flex jcc py5 r3" x-appear>Appeared</div>
-          <div class="exampleAppear2 flex jcc py5 mt2 r3" x-appear>Visible</div>
+          <div class="exampleAppear1 flex jcc py5 br3" x-appear>Appeared</div>
+          <div class="exampleAppear2 flex jcc py5 mt2 br3" x-appear>Visible</div>
         </div>
 
         <div class="c1">
@@ -311,7 +313,7 @@
           </div>
           <div class="mt2">
             <a href="#2" onclick="return false" x-hover>
-              <img class="r3" src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg" width="800" height="600" />
+              <img class="br3" src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0476.jpg" width="800" height="600" />
             </a>
             <a href="#2" onclick="return false" x-hover>Photo link</a>
           </div>
@@ -321,7 +323,7 @@
           <h3><a class="link" x-modal-open="modalLazyload">Lazyload</a></h3>
           <div>Image loaded lazy.</div>
           <div class="mt2">
-            <img class="r3" src="https://seosecret.id/placeholder/800x600/ffffff/584959/Loading.../png" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
+            <img class="br3" src="https://seosecret.id/placeholder/800x600/ffffff/584959/Loading.../png" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
           </div>
         </div>
 
@@ -644,7 +646,7 @@
         <div class="c1">
           <h3><a class="link" x-modal-open="modalSheets">Sheets</a></h3>
           <div x-sheets class="sheets-example unselectable">
-            <div class="button--tabs">
+            <div class="buttons-group">
               <a class="button hidden" x-sheet-open="sheet0">First</a>
               <a class="button active" x-sheet-open="sheetA">Bird</a>
               <a class="button" x-sheet-open="sheetB">Sea</a>
@@ -656,7 +658,7 @@
 
 
                 <div x-sheets class="sheets-example mt3">
-                  <div class="button--tabs">
+                  <div class="buttons-group">
                     <a class="button" x-sheet-open="sheetA1">Bird</a>
                     <a class="button" x-sheet-open="sheetB1">Sea</a>
                   </div>
@@ -669,7 +671,7 @@
             </div>
           </div>
           <div x-sheets class="mt3 flex aic gap2 sheets-example">
-            <div class="button--tabs">
+            <div class="buttons-group">
               <a class="button active" x-sheet-open="sheetHappy">Happy</a>
               <a class="button" x-sheet-open="sheetSad">Sad</a>
             </div>
@@ -682,8 +684,7 @@
 
         <div class="c1">
           <h3><a class="link" x-modal-open="modalSlider">Slider</a></h3>
-          <style>.slider .slider-item:first-child img{border-radius:var(--space-3)0 0 var(--space-3)}.slider .slider-item:last-child img{border-radius:0 var(--space-3)var(--space-3)0}</style>
-          <div x-slider='{"gap":2}' class="ratio4x3 r3">
+          <div x-slider='{"gap":2}' class="ratio4x3 br3 oh">
             <div><img data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0430.jpg 2x" alt=""></div>
             <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0320.jpg" alt=""></div>
             <div><img data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0401.jpg" alt=""></div>

@@ -31,25 +31,18 @@
  * - `visible` – Dispatched when the element becomes visible.
  * - `invisible` – Dispatched when the element leaves the viewport.
  *
- * Next.js: call init() in useEffect(); on route change call destroy() in cleanup and init() after mount.
  * SSR-safe: init/destroy no-op when window is undefined.
  *
  * @example
- * // Next.js — _app.tsx or layout
- * import { useEffect } from 'react';
- * import { usePathname } from 'next/navigation';
- * import { appear } from '@andreyshpigunov/x/appear';
- *
- * export default function App({ Component, pageProps }) {
- *   const pathname = usePathname();
- *
- *   useEffect(() => {
- *     appear.init(); // or appear.init({ once: true, rootMargin: '50px' })
- *     return () => appear.destroy();
- *   }, [pathname]);
- *
- *   return <Component {...pageProps} />;
- * }
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <div x-appear>Hello!</div>
+ * // <script type="module">
+ * //   import { appear } from './src/components/x/appear.js';
+ * //   window.addEventListener('DOMContentLoaded', () => {
+ * //     appear.init({ once: false, rootMargin: '0px', threshold: 0 });
+ * //   });
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.4
@@ -64,7 +57,7 @@ import { lib } from './lib';
  * Uses IntersectionObserver to track elements with [x-appear] attribute and manage classes.
  */
 class Appear {
-
+  
   constructor() {
     this._targets = [];
     this._observer = null;
@@ -78,7 +71,7 @@ class Appear {
     };
     this._observerCallback = this._observerCallback.bind(this);
   }
-
+  
   /**
    * Initializes or reinitializes the observer and starts observing elements.
    *
@@ -93,24 +86,24 @@ class Appear {
   init(config = {}) {
     if (typeof window === 'undefined') return;
     if (!('IntersectionObserver' in window)) return;
-
+    
     this._options = { ...this._options, ...config };
-
+    
     if (this._observer) {
       this._observer.disconnect();
       this._observer = null;
     }
-
+    
     this._targets = lib.qsa('[x-appear]');
     if (!this._targets.length) return;
-
+    
     const { root, rootMargin, threshold } = this._options;
     this._observer = new IntersectionObserver(this._observerCallback, { root: root || null, rootMargin, threshold });
     for (let i = 0; i < this._targets.length; i++) {
       this._observer.observe(this._targets[i]);
     }
   }
-
+  
   /**
    * Stops observing all elements and resets state. Use when unmounting (e.g. SPA).
    */
@@ -122,7 +115,7 @@ class Appear {
     }
     this._targets = [];
   }
-
+  
   /**
    * IntersectionObserver callback. Handles visibility changes for tracked elements.
    *
@@ -132,7 +125,7 @@ class Appear {
   _observerCallback(entries) {
     const { appearedClass, visibleClass, once } = this._options;
     const observer = this._observer;
-
+    
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i];
       const target = entry.target;

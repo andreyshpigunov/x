@@ -9,7 +9,6 @@ All right reserved.
 
 /* !- Helpers – small help for you code. */
 
-
 /*
   .antialiased
   .container
@@ -28,80 +27,80 @@ All right reserved.
   .rel
   .abs
   .ins
-  .fit-none    (m,l,xl)
-  .fit-cover   (m,l,xl)
-  .fit-contain (m,l,xl)
-  .t[0-12]   (m,l,xl)
-  .b[0-12]   (m,l,xl)
-  .z[0-12]   (m,l,xl)
-  .op[0-10]  (hover,m,m:hover,l,l:hover)
-  .ratio1x1  (m,l,xl)
-  .ratio2x1  (m,l,xl)
-  .ratio3x1  (m,l,xl)
-  .ratio4x1  (m,l,xl)
-  .ratio3x2  (m,l,xl)
-  .ratio4x3  (m,l,xl)
-  .ratio16x9 (m,l,xl)
-  .ratio1x2  (m,l,xl)
-  .ratio1x3  (m,l,xl)
-  .ratio1x4  (m,l,xl)
-  .ratio2x3  (m,l,xl)
-  .ratio3x4  (m,l,xl)
-  .ratio9x16 (m,l,xl)
+  .fit-none    (s,m,l,xl)
+  .fit-cover   (s,m,l,xl)
+  .fit-contain (s,m,l,xl)
+  .t[0-12][n]   (s,m,l,xl)
+  .b[0-12][n]   (s,m,l,xl)
+  .l[0-12][n]   (s,m,l,xl)
+  .r[0-12][n]   (s,m,l,xl)
+  .z[0-12]   (s,m,l,xl)
+  .op[0-10]
+  .ratio1x1  (s,m,l,xl)
+  .ratio2x1  (s,m,l,xl)
+  .ratio3x1  (s,m,l,xl)
+  .ratio4x1  (s,m,l,xl)
+  .ratio3x2  (s,m,l,xl)
+  .ratio4x3  (s,m,l,xl)
+  .ratio16x9 (s,m,l,xl)
+  .ratio1x2  (s,m,l,xl)
+  .ratio1x3  (s,m,l,xl)
+  .ratio1x4  (s,m,l,xl)
+  .ratio2x3  (s,m,l,xl)
+  .ratio3x4  (s,m,l,xl)
+  .ratio9x16 (s,m,l,xl)
   .break-word
   .visually-hidden
   .invisible
   .scroll-responsive
-  .hidden     =(s,m,l)
-  .hidden-next =(s,m,l)
-  .dark:hidden  =(s,m,l)
-  .light:hidden =(s,m,l)
+  .hidden       (s,m,l,xl)
+  .hidden-next  (s,m,l,xl)
+  .block        (s,m,l,xl)
+  .inline       (s,m,l,xl)
+  .inline-block (s,m,l,xl)
   .fullscreen
-  .max (m,l,xl)
-  .w[10-190] step 10      (m,l,xl)
-  .w[200-380] step 20     (m,l,xl)
-  .w[400-1600] step 100   (m,l,xl)
-  .max[10-190] step 10    (m,l,xl)
-  .max[200-380] step 20   (m,l,xl)
-  .max[400-1600] step 100 (m,l,xl)
-  .min[10-190] step 10    (m,l,xl)
-  .min[200-380] step 20   (m,l,xl)
-  .min[400-1600] step 100 (m,l,xl)
-  .block       (m,l,xl)
-  .inline      (m,l,xl)
-  .inline-block (m,l,xl)
-  .al (m,l,xl)
-  .ar (m,l,xl)
-  .ac (m,l,xl)
-  .aj (m,l,xl)
-  .m[0-12]  (m,l,xl)
-  .mx[0-12] (m,l,xl)
-  .my[0-12] (m,l,xl)
-  .mt[0-12] (m,l,xl)
-  .mb[0-12] (m,l,xl)
-  .ml[0-12] (m,l,xl)
-  .mr[0-12] (m,l,xl)
-  .ma  (m,l,xl)
-  .mxa (m,l,xl)
-  .mya (m,l,xl)
-  .mta (m,l,xl)
-  .mba (m,l,xl)
-  .mla (m,l,xl)
-  .mra (m,l,xl)
-  .p[0-12]  (m,l,xl)
-  .px[0-12] (m,l,xl)
-  .py[0-12] (m,l,xl)
-  .pt[0-12] (m,l,xl)
-  .pb[0-12] (m,l,xl)
-  .pl[0-12] (m,l,xl)
-  .pr[0-12] (m,l,xl)
-  .gap[0-12]  (m,l,xl)
-  .gapx[0-12] (m,l,xl)
-  .gapy[0-12] (m,l,xl)
-  .r[0-12] (m,l,xl)
-  .r100 (m,l,xl)
-  .sh[0-10] (m,l)
-  .o[0-10] (m,l,xl)
+  .max                    (s,m,l,xl)
+  .w[10-190] step 10      (s,m,l,xl)
+  .w[200-380] step 20     (s,m,l,xl)
+  .w[400-1600] step 100   (s,m,l,xl)
+  .max[10-190] step 10    (s,m,l,xl)
+  .max[200-380] step 20   (s,m,l,xl)
+  .max[400-1600] step 100 (s,m,l,xl)
+  .min[10-190] step 10    (s,m,l,xl)
+  .min[200-380] step 20   (s,m,l,xl)
+  .min[400-1600] step 100 (s,m,l,xl)
+  .al      (s,m,l,xl)
+  .ar      (s,m,l,xl)
+  .ac      (s,m,l,xl)
+  .aj      (s,m,l,xl)
+  .m[0-12][n]  (s,m,l,xl)
+  .mx[0-12][n] (s,m,l,xl)
+  .my[0-12][n] (s,m,l,xl)
+  .mt[0-12][n] (s,m,l,xl)
+  .mb[0-12][n] (s,m,l,xl)
+  .ml[0-12][n] (s,m,l,xl)
+  .mr[0-12][n] (s,m,l,xl)
+  .ma  (s,m,l,xl)
+  .mxa (s,m,l,xl)
+  .mya (s,m,l,xl)
+  .mta (s,m,l,xl)
+  .mba (s,m,l,xl)
+  .mla (s,m,l,xl)
+  .mra (s,m,l,xl)
+  .p[0-12]  (s,m,l,xl)
+  .px[0-12] (s,m,l,xl)
+  .py[0-12] (s,m,l,xl)
+  .pt[0-12] (s,m,l,xl)
+  .pb[0-12] (s,m,l,xl)
+  .pl[0-12] (s,m,l,xl)
+  .pr[0-12] (s,m,l,xl)
+  .gap[0-12]  (s,m,l,xl)
+  .gapx[0-12] (s,m,l,xl)
+  .gapy[0-12] (s,m,l,xl)
+  .br[0-12]  (s,m,l,xl)
+  .br100     (s,m,l,xl)
+  .sh[0-10]  (s,m,l,xl)
+  .o[0-10]   (s,m,l,xl)
   .no-print
 */
 
@@ -185,17 +184,22 @@ All right reserved.
 @for $i from 0 to 5 {
   .lc$(i) { -webkit-line-clamp: $(i) }
 }
-@media (--medium) {
+@media (min-width: 640px) {
+  @for $i from 0 to 5 {
+    .s\:lc$(i) { -webkit-line-clamp: $(i) }
+  }
+}
+@media (min-width: 768px) {
   @for $i from 0 to 5 {
     .m\:lc$(i) { -webkit-line-clamp: $(i) }
   }
 }
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 0 to 5 {
     .l\:lc$(i) { -webkit-line-clamp: $(i) }
   }
 }
-@media (--xlarge) {
+@media (min-width: 1280px) {
   @for $i from 0 to 5 {
     .xl\:lc$(i) { -webkit-line-clamp: $(i) }
   }
@@ -224,76 +228,97 @@ html.touch .touch-hide { display: none }
 /* !- Object fit */
 .fit-cover { object-fit: cover }
 .fit-contain { object-fit: contain }
-@media (--medium) {
+@media (min-width: 640px) {
+  .s\:fit-none { object-fit: none }
+  .s\:fit-cover { object-fit: cover }
+  .s\:fit-contain { object-fit: contain }
+}
+@media (min-width: 768px) {
   .m\:fit-none { object-fit: none }
   .m\:fit-cover { object-fit: cover }
   .m\:fit-contain { object-fit: contain }
 }
-@media (--large) {
+@media (min-width: 1024px) {
   .l\:fit-none { object-fit: none }
   .l\:fit-cover { object-fit: cover }
   .l\:fit-contain { object-fit: contain }
 }
-@media (--xlarge) {
+@media (min-width: 1280px) {
   .xl\:fit-none { object-fit: none }
   .xl\:fit-cover { object-fit: cover }
   .xl\:fit-contain { object-fit: contain }
 }
 
 
-/* !- Top, bottom, z-index */
+/* !- Top, bottom, left, right, z-index */
 @for $i from 0 to 12 {
-  .t$(i) { top: var(--space-$(i)) !important; }
-  .b$(i) { bottom: var(--space-$(i)) !important; }
-  .t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
-  .b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
-  .z$(i) { z-index: $(i) !important; }
+  .t$(i) { top: var(--space-$(i)) }
+  .b$(i) { bottom: var(--space-$(i)) }
+  .l$(i) { left: var(--space-$(i)) }
+  .r$(i) { right: var(--space-$(i)) }
+  .t$(i)n { top: calc(var(--space-$(i)) * -1) }
+  .b$(i)n { bottom: calc(var(--space-$(i)) * -1) }
+  .l$(i)n { left: calc(var(--space-$(i)) * -1) }
+  .r$(i)n { right: calc(var(--space-$(i)) * -1) }
+  .z$(i) { z-index: $(i) }
 }
-@media (--medium) {
+@media (min-width: 640px) {
   @for $i from 0 to 12 {
-    .m\:t$(i) { top: var(--space-$(i)) !important; }
-    .m\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .m\:t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
-    .m\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
-    .m\:z$(i) { z-index: $(i) !important; }
+    .s\:t$(i) { top: var(--space-$(i)) }
+    .s\:b$(i) { bottom: var(--space-$(i)) }
+    .s\:l$(i) { left: var(--space-$(i)) }
+    .s\:r$(i) { right: var(--space-$(i)) }
+    .s\:t$(i)n { top: calc(var(--space-$(i)) * -1) }
+    .s\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) }
+    .s\:l$(i)n { left: calc(var(--space-$(i)) * -1) }
+    .s\:r$(i)n { right: calc(var(--space-$(i)) * -1) }
+    .s\:z$(i) { z-index: $(i) }
   }
 }
-@media (--large) {
+@media (min-width: 768px) {
   @for $i from 0 to 12 {
-    .l\:t$(i) { top: var(--space-$(i)) !important; }
-    .l\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .l\:t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
-    .l\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
-    .l\:z$(i) { z-index: $(i) !important; }
+    .m\:t$(i) { top: var(--space-$(i)) }
+    .m\:b$(i) { bottom: var(--space-$(i)) }
+    .m\:l$(i) { left: var(--space-$(i)) }
+    .m\:r$(i) { right: var(--space-$(i)) }
+    .m\:t$(i)n { top: calc(var(--space-$(i)) * -1) }
+    .m\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) }
+    .m\:l$(i)n { left: calc(var(--space-$(i)) * -1) }
+    .m\:r$(i)n { right: calc(var(--space-$(i)) * -1) }
+    .m\:z$(i) { z-index: $(i) }
   }
 }
-@media (--xlarge) {
+@media (min-width: 1024px) {
   @for $i from 0 to 12 {
-    .xl\:t$(i) { top: var(--space-$(i)) !important; }
-    .xl\:b$(i) { bottom: var(--space-$(i)) !important; }
-    .xl\:t$(i)n { top: calc(var(--space-$(i)) * -1) !important; }
-    .xl\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) !important; }
-    .xl\:z$(i) { z-index: $(i) !important; }
+    .l\:t$(i) { top: var(--space-$(i)) }
+    .l\:b$(i) { bottom: var(--space-$(i)) }
+    .l\:l$(i) { left: var(--space-$(i)) }
+    .l\:r$(i) { right: var(--space-$(i)) }
+    .l\:t$(i)n { top: calc(var(--space-$(i)) * -1) }
+    .l\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) }
+    .l\:l$(i)n { left: calc(var(--space-$(i)) * -1) }
+    .l\:r$(i)n { right: calc(var(--space-$(i)) * -1) }
+    .l\:z$(i) { z-index: $(i) }
+  }
+}
+@media (min-width: 1280px) {
+  @for $i from 0 to 12 {
+    .xl\:t$(i) { top: var(--space-$(i)) }
+    .xl\:b$(i) { bottom: var(--space-$(i)) }
+    .xl\:l$(i) { left: var(--space-$(i)) }
+    .xl\:r$(i) { right: var(--space-$(i)) }
+    .xl\:t$(i)n { top: calc(var(--space-$(i)) * -1) }
+    .xl\:b$(i)n { bottom: calc(var(--space-$(i)) * -1) }
+    .xl\:l$(i)n { left: calc(var(--space-$(i)) * -1) }
+    .xl\:r$(i)n { right: calc(var(--space-$(i)) * -1) }
+    .xl\:z$(i) { z-index: $(i) }
   }
 }
 
 
 /* !- Opacity */
 @for $i from 0 to 10 {
-  .op$(i) { opacity: calc($(i) / 10) !important }
-  .hover\:op$(i):hover { opacity: calc($(i) / 10) !important }
-}
-@media (--medium) {
-  @for $i from 0 to 10 {
-    .m\:op$(i) { opacity: calc($(i) / 10) !important }
-    .hover\:m\:op$(i):hover { opacity: calc($(i) / 10) !important }
-  }
-}
-@media (--large) {
-  @for $i from 0 to 10 {
-    .l\:op$(i) { opacity: calc($(i) / 10) !important }
-    .hover\:l\:op$(i):hover { opacity: calc($(i) / 10) !important }
-  }
+  .op$(i) { opacity: calc($(i) / 10) }
 }
 
 
@@ -336,77 +361,96 @@ html.touch .touch-hide { display: none }
 }
 
 /* Square */
-.ratio1x1 { aspect-ratio: 1/1 !important }
+.ratio1x1 { aspect-ratio: 1/1 }
 /* Landscape */
-.ratio2x1 { aspect-ratio: 2/1 !important }
-.ratio3x1 { aspect-ratio: 3/1 !important }
-.ratio4x1 { aspect-ratio: 4/1 !important }
-.ratio3x2 { aspect-ratio: 3/2 !important }
-.ratio4x3 { aspect-ratio: 4/3 !important }
-.ratio16x9 { aspect-ratio: 16/9 !important }
+.ratio2x1 { aspect-ratio: 2/1 }
+.ratio3x1 { aspect-ratio: 3/1 }
+.ratio4x1 { aspect-ratio: 4/1 }
+.ratio3x2 { aspect-ratio: 3/2 }
+.ratio4x3 { aspect-ratio: 4/3 }
+.ratio16x9 { aspect-ratio: 16/9 }
 /* Portrait */
-.ratio1x2 { aspect-ratio: 1/2 !important }
-.ratio1x3 { aspect-ratio: 1/3 !important }
-.ratio1x4 { aspect-ratio: 1/4 !important }
-.ratio2x3 { aspect-ratio: 2/3 !important }
-.ratio3x4 { aspect-ratio: 3/4 !important }
-.ratio9x16 { aspect-ratio: 9/16 !important }
+.ratio1x2 { aspect-ratio: 1/2 }
+.ratio1x3 { aspect-ratio: 1/3 }
+.ratio1x4 { aspect-ratio: 1/4 }
+.ratio2x3 { aspect-ratio: 2/3 }
+.ratio3x4 { aspect-ratio: 3/4 }
+.ratio9x16 { aspect-ratio: 9/16 }
 
-@media (--medium) {
+@media (min-width: 640px) {
   /* Square */
-  .m\:ratio1x1 { aspect-ratio: 1/1 !important }
+  .s\:ratio1x1 { aspect-ratio: 1/1 }
   /* Landscape */
-  .m\:ratio2x1 { aspect-ratio: 2/1 !important }
-  .m\:ratio3x1 { aspect-ratio: 3/1 !important }
-  .m\:ratio4x1 { aspect-ratio: 4/1 !important }
-  .m\:ratio3x2 { aspect-ratio: 3/2 !important }
-  .m\:ratio4x3 { aspect-ratio: 4/3 !important }
-  .m\:ratio16x9 { aspect-ratio: 16/9 !important }
+  .s\:ratio2x1 { aspect-ratio: 2/1 }
+  .s\:ratio3x1 { aspect-ratio: 3/1 }
+  .s\:ratio4x1 { aspect-ratio: 4/1 }
+  .s\:ratio3x2 { aspect-ratio: 3/2 }
+  .s\:ratio4x3 { aspect-ratio: 4/3 }
+  .s\:ratio16x9 { aspect-ratio: 16/9 }
   /* Portrait */
-  .m\:ratio1x2 { aspect-ratio: 1/2 !important }
-  .m\:ratio1x3 { aspect-ratio: 1/3 !important }
-  .m\:ratio1x4 { aspect-ratio: 1/4 !important }
-  .m\:ratio2x3 { aspect-ratio: 2/3 !important }
-  .m\:ratio3x4 { aspect-ratio: 3/4 !important }
-  .m\:ratio9x16 { aspect-ratio: 9/16 !important }
+  .s\:ratio1x2 { aspect-ratio: 1/2 }
+  .s\:ratio1x3 { aspect-ratio: 1/3 }
+  .s\:ratio1x4 { aspect-ratio: 1/4 }
+  .s\:ratio2x3 { aspect-ratio: 2/3 }
+  .s\:ratio3x4 { aspect-ratio: 3/4 }
+  .s\:ratio9x16 { aspect-ratio: 9/16 }
 }
 
-@media (--large) {
+@media (min-width: 768px) {
   /* Square */
-  .l\:ratio1x1 { aspect-ratio: 1/1 !important }
+  .m\:ratio1x1 { aspect-ratio: 1/1 }
   /* Landscape */
-  .l\:ratio2x1 { aspect-ratio: 2/1 !important }
-  .l\:ratio3x1 { aspect-ratio: 3/1 !important }
-  .l\:ratio4x1 { aspect-ratio: 4/1 !important }
-  .l\:ratio3x2 { aspect-ratio: 3/2 !important }
-  .l\:ratio4x3 { aspect-ratio: 4/3 !important }
-  .l\:ratio16x9 { aspect-ratio: 16/9 !important }
+  .m\:ratio2x1 { aspect-ratio: 2/1 }
+  .m\:ratio3x1 { aspect-ratio: 3/1 }
+  .m\:ratio4x1 { aspect-ratio: 4/1 }
+  .m\:ratio3x2 { aspect-ratio: 3/2 }
+  .m\:ratio4x3 { aspect-ratio: 4/3 }
+  .m\:ratio16x9 { aspect-ratio: 16/9 }
   /* Portrait */
-  .l\:ratio1x2 { aspect-ratio: 1/2 !important }
-  .l\:ratio1x3 { aspect-ratio: 1/3 !important }
-  .l\:ratio1x4 { aspect-ratio: 1/4 !important }
-  .l\:ratio2x3 { aspect-ratio: 2/3 !important }
-  .l\:ratio3x4 { aspect-ratio: 3/4 !important }
-  .l\:ratio9x16 { aspect-ratio: 9/16 !important }
+  .m\:ratio1x2 { aspect-ratio: 1/2 }
+  .m\:ratio1x3 { aspect-ratio: 1/3 }
+  .m\:ratio1x4 { aspect-ratio: 1/4 }
+  .m\:ratio2x3 { aspect-ratio: 2/3 }
+  .m\:ratio3x4 { aspect-ratio: 3/4 }
+  .m\:ratio9x16 { aspect-ratio: 9/16 }
 }
 
-@media (--xlarge) {
+@media (min-width: 1024px) {
   /* Square */
-  .xl\:ratio1x1 { aspect-ratio: 1/1 !important }
+  .l\:ratio1x1 { aspect-ratio: 1/1 }
   /* Landscape */
-  .xl\:ratio2x1 { aspect-ratio: 2/1 !important }
-  .xl\:ratio3x1 { aspect-ratio: 3/1 !important }
-  .xl\:ratio4x1 { aspect-ratio: 4/1 !important }
-  .xl\:ratio3x2 { aspect-ratio: 3/2 !important }
-  .xl\:ratio4x3 { aspect-ratio: 4/3 !important }
-  .xl\:ratio16x9 { aspect-ratio: 16/9 !important }
+  .l\:ratio2x1 { aspect-ratio: 2/1 }
+  .l\:ratio3x1 { aspect-ratio: 3/1 }
+  .l\:ratio4x1 { aspect-ratio: 4/1 }
+  .l\:ratio3x2 { aspect-ratio: 3/2 }
+  .l\:ratio4x3 { aspect-ratio: 4/3 }
+  .l\:ratio16x9 { aspect-ratio: 16/9 }
   /* Portrait */
-  .xl\:ratio1x2 { aspect-ratio: 1/2 !important }
-  .xl\:ratio1x3 { aspect-ratio: 1/3 !important }
-  .xl\:ratio1x4 { aspect-ratio: 1/4 !important }
-  .xl\:ratio2x3 { aspect-ratio: 2/3 !important }
-  .xl\:ratio3x4 { aspect-ratio: 3/4 !important }
-  .xl\:ratio9x16 { aspect-ratio: 9/16 !important }
+  .l\:ratio1x2 { aspect-ratio: 1/2 }
+  .l\:ratio1x3 { aspect-ratio: 1/3 }
+  .l\:ratio1x4 { aspect-ratio: 1/4 }
+  .l\:ratio2x3 { aspect-ratio: 2/3 }
+  .l\:ratio3x4 { aspect-ratio: 3/4 }
+  .l\:ratio9x16 { aspect-ratio: 9/16 }
+}
+
+@media (min-width: 1280px) {
+  /* Square */
+  .xl\:ratio1x1 { aspect-ratio: 1/1 }
+  /* Landscape */
+  .xl\:ratio2x1 { aspect-ratio: 2/1 }
+  .xl\:ratio3x1 { aspect-ratio: 3/1 }
+  .xl\:ratio4x1 { aspect-ratio: 4/1 }
+  .xl\:ratio3x2 { aspect-ratio: 3/2 }
+  .xl\:ratio4x3 { aspect-ratio: 4/3 }
+  .xl\:ratio16x9 { aspect-ratio: 16/9 }
+  /* Portrait */
+  .xl\:ratio1x2 { aspect-ratio: 1/2 }
+  .xl\:ratio1x3 { aspect-ratio: 1/3 }
+  .xl\:ratio1x4 { aspect-ratio: 1/4 }
+  .xl\:ratio2x3 { aspect-ratio: 2/3 }
+  .xl\:ratio3x4 { aspect-ratio: 3/4 }
+  .xl\:ratio9x16 { aspect-ratio: 9/16 }
 }
 
 
@@ -428,7 +472,7 @@ html.touch .touch-hide { display: none }
   border: 0;
 }
 .invisible {
-  visibility: hidden !important;
+  visibility: hidden;
 }
 .scroll-responsive {
   overflow-x: auto;
@@ -437,60 +481,56 @@ html.touch .touch-hide { display: none }
 
 /* !- Hidden */
 .hidden,
-.hidden-next + * { display: none !important }
+.hidden-next + * { display: none }
 
-@media (--small-max) {
+@media (min-width: 640px) {
   .s\:hidden,
-  .s\:hidden-next + * { display: none !important }
+  .s\:hidden-next + * { display: none }
 }
-@media (--medium-min) and (--medium-max) {
+@media (min-width: 768px) {
   .m\:hidden,
-  .m\:hidden-next + * { display: none !important }
+  .m\:hidden-next + * { display: none }
 }
-@media (--large-min) {
+@media (min-width: 1024px) {
   .l\:hidden,
-  .l\:hidden-next + * { display: none !important }
+  .l\:hidden-next + * { display: none }
 }
-@media (--xlarge-min) {
+@media (min-width: 1280px) {
   .xl\:hidden,
-  .xl\:hidden-next + * { display: none !important }
+  .xl\:hidden-next + * { display: none }
 }
 
 
-/* !-- Hidden dark/light */
-@media (prefers-color-scheme: dark) {
-  .dark\:hidden { display: none !important }
-  
-  @media (--small-max) {
-    .s\:dark\:hidden { display: none !important }
-  }
-  @media (--medium-min) and (--medium-max) {
-    .m\:dark\:hidden { display: none !important }
-  }
-  @media (--large-min) {
-    .l\:dark\:hidden { display: none !important }
-  }
-  @media (--xlarge-min) {
-    .xl\:dark\:hidden { display: none !important }
-  }
-}
-@media (prefers-color-scheme: light) {
-  .light\:hidden { display: none !important }
-  
-  @media (--small-max) {
-    .s\:light\:hidden { display: none !important }
-  }
-  @media (--medium-min) and (--medium-max) {
-    .m\:light\:hidden { display: none !important }
-  }
-  @media (--large-min) {
-    .l\:light\:hidden { display: none !important }
-  }
-  @media (--xlarge-min) {
-    .xl\:light\:hidden { display: none !important }
-  }
-}
+/* !- Display */
+.block { display: none }
+.inline { display: inline }
+.inline-block { display: inline-block }
+.table { display: table }
 
+@media (min-width: 640px) {
+  .s\:block { display: none }
+  .s\:inline { display: inline }
+  .s\:inline-block { display: inline-block }
+  .s\:table { display: table }
+}
+@media (min-width: 768px) {
+  .m\:block { display: none }
+  .m\:inline { display: inline }
+  .m\:inline-block { display: inline-block }
+  .m\:table { display: table }
+}
+@media (min-width: 1024px) {
+  .l\:block { display: none }
+  .l\:inline { display: inline }
+  .l\:inline-block { display: inline-block }
+  .l\:table { display: table }
+}
+@media (min-width: 1280px) {
+  .xl\:block { display: none }
+  .xl\:inline { display: inline }
+  .xl\:inline-block { display: inline-block }
+  .xl\:table { display: table }
+}
 
 
 /* !- Width, height */
@@ -499,361 +539,451 @@ html.touch .touch-hide { display: none }
   min-height: 100vh;
 }
 .max {
-  width: 100% !important;
-  max-width: 100% !important;
+  width: 100%;
+  max-width: 100%;
 }
 
 @for $i from 10 to 190 by 10 {
-  .w$(i)   { width: $(i)px !important }
-  .max$(i) { width: 100% !important; max-width: $(i)px !important }
-  .min$(i) { min-width: $(i)px !important }
+  .w$(i)   { width: $(i)px }
+  .max$(i) { width: 100%; max-width: $(i)px }
+  .min$(i) { min-width: $(i)px }
 }
 @for $i from 200 to 380 by 20 {
-  .w$(i)   { width: $(i)px !important }
-  .max$(i) { width: 100% !important; max-width: $(i)px !important }
-  .min$(i) { min-width: $(i)px !important }
+  .w$(i)   { width: $(i)px }
+  .max$(i) { width: 100%; max-width: $(i)px }
+  .min$(i) { min-width: $(i)px }
 }
 @for $i from 400 to 1600 by 100 {
-  .w$(i)   { width: $(i)px !important }
-  .max$(i) { width: 100% !important; max-width: $(i)px !important }
-  .min$(i) { min-width: $(i)px !important }
+  .w$(i)   { width: $(i)px }
+  .max$(i) { width: 100%; max-width: $(i)px }
+  .min$(i) { min-width: $(i)px }
 }
 
-@media (--medium) {
+@media (min-width: 640px) {
+  .s\:max {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  @for $i from 10 to 190 by 10 {
+    .s\:w$(i)   { width: $(i)px }
+    .s\:max$(i) { width: 100%; max-width: $(i)px }
+    .s\:min$(i) { min-width: $(i)px }
+  }
+  @for $i from 200 to 380 by 20 {
+    .s\:w$(i)   { width: $(i)px }
+    .s\:max$(i) { width: 100%; max-width: $(i)px }
+    .s\:min$(i) { min-width: $(i)px }
+  }
+  @for $i from 400 to 1600 by 100 {
+    .s\:w$(i)   { width: $(i)px }
+    .s\:max$(i) { width: 100%; max-width: $(i)px }
+    .s\:min$(i) { min-width: $(i)px }
+  }
+}
+
+@media (min-width: 768px) {
   .m\:max {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: 100%;
   }
   
   @for $i from 10 to 190 by 10 {
-    .m\:w$(i)   { width: $(i)px !important }
-    .m\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .m\:min$(i) { min-width: $(i)px !important }
+    .m\:w$(i)   { width: $(i)px }
+    .m\:max$(i) { width: 100%; max-width: $(i)px }
+    .m\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
-    .m\:w$(i)   { width: $(i)px !important }
-    .m\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .m\:min$(i) { min-width: $(i)px !important }
+    .m\:w$(i)   { width: $(i)px }
+    .m\:max$(i) { width: 100%; max-width: $(i)px }
+    .m\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
-    .m\:w$(i)   { width: $(i)px !important }
-    .m\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .m\:min$(i) { min-width: $(i)px !important }
+    .m\:w$(i)   { width: $(i)px }
+    .m\:max$(i) { width: 100%; max-width: $(i)px }
+    .m\:min$(i) { min-width: $(i)px }
   }
 }
 
-@media (--large) {
+@media (min-width: 1024px) {
   .l\:max {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: 100%;
   }
   
   @for $i from 10 to 190 by 10 {
-    .l\:w$(i)   { width: $(i)px !important }
-    .l\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .l\:min$(i) { min-width: $(i)px !important }
+    .l\:w$(i)   { width: $(i)px }
+    .l\:max$(i) { width: 100%; max-width: $(i)px }
+    .l\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
-    .l\:w$(i)   { width: $(i)px !important }
-    .l\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .l\:min$(i) { min-width: $(i)px !important }
+    .l\:w$(i)   { width: $(i)px }
+    .l\:max$(i) { width: 100%; max-width: $(i)px }
+    .l\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
-    .l\:w$(i)   { width: $(i)px !important }
-    .l\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .l\:min$(i) { min-width: $(i)px !important }
+    .l\:w$(i)   { width: $(i)px }
+    .l\:max$(i) { width: 100%; max-width: $(i)px }
+    .l\:min$(i) { min-width: $(i)px }
   }
 }
 
-@media (--xlarge) {
+@media (min-width: 1280px) {
   .xl\:max {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 100%;
+    max-width: 100%;
   }
   
   @for $i from 10 to 190 by 10 {
-    .xl\:w$(i)   { width: $(i)px !important }
-    .xl\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .xl\:min$(i) { min-width: $(i)px !important }
+    .xl\:w$(i)   { width: $(i)px }
+    .xl\:max$(i) { width: 100%; max-width: $(i)px }
+    .xl\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
-    .xl\:w$(i)   { width: $(i)px !important }
-    .xl\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .xl\:min$(i) { min-width: $(i)px !important }
+    .xl\:w$(i)   { width: $(i)px }
+    .xl\:max$(i) { width: 100%; max-width: $(i)px }
+    .xl\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
-    .xl\:w$(i)   { width: $(i)px !important }
-    .xl\:max$(i) { width: 100% !important; max-width: $(i)px !important }
-    .xl\:min$(i) { min-width: $(i)px !important }
+    .xl\:w$(i)   { width: $(i)px }
+    .xl\:max$(i) { width: 100%; max-width: $(i)px }
+    .xl\:min$(i) { min-width: $(i)px }
   }
 }
 
 
 /* !- Text align */
-.al { text-align: left !important }
-.ar { text-align: right !important }
-.ac { text-align: center !important }
-.aj { text-align: justify !important }
+.al { text-align: left }
+.ar { text-align: right }
+.ac { text-align: center }
+.aj { text-align: justify }
 
-@media (--medium) {
-  .m\:al { text-align: left !important }
-  .m\:ar { text-align: right !important }
-  .m\:ac { text-align: center !important }
-  .m\:aj { text-align: justify !important }
+@media (min-width: 640px) {
+  .s\:al { text-align: left }
+  .s\:ar { text-align: right }
+  .s\:ac { text-align: center }
+  .s\:aj { text-align: justify }
 }
 
-@media (--large) {
-  .l\:al { text-align: left !important }
-  .l\:ar { text-align: right !important }
-  .l\:ac { text-align: center !important }
-  .l\:aj { text-align: justify !important }
+@media (min-width: 768px) {
+  .m\:al { text-align: left }
+  .m\:ar { text-align: right }
+  .m\:ac { text-align: center }
+  .m\:aj { text-align: justify }
 }
 
-@media (--xlarge) {
-  .xl\:al { text-align: left !important }
-  .xl\:ar { text-align: right !important }
-  .xl\:ac { text-align: center !important }
-  .xl\:aj { text-align: justify !important }
+@media (min-width: 1024px) {
+  .l\:al { text-align: left }
+  .l\:ar { text-align: right }
+  .l\:ac { text-align: center }
+  .l\:aj { text-align: justify }
+}
+
+@media (min-width: 1280px) {
+  .xl\:al { text-align: left }
+  .xl\:ar { text-align: right }
+  .xl\:ac { text-align: center }
+  .xl\:aj { text-align: justify }
 }
 
 
 /* !- Margin */
 @for $i from 0 to 12 {
-  .m$(i)  { margin: var(--space-$(i)) !important }
-  .mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
-  .my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
-  .mt$(i) { margin-top: var(--space-$(i)) !important }
-  .mb$(i) { margin-bottom: var(--space-$(i)) !important }
-  .ml$(i) { margin-left: var(--space-$(i)) !important }
-  .mr$(i) { margin-right: var(--space-$(i)) !important }
+  .m$(i)  { margin: var(--space-$(i)) }
+  .mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
+  .my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
+  .mt$(i) { margin-top: var(--space-$(i)) }
+  .mb$(i) { margin-bottom: var(--space-$(i)) }
+  .ml$(i) { margin-left: var(--space-$(i)) }
+  .mr$(i) { margin-right: var(--space-$(i)) }
   
-  .m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+  .m$(i)n  { margin: calc(var(--space-$(i)) * -1) }
   .mx$(i)n {
-    margin-left: calc(var(--space-$(i)) * -1) !important;
-    margin-right: calc(var(--space-$(i)) * -1) !important;
+    margin-left: calc(var(--space-$(i)) * -1);
+    margin-right: calc(var(--space-$(i)) * -1);
   }
   .my$(i)n {
-    margin-top: calc(var(--space-$(i)) * -1) !important;
-    margin-bottom: calc(var(--space-$(i)) * -1) !important;
+    margin-top: calc(var(--space-$(i)) * -1);
+    margin-bottom: calc(var(--space-$(i)) * -1);
   }
-  .mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
-  .mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
-  .ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
-  .mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
+  .mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) }
+  .mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) }
+  .ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) }
+  .mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) }
 }
-.ma  { margin: auto !important }
-.mxa { margin-left: auto !important; margin-right: auto !important }
-.mya { margin-top: auto !important; margin-bottom: auto !important }
-.mta { margin-top: auto !important }
-.mba { margin-bottom: auto !important }
-.mla { margin-left: auto !important }
-.mra { margin-right: auto !important }
+.ma  { margin: auto }
+.mxa { margin-left: auto; margin-right: auto }
+.mya { margin-top: auto; margin-bottom: auto }
+.mta { margin-top: auto }
+.mba { margin-bottom: auto }
+.mla { margin-left: auto }
+.mra { margin-right: auto }
 
-@media (--medium) {
+@media (min-width: 640px) {
   @for $i from 0 to 12 {
-    .m\:m$(i)  { margin: var(--space-$(i)) !important }
-    .m\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
-    .m\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
-    .m\:mt$(i) { margin-top: var(--space-$(i)) !important }
-    .m\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
-    .m\:ml$(i) { margin-left: var(--space-$(i)) !important }
-    .m\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    .s\:m$(i)  { margin: var(--space-$(i)) }
+    .s\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
+    .s\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
+    .s\:mt$(i) { margin-top: var(--space-$(i)) }
+    .s\:mb$(i) { margin-bottom: var(--space-$(i)) }
+    .s\:ml$(i) { margin-left: var(--space-$(i)) }
+    .s\:mr$(i) { margin-right: var(--space-$(i)) }
     
-    .m\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+    .s\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) }
+    .s\:mx$(i)n {
+      margin-left: calc(var(--space-$(i)) * -1);
+      margin-right: calc(var(--space-$(i)) * -1);
+    }
+    .s\:my$(i)n {
+      margin-top: calc(var(--space-$(i)) * -1);
+      margin-bottom: calc(var(--space-$(i)) * -1);
+    }
+    .s\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) }
+    .s\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) }
+    .s\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) }
+    .s\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) }
+  }
+  .s\:ma  { margin: auto }
+  .s\:mxa { margin-left: auto; margin-right: auto }
+  .s\:mya { margin-top: auto; margin-bottom: auto }
+  .s\:mta { margin-top: auto }
+  .s\:mba { margin-bottom: auto }
+  .s\:mla { margin-left: auto }
+  .s\:mra { margin-right: auto }
+}
+
+@media (min-width: 768px) {
+  @for $i from 0 to 12 {
+    .m\:m$(i)  { margin: var(--space-$(i)) }
+    .m\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
+    .m\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
+    .m\:mt$(i) { margin-top: var(--space-$(i)) }
+    .m\:mb$(i) { margin-bottom: var(--space-$(i)) }
+    .m\:ml$(i) { margin-left: var(--space-$(i)) }
+    .m\:mr$(i) { margin-right: var(--space-$(i)) }
+    
+    .m\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) }
     .m\:mx$(i)n {
-      margin-left: calc(var(--space-$(i)) * -1) !important;
-      margin-right: calc(var(--space-$(i)) * -1) !important;
+      margin-left: calc(var(--space-$(i)) * -1);
+      margin-right: calc(var(--space-$(i)) * -1);
     }
     .m\:my$(i)n {
-      margin-top: calc(var(--space-$(i)) * -1) !important;
-      margin-bottom: calc(var(--space-$(i)) * -1) !important;
+      margin-top: calc(var(--space-$(i)) * -1);
+      margin-bottom: calc(var(--space-$(i)) * -1);
     }
-    .m\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
-    .m\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
-    .m\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
-    .m\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
+    .m\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) }
+    .m\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) }
+    .m\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) }
+    .m\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) }
   }
-  .m\:ma  { margin: auto !important }
-  .m\:mxa { margin-left: auto !important; margin-right: auto !important }
-  .m\:mya { margin-top: auto !important; margin-bottom: auto !important }
-  .m\:mta { margin-top: auto !important }
-  .m\:mba { margin-bottom: auto !important }
-  .m\:mla { margin-left: auto !important }
-  .m\:mra { margin-right: auto !important }
+  .m\:ma  { margin: auto }
+  .m\:mxa { margin-left: auto; margin-right: auto }
+  .m\:mya { margin-top: auto; margin-bottom: auto }
+  .m\:mta { margin-top: auto }
+  .m\:mba { margin-bottom: auto }
+  .m\:mla { margin-left: auto }
+  .m\:mra { margin-right: auto }
 }
 
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 0 to 12 {
-    .l\:m$(i)  { margin: var(--space-$(i)) !important }
-    .l\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
-    .l\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
-    .l\:mt$(i) { margin-top: var(--space-$(i)) !important }
-    .l\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
-    .l\:ml$(i) { margin-left: var(--space-$(i)) !important }
-    .l\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    .l\:m$(i)  { margin: var(--space-$(i)) }
+    .l\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
+    .l\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
+    .l\:mt$(i) { margin-top: var(--space-$(i)) }
+    .l\:mb$(i) { margin-bottom: var(--space-$(i)) }
+    .l\:ml$(i) { margin-left: var(--space-$(i)) }
+    .l\:mr$(i) { margin-right: var(--space-$(i)) }
     
-    .l\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+    .l\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) }
     .l\:mx$(i)n {
-      margin-left: calc(var(--space-$(i)) * -1) !important;
-      margin-right: calc(var(--space-$(i)) * -1) !important;
+      margin-left: calc(var(--space-$(i)) * -1);
+      margin-right: calc(var(--space-$(i)) * -1);
     }
     .l\:my$(i)n {
-      margin-top: calc(var(--space-$(i)) * -1) !important;
-      margin-bottom: calc(var(--space-$(i)) * -1) !important;
+      margin-top: calc(var(--space-$(i)) * -1);
+      margin-bottom: calc(var(--space-$(i)) * -1);
     }
-    .l\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
-    .l\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
-    .l\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
-    .l\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
+    .l\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) }
+    .l\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) }
+    .l\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) }
+    .l\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) }
   }
-  .l\:ma  { margin: auto !important }
-  .l\:mxa { margin-left: auto !important; margin-right: auto !important }
-  .l\:mya { margin-top: auto !important; margin-bottom: auto !important }
-  .l\:mta { margin-top: auto !important }
-  .l\:mba { margin-bottom: auto !important }
-  .l\:mla { margin-left: auto !important }
-  .l\:mra { margin-right: auto !important }
+  .l\:ma  { margin: auto }
+  .l\:mxa { margin-left: auto; margin-right: auto }
+  .l\:mya { margin-top: auto; margin-bottom: auto }
+  .l\:mta { margin-top: auto }
+  .l\:mba { margin-bottom: auto }
+  .l\:mla { margin-left: auto }
+  .l\:mra { margin-right: auto }
 }
 
-@media (--xlarge) {
+@media (min-width: 1280px) {
   @for $i from 0 to 12 {
-    .xl\:m$(i)  { margin: var(--space-$(i)) !important }
-    .xl\:mx$(i) { margin-left: var(--space-$(i)) !important; margin-right: var(--space-$(i)) !important }
-    .xl\:my$(i) { margin-top: var(--space-$(i)) !important; margin-bottom: var(--space-$(i)) !important }
-    .xl\:mt$(i) { margin-top: var(--space-$(i)) !important }
-    .xl\:mb$(i) { margin-bottom: var(--space-$(i)) !important }
-    .xl\:ml$(i) { margin-left: var(--space-$(i)) !important }
-    .xl\:mr$(i) { margin-right: var(--space-$(i)) !important }
+    .xl\:m$(i)  { margin: var(--space-$(i)) }
+    .xl\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
+    .xl\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
+    .xl\:mt$(i) { margin-top: var(--space-$(i)) }
+    .xl\:mb$(i) { margin-bottom: var(--space-$(i)) }
+    .xl\:ml$(i) { margin-left: var(--space-$(i)) }
+    .xl\:mr$(i) { margin-right: var(--space-$(i)) }
     
-    .xl\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) !important }
+    .xl\:m$(i)n  { margin: calc(var(--space-$(i)) * -1) }
     .xl\:mx$(i)n {
-      margin-left: calc(var(--space-$(i)) * -1) !important;
-      margin-right: calc(var(--space-$(i)) * -1) !important;
+      margin-left: calc(var(--space-$(i)) * -1);
+      margin-right: calc(var(--space-$(i)) * -1);
     }
     .xl\:my$(i)n {
-      margin-top: calc(var(--space-$(i)) * -1) !important;
-      margin-bottom: calc(var(--space-$(i)) * -1) !important;
+      margin-top: calc(var(--space-$(i)) * -1);
+      margin-bottom: calc(var(--space-$(i)) * -1);
     }
-    .xl\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) !important }
-    .xl\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) !important }
-    .xl\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) !important }
-    .xl\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) !important }
+    .xl\:mt$(i)n { margin-top: calc(var(--space-$(i)) * -1) }
+    .xl\:mb$(i)n { margin-bottom: calc(var(--space-$(i)) * -1) }
+    .xl\:ml$(i)n { margin-left: calc(var(--space-$(i)) * -1) }
+    .xl\:mr$(i)n { margin-right: calc(var(--space-$(i)) * -1) }
   }
-  .xl\:ma  { margin: auto !important }
-  .xl\:mxa { margin-left: auto !important; margin-right: auto !important }
-  .xl\:mya { margin-top: auto !important; margin-bottom: auto !important }
-  .xl\:mta { margin-top: auto !important }
-  .xl\:mba { margin-bottom: auto !important }
-  .xl\:mla { margin-left: auto !important }
-  .xl\:mra { margin-right: auto !important }
+  .xl\:ma  { margin: auto }
+  .xl\:mxa { margin-left: auto; margin-right: auto }
+  .xl\:mya { margin-top: auto; margin-bottom: auto }
+  .xl\:mta { margin-top: auto }
+  .xl\:mba { margin-bottom: auto }
+  .xl\:mla { margin-left: auto }
+  .xl\:mra { margin-right: auto }
 }
 
 
 /* !- Padding */
 @for $i from 0 to 12 {
-  .p$(i)  { padding: var(--space-$(i)) !important }
-  .px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
-  .py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
-  .pt$(i) { padding-top: var(--space-$(i)) !important }
-  .pb$(i) { padding-bottom: var(--space-$(i)) !important }
-  .pl$(i) { padding-left: var(--space-$(i)) !important }
-  .pr$(i) { padding-right: var(--space-$(i)) !important }
+  .p$(i)  { padding: var(--space-$(i)) }
+  .px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
+  .py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
+  .pt$(i) { padding-top: var(--space-$(i)) }
+  .pb$(i) { padding-bottom: var(--space-$(i)) }
+  .pl$(i) { padding-left: var(--space-$(i)) }
+  .pr$(i) { padding-right: var(--space-$(i)) }
 }
 
-@media (--medium) {
+@media (min-width: 640px) {
   @for $i from 0 to 12 {
-    .m\:p$(i)  { padding: var(--space-$(i)) !important }
-    .m\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
-    .m\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
-    .m\:pt$(i) { padding-top: var(--space-$(i)) !important }
-    .m\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
-    .m\:pl$(i) { padding-left: var(--space-$(i)) !important }
-    .m\:pr$(i) { padding-right: var(--space-$(i)) !important }
+    .s\:p$(i)  { padding: var(--space-$(i)) }
+    .s\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
+    .s\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
+    .s\:pt$(i) { padding-top: var(--space-$(i)) }
+    .s\:pb$(i) { padding-bottom: var(--space-$(i)) }
+    .s\:pl$(i) { padding-left: var(--space-$(i)) }
+    .s\:pr$(i) { padding-right: var(--space-$(i)) }
   }
 }
 
-@media (--large) {
+@media (min-width: 768px) {
   @for $i from 0 to 12 {
-    .l\:p$(i)  { padding: var(--space-$(i)) !important }
-    .l\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
-    .l\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
-    .l\:pt$(i) { padding-top: var(--space-$(i)) !important }
-    .l\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
-    .l\:pl$(i) { padding-left: var(--space-$(i)) !important }
-    .l\:pr$(i) { padding-right: var(--space-$(i)) !important }
+    .m\:p$(i)  { padding: var(--space-$(i)) }
+    .m\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
+    .m\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
+    .m\:pt$(i) { padding-top: var(--space-$(i)) }
+    .m\:pb$(i) { padding-bottom: var(--space-$(i)) }
+    .m\:pl$(i) { padding-left: var(--space-$(i)) }
+    .m\:pr$(i) { padding-right: var(--space-$(i)) }
   }
 }
 
-@media (--xlarge) {
+@media (min-width: 1024px) {
   @for $i from 0 to 12 {
-    .xl\:p$(i)  { padding: var(--space-$(i)) !important }
-    .xl\:px$(i) { padding-left: var(--space-$(i)) !important; padding-right: var(--space-$(i)) !important }
-    .xl\:py$(i) { padding-top: var(--space-$(i)) !important; padding-bottom: var(--space-$(i)) !important }
-    .xl\:pt$(i) { padding-top: var(--space-$(i)) !important }
-    .xl\:pb$(i) { padding-bottom: var(--space-$(i)) !important }
-    .xl\:pl$(i) { padding-left: var(--space-$(i)) !important }
-    .xl\:pr$(i) { padding-right: var(--space-$(i)) !important }
+    .l\:p$(i)  { padding: var(--space-$(i)) }
+    .l\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
+    .l\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
+    .l\:pt$(i) { padding-top: var(--space-$(i)) }
+    .l\:pb$(i) { padding-bottom: var(--space-$(i)) }
+    .l\:pl$(i) { padding-left: var(--space-$(i)) }
+    .l\:pr$(i) { padding-right: var(--space-$(i)) }
+  }
+}
+
+@media (min-width: 1280px) {
+  @for $i from 0 to 12 {
+    .xl\:p$(i)  { padding: var(--space-$(i)) }
+    .xl\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
+    .xl\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
+    .xl\:pt$(i) { padding-top: var(--space-$(i)) }
+    .xl\:pb$(i) { padding-bottom: var(--space-$(i)) }
+    .xl\:pl$(i) { padding-left: var(--space-$(i)) }
+    .xl\:pr$(i) { padding-right: var(--space-$(i)) }
   }
 }
 
 
 /* !- Gap */
 @for $i from 0 to 12 {
-  .gap$(i) { gap: var(--space-$(i)) !important }
-  .gapx$(i) { column-gap: var(--space-$(i)) !important }
-  .gapy$(i) { row-gap: var(--space-$(i)) !important }
+  .gap$(i) { gap: var(--space-$(i)) }
+  .gapx$(i) { column-gap: var(--space-$(i)) }
+  .gapy$(i) { row-gap: var(--space-$(i)) }
 }
 
-@media (--medium) {
+@media (min-width: 640px) {
   @for $i from 0 to 12 {
-    .m\:gap$(i) { gap: var(--space-$(i)) !important }
-    .m\:gapx$(i) { column-gap: var(--space-$(i)) !important }
-    .m\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+    .s\:gap$(i) { gap: var(--space-$(i)) }
+    .s\:gapx$(i) { column-gap: var(--space-$(i)) }
+    .s\:gapy$(i) { row-gap: var(--space-$(i)) }
   }
 }
 
-@media (--large) {
+@media (min-width: 768px) {
   @for $i from 0 to 12 {
-    .l\:gap$(i) { gap: var(--space-$(i)) !important }
-    .l\:gapx$(i) { column-gap: var(--space-$(i)) !important }
-    .l\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+    .m\:gap$(i) { gap: var(--space-$(i)) }
+    .m\:gapx$(i) { column-gap: var(--space-$(i)) }
+    .m\:gapy$(i) { row-gap: var(--space-$(i)) }
   }
 }
 
-@media (--xlarge) {
+@media (min-width: 1024px) {
   @for $i from 0 to 12 {
-    .xl\:gap$(i) { gap: var(--space-$(i)) !important }
-    .xl\:gapx$(i) { column-gap: var(--space-$(i)) !important }
-    .xl\:gapy$(i) { row-gap: var(--space-$(i)) !important }
+    .l\:gap$(i) { gap: var(--space-$(i)) }
+    .l\:gapx$(i) { column-gap: var(--space-$(i)) }
+    .l\:gapy$(i) { row-gap: var(--space-$(i)) }
+  }
+}
+
+@media (min-width: 1280px) {
+  @for $i from 0 to 12 {
+    .xl\:gap$(i) { gap: var(--space-$(i)) }
+    .xl\:gapx$(i) { column-gap: var(--space-$(i)) }
+    .xl\:gapy$(i) { row-gap: var(--space-$(i)) }
   }
 }
 
 
 /* !- Border radius */
 @for $i from 0 to 12 {
-  .r$(i) { border-radius: var(--space-$(i)) !important }
+  .br$(i) { border-radius: var(--space-$(i)) }
 }
-.r100 { border-radius: 100% !important }
+.br100 { border-radius: 100% }
 
-@media (--medium) {
+@media (min-width: 640px) {
   @for $i from 0 to 12 {
-    .m\:r$(i) { border-radius: var(--space-$(i)) !important }
+    .s\:br$(i) { border-radius: var(--space-$(i)) }
   }
-  .m\:r100 { border-radius: 100% !important }
-}
-
-@media (--large) {
-  @for $i from 0 to 12 {
-    .l\:r$(i) { border-radius: var(--space-$(i)) !important }
-  }
-  .l\:r100 { border-radius: 100% !important }
+  .s\:br100 { border-radius: 100% }
 }
 
-@media (--xlarge) {
+@media (min-width: 768px) {
   @for $i from 0 to 12 {
-    .xl\:r$(i) { border-radius: var(--space-$(i)) !important }
+    .m\:br$(i) { border-radius: var(--space-$(i)) }
   }
-  .xl\:r100 { border-radius: 100% !important }
+  .m\:br100 { border-radius: 100% }
+}
+
+@media (min-width: 1024px) {
+  @for $i from 0 to 12 {
+    .l\:br$(i) { border-radius: var(--space-$(i)) }
+  }
+  .l\:br100 { border-radius: 100% }
+}
+
+@media (min-width: 1280px) {
+  @for $i from 0 to 12 {
+    .xl\:br$(i) { border-radius: var(--space-$(i)) }
+  }
+  .xl\:br100 { border-radius: 100% }
 }
 
 
@@ -870,7 +1000,21 @@ html.touch .touch-hide { display: none }
 .sh9  { box-shadow: var(--shadow-9) }
 .sh10 { box-shadow: var(--shadow-10) }
 
-@media (--medium) {
+@media (min-width: 640px) {
+  .s\:sh0 { box-shadow: none }
+  .s\:sh1  { box-shadow: var(--shadow-1) }
+  .s\:sh2  { box-shadow: var(--shadow-2) }
+  .s\:sh3  { box-shadow: var(--shadow-3) }
+  .s\:sh4  { box-shadow: var(--shadow-4) }
+  .s\:sh5  { box-shadow: var(--shadow-5) }
+  .s\:sh6  { box-shadow: var(--shadow-6) }
+  .s\:sh7  { box-shadow: var(--shadow-7) }
+  .s\:sh8  { box-shadow: var(--shadow-8) }
+  .s\:sh9  { box-shadow: var(--shadow-9) }
+  .s\:sh10 { box-shadow: var(--shadow-10) }
+}
+
+@media (min-width: 768px) {
   .m\:sh0 { box-shadow: none }
   .m\:sh1  { box-shadow: var(--shadow-1) }
   .m\:sh2  { box-shadow: var(--shadow-2) }
@@ -884,7 +1028,7 @@ html.touch .touch-hide { display: none }
   .m\:sh10 { box-shadow: var(--shadow-10) }
 }
 
-@media (--large) {
+@media (min-width: 1024px) {
   .l\:sh0 { box-shadow: none }
   .l\:sh1  { box-shadow: var(--shadow-1) }
   .l\:sh2  { box-shadow: var(--shadow-2) }
@@ -898,22 +1042,41 @@ html.touch .touch-hide { display: none }
   .l\:sh10 { box-shadow: var(--shadow-10) }
 }
 
+@media (min-width: 1280px) {
+  .xl\:sh0 { box-shadow: none }
+  .xl\:sh1  { box-shadow: var(--shadow-1) }
+  .xl\:sh2  { box-shadow: var(--shadow-2) }
+  .xl\:sh3  { box-shadow: var(--shadow-3) }
+  .xl\:sh4  { box-shadow: var(--shadow-4) }
+  .xl\:sh5  { box-shadow: var(--shadow-5) }
+  .xl\:sh6  { box-shadow: var(--shadow-6) }
+  .xl\:sh7  { box-shadow: var(--shadow-7) }
+  .xl\:sh8  { box-shadow: var(--shadow-8) }
+  .xl\:sh9  { box-shadow: var(--shadow-9) }
+  .xl\:sh10 { box-shadow: var(--shadow-10) }
+}
+
 
 /* !- Order */
 @for $i from 0 to 12 {
   .o$(i) { order: $(i) }
 }
-@media (--medium) {
+@media (min-width: 640px) {
+  @for $i from 0 to 12 {
+    .s\:o$(i) { order: $(i) }
+  }
+}
+@media (min-width: 768px) {
   @for $i from 0 to 12 {
     .m\:o$(i) { order: $(i) }
   }
 }
-@media (--large) {
+@media (min-width: 1024px) {
   @for $i from 0 to 12 {
     .l\:o$(i) { order: $(i) }
   }
 }
-@media (--xlarge) {
+@media (min-width: 1280px) {
   @for $i from 0 to 12 {
     .xl\:o$(i) { order: $(i) }
   }

@@ -156,7 +156,21 @@
  *   - Implement Content Security Policy (CSP) headers
  *   - Consider using a proper HTML sanitization library for complex cases
  *
- * Next.js: DOM methods no-op or return safe defaults when document/window undefined. Use lib on client (e.g. useEffect).
+ * SSR-safe: DOM methods no-op or return safe defaults when document/window undefined.
+ *
+ * @example
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <p id="out"></p>
+ * // <div x-render="'Hello from x-render'"></div>
+ * //
+ * // <script type="module">
+ * //   import { lib } from './src/components/x/lib.js';
+ * //   window.addEventListener('DOMContentLoaded', () => {
+ * //     const el = lib.qs('#out');
+ * //     if (el) el.textContent = lib.price(1234.56);
+ * //   });
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.3

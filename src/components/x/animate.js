@@ -22,25 +22,19 @@
  *   "classRemove": true
  * }'></div>
  *
- * Next.js: call init() in useEffect(); on route change call destroy() in cleanup and init() after mount.
  * SSR-safe: init/destroy no-op when window is undefined.
  *
  * @example
- * // Next.js — _app.tsx or layout
- * import { useEffect } from 'react';
- * import { usePathname } from 'next/navigation';
- * import { animate } from '@andreyshpigunov/x/animate';
- *
- * export default function App({ Component, pageProps }) {
- *   const pathname = usePathname();
- *
- *   useEffect(() => {
- *     animate.init();
- *     return () => animate.destroy();
- *   }, [pathname]);
- *
- *   return <Component {...pageProps} />;
- * }
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <script type="module">
+ * //   import { animate } from './src/components/x/animate.js';
+ * //   window.coverOut = (item) => {
+ * //     // item.progress is 0..1 (string with 4 decimals)
+ * //     item.element.style.setProperty('--progress', item.progress);
+ * //   };
+ * //   window.addEventListener('DOMContentLoaded', () => animate.init());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.4
@@ -53,7 +47,7 @@ import { lib } from './lib';
  * Scroll-based animation controller.
  */
 class Animate {
-
+  
   constructor() {
     /**
      * Prevents multiple `requestAnimationFrame` calls.
@@ -61,42 +55,42 @@ class Animate {
      * @private
      */
     this._ticking = false;
-
+    
     /**
      * Array of animation items parsed from `[x-animate]` elements.
      * @type {Object[]}
      * @private
      */
     this._animations = [];
-
+    
     /**
      * Bound scroll handler for `requestAnimationFrame`.
      * @type {Function}
      * @private
      */
     this._scroll = this._scroll.bind(this);
-
+    
     /**
      * Bound raw scroll/resize handler.
      * @type {Function}
      * @private
      */
     this._scrollHandler = this._scrollHandler.bind(this);
-
+    
     /**
      * Indicates whether `init()` was called.
      * @type {boolean}
      * @private
      */
     this._initialized = false;
-
+    
     /**
      * Set of parent elements being listened to for scroll.
      * @type {Set<HTMLElement|Window>}
      * @private
      */
     this._parents = new Set();
-
+    
     /**
      * NodeList of elements with `[x-animate]`.
      * @type {NodeListOf<HTMLElement>|null}
@@ -104,25 +98,25 @@ class Animate {
      */
     this._elements = null;
   }
-
+  
   /**
    * Initializes or reinitializes animation tracking for `[x-animate]` elements.
    */
   init() {
     if (typeof window === 'undefined') return;
-
+    
     this._cleanup();
-
+    
     this._elements = lib.qsa('[x-animate]');
     if (!this._elements?.length) return;
-
+    
     this._parseElementsAnimations();
     if (!this._animations.length) return;
-
+    
     this._setupListeners();
     this._initialized = true;
   }
-
+  
   /**
    * Removes all listeners and resets internal state.
    *
@@ -131,27 +125,27 @@ class Animate {
   _cleanup() {
     if (!this._initialized) return;
     if (typeof window === 'undefined') return;
-
+    
     this._parents.forEach(parent => {
       parent.removeEventListener('scroll', this._scrollHandler);
     });
     window.removeEventListener('resize', this._scrollHandler);
-
+    
     this._ticking = false;
     this._animations = [];
     this._parents = new Set();
     this._elements = null;
     this._initialized = false;
   }
-
+  
   /**
-   * Stops observing and resets state. Use when unmounting (e.g. Next.js route change).
+   * Stops observing and resets state. Use when unmounting (page change / removing DOM).
    */
   destroy() {
     if (typeof window === 'undefined') return;
     this._cleanup();
   }
-
+  
   /**
    * Parses `[x-animate]` attributes and creates animation configuration for each element.
    *
@@ -181,7 +175,7 @@ class Animate {
       }
     }
   }
-
+  
   /**
    * Sets up scroll and resize event listeners for unique parent containers.
    *
@@ -195,7 +189,7 @@ class Animate {
       }
     }
     window.addEventListener('resize', this._scrollHandler);
-
+    
     const runScroll = () => requestAnimationFrame(() => this._scroll());
     if (document.readyState === 'complete') {
       runScroll();
@@ -203,7 +197,7 @@ class Animate {
       window.addEventListener('load', runScroll, { once: true });
     }
   }
-
+  
   /**
    * Raw scroll/resize event handler with throttling via `requestAnimationFrame`.
    *
@@ -218,7 +212,7 @@ class Animate {
       });
     }
   }
-
+  
   /**
    * Main animation logic executed on scroll or resize.
    *
@@ -242,9 +236,9 @@ class Animate {
       const hasStart = !isNaN(start);
       const hasEnd = !isNaN(end);
       const fn = item.fn;
-
+      
       if (item.log) console.log(top, start, end, item);
-
+      
       if (hasStart && hasEnd) {
         item.duration = start - end;
         const inRange = top <= start && top >= end;
@@ -291,7 +285,7 @@ class Animate {
       }
     }
   }
-
+  
   /**
    * Converts a value like '120vh', '50%' or '300' into pixels.
    *
@@ -305,9 +299,9 @@ class Animate {
     if (typeof value !== 'string') return NaN;
     const num = parseFloat(value);
     if (!/[%vh]/.test(value)) return num;
-    const height = value.includes('vh')
-      ? document.documentElement.clientHeight
-      : (parent === window ? document.documentElement.clientHeight : parent.clientHeight);
+    const height = value.includes('vh') ?
+      document.documentElement.clientHeight :
+      (parent === window ? document.documentElement.clientHeight : parent.clientHeight);
     return (height * num) / 100;
   }
 }

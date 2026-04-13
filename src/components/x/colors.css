@@ -1,31 +1,26 @@
 /*----------------------------------------
 colors.css / x
-Colors from https://147colors.com
+Colors
 
 Created by Andrey Shpigunov at 20.03.2025
 All right reserved.
 ----------------------------------------*/
 
-
 /*
-  .colorPrimary
-  .colorSuccess
-  .colorWarning
-  .colorDanger
-  .colorError
-  .colorGrey
+  .color-primary
+  .color-success
+  .color-warning
+  .color-danger
+  .color-error
+  .color-grey
   
-  .bgPrimary
-  .bgSuccess
-  .bgWarning
-  .bgDanger
-  .bgError
-  .bgGrey
-  
-  .color[ColorName] - color (d)
-  .bg[ColorName] - background color (d)
+  .bg-primary
+  .bg-success
+  .bg-warning
+  .bg-danger
+  .bg-error
+  .bg-grey
 */
-
 
 :root {
   --color-primary: #0088ee;
@@ -36,29 +31,40 @@ All right reserved.
   --color-grey: #f4f5f6;
 }
 
-
-.colorPrimary { color: var(--color-primary) !important }
-.colorSuccess { color: var(--color-success) !important }
-.colorWarning { color: var(--color-warning) !important }
-.colorDanger  { color: var(--color-danger) !important }
-.colorError   { color: var(--color-error) !important }
-.bgPrimary   { background-color: var(--color-primary) !important }
-.bgSuccess   { background-color: var(--color-success) !important }
-.bgWarning   { background-color: var(--color-warning) !important }
-.bgDanger    { background-color: var(--color-danger) !important }
-.bgError     { background-color: var(--color-error) !important }
-.bgGrey      { background-color: var(--color-grey) !important }
-
-
-@each $color in AliceBlue, AntiqueWhite, Aqua, Azure, Beige, Bisque, Black, BlanchedAlmond, Blue, BlueViolet, Brown, Burlywood, CadetBlue, Chartreuse, Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson, Cyan, DarkBlue, DarkCyan, DarkGoldenrod, DarkGray, DarkGreen, DarkGrey, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange, DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue, DarkSlateGray, DarkSlateGrey, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue, DimGray, DimGrey, DodgerBlue, FireBrick, FloralWhite, ForestGreen, Fuchsia, Gainsboro, GhostWhite, Gold, Goldenrod, Gray, Green, GreenYellow, Grey, HoneyDew, HotPink, IndianRed, Indigo, Ivory, Khaki, Lavender, LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral, LightCyan, LightGoldenrodYellow, LightGray, LightGreen, LightGrey, LightPink, LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSlateGrey, LightSteelBlue, LightYellow, Lime, LimeGreen, Linen, Magenta, Maroon, MediumAquaMarine, MediumBlue, MediumOrchid, MediumPurple, MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed, MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite, Navy, OldLace, Olive, OliveDrab, Orange, OrangeRed, Orchid, PaleGoldenrod, PaleGreen, PaleTurquoise, PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink, Plum, PowderBlue, Purple, RebeccaPurple, Red, RosyBrown, RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen, SeaShell, Sienna, Silver, SkyBlue, SlateBlue, SlateGray, SlateGrey, Snow, SpringGreen, SteelBlue, Tan, Teal, Thistle, Tomato, Turquoise, Violet, Wheat, White, WhiteSmoke, Yellow, YellowGreen {
-  
-  .color$(color) { color: $(color) !important }
-  .bg$(color) { background-color: $(color) !important }
+.color-primary {
+  color: var(--color-primary);
+}
+.color-success {
+  color: var(--color-success);
+}
+.color-warning {
+  color: var(--color-warning);
+}
+.color-danger {
+  color: var(--color-danger);
+}
+.color-error {
+  color: var(--color-error);
+}
+.color-grey {
+  color: var(--color-grey);
 }
 
-@media (--dark) {
-  @each $color in AliceBlue, AntiqueWhite, Aqua, Azure, Beige, Bisque, Black, BlanchedAlmond, Blue, BlueViolet, Brown, Burlywood, CadetBlue, Chartreuse, Chocolate, Coral, CornflowerBlue, Cornsilk, Crimson, Cyan, DarkBlue, DarkCyan, DarkGoldenrod, DarkGray, DarkGreen, DarkGrey, DarkKhaki, DarkMagenta, DarkOliveGreen, DarkOrange, DarkOrchid, DarkRed, DarkSalmon, DarkSeaGreen, DarkSlateBlue, DarkSlateGray, DarkSlateGrey, DarkTurquoise, DarkViolet, DeepPink, DeepSkyBlue, DimGray, DimGrey, DodgerBlue, FireBrick, FloralWhite, ForestGreen, Fuchsia, Gainsboro, GhostWhite, Gold, Goldenrod, Gray, Green, GreenYellow, Grey, HoneyDew, HotPink, IndianRed, Indigo, Ivory, Khaki, Lavender, LavenderBlush, LawnGreen, LemonChiffon, LightBlue, LightCoral, LightCyan, LightGoldenrodYellow, LightGray, LightGreen, LightGrey, LightPink, LightSalmon, LightSeaGreen, LightSkyBlue, LightSlateGray, LightSlateGrey, LightSteelBlue, LightYellow, Lime, LimeGreen, Linen, Magenta, Maroon, MediumAquaMarine, MediumBlue, MediumOrchid, MediumPurple, MediumSeaGreen, MediumSlateBlue, MediumSpringGreen, MediumTurquoise, MediumVioletRed, MidnightBlue, MintCream, MistyRose, Moccasin, NavajoWhite, Navy, OldLace, Olive, OliveDrab, Orange, OrangeRed, Orchid, PaleGoldenrod, PaleGreen, PaleTurquoise, PaleVioletRed, PapayaWhip, PeachPuff, Peru, Pink, Plum, PowderBlue, Purple, RebeccaPurple, Red, RosyBrown, RoyalBlue, SaddleBrown, Salmon, SandyBrown, SeaGreen, SeaShell, Sienna, Silver, SkyBlue, SlateBlue, SlateGray, SlateGrey, Snow, SpringGreen, SteelBlue, Tan, Teal, Thistle, Tomato, Turquoise, Violet, Wheat, White, WhiteSmoke, Yellow, YellowGreen {
-    .d\:color$(color) { color: $(color) !important }
-    .d\:bg$(color) { background-color: $(color) !important }
-  }
+.bg-primary {
+  background-color: var(--color-primary);
+}
+.bg-success {
+  background-color: var(--color-success);
+}
+.bg-warning {
+  background-color: var(--color-warning);
+}
+.bg-danger {
+  background-color: var(--color-danger);
+}
+.bg-error {
+  background-color: var(--color-error);
+}
+.bg-grey {
+  background-color: var(--color-grey);
 }

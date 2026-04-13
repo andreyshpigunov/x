@@ -23,7 +23,7 @@
  *     top: 0;
  *     z-index: 100;
  *   }
- *   .sticky.sticky_on {
+ *   .sticky.sticky--on {
  *     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
  *   }
  *
@@ -76,7 +76,7 @@
  * CSS classes:
  *
  * - `.sticky` - Required class to mark element for observation
- * - `.sticky_on` - Added when element is in sticky state (not fully visible)
+ * - `.sticky--on` - Added when element is in sticky state (not fully visible)
  * - Removed when element returns to normal flow
  *
  * How it works:
@@ -85,7 +85,7 @@
  * 2. Uses threshold: 1 (element must be fully visible)
  * 3. Uses rootMargin: '-1px 0px 0px 0px' (triggers when top edge leaves viewport)
  * 4. When intersectionRatio < 1, element is sticky
- * 5. Toggles `sticky_on` class and dispatches events
+ * 5. Toggles `sticky--on` class and dispatches events
  *
  * Observer configuration:
  *
@@ -114,6 +114,23 @@
  * - Modern browsers (Chrome 51+, Firefox 55+, Safari 12.1+, Edge 15+)
  * - Falls back gracefully if not supported (no errors, just no functionality)
  *
+ * @example
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <header class="sticky"><nav>Navigation</nav></header>
+ * // <main style="min-height: 200vh">Scroll content</main>
+ * //
+ * // <style>
+ * //   .sticky { position: sticky; top: 0; z-index: 100; }
+ * //   .sticky.sticky--on { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+ * // </style>
+ * //
+ * // <script type="module">
+ * //   import { sticky } from './src/components/x/sticky.js';
+ * //   window.addEventListener('DOMContentLoaded', () => sticky.init());
+ * //   window.addEventListener('pagehide', () => sticky.destroy());
+ * // </script>
+ *
  * @author Andrey Shpigunov
  * @version 0.2
  * @since 2025-07-17
@@ -133,7 +150,7 @@ class Sticky {
      * Class to apply when sticky state is active.
      * @type {string}
      */
-    this.activeClass = 'sticky_on';
+    this.activeClass = 'sticky--on';
 
     /**
      * Root margin for IntersectionObserver.

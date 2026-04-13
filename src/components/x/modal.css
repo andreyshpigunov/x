@@ -7,9 +7,6 @@ All right reserved.
 ----------------------------------------*/
 
 
-/* !- Modal windows */
-
-
 :root {
   --modal-margin-top: 3vw;
   --modal-margin-bottom: 3vw;
@@ -31,17 +28,14 @@ All right reserved.
   --modal-overlay-background-color: #00000066;
 }
 
-
 html.modal--active body {
   overflow: hidden;
 }
-
 
 /* !- Modal window content */
 [x-modal] {
   display: none;
 }
-
 
 /* !- Modal wrapper */
 .modal {
@@ -71,7 +65,6 @@ html.modal--active body {
 .modal--z9  { z-index: 10009 }
 .modal--z10 { z-index: 10010 }
 
-
 /* !- Overlay */
 .modal-overlay {
   position: absolute;
@@ -82,7 +75,6 @@ html.modal--active body {
   right: 0;
   background-color: var(--modal-overlay-background-color);
 }
-
 
 /* ! -Main structure */
 .modal-outer {
@@ -104,7 +96,6 @@ html.modal--active body {
   min-height: 100%;
 }
 
-
 /* !- Modal window */
 .modal-window {
   position: relative;
@@ -121,7 +112,6 @@ html.modal--active body {
   box-shadow: var(--modal-box-shadow);
   border-radius: var(--modal-border-radius);
 }
-
 
 /* !- Close cross */
 .modal-rail {
@@ -187,11 +177,10 @@ html.modal--active body {
   }
 }
 
-
-/* !- Effects
-   https://github.com/codrops/ModalWindowEffects */
-
-
+/*
+  !- Effects
+  https://github.com/codrops/ModalWindowEffects
+*/
 .modal {
   & .modal-overlay {
     will-change: opacity;
@@ -202,7 +191,6 @@ html.modal--active body {
     opacity: 1;
   }
 }
-
 
 /* !- Default */
 .modal {
@@ -219,7 +207,6 @@ html.modal--active body {
   }
 }
 
-
 /* !- Zoom in */
 .modal--effect-in {
   & .modal-window {
@@ -229,7 +216,6 @@ html.modal--active body {
     transform: scale(1);
   }
 }
-
 
 /* !- Zoom out */
 .modal--effect-out {
@@ -241,7 +227,6 @@ html.modal--active body {
   }
 }
 
-
 /* !- Slide up */
 .modal--effect-up {
   & .modal-window {
@@ -251,7 +236,6 @@ html.modal--active body {
     transform: translateY(0);
   }
 }
-
 
 /* !- Slide down */
 .modal--effect-down {
@@ -263,7 +247,6 @@ html.modal--active body {
   }
 }
 
-
 /* !- Slide from left */
 .modal--effect-left {
   & .modal-window {
@@ -273,7 +256,6 @@ html.modal--active body {
     transform: translateX(0);
   }
 }
-
 
 /* !- Slide from right */
 .modal--effect-right {

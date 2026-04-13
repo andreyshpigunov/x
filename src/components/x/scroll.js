@@ -98,6 +98,19 @@
  * - Handle errors gracefully in scroll callbacks
  * - Consider accessibility (keyboard navigation, focus management)
  *
+ * @example
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <a x-scrollto='{"target":"#section","offset":80,"hash":true,"classActive":"active"}'>Go</a>
+ * // <div style="height: 120vh"></div>
+ * // <section id="section" style="height: 50vh; border: 1px solid #ccc;">Target</section>
+ * //
+ * // <script type="module">
+ * //   import { scroll } from './src/components/x/scroll.js';
+ * //   window.addEventListener('DOMContentLoaded', () => scroll.init());
+ * //   window.addEventListener('pagehide', () => scroll.destroy());
+ * // </script>
+ *
  * @author Andrey Shpigunov
  * @version 0.3
  * @since 2025-07-18

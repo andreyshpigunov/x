@@ -10,9 +10,7 @@
  *
  * - `dropdown.init()`            – Initializes all dropdown menus in the DOM.
  * - `dropdown.closeAllDropdowns()` – Closes all open dropdown menus.
- * - `dropdown.destroy()`         – Full teardown (listeners + global). Use on SPA unmount / Next.js.
- *
- * Next.js: call init() in useEffect() on client; call destroy() in cleanup (e.g. on unmount or route change).
+ * - `dropdown.destroy()`         – Full teardown (listeners + global). Use on SPA unmount / page change.
  * SSR-safe: init/destroy no-op when document is undefined.
  *
  * Usage:
@@ -97,11 +95,20 @@
  * - Screen reader friendly
  *
  * @example
- * // Next.js — layout or _app
- * useEffect(() => {
- *   dropdown.init();
- *   return () => dropdown.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <div class="dropdown">
+ * //   <button x-dropdown-open>Menu</button>
+ * //   <ul x-dropdown>
+ * //     <li><a href="#" role="menuitem">Item 1</a></li>
+ * //     <li><a href="#" role="menuitem">Item 2</a></li>
+ * //   </ul>
+ * // </div>
+ * //
+ * // <script type="module">
+ * //   import { dropdown } from './src/components/x/dropdown.js';
+ * //   window.addEventListener('DOMContentLoaded', () => dropdown.init());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.2
@@ -553,7 +560,7 @@ class Dropdown {
   }
 
   /**
-   * Full teardown: cleanup and remove global listener. Use on SPA unmount or Next.js.
+   * Full teardown: cleanup and remove global listener. Use on SPA unmount / page change.
    * SSR-safe: no-op when document is undefined.
    */
   destroy() {

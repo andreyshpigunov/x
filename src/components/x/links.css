@@ -9,7 +9,6 @@ All right reserved.
 
 /* !- Links styles */
 
-
 /*
   a
   a.link
@@ -21,7 +20,6 @@ All right reserved.
   a.link--dotted
   a.link--wavy
 */
-
 
 :root {
   --link-color: #0060cc;
@@ -42,7 +40,6 @@ All right reserved.
     --link-transition: all .1s ease-out;
   */
 }
-
 
 a {
   
@@ -83,7 +80,6 @@ a {
     text-decoration-color: var(--link-decoration-color-hover, currentcolor);
   }
   
-  
   /* Link predefined styles */
   
   &.link--noline {
@@ -109,6 +105,6 @@ a {
 a[href^="tel"],
 a[href^="tel"]:hover,
 a[href^="tel"]:active {
-  color: inherit !important;
-  text-decoration: inherit !important;
+  color: inherit;
+  text-decoration: inherit;
 }

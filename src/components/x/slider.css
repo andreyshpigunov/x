@@ -1,3 +1,12 @@
+/*----------------------------------------
+slider.css
+Slider
+
+Created by Andrey Shpigunov at 13.04.2026
+All right reserved.
+----------------------------------------*/
+
+
 :root {
   --slider-point-color: #ffffff66;
   --slider-point-color-active: #fff;
@@ -22,7 +31,7 @@
   overscroll-behavior: contain;    /* не отдаём overscroll родителю */
 }
 .slider_touch {
-  touch-action: pan-y !important;  /* разрешаем только вертикальные жесты браузеру */
+  touch-action: pan-y;  /* разрешаем только вертикальные жесты браузеру */
 }
 .slider-wrapper {
   display: flex;

@@ -1,13 +1,10 @@
 /*----------------------------------------
 scroll.css / x
-Scroll
+Scroll — native CSS horizontal scroller
 
 Created by Andrey Shpigunov at 20.03.2025
 All right reserved.
 ----------------------------------------*/
-
-
-/* !- Scroll - native CSS horizontal scroller */
 
 
 /*
@@ -17,13 +14,11 @@ All right reserved.
   .scroll--x-mandatory
 */
 
-
 :root {
   --scroll-scrollbar-size: 6px;
   --scroll-scrollbar-thumb-background: #00000011;
   --scroll-scrollbar-thumb-background-hover: #00000022;
 }
-
 
 .scroll {
   flex-wrap: nowrap;
@@ -34,7 +29,7 @@ All right reserved.
   -ms-overflow-style: none;
   /* Hide scrollbar in Firefox */
   scrollbar-width: none;
-  touch-action: pan-x !important;
+  touch-action: pan-x;
 
   &::-webkit-scrollbar {
     width: var(--scroll-scrollbar-size);
@@ -69,13 +64,13 @@ All right reserved.
 .scroll.scroll--x {
   overflow-x: scroll;
   overflow-y: hidden;
-  touch-action: pan-x !important;
+  touch-action: pan-x;
 }
 
 .scroll.scroll--y {
   overflow-x: hidden;
   overflow-y: scroll;
-  touch-action: pan-y !important;
+  touch-action: pan-y;
 }
 
 .scroll--contain {

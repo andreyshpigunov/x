@@ -13,19 +13,31 @@
  * - `autocomplete.init(dropdownId, options)` – Binds to dropdown by id; options: loadData, mapData, renderItem, onSelect, resetFunc, emptyStateHtml, defaultStateHtml, loadingStateHtml.
  * - `autocomplete.destroy()` – Removes listeners and resets state.
  *
- * Next.js: call init() in useEffect after mount; call destroy() in cleanup on route change.
  * SSR-safe: init/destroy no-op when window is undefined.
  *
  * @example
- * // Next.js — in a component with a dropdown by id="searchDropdown"
- * useEffect(() => {
- *   autocomplete.init('searchDropdown', {
- *     loadData: async () => fetch('/api/search').then(r => r.json()),
- *     renderItem: (item) => `<li data-item='${JSON.stringify(item)}'>${item.name}</li>`,
- *     onSelect: (item) => { setValue(item.name); }
- *   });
- *   return () => autocomplete.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <div id="searchDropdown">
+ * //   <input x-dropdown-open type="text" placeholder="Search…" />
+ * //   <ul x-dropdown></ul>
+ * // </div>
+ * //
+ * // <script type="module">
+ * //   import { autocomplete } from './src/components/x/autocomplete.js';
+ * //   // dropdown.js must be loaded too (for open/close behavior)
+ * //   window.addEventListener('DOMContentLoaded', () => {
+ * //     autocomplete.init('searchDropdown', {
+ * //       loadData: async (ctx) => {
+ * //         const q = ctx.field.value.trim();
+ * //         const r = await fetch(`/api/search?q=${encodeURIComponent(q)}`);
+ * //         return r.json();
+ * //       },
+ * //       renderItem: (item) => `<li data-item='${JSON.stringify(item)}'>${item.name}</li>`,
+ * //       onSelect: (item) => { console.log('selected', item); }
+ * //     });
+ * //   });
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.4

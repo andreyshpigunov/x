@@ -120,14 +120,26 @@
  * - Handle errors gracefully in callback functions
  * - Consider rate limiting for API calls
  *
- * Next.js: call init() in useEffect; call destroy() in cleanup (e.g. on unmount).
  * SSR-safe: init/destroy no-op when window/document is undefined.
  *
  * @example
- * useEffect(() => {
- *   loadmore.init();
- *   return () => loadmore.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <div class="items"></div>
+ * // <div x-loadmore='{"functionName": "loadMoreData"}'></div>
+ * //
+ * // <script type="module">
+ * //   import { loadmore } from './src/components/x/loadmore.js';
+ * //   window.loadMoreData = async (page) => {
+ * //     const r = await fetch(`/api/items?page=${page}`);
+ * //     const items = await r.json();
+ * //     const el = document.querySelector('.items');
+ * //     items.forEach((item) => el.appendChild(Object.assign(document.createElement('div'), { textContent: item.name })));
+ * //     return items.length > 0;
+ * //   };
+ * //   window.addEventListener('DOMContentLoaded', () => loadmore.init());
+ * //   window.addEventListener('pagehide', () => loadmore.destroy());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.3

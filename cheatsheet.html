@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Framework Cheatsheet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #f0f2f5;
+            padding: 16px;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Контейнер для компактного отображения */
+        .cheatsheet {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        /* Заголовок */
+        .header {
+            background: #1a1a2e;
+            color: white;
+            padding: 16px 20px;
+            border-bottom: 3px solid #08e;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            opacity: 0.7;
+            font-size: 12px;
+        }
+
+        /* Сетка для таблиц */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1px;
+            background: #ddd;
+        }
+
+        .card {
+            background: white;
+            padding: 12px 14px;
+            min-width: 0;
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #08e;
+            border-left: 3px solid #08e;
+            padding-left: 8px;
+            margin-bottom: 10px;
+            margin-top: 4px;
+        }
+
+        .card-title:first-child {
+            margin-top: 0;
+        }
+
+        .class-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 6px;
+            margin-bottom: 8px;
+        }
+
+        .class-item {
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 11px;
+            background: #f5f7fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #d63384;
+            border: 1px solid #e9ecef;
+            white-space: nowrap;
+        }
+
+        .class-item-prefix {
+            background: #e8f0fe;
+            color: #0066cc;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 9px;
+            background: #e9ecef;
+            padding: 1px 4px;
+            border-radius: 4px;
+            margin-left: 4px;
+            font-family: monospace;
+            font-weight: normal;
+        }
+
+        .note {
+            font-size: 10px;
+            color: #6c757d;
+            margin-top: 6px;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 6px;
+        }
+
+        hr {
+            margin: 8px 0;
+            border: none;
+            border-top: 1px solid #eee;
+        }
+
+        .subtitle {
+            font-weight: 600;
+            font-size: 12px;
+            color: #495057;
+            margin: 8px 0 4px 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .cheatsheet {
+                box-shadow: none;
+            }
+            .card {
+                break-inside: avoid;
+            }
+            .grid-cards {
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="cheatsheet">
+    <div class="header">
+        <h1>📄 CSS Framework Cheatsheet</h1>
+        <p>Все классы в одном месте · s/m/l/xl — адаптивные брейкпоинты (640/768/1024/1280px)</p>
+    </div>
+
+    <div class="grid-cards">
+
+        <!-- ======================= -->
+        <!-- BUTTONS -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🔘 Buttons</div>
+            <div class="class-list">
+                <span class="class-item">.button</span>
+                <span class="class-item">.button--label</span>
+                <span class="class-item">.button--primary</span>
+                <span class="class-item">.button--success</span>
+                <span class="class-item">.button--warning</span>
+                <span class="class-item">.button--danger</span>
+                <span class="class-item">.button--white</span>
+                <span class="class-item">.button--black</span>
+                <span class="class-item">.button--clear</span>
+                <span class="class-item">.button--dropdown</span>
+                <span class="class-item">.buttons-group</span>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- COLORS & BG -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🎨 Colors & Backgrounds</div>
+            <div class="class-list">
+                <span class="class-item">.color-primary</span>
+                <span class="class-item">.color-success</span>
+                <span class="class-item">.color-warning</span>
+                <span class="class-item">.color-danger</span>
+                <span class="class-item">.color-error</span>
+                <span class="class-item">.color-grey</span>
+            </div>
+            <div class="class-list">
+                <span class="class-item">.bg-primary</span>
+                <span class="class-item">.bg-success</span>
+                <span class="class-item">.bg-warning</span>
+                <span class="class-item">.bg-danger</span>
+                <span class="class-item">.bg-error</span>
+                <span class="class-item">.bg-grey</span>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- FLEX -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🧩 Flex <span class="badge">+ s/m/l/xl</span></div>
+            <div class="subtitle">Включение</div>
+            <div class="class-list"><span class="class-item">.flex</span><span class="class-item">.s:flex</span><span class="class-item">.m:flex</span><span class="class-item">.l:flex</span><span class="class-item">.xl:flex</span></div>
+            <div class="subtitle">Направление / Wrap</div>
+            <div class="class-list"><span class="class-item">.fr</span><span class="class-item">.fc</span><span class="class-item">.fw</span><span class="class-item">.fnw</span><span class="class-item badge">s/m/l/xl:*</span></div>
+            <div class="subtitle">Align-items</div>
+            <div class="class-list"><span class="class-item">.ais</span><span class="class-item">.aifs</span><span class="class-item">.aic</span><span class="class-item">.aife</span></div>
+            <div class="subtitle">Justify-content</div>
+            <div class="class-list"><span class="class-item">.jcfs</span><span class="class-item">.jcc</span><span class="class-item">.jcfe</span><span class="class-item">.jcsb</span><span class="class-item">.jcsa</span><span class="class-item">.jcse</span></div>
+            <div class="subtitle">Flex-колонки</div>
+            <div class="class-list"><span class="class-item">.c1/2</span><span class="class-item">.c1/3</span><span class="class-item">.c2/3</span><span class="class-item">.c1/4</span><span class="class-item">.c3/4</span><span class="class-item">.c1/6</span><span class="class-item">.c5/6</span><span class="class-item">.c1/12</span><span class="class-item">.c11/12</span><span class="class-item badge">+ s/m/l/xl</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- GRID -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📐 Grid <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.grid</span><span class="class-item">.g1</span><span class="class-item">.g2</span><span class="class-item">.g3</span><span class="class-item">.g4</span><span class="class-item">.g5</span><span class="class-item">.g6</span><span class="class-item">.g7</span><span class="class-item">.g8</span><span class="class-item">.g9</span><span class="class-item">.g10</span><span class="class-item">.g11</span><span class="class-item">.g12</span></div>
+            <div class="subtitle">Колонки (span)</div>
+            <div class="class-list"><span class="class-item">.c1</span><span class="class-item">.c2</span><span class="class-item">.c3</span>…<span class="class-item">.c12</span></div>
+            <div class="subtitle">Диапазон</div>
+            <div class="class-list"><span class="class-item">.c1/12</span><span class="class-item">.c2/12</span><span class="class-item">.c5/11</span><span class="class-item">.c6/12</span><span class="class-item badge">+ s/m/l/xl</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- FLOW / SPACE / STICKY -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📏 Flow & Vertical Space</div>
+            <div class="class-list"><span class="class-item">.flow</span><span class="class-item">.flow.s0</span>…<span class="class-item">.flow.s10</span><span class="class-item badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.space0</span>…<span class="class-item">.space10</span><span class="class-item badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.sticky</span><span class="class-item badge">+ s/m/l/xl</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- UTILITIES (текст, позиционирование, видимость) -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">⚙️ Утилиты</div>
+            <div class="class-list">
+                <span class="class-item">.antialiased</span>
+                <span class="class-item">.container</span>
+                <span class="class-item">.unselectable</span>
+                <span class="class-item">.unclickable</span>
+                <span class="class-item">.upper</span>
+                <span class="class-item">.lower</span>
+                <span class="class-item">.capitalize</span>
+                <span class="class-item">.nowrap</span>
+                <span class="class-item">.hyphens</span>
+                <span class="class-item">.pointer</span>
+                <span class="class-item">.toe</span>
+                <span class="class-item">.oh</span>
+                <span class="class-item">.rel</span>
+                <span class="class-item">.abs</span>
+                <span class="class-item">.ins</span>
+                <span class="class-item">.break-word</span>
+                <span class="class-item">.visually-hidden</span>
+                <span class="class-item">.invisible</span>
+                <span class="class-item">.scroll-responsive</span>
+                <span class="class-item">.fullscreen</span>
+                <span class="class-item">.no-print</span>
+                <span class="class-item">.touch-show</span>
+                <span class="class-item">.touch-hide</span>
+            </div>
+            <div class="subtitle">Line Clamp</div>
+            <div class="class-list"><span class="class-item">.lc1</span><span class="class-item">.lc2</span><span class="class-item">.lc3</span><span class="class-item">.lc4</span><span class="class-item">.lc5</span><span class="class-item badge">+ s/m/l/xl</span></div>
+            <div class="subtitle">Object-fit</div>
+            <div class="class-list"><span class="class-item">.fit-none</span><span class="class-item">.fit-cover</span><span class="class-item">.fit-contain</span><span class="class-item badge">+ s/m/l/xl</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- SHOW / HIDE -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">👁️ Show / Hide <span class="badge">s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.hidden</span><span class="class-item">.hidden-next</span><span class="class-item">.block</span><span class="class-item">.inline</span><span class="class-item">.inline-block</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- MARGIN, PADDING, GAP -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📐 Margin <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.m0</span>…<span class="class-item">.m12</span><span class="class-item">.m0n</span>…<span class="class-item">.m12n</span></div>
+            <div class="class-list"><span class="class-item">.mx0</span>…<span class="class-item">.mx12</span><span class="class-item">.my0</span>…<span class="class-item">.my12</span></div>
+            <div class="class-list"><span class="class-item">.mt0</span>…<span class="class-item">.mt12</span><span class="class-item">.mb0</span>…<span class="class-item">.mb12</span></div>
+            <div class="class-list"><span class="class-item">.ml0</span>…<span class="class-item">.ml12</span><span class="class-item">.mr0</span>…<span class="class-item">.mr12</span></div>
+            <div class="class-list"><span class="class-item">.ma</span><span class="class-item">.mxa</span><span class="class-item">.mya</span><span class="class-item">.mta</span><span class="class-item">.mba</span><span class="class-item">.mla</span><span class="class-item">.mra</span></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">📦 Padding <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.p0</span>…<span class="class-item">.p12</span><span class="class-item">.px0</span>…<span class="class-item">.px12</span><span class="class-item">.py0</span>…<span class="class-item">.py12</span></div>
+            <div class="class-list"><span class="class-item">.pt0</span>…<span class="class-item">.pt12</span><span class="class-item">.pb0</span>…<span class="class-item">.pb12</span></div>
+            <div class="class-list"><span class="class-item">.pl0</span>…<span class="class-item">.pl12</span><span class="class-item">.pr0</span>…<span class="class-item">.pr12</span></div>
+        </div>
+
+        <div class="card">
+            <div class="card-title">🔲 Gap <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.gap0</span>…<span class="class-item">.gap12</span><span class="class-item">.gapx0</span>…<span class="class-item">.gapx12</span><span class="class-item">.gapy0</span>…<span class="class-item">.gapy12</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- POSITION (top/bottom/left/right/z-index) -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📍 Position offsets <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.t0</span>…<span class="class-item">.t12</span><span class="class-item">.t0n</span>…<span class="class-item">.t12n</span></div>
+            <div class="class-list"><span class="class-item">.b0</span>…<span class="class-item">.b12</span><span class="class-item">.b0n</span>…<span class="class-item">.b12n</span></div>
+            <div class="class-list"><span class="class-item">.l0</span>…<span class="class-item">.l12</span><span class="class-item">.l0n</span>…<span class="class-item">.l12n</span></div>
+            <div class="class-list"><span class="class-item">.r0</span>…<span class="class-item">.r12</span><span class="class-item">.r0n</span>…<span class="class-item">.r12n</span></div>
+            <div class="class-list"><span class="class-item">.z0</span>…<span class="class-item">.z12</span><span class="class-item badge">+ s/m/l/xl</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- OPACITY -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🌀 Opacity</div>
+            <div class="class-list"><span class="class-item">.op0</span><span class="class-item">.op1</span><span class="class-item">.op2</span><span class="class-item">.op3</span><span class="class-item">.op4</span><span class="class-item">.op5</span><span class="class-item">.op6</span><span class="class-item">.op7</span><span class="class-item">.op8</span><span class="class-item">.op9</span><span class="class-item">.op10</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- RATIO -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📐 Ratio <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list">
+                <span class="class-item">.ratio1x1</span><span class="class-item">.ratio2x1</span><span class="class-item">.ratio3x1</span><span class="class-item">.ratio4x1</span>
+                <span class="class-item">.ratio3x2</span><span class="class-item">.ratio4x3</span><span class="class-item">.ratio16x9</span>
+                <span class="class-item">.ratio1x2</span><span class="class-item">.ratio1x3</span><span class="class-item">.ratio1x4</span>
+                <span class="class-item">.ratio2x3</span><span class="class-item">.ratio3x4</span><span class="class-item">.ratio9x16</span>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- WIDTH (w, max, min) -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📏 Width <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.max</span></div>
+            <div class="class-list"><span class="class-item">.w10</span>…<span class="class-item">.w190</span> step 10</div>
+            <div class="class-list"><span class="class-item">.w200</span>…<span class="class-item">.w380</span> step 20</div>
+            <div class="class-list"><span class="class-item">.w400</span>…<span class="class-item">.w1600</span> step 100</div>
+            <div class="class-list"><span class="class-item">.max10</span>…<span class="class-item">.max1600</span> (аналогично)</div>
+            <div class="class-list"><span class="class-item">.min10</span>…<span class="class-item">.min1600</span> (аналогично)</div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- TEXT ALIGN -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📌 Text align <span class="badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.al</span><span class="class-item">.ar</span><span class="class-item">.ac</span><span class="class-item">.aj</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- BORDER RADIUS / SHADOW / ORDER -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🎨 Border Radius, Shadow, Order</div>
+            <div class="class-list"><span class="class-item">.br0</span>…<span class="class-item">.br12</span><span class="class-item">.br100</span><span class="class-item badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.sh0</span>…<span class="class-item">.sh10</span><span class="class-item badge">+ s/m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.o0</span>…<span class="class-item">.o12</span><span class="class-item badge">+ s/m/l/xl</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- ICON -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🔷 Icon</div>
+            <div class="class-list"><span class="class-item">.icon</span><span class="class-item">.icon.s10</span>…<span class="class-item">.icon.s60</span> step 2 <span class="badge">+ m/l</span></div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- LINKS -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">🔗 Links</div>
+            <div class="class-list">
+                <span class="class-item">a</span><span class="class-item">a.link</span><span class="class-item">a.hover</span><span class="class-item">a.active</span>
+                <span class="class-item">a.link--noline</span><span class="class-item">a.link--underline</span>
+                <span class="class-item">a.link--dashed</span><span class="class-item">a.link--dotted</span><span class="class-item">a.link--wavy</span>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- SCROLL -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📜 Scroll</div>
+            <div class="class-list">
+                <span class="class-item">.scroll</span>
+                <span class="class-item">.scroll--contain</span>
+                <span class="class-item">.scroll--x-proximity</span>
+                <span class="class-item">.scroll--x-mandatory</span>
+            </div>
+        </div>
+
+        <!-- ======================= -->
+        <!-- TYPOGRAPHY (h, fs, fw, ls, lh) -->
+        <!-- ======================= -->
+        <div class="card">
+            <div class="card-title">📝 Typography</div>
+            <div class="class-list"><span class="class-item">.h1</span>…<span class="class-item">.h6</span><span class="class-item">.mono</span><span class="class-item">.italic</span><span class="class-item">.strike</span></div>
+            <div class="class-list"><span class="class-item">.fs10</span>…<span class="class-item">.fs19</span> step 1 <span class="badge">+ m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.fs20</span><span class="class-item">.fs22</span>…<span class="class-item">.fs64</span> step 2 <span class="badge">+ m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.fw100</span>…<span class="class-item">.fw900</span> step 100 <span class="badge">+ m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.ls0</span>…<span class="class-item">.ls4</span><span class="class-item badge">+ m/l/xl</span></div>
+            <div class="class-list"><span class="class-item">.lh0</span>…<span class="class-item">.lh9</span><span class="class-item badge">+ m/l/xl</span> (1.0–1.9)</div>
+        </div>
+
+    </div>
+    <div class="note" style="padding: 12px 16px; background: #f8f9fa; border-top: 1px solid #ddd; font-size: 11px;">
+        🧠 <strong>Примечание:</strong> <code>.s:</code> — 640px, <code>.m:</code> — 768px, <code>.l:</code> — 1024px, <code>.xl:</code> — 1280px.<br>
+        📐 Отступы <code>.m0–m12</code> используют CSS-переменные <code>--space-0</code> … <code>--space-12</code>.<br>
+        🎯 <code>.c1/2</code> = ширина 50%, <code>.c1/3</code> ≈ 33.33%, <code>.c2/3</code> ≈ 66.66% и т.д.
+    </div>
+</div>
+</body>
+</html>

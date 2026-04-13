@@ -44,10 +44,11 @@
  *
  * Breakpoints:
  *
- * - s (small): < 600px (mobile)
- * - m (medium): >= 600px and < 1000px (tablet)
- * - l (large): >= 1000px and < 1400px (desktop)
- * - xl (xlarge): >= 1400px (large desktop)
+ * - xs (xsmall): >= 0px
+ * - s (small): >= 640px
+ * - m (medium): >= 768px
+ * - l (large): >= 1024px
+ * - xl (xlarge): >= 1280px
  *
  * Public API:
  *
@@ -61,8 +62,9 @@
  * @property {boolean} touch - true if touch support is available
  * @property {number} width - Current window width in pixels
  * @property {number} height - Current window height in pixels
- * @property {string} breakpoint - Current responsive breakpoint: 's', 'm', 'l', or 'xl'
+ * @property {string} breakpoint - Current responsive breakpoint: 'xs', 's', 'm', 'l', or 'xl'
  * @property {Object} size - Boolean flags for each breakpoint:
+ *   - size.xs - true if xsmall breakpoint
  *   - size.s - true if small breakpoint
  *   - size.m - true if medium breakpoint
  *   - size.l - true if large breakpoint
@@ -70,9 +72,8 @@
  *
  * @method init() - Initializes or re-initializes detection, CSS classes, and resize listeners.
  *   Safe to call multiple times. Automatically cleans up previous state.
- * @method destroy() - Removes listeners and CSS classes. Use when unmounting (e.g. Next.js).
+ * @method destroy() - Removes listeners and CSS classes. Use when unmounting (page change / removing DOM).
  *
- * Next.js: call init() in useEffect() on client; optionally call destroy() in cleanup on route change.
  * SSR-safe: constructor/init/destroy no-op or safe when window is undefined.
  *
  * @event window.breakpointchange - Fired when the responsive breakpoint changes.
@@ -99,11 +100,13 @@
  *   }
  *
  * @example
- * // Next.js — _app.tsx or layout
- * useEffect(() => {
- *   device.init();
- *   return () => device.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <script type="module">
+ * //   import { device } from './src/components/x/device.js';
+ * //   window.addEventListener('DOMContentLoaded', () => device.init());
+ * //   window.addEventListener('breakpointchange', (e) => console.log(e.detail));
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.7
@@ -119,10 +122,11 @@ const CLASSES_TO_REMOVE = [
 ];
 
 const SIZE_FLAGS = {
-  s: { s: true, m: false, l: false, xl: false },
-  m: { s: false, m: true, l: false, xl: false },
-  l: { s: false, m: false, l: true, xl: false },
-  xl: { s: false, m: false, l: false, xl: true }
+  xs: { xs: true, s: false, m: false, l: false, xl: false },
+  s: { xs: false, s: true, m: false, l: false, xl: false },
+  m: { xs: false, s: false, m: true, l: false, xl: false },
+  l: { xs: false, s: false, m: false, l: true, xl: false },
+  xl: { xs: false, s: false, m: false, l: false, xl: true }
 };
 
 export class Device {
@@ -135,8 +139,8 @@ export class Device {
     this.touch = false;
     this.width = 0;
     this.height = 0;
-    this.breakpoint = 's';
-    this.size = SIZE_FLAGS.s;
+    this.breakpoint = 'xs';
+    this.size = SIZE_FLAGS.xs;
     this._html = null;
     this._onResize = this._onResize.bind(this);
     this._debouncedResize = lib.debounce(this._onResize, 200);
@@ -147,7 +151,7 @@ export class Device {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.breakpoint = this._getBreakpointName(this.width);
-    this.size = SIZE_FLAGS[this.breakpoint] || SIZE_FLAGS.s;
+    this.size = SIZE_FLAGS[this.breakpoint] || SIZE_FLAGS.xs;
     this._html = document.documentElement;
   }
 
@@ -168,7 +172,7 @@ export class Device {
   }
 
   /**
-   * Removes listeners and CSS classes. Use when unmounting (e.g. Next.js).
+   * Removes listeners and CSS classes. Use when unmounting (page change / removing DOM).
    */
   destroy() {
     if (typeof window === 'undefined') return;
@@ -188,30 +192,32 @@ export class Device {
   /**
    * Returns a breakpoint name based on current width.
    * Breakpoint map:
-   *   - s: < 600px
-   *   - m: ≥600px and <1000px
-   *   - l: ≥1000px and <1400px
-   *   - xl: ≥1400px
+   *   - xs: ≥0px and <640px
+   *   - s: ≥640px and <768px
+   *   - m: ≥768px and <1024px
+   *   - l: ≥1024px and <1280px
+   *   - xl: ≥1280px
    *
    * @param {number} width - Current viewport width
-   * @return {'s'|'m'|'l'|'xl'}
+   * @return {'xs'|'s'|'m'|'l'|'xl'}
    * @private
    */
   _getBreakpointName(width) {
-    if (width >= 1400) return 'xl';
-    if (width >= 1000) return 'l';
-    if (width >= 600) return 'm';
-    return 's';
+    if (width >= 1280) return 'xl';
+    if (width >= 1024) return 'l';
+    if (width >= 768) return 'm';
+    if (width >= 640) return 's';
+    return 'xs';
   }
 
   /**
    * Converts breakpoint string into boolean flags for convenience.
-   * @param {'s'|'m'|'l'|'xl'} bp - Breakpoint name
-   * @return {{s:boolean,m:boolean,l:boolean,xl:boolean}}
+   * @param {'xs'|'s'|'m'|'l'|'xl'} bp - Breakpoint name
+   * @return {{xs:boolean,s:boolean,m:boolean,l:boolean,xl:boolean}}
    * @private
    */
   _getSizeFlags(bp) {
-    return SIZE_FLAGS[bp] || SIZE_FLAGS.s;
+    return SIZE_FLAGS[bp] || SIZE_FLAGS.xs;
   }
 
   /**
@@ -229,7 +235,7 @@ export class Device {
     this.width = w;
     this.height = h;
     this.breakpoint = next;
-    this.size = SIZE_FLAGS[next] || SIZE_FLAGS.s;
+    this.size = SIZE_FLAGS[next] || SIZE_FLAGS.xs;
 
     if (prev !== next) {
       window.dispatchEvent(new CustomEvent('breakpointchange', {

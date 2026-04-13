@@ -85,7 +85,7 @@
  *   @example
  *     form.offUpdate('input[name="email"]');
  *
- * @method destroy() - Removes all update listeners and clears internal state. Use on SPA unmount / Next.js.
+ * @method destroy() - Removes all update listeners and clears internal state. Use on SPA unmount / page change.
  *
  * @method update(selector) - Manually dispatches input/change events.
  *   @param {string} selector - CSS selector for elements.
@@ -114,14 +114,17 @@
  * - Input elements and contenteditable: 'input' event
  * - Select elements: 'change' event
  *
- * Next.js: call destroy() in useEffect cleanup (e.g. on unmount). All DOM methods no-op when document is undefined.
- *
  * @example
- * // Next.js — cleanup on unmount
- * useEffect(() => {
- *   form.onUpdate('input[name="email"]', (el) => setEmail(el.value));
- *   return () => form.destroy();
- * }, []);
+ * // Vanilla JS — plain HTML
+ * // index.html:
+ * // <input name="email" type="email" />
+ * // <script type="module">
+ * //   import { form } from './src/components/x/form.js';
+ * //   window.addEventListener('DOMContentLoaded', () => {
+ * //     form.onUpdate('input[name="email"]', (el) => console.log('Email:', el.value));
+ * //   });
+ * //   window.addEventListener('pagehide', () => form.destroy());
+ * // </script>
  *
  * @author Andrey Shpigunov
  * @version 0.3
@@ -310,7 +313,7 @@ class Form {
   }
 
   /**
-   * Removes all update listeners and clears internal state. Use on SPA unmount or in Next.js cleanup.
+   * Removes all update listeners and clears internal state. Use on SPA unmount / page change.
    * SSR-safe: no-op when document is undefined.
    */
   destroy() {
