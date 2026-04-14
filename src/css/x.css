@@ -10,8 +10,6 @@ All right reserved.
 @import "../components/x/reset.css";
 @import "../components/x/space.css";
 @import "../components/x/links.css";
-@import "../components/x/grid.css";
-@import "../components/x/flex.css";
 @import "../components/x/flow.css";
 @import "../components/x/form.css";
 @import "../components/x/buttons.css";
@@ -25,6 +23,8 @@ All right reserved.
 @import "../components/x/icons.css";
 @import "../components/x/typo.css";
 @import "../components/x/helpers.css";
+@import "../components/x/grid.css";
+@import "../components/x/flex.css";
 @import "../components/x/colors.css";
 
 /*
