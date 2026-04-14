@@ -78,130 +78,130 @@ All right reserved.
 
 
 .header {
-    z-index: 100;
-    height: 100px;
-    will-change: height;
-    
-    @media (min-width: 768px) {
-        height: 120px;
-    }
+  z-index: 100;
+  height: 100px;
+  will-change: height;
+  
+  @media (min-width: 768px) {
+      height: 120px;
+  }
 }
 .header_compact {
     
 }
 .header-version {
-    width: 40px;
-    font-weight: 700;
+  width: 40px;
+  font-weight: 700;
 }
 .header-logo {
-    transform-origin: top;
+  transform-origin: top;
+  
+  & a {
+    display: block;
+  }
+  & img {
+    max-width: 100px;
+    will-change: transform;
     
-    & a {
-        display: block;
+    @media (min-width: 768px) {
+      max-width: 120px;
     }
-    & img {
-        max-width: 100px;
-        will-change: transform;
-        
-        @media (min-width: 768px) {
-            max-width: 120px;
-        }
-    }
+  }
 }
 .header-github {
-    & a {
-        display: block;
-        width: 40px;
-        height: 40px;
-        background-position: center;
-        background-size: cover;
-        background-image: url(assets/img/github-mark.png);
+  & a {
+    display: block;
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-size: cover;
+    background-image: url(../img/github-mark.png);
 
-        @media (prefers-color-scheme: dark) {
-            background-image: url(assets/img/github-mark-white.png);
-        }
+    @media (prefers-color-scheme: dark) {
+      background-image: url(../img/github-mark-white.png);
     }
+  }
 }
 
 .modalNavigation {
-    z-index: 10;
+  z-index: 10;
 }
 .modalNavigation-inner {
-    display: flex;
-    gap: 10px;
-    padding: 10px 0;
+  display: flex;
+  gap: 10px;
+  padding: 10px 0;
 }
 .modalNavigation a {
-    cursor: pointer;
-    padding: 4px 14px;
-    color: #000;
-    background: #fff;
-    border: solid 1px #000;
-    border-radius: 100px;
+  cursor: pointer;
+  padding: 4px 14px;
+  color: #000;
+  background: #fff;
+  border: solid 1px #000;
+  border-radius: 100px;
+  
+  &.active {
+    color: #fff;
+    background: #000;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    color: #eee;
+    background: #222;
+    border: solid 1px #222;
     
     &.active {
-        color: #fff;
-        background: #000;
+      color: #000;
+      background: #fff;
     }
-    
-    @media (prefers-color-scheme: dark) {
-        color: #eee;
-        background: #222;
-        border: solid 1px #222;
-        
-        &.active {
-            color: #000;
-            background: #fff;
-        }
-    }
+  }
 }
 
 
 code {
-    padding: 2px;
-    font-size: var(--code-font-size);
-    color: var(--code-font-color);
-    background: var(--code-background-color);
+  padding: 2px;
+  font-size: var(--code-font-size);
+  color: var(--code-font-color);
+  background: var(--code-background-color);
 }
 .codeBlock {
-    position: relative;
-    padding: 16px 20px 16px 10px;
-    background: var(--code-background-color);
-    counter-reset: row 0;
-    border-radius: 8px;
+  position: relative;
+  padding: 16px 20px 16px 10px;
+  background: var(--code-background-color);
+  counter-reset: row 0;
+  border-radius: 8px;
+  
+  &:before {
+    content: '</>';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    letter-spacing: 1px;
+    line-height: 1;
+    font-weight: 500;
+    font-size: 18px;
+    font-family: var(--font-family-mono);
+    color: #ccc;
+  }
+  
+  & code {
+    display: flex;
+    counter-increment: row 1;
+    line-height: 1.4;
     
     &:before {
-        content: '</>';
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        letter-spacing: 1px;
-        line-height: 1;
-        font-weight: 500;
-        font-size: 18px;
-        font-family: var(--font-family-mono);
-        color: #ccc;
+      content: counter(row);
+      user-select: none;
+      width: 30px;
+      margin-right: 20px;
+      color: #ccc;
+      text-align: right;
     }
-    
-    & code {
-        display: flex;
-        counter-increment: row 1;
-        line-height: 1.4;
-        
-        &:before {
-            content: counter(row);
-            user-select: none;
-            width: 30px;
-            margin-right: 20px;
-            color: #ccc;
-            text-align: right;
-        }
-    }
+  }
 }
 
 .button code {
-    color: inherit;
-    background: inherit;
+  color: inherit;
+  background: inherit;
 }
 
 
