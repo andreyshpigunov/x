@@ -479,6 +479,13 @@ html.touch .touch-hide { display: none }
 }
 
 
+/* !- Display */
+.block { display: block }
+.inline { display: inline }
+.inline-block { display: inline-block }
+.table { display: table }
+
+
 /* !- Hidden */
 .hidden,
 .hidden-next + * { display: none }
@@ -502,34 +509,37 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Display */
-.block { display: block }
-.inline { display: inline }
-.inline-block { display: inline-block }
-.table { display: table }
-
 @media (min-width: 640px) {
   .s\:block { display: block }
   .s\:inline { display: inline }
   .s\:inline-block { display: inline-block }
   .s\:table { display: table }
+  .s\:flex { display: flex }
+  .s\:grid { display: grid }
 }
 @media (min-width: 768px) {
   .m\:block { display: block }
   .m\:inline { display: inline }
   .m\:inline-block { display: inline-block }
   .m\:table { display: table }
+  .m\:flex { display: flex }
+  .m\:grid { display: grid }
 }
 @media (min-width: 1024px) {
   .l\:block { display: block }
   .l\:inline { display: inline }
   .l\:inline-block { display: inline-block }
   .l\:table { display: table }
+  .l\:flex { display: flex }
+  .l\:grid { display: grid }
 }
 @media (min-width: 1280px) {
   .xl\:block { display: block }
   .xl\:inline { display: inline }
   .xl\:inline-block { display: inline-block }
   .xl\:table { display: table }
+  .xl\:flex { display: flex }
+  .xl\:grid { display: grid }
 }
 
 

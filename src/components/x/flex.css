@@ -30,10 +30,6 @@ All right reserved.
 */
 
 .flex { display: flex }
-@media (min-width: 640px)  { .s\:flex { display: flex } }
-@media (min-width: 768px)  { .m\:flex { display: flex } }
-@media (min-width: 1024px) { .l\:flex { display: flex } }
-@media (min-width: 1280px) { .xl\:flex { display: flex } }
 
 [class*=flex] {
   /* Columns */
