@@ -233,10 +233,8 @@ All right reserved.
 /* Dropdown button */
 
 .button--dropdown {
-  padding-right: calc(var(
-    --button-side-padding,
-    calc(var(--button-font-size) * var(--button-side-padding-coeff)
-  )) * 1.8);
+  --var: calc(var(--button-font-size) * var(--button-side-padding-coeff));
+  padding-right: calc(var(--button-side-padding, --var) * 1.8);
 
   &::after {
     content: '';
