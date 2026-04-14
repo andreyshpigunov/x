@@ -49,15 +49,15 @@ All right reserved.
   .ratio2x3  (s,m,l,xl)
   .ratio3x4  (s,m,l,xl)
   .ratio9x16 (s,m,l,xl)
-  .break-word
-  .visually-hidden
+  .breakWord
+  .visuallyHidden
   .invisible
   .scroll-responsive
   .hidden       (s,m,l,xl)
   .hidden-next  (s,m,l,xl)
   .block        (s,m,l,xl)
   .inline       (s,m,l,xl)
-  .inline-block (s,m,l,xl)
+  .inlineBlock (s,m,l,xl)
   .fullscreen
   .max                    (s,m,l,xl)
   .w[10-190] step 10      (s,m,l,xl)
@@ -455,11 +455,11 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Break word, invisible, scroll */
-.break-word {
+.breakWord {
   overflow-wrap: anywhere;
   word-break: break-word;
 }
-.visually-hidden {
+.visuallyHidden {
   position: absolute;
   top: 0;
   left: 0;
@@ -482,7 +482,7 @@ html.touch .touch-hide { display: none }
 /* !- Display */
 .block { display: block }
 .inline { display: inline }
-.inline-block { display: inline-block }
+.inlineBlock { display: inline-block }
 .table { display: table }
 
 
@@ -512,7 +512,7 @@ html.touch .touch-hide { display: none }
 @media (min-width: 640px) {
   .s\:block { display: block }
   .s\:inline { display: inline }
-  .s\:inline-block { display: inline-block }
+  .s\:inlineBlock { display: inline-block }
   .s\:table { display: table }
   .s\:flex { display: flex }
   .s\:grid { display: grid }
@@ -520,7 +520,7 @@ html.touch .touch-hide { display: none }
 @media (min-width: 768px) {
   .m\:block { display: block }
   .m\:inline { display: inline }
-  .m\:inline-block { display: inline-block }
+  .m\:inlineBlock { display: inline-block }
   .m\:table { display: table }
   .m\:flex { display: flex }
   .m\:grid { display: grid }
@@ -528,7 +528,7 @@ html.touch .touch-hide { display: none }
 @media (min-width: 1024px) {
   .l\:block { display: block }
   .l\:inline { display: inline }
-  .l\:inline-block { display: inline-block }
+  .l\:inlineBlock { display: inline-block }
   .l\:table { display: table }
   .l\:flex { display: flex }
   .l\:grid { display: grid }
@@ -536,7 +536,7 @@ html.touch .touch-hide { display: none }
 @media (min-width: 1280px) {
   .xl\:block { display: block }
   .xl\:inline { display: inline }
-  .xl\:inline-block { display: inline-block }
+  .xl\:inlineBlock { display: inline-block }
   .xl\:table { display: table }
   .xl\:flex { display: flex }
   .xl\:grid { display: grid }

@@ -14,11 +14,11 @@ All right reserved.
   a.link
   a.hover
   a.active
-  a.link--noline
-  a.link--underline
-  a.link--dashed
-  a.link--dotted
-  a.link--wavy
+  a.link_noline
+  a.link_underline
+  a.link_dashed
+  a.link_dotted
+  a.link_wavy
 */
 
 :root {
@@ -82,19 +82,19 @@ a {
   
   /* Link predefined styles */
   
-  &.link--noline {
+  &.link_noline {
     --link-decoration-line: none;
   }
-  &.link--underline {
+  &.link_underline {
     --link-decoration-line: underline;
   }
-  &.link--dashed {
+  &.link_dashed {
     --link-decoration-style: dashed;
   }
-  &.link--dotted {
+  &.link_dotted {
     --link-decoration-style: dotted;
   }
-  &.link--wavy {
+  &.link_wavy {
     --link-decoration-style: wavy;
   }
 }

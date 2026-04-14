@@ -29,15 +29,15 @@ All right reserved.
 
 /*
   .button
-  .button--label
-  .button--primary
-  .button--success
-  .button--warning
-  .button--danger
-  .button--white
-  .button--black
-  .button--clear
-  .button--dropdown
+  .button_label
+  .button_primary
+  .button_success
+  .button_warning
+  .button_danger
+  .button_white
+  .button_black
+  .button_clear
+  .button_dropdown
   .buttons-group
 */
 
@@ -197,18 +197,18 @@ All right reserved.
   a.link
   a.hover
   a.active
-  a.link--noline
-  a.link--underline
-  a.link--dashed
-  a.link--dotted
-  a.link--wavy
+  a.link_noline
+  a.link_underline
+  a.link_dashed
+  a.link_dotted
+  a.link_wavy
 */
 
 /*
   .scroll
-  .scroll--contain
-  .scroll--x-proximity
-  .scroll--x-mandatory
+  .scroll_contain
+  .scroll_x-proximity
+  .scroll_x-mandatory
 */
 
 /*

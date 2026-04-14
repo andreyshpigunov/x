@@ -87,24 +87,24 @@ All right reserved.
 .dropdown {
   position: relative;
   
-  &.dropdown--right > [x-dropdown] {
+  &.dropdown_right > [x-dropdown] {
     right: 0;
     left: auto;
   }
-  &.dropdown--bottom > [x-dropdown] {
+  &.dropdown_bottom > [x-dropdown] {
     bottom: 100%;
     top: auto;
     transform-origin: bottom;
   }
-  &.dropdown--ready > [x-dropdown] {
+  &.dropdown_ready > [x-dropdown] {
     display: block;
     pointer-events: auto;
   }
-  &.dropdown--open > [x-dropdown] {
+  &.dropdown_open > [x-dropdown] {
     opacity: 1;
     transform: scale(1);
   }
-  &.dropdown--wrap > [x-dropdown] li {
+  &.dropdown_wrap > [x-dropdown] li {
     & > a,
     & > span {
       white-space: wrap;

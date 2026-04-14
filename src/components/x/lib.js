@@ -90,8 +90,8 @@
  *   const items = lib.qsa('li', container);
  *
  * Classes with delay (for transitions):
- *   await lib.addClass('.element', 'active', 100); // Adds --ready class, waits 100ms, then adds active
- *   await lib.removeClass('.element', 'active', 200); // Removes active, waits 200ms, removes --ready
+ *   await lib.addClass('.element', 'active', 100); // Adds _ready class, waits 100ms, then adds active
+ *   await lib.removeClass('.element', 'active', 200); // Removes active, waits 200ms, removes _ready
  *
  * Formatting:
  *   lib.price(1234.56);        // "1 234.56"
@@ -333,7 +333,7 @@ class Lib {
     if (!len) return;
 
     if (delay > 0) {
-      const readyClass = className.replace(/--.*/, '') + '--ready';
+      const readyClass = className.replace(/_.*/, '') + '_ready';
       for (let i = 0; i < len; i++) items[i].classList.add(readyClass);
       await new Promise(res => setTimeout(res, delay));
     }
@@ -357,7 +357,7 @@ class Lib {
 
     if (delay > 0) {
       await new Promise(res => setTimeout(res, delay));
-      const readyClass = className.replace(/--.*/, '') + '--ready';
+      const readyClass = className.replace(/_.*/, '') + '_ready';
       for (let i = 0; i < len; i++) items[i].classList.remove(readyClass);
     }
   }

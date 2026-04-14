@@ -12,6 +12,8 @@ All right reserved.
   .color-warning
   .color-danger
   .color-error
+  .color-black
+  .color-white
   .color-grey
   
   .bg-primary
@@ -19,6 +21,8 @@ All right reserved.
   .bg-warning
   .bg-danger
   .bg-error
+  .bg-black
+  .bg-white
   .bg-grey
 */
 
@@ -28,6 +32,8 @@ All right reserved.
   --color-warning: #ff8800;
   --color-danger: #ee3333;
   --color-error: #ee3333;
+  --color-black: #fff;
+  --color-white: #000;
   --color-grey: #f4f5f6;
 }
 
@@ -45,6 +51,12 @@ All right reserved.
 }
 .color-error {
   color: var(--color-error);
+}
+.color-black {
+  color: var(--color-black);
+}
+.color-white {
+  color: var(--color-white);
 }
 .color-grey {
   color: var(--color-grey);
@@ -64,6 +76,12 @@ All right reserved.
 }
 .bg-error {
   background-color: var(--color-error);
+}
+.bg-black {
+  background-color: var(--color-black);
+}
+.bg-white {
+  background-color: var(--color-white);
 }
 .bg-grey {
   background-color: var(--color-grey);

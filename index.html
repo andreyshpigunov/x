@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky t0 px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.4.4</div>
+    <div class="header-version nowrap">0.5.0</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/img/logo.png" alt="x" />
@@ -45,7 +45,7 @@
 
     <div class="flex">
       <div class="mt4">
-        <button x-dropdown-open class="button button--dropdown button--spacy" tabindex="1">
+        <button x-dropdown-open class="button button_dropdown button_spacy" tabindex="1">
           Menu left
         </button>
         <ul x-dropdown>
@@ -67,7 +67,7 @@
         </ul>
       </div>
       <div class="mt4">
-        <button x-dropdown-open class="button button--dropdown" tabindex="3">Menu right</button>
+        <button x-dropdown-open class="button button_dropdown" tabindex="3">Menu right</button>
         <ul x-dropdown>
           <li><a href="/admin/settings/profile/">Профиль</a></li>
           <li><a href="/logout/">Выйти</a></li>
@@ -274,7 +274,7 @@
             })
           </script>
 
-          <div x-modal="modalForm" class="modal--hash" data-window-class="max1000">
+          <div x-modal="modalForm" class="modal_hash" data-window-class="max1000">
             <h2>Form</h2>
 
             <p>Useful utilities for forms interactivity.</p>
@@ -354,7 +354,7 @@
           </div>
           <div class="flex gap3 aic mt1">
             <span class="jsLibExampleUpdate pointer unselectable">↺</span>
-            <a class="link link--dashed fs14" x-modal-open="modalLib">Show all methods</a>
+            <a class="link link_dashed fs14" x-modal-open="modalLib">Show all methods</a>
           </div>
           <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -437,7 +437,7 @@
             <a role="button" class="button" x-modal-open="modalExampleStory">Modal with long story</a>
           </div>
           <h6>API call:</h6>
-          <a class="link link--dashed" onclick="x.modal.show('modalExampleTest')">x.modal.show('modalExampleTest')</a>
+          <a class="link link_dashed" onclick="x.modal.show('modalExampleTest')">x.modal.show('modalExampleTest')</a>
 
           <div x-modal="modalExampleTest">
             <h2>Test modal</h2>
@@ -457,12 +457,12 @@
             <p>Opening this window, you are not closed all the other windows on the page.</p>
           </div>
 
-          <div x-modal="modalExampleUniq" class="modal--uniq">
+          <div x-modal="modalExampleUniq" class="modal_uniq">
             <h2>Unique modal</h2>
             <p>Opening this window, you are closed all the other windows on the page.</p>
           </div>
 
-          <div x-modal="modalExampleStory" class="modal--hash">
+          <div x-modal="modalExampleStory" class="modal_hash">
 
             <div class="fs20">
               <h1>Font size 20px</h1>
@@ -786,7 +786,7 @@
     <div class="container max700">
 
       <h3>HTML</h3>
-      <p>Manually download <a class="button button--label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js">x.js</a> and <a class="button button--label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">x.css</a> and connect them in HTML.</p>
+      <p>Manually download <a class="button button_label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js">x.js</a> and <a class="button button_label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">x.css</a> and connect them in HTML.</p>
       <p>In the <code>&lt;head&gt;</code> tag, as first style.</p>
       <div class="codeBlock">
         <code>&lt;link rel="stylesheet" href="x.css"/&gt;</code>
@@ -836,7 +836,7 @@
   </section>
 
 
-  <div x-modal="modalBreakpoints" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalBreakpoints" class="modal_hash" data-window-class="max1000">
       <h2>Breakpoints</h2>
       <p>Mobile first breakpoints</p>
       <p>
@@ -869,7 +869,7 @@
   </div>
 
 
-  <div x-modal="modalReset" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalReset" class="modal_hash" data-window-class="max1000">
     <h2>Reset</h2>
     <p>Global styles reset and base variables.</p>
 
@@ -885,7 +885,7 @@
   </div>
 
 
-  <div x-modal="modalSpaces" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalSpaces" class="modal_hash" data-window-class="max1000">
     <h2>Spaces</h2>
     <p>Global spaces.</p>
     <p class="fs12">
@@ -909,7 +909,7 @@
   </div>
 
 
-  <div x-modal="modalLinks" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalLinks" class="modal_hash" data-window-class="max1000">
     <h2>Links</h2>
     <p>Links styling.</p>
 
@@ -919,19 +919,19 @@ a
 a.link
 a.hover
 a.active
-a.link--noline
-a.link--underline
-a.link--dashed
-a.link--dotted
-a.link--wavy</pre>
+a.link_noline
+a.link_underline
+a.link_dashed
+a.link_dotted
+a.link_wavy</pre>
 
     <h3>Example</h3>
     <div class="flex gap4 m:gap6 fs20 m:fs24">
-      <a class="link link--noline">noline</a>
-      <a class="link link--underline">underline</a>
-      <a class="link link--dashed">dashed</a>
-      <a class="link link--dotted">dotted</a>
-      <a class="link link--wavy">wavy</a>
+      <a class="link link_noline">noline</a>
+      <a class="link link_underline">underline</a>
+      <a class="link link_dashed">dashed</a>
+      <a class="link link_dotted">dotted</a>
+      <a class="link link_wavy">wavy</a>
     </div>
 
     <h3>Variables</h3>
@@ -954,7 +954,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalIcons" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalIcons" class="modal_hash" data-window-class="max1000">
     <h2>Icons</h2>
     <div class="mt6">
       <pre class="fs14 mono">.icon - icon with default size 1em
@@ -963,7 +963,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalColors" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalColors" class="modal_hash" data-window-class="max1000">
     <h2>Colors</h2>
     <div class="mt6">
       <pre class="fs14 mono"><span class="textPrimary">.colorPrimary</span>
@@ -971,21 +971,21 @@ a.link--wavy</pre>
 <span class="textWarning">.colorWarning</span>
 <span class="textDanger">.colorDanger</span>
 
-<span class="bgPrimary textWhite button button--label">.bgPrimary</span>
-<span class="bgSuccess textWhite button button--label">.bgSuccess</span>
-<span class="bgWarning textWhite button button--label">.bgWarning</span>
-<span class="bgDanger textWhite button button--label">.bgDanger</span>
-<span class="bgGrey textWhite button button--label">.bgGrey</span>
+<span class="bgPrimary textWhite button button_label">.bgPrimary</span>
+<span class="bgSuccess textWhite button button_label">.bgSuccess</span>
+<span class="bgWarning textWhite button button_label">.bgWarning</span>
+<span class="bgDanger textWhite button button_label">.bgDanger</span>
+<span class="bgGrey textWhite button button_label">.bgGrey</span>
 
 .color[ColorName] (d) - text color
 .bg[ColorName] (d) — background color</pre>
     </div>
-    <div class="mt6">All color names here: <a class="button button--label bgBeige" href="https://147colors.com" target="_blank"><div class="strike fw700 mr1">147</div> Colors →</a></div>
-    <div class="mt2">Colors by tones: <a class="button button--label" href="https://colorscheme.ru/html-colors.html" target="_blank">colorscheme.ru</a></div>
+    <div class="mt6">All color names here: <a class="button button_label bgBeige" href="https://147colors.com" target="_blank"><div class="strike fw700 mr1">147</div> Colors →</a></div>
+    <div class="mt2">Colors by tones: <a class="button button_label" href="https://colorscheme.ru/html-colors.html" target="_blank">colorscheme.ru</a></div>
   </div>
 
 
-  <div x-modal="modalTypo" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalTypo" class="modal_hash" data-window-class="max1000">
     <h2>Typo</h2>
 
     <h3>Elements</h3>
@@ -1035,7 +1035,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalForms" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalForms" class="modal_hash" data-window-class="max1000">
     <h2>Forms</h2>
     <p>Form elements.</p>
 
@@ -1069,59 +1069,59 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalButtons" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalButtons" class="modal_hash" data-window-class="max1000">
     <h2>Buttons</h2>
 
     <div class="flow s4">
       <div class="flex fw gap4">
-        <button class="button button--label">Label</button>
-        <button class="button button--label button--primary">Label</button>
-        <button class="button button--label button--success">Label</button>
-        <button class="button button--label button--danger">Label</button>
-        <button class="button button--label button--warning">Label</button>
-        <button class="button button--label button--white">Label</button>
-        <button class="button button--label button--black">Label</button>
-        <button class="button button--label button--clear">Label</button>
+        <button class="button button_label">Label</button>
+        <button class="button button_label button_primary">Label</button>
+        <button class="button button_label button_success">Label</button>
+        <button class="button button_label button_danger">Label</button>
+        <button class="button button_label button_warning">Label</button>
+        <button class="button button_label button_white">Label</button>
+        <button class="button button_label button_black">Label</button>
+        <button class="button button_label button_clear">Label</button>
       </div>
       <div class="flex fw gap4">
         <button class="button fs12">Button</button>
-        <button class="button fs12 button--primary">Button</button>
-        <button class="button fs12 button--success">Button</button>
-        <button class="button fs12 button--danger">Button</button>
-        <button class="button fs12 button--warning">Button</button>
-        <button class="button fs12 button--white">Button</button>
-        <button class="button fs12 button--black">Button</button>
-        <button class="button fs12 button--clear">Button</button>
+        <button class="button fs12 button_primary">Button</button>
+        <button class="button fs12 button_success">Button</button>
+        <button class="button fs12 button_danger">Button</button>
+        <button class="button fs12 button_warning">Button</button>
+        <button class="button fs12 button_white">Button</button>
+        <button class="button fs12 button_black">Button</button>
+        <button class="button fs12 button_clear">Button</button>
       </div>
       <div class="flex fw gap4">
         <button class="button">Button</button>
-        <button class="button button--primary">Button</button>
-        <button class="button button--success">Button</button>
-        <button class="button button--danger">Button</button>
-        <button class="button button--warning">Button</button>
-        <button class="button button--white">Button</button>
-        <button class="button button--black">Button</button>
-        <button class="button button--clear">Button</button>
+        <button class="button button_primary">Button</button>
+        <button class="button button_success">Button</button>
+        <button class="button button_danger">Button</button>
+        <button class="button button_warning">Button</button>
+        <button class="button button_white">Button</button>
+        <button class="button button_black">Button</button>
+        <button class="button button_clear">Button</button>
       </div>
       <div class="flex fw gap4">
         <button class="button fs20">Button</button>
-        <button class="button fs20 button--primary">Button</button>
-        <button class="button fs20 button--success">Button</button>
-        <button class="button fs20 button--danger">Button</button>
-        <button class="button fs20 button--warning">Button</button>
-        <button class="button fs20 button--white">Button</button>
-        <button class="button fs20 button--black">Button</button>
-        <button class="button fs20 button--clear">Button</button>
+        <button class="button fs20 button_primary">Button</button>
+        <button class="button fs20 button_success">Button</button>
+        <button class="button fs20 button_danger">Button</button>
+        <button class="button fs20 button_warning">Button</button>
+        <button class="button fs20 button_white">Button</button>
+        <button class="button fs20 button_black">Button</button>
+        <button class="button fs20 button_clear">Button</button>
       </div>
       <div class="flex fw gap4">
         <button class="button fs24">Button</button>
-        <button class="button fs24 button--primary">Button</button>
-        <button class="button fs24 button--success">Button</button>
-        <button class="button fs24 button--danger">Button</button>
-        <button class="button fs24 button--warning">Button</button>
-        <button class="button fs24 button--white">Button</button>
-        <button class="button fs24 button--black">Button</button>
-        <button class="button fs24 button--clear">Button</button>
+        <button class="button fs24 button_primary">Button</button>
+        <button class="button fs24 button_success">Button</button>
+        <button class="button fs24 button_danger">Button</button>
+        <button class="button fs24 button_warning">Button</button>
+        <button class="button fs24 button_white">Button</button>
+        <button class="button fs24 button_black">Button</button>
+        <button class="button fs24 button_clear">Button</button>
       </div>
     </div>
 
@@ -1129,14 +1129,14 @@ a.link--wavy</pre>
     <pre class="fs14 mono">
 .button
 
-.button--label
-.button--primary
-.button--success
-.button--warning
-.button--danger
-.button--white
-.button--black
-.button--clear</pre>
+.button_label
+.button_primary
+.button_success
+.button_warning
+.button_danger
+.button_white
+.button_black
+.button_clear</pre>
 
   <h3>Variables</h3>
   <pre class="fs14 mono"><span class="op4">/* Required variables */</span>
@@ -1166,7 +1166,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalFlex" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalFlex" class="modal_hash" data-window-class="max1000">
     <h2>Flex</h2>
     <p>Flexbox.</p>
 
@@ -1197,7 +1197,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalGrid" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalGrid" class="modal_hash" data-window-class="max1000">
     <h2>Grid</h2>
     <p>Multicolumn adaptive grid (1–12 columns).</p>
 
@@ -1210,7 +1210,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalFlow" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalFlow" class="modal_hash" data-window-class="max1000">
     <h2>Flow</h2>
     <p>Vertical flow of elements with equal spaces between them.</p>
 
@@ -1223,7 +1223,7 @@ a.link--wavy</pre>
 
 
 
-  <div x-modal="modalHelpers" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalHelpers" class="modal_hash" data-window-class="max1000">
     <h2>Helpers</h2>
     <p>Helper classes.</p>
 
@@ -1392,7 +1392,7 @@ a.link--wavy</pre>
 
 
 
-  <div x-modal="modalModal" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalModal" class="modal_hash" data-window-class="max1000">
     <h2>Modals</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1427,12 +1427,12 @@ a.link--wavy</pre>
       </p>
       <p>Эффекты в <code>[custom-classes]</code>:</p>
       <div class="codeBlock">
-        <code>.effectIn</code>
-        <code>.effectOut</code>
-        <code>.effectUp</code>
-        <code>.effectDown</code>
-        <code>.effectLeft</code>
-        <code>.effectRight</code>
+        <code>.modal_effect-in</code>
+        <code>.modal_effect-out</code>
+        <code>.modal_effect-up</code>
+        <code>.modal_effect-down</code>
+        <code>.modal_effect-left</code>
+        <code>.modal_effect-right</code>
       </div>
       <p>
         После инициализации, шаблон модального окна преобразуется в готовый код, который добавляется в конце страницы перед <code>&lt;/body&gt;</code>. Если это поведение необходимо изменить, добавьте класс <code>.modal-here</code> элементу, в который вы хотите инициализировать модальные окна.
@@ -1613,13 +1613,13 @@ a.link--wavy</pre>
     <a class="button modal-close">Закрыть</a>
   </div>
 
-  <div x-modal="modalUniq" class="modal--uniq">
+  <div x-modal="modalUniq" class="modal_uniq">
     <h2>Уникальное окно</h2>
     <p>Открыв это окно, вы закрыли все остальные окна на странице. Включая окно со страницей документации.</p>
   </div>
 
 
-  <div x-modal="modalScroll" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalScroll" class="modal_hash" data-window-class="max1000">
     <h2>Scroll</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1638,7 +1638,7 @@ a.link--wavy</pre>
         <code>&lt;a x-scrollto="top"&gt;Наверх&lt;/a&gt;</code>
         <code>&lt;a x-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
       </div>
-      <p>Вызов с <a class="link link--dashed" x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
+      <p>Вызов с <a class="link link_dashed" x-scrollto='{"parent": "#modalScroll .modal-outer", "target": "#modalScrollParams"}'>параметрами</a> в формате JSON:</p>
       <div class="codeBlock">
         <code>&lt;a x-scrollto='{</code>
         <code>  "parent": window,</code>
@@ -1726,7 +1726,7 @@ a.link--wavy</pre>
     </div>
   </div>
 
-  <div x-modal="modalAnimate" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalAnimate" class="modal_hash" data-window-class="max1000">
     <h2>Animate</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1816,7 +1816,7 @@ a.link--wavy</pre>
     </div>
   </div>
 
-  <div x-modal="modalSheets" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalSheets" class="modal_hash" data-window-class="max1000">
     <h2>Sheets</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1877,7 +1877,7 @@ a.link--wavy</pre>
 
   </div>
 
-  <div x-modal="modalLoadmore" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalLoadmore" class="modal_hash" data-window-class="max1000">
     <h2>Loadmore</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1938,7 +1938,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalLazyload" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalLazyload" class="modal_hash" data-window-class="max1000">
     <h2>Lazyload</h2>
 
     <p>Отложенная загрузка изображений.</p>
@@ -1959,7 +1959,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalAppear" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalAppear" class="modal_hash" data-window-class="max1000">
     <h2>Appear</h2>
 
     <p>Добавляет классы <code>.appeared</code> и <code>.visible</code> на элементе, появившемся в зоне видимости.</p>
@@ -1973,7 +1973,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalHover" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalHover" class="modal_hash" data-window-class="max1000">
     <h2>Hover</h2>
 
     <p>Синхронизирует наведение <code>.hover</code> у отдельно расположенных элементов, имеющих общую ссылку. Для активации элементам нужно добавить класс <code>.syncHover</code>.</p>
@@ -1996,7 +1996,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalDevice" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalDevice" class="modal_hash" data-window-class="max1000">
     <h2>Device</h2>
 
     <p>Определяет устройство и браузер пользователя.</p>
@@ -2031,7 +2031,7 @@ a.link--wavy</pre>
   </div>
 
 
-  <div x-modal="modalLib" class="modal--hash" data-window-class="max1000">
+  <div x-modal="modalLib" class="modal_hash" data-window-class="max1000">
 
     <h2>Lib</h2>
 
@@ -2183,7 +2183,7 @@ a.link--wavy</pre>
 
   <div class="flex aic jcse m4">
     <div>
-      <button x-dropdown-open class="button button--dropdown" tabindex="4">Bottom menu</button>
+      <button x-dropdown-open class="button button_dropdown" tabindex="4">Bottom menu</button>
       <ul x-dropdown role="menu" tabindex="-1">
         <li><a href="/admin/settings/profile/">Профиль</a></li>
         <li><a href="/logout/">Выйти</a></li>

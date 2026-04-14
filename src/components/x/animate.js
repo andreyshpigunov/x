@@ -31,7 +31,7 @@
  * //   import { animate } from './src/components/x/animate.js';
  * //   window.coverOut = (item) => {
  * //     // item.progress is 0..1 (string with 4 decimals)
- * //     item.element.style.setProperty('--progress', item.progress);
+ * //     item.element.style.setProperty('_progress', item.progress);
  * //   };
  * //   window.addEventListener('DOMContentLoaded', () => animate.init());
  * // </script>

@@ -13,7 +13,7 @@
  *   modal.init();
  *
  * HTML structure:
- *   <div x-modal="myModal" class="modal--hash" data-window-class="max800">
+ *   <div x-modal="myModal" class="modal_hash" data-window-class="max800">
  *     <h2>Modal Title</h2>
  *     <p>Modal content goes here</p>
  *     <button class="modal-close">Close</button>
@@ -92,8 +92,8 @@
  *
  * - `x-modal="id"` - Required attribute to define modal
  * - `x-modal-open="id"` - Attribute for links/buttons that open modal
- * - `modal--hash` - Class to enable URL hash integration (#id)
- * - `modal--uniq` - Class to close other modals when this one opens
+ * - `modal_hash` - Class to enable URL hash integration (#id)
+ * - `modal_uniq` - Class to close other modals when this one opens
  * - `data-window-class` - Attribute to add classes to modal window
  *
  * Features:
@@ -102,8 +102,8 @@
  * - ESC key to close topmost modal
  * - Click overlay to close
  * - Click .modal-close button to close
- * - URL hash integration (modal--hash class)
- * - Unique modal mode (modal--uniq class)
+ * - URL hash integration (modal_hash class)
+ * - Unique modal mode (modal_uniq class)
  * - Lock mechanism to prevent overlapping animations
  * - Global classes on <html> element
  *
@@ -136,7 +136,7 @@
  * @example
  * // Vanilla JS — plain HTML
  * // index.html:
- * // <div x-modal="myModal" class="modal--hash" data-window-class="max800">
+ * // <div x-modal="myModal" class="modal_hash" data-window-class="max800">
  * //   <h2>Title</h2>
  * //   <p>Content</p>
  * //   <button type="button" class="modal-close">Close</button>
@@ -291,7 +291,7 @@ class Modal {
 
       if (window.location.hash === '#' + id) {
         const el = lib.qs('#' + id);
-        if (el && el.classList.contains('modal--hash')) this.show(id);
+        if (el && el.classList.contains('modal_hash')) this.show(id);
       }
     }
   }
@@ -304,7 +304,7 @@ class Modal {
    */
   _setupGlobalListeners() {
     this._clickHandler = e => {
-      if (!lib.qs('.modal--active')) return;
+      if (!lib.qs('.modal_active')) return;
       const target = e.target;
       const isClose = target.classList && target.classList.contains('modal-close');
       const isOverlay = !target.closest || !target.closest('.modal-window');
@@ -317,7 +317,7 @@ class Modal {
 
     this._keydownHandler = e => {
       if (e.key !== 'Escape') return;
-      const modals = lib.qsa('.modal--active');
+      const modals = lib.qsa('.modal_active');
       const len = modals.length;
       if (!len) return;
       const id = modals[len - 1].getAttribute('id');
@@ -351,24 +351,24 @@ class Modal {
     const modal = lib.qs('#' + id);
     if (!modal) return;
 
-    if (modal.classList.contains('modal--uniq')) await this.hideAll();
+    if (modal.classList.contains('modal_uniq')) await this.hideAll();
 
     this.lockCount++;
     try {
-      await lib.addClass(modal, 'modal--ready');
+      await lib.addClass(modal, 'modal_ready');
       await lib.sleep(10);
       modal.dispatchEvent(new CustomEvent('modal:ready'));
 
-      if (modal.classList.contains('modal--hash')) history.replaceState(null, '', '#' + id);
+      if (modal.classList.contains('modal_hash')) history.replaceState(null, '', '#' + id);
 
       if (this.html) {
-        lib.addClass(this.html, 'modal--active');
-        lib.addClass(this.html, id + '--active');
+        lib.addClass(this.html, 'modal_active');
+        lib.addClass(this.html, id + '_active');
       }
       lib.addClass('[x-modal-open=' + id + ']', 'active');
       this.modalLevel++;
-      lib.addClass(modal, 'modal--z' + this.modalLevel);
-      await lib.addClass(modal, 'modal--active');
+      lib.addClass(modal, 'modal_z' + this.modalLevel);
+      await lib.addClass(modal, 'modal_active');
 
       const modalOuter = lib.qs('.modal-outer', modal);
       if (modalOuter) modalOuter.scrollTo(0, 1);
@@ -398,16 +398,16 @@ class Modal {
 
     this.lockCount++;
     try {
-      if (modal.classList.contains('modal--hash') && window.location.hash === '#' + id) {
+      if (modal.classList.contains('modal_hash') && window.location.hash === '#' + id) {
         history.replaceState(null, document.title, window.location.pathname + window.location.search);
       }
       lib.removeClass('[x-modal-open=' + id + ']', 'active');
-      await lib.removeClass(modal, 'modal--active', 200);
-      lib.removeClass(modal, 'modal--z' + this.modalLevel);
+      await lib.removeClass(modal, 'modal_active', 200);
+      lib.removeClass(modal, 'modal_z' + this.modalLevel);
       modal.dispatchEvent(new CustomEvent('modal:close'));
-      if (this.html) lib.removeClass(this.html, id + '--active');
+      if (this.html) lib.removeClass(this.html, id + '_active');
       this.modalLevel--;
-      if (this.modalLevel === 0 && this.html) lib.removeClass(this.html, 'modal--active');
+      if (this.modalLevel === 0 && this.html) lib.removeClass(this.html, 'modal_active');
     } catch (_) {
     } finally {
       this.lockCount--;
@@ -422,7 +422,7 @@ class Modal {
    */
   async hideAll() {
     if (typeof document === 'undefined') return;
-    const modals = lib.qsa('.modal--active');
+    const modals = lib.qsa('.modal_active');
     for (let i = 0; i < modals.length; i++) {
       const id = modals[i].getAttribute('id');
       if (id) await this.hide(id);
@@ -437,7 +437,7 @@ class Modal {
   isActive(id) {
     if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return false;
     const modal = lib.qs('#' + id);
-    return modal ? modal.classList.contains('modal--active') : false;
+    return modal ? modal.classList.contains('modal_active') : false;
   }
 }
 

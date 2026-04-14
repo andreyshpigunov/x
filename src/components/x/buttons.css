@@ -8,15 +8,15 @@ All right reserved.
 
 /*
   .button
-  .button--label
-  .button--primary
-  .button--success
-  .button--warning
-  .button--danger
-  .button--white
-  .button--black
-  .button--clear
-  .button--dropdown
+  .button_label
+  .button_primary
+  .button_success
+  .button_warning
+  .button_danger
+  .button_white
+  .button_black
+  .button_clear
+  .button_dropdown
   .buttons-group
 */
 
@@ -68,7 +68,7 @@ All right reserved.
 }
 
 .button, [type=submit] {
-  /* Computed on the element so var(--button-color) respects .button--primary etc. */
+  /* Computed on the element so var(--button-color) respects .button_primary etc. */
   --button-color-hover: color-mix(
       in oklab,
       var(--button-color) calc(100% - var(--button-hover-lighten)),
@@ -161,14 +161,14 @@ All right reserved.
 
 /* Predefined styles & colors */
 
-.button--spacy {
+.button_spacy {
   padding-top: calc(var(--button-font-size) * var(--button-side-padding-coeff) * 0.75);
   padding-bottom: calc(var(--button-font-size) * var(--button-side-padding-coeff) * 0.75);
   padding-left: calc(var(--button-font-size) * var(--button-side-padding-coeff) * 1.25);
   padding-right: calc(var(--button-font-size) * var(--button-side-padding-coeff) * 1.25);
 }
 
-.button--label {
+.button_label {
   --button-height: calc(var(--line-height) * 1em);
   --button-side-padding: .5em;
   --button-font-size: inherit;
@@ -176,31 +176,31 @@ All right reserved.
   vertical-align: baseline;
 }
 
-.button--primary {
+.button_primary {
   --button-color: var(--color-primary);
   --button-font-color: #fff;
 }
-.button--success {
+.button_success {
   --button-color: var(--color-success);
   --button-font-color: #fff;
 }
-.button--warning {
+.button_warning {
   --button-color: var(--color-warning);
   --button-font-color: #fff;
 }
-.button--danger {
+.button_danger {
   --button-color: var(--color-danger);
   --button-font-color: #fff;
 }
-.button--white {
+.button_white {
   --button-color: #fff;
   --button-font-color: #000;
 }
-.button--black {
+.button_black {
   --button-color: #111;
   --button-font-color: #fff;
 }
-.button--clear {
+.button_clear {
   --button-color: transparent;
   --button-box-shadow: none;
   --button-box-shadow-hover: none;
@@ -232,9 +232,9 @@ All right reserved.
 
 /* Dropdown button */
 
-.button--dropdown {
-  --var: calc(var(--button-font-size) * var(--button-side-padding-coeff));
-  padding-right: calc(var(--button-side-padding, --var) * 1.8);
+.button_dropdown {
+  --temp: calc(var(--button-font-size) * var(--button-side-padding-coeff));
+  padding-right: calc(var(--button-side-padding, var(--temp)) * 1.8);
 
   &::after {
     content: '';
@@ -256,12 +256,12 @@ All right reserved.
     transition: opacity .1s ease-out;
   }
 }
-.dropdown--bottom .button--dropdown::after {
+.dropdown_bottom .button_dropdown::after {
   transform: rotate(225deg);
   margin-top: .35em;
 }
 
-.button--dropdown.active {
+.button_dropdown.active {
   &::after {
     opacity: 1;
   }

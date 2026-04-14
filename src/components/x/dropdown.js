@@ -46,7 +46,7 @@
  * Preventing auto-close on click:
  * ```html
  * <ul x-dropdown>
- *   <li class="dropdown--stay">
+ *   <li class="dropdown_stay">
  *     <button>This area won't close dropdown</button>
  *   </li>
  * </ul>
@@ -80,10 +80,10 @@
  * CSS classes:
  *
  * - `.dropdown` – Added to parent container
- * - `.dropdown--open` – Added when dropdown is open
- * - `.dropdown--right` – Added when menu needs to align right (overflow prevention)
- * - `.dropdown--bottom` – Added when menu needs to align bottom (overflow prevention)
- * - `.dropdown--ready` – Temporarily added during position calculation
+ * - `.dropdown_open` – Added when dropdown is open
+ * - `.dropdown_right` – Added when menu needs to align right (overflow prevention)
+ * - `.dropdown_bottom` – Added when menu needs to align bottom (overflow prevention)
+ * - `.dropdown_ready` – Temporarily added during position calculation
  * - `.active` – Added to trigger when dropdown is open
  * - `.hover` – Added on focus for better visual feedback
  *
@@ -123,7 +123,7 @@ import { lib } from './lib';
  * Features:
  * - Supports multiple dropdowns on the page.
  * - Keyboard navigation (Enter, Space, ArrowDown, ArrowUp, Home, End, Escape).
- * - Automatic positioning with overflow handling (adds `.dropdown--right`, `.dropdown--bottom`).
+ * - Automatic positioning with overflow handling (adds `.dropdown_right`, `.dropdown_bottom`).
  * - Adds `.hover` class on focus for triggers and menu items.
  * - Safe `init()` with cleanup and reinitialization support.
  *
@@ -412,7 +412,7 @@ class Dropdown {
    * @private
    */
   _toggleDropdown(parent, trigger) {
-    const isOpen = parent.classList.contains('dropdown--open');
+    const isOpen = parent.classList.contains('dropdown_open');
     this.closeAllDropdowns();
     if (!isOpen) this._open(parent, trigger);
   }
@@ -432,7 +432,7 @@ class Dropdown {
     this._adjustPosition(parent, menu);
 
     lib.addClass(trigger, 'active');
-    lib.addClass(parent, 'dropdown--open', 20);
+    lib.addClass(parent, 'dropdown_open', 20);
     trigger.setAttribute('aria-expanded', 'true');
 
     this._fireEvent(parent, 'aftershow');
@@ -446,22 +446,22 @@ class Dropdown {
    * @private
    */
   _adjustPosition(parent, menu) {
-    parent.classList.add('dropdown--ready');
+    parent.classList.add('dropdown_ready');
     const rect = menu.getBoundingClientRect();
-    parent.classList.remove('dropdown--ready');
+    parent.classList.remove('dropdown_ready');
 
     const vw = window.innerWidth;
     const docHeight = document.documentElement.scrollHeight;
 
-    parent.classList.remove('dropdown--right', 'dropdown--bottom');
+    parent.classList.remove('dropdown_right', 'dropdown_bottom');
 
     if (rect.right > vw) {
-      parent.classList.add('dropdown--right');
+      parent.classList.add('dropdown_right');
     }
 
     const menuBottomInDoc = window.scrollY + rect.bottom;
     if (menuBottomInDoc > docHeight) {
-      parent.classList.add('dropdown--bottom');
+      parent.classList.add('dropdown_bottom');
     }
   }
 
@@ -498,8 +498,8 @@ class Dropdown {
    * dropdown.closeAllDropdowns();
    */
   closeAllDropdowns() {
-    if (!document.querySelector('.dropdown--open')) return;
-    const openDropdowns = lib.qsa('.dropdown--open');
+    if (!document.querySelector('.dropdown_open')) return;
+    const openDropdowns = lib.qsa('.dropdown_open');
     for (const parent of openDropdowns) {
       this._close(parent);
     }
@@ -523,8 +523,8 @@ class Dropdown {
       trigger.setAttribute('aria-expanded', 'false');
     }
   
-    await lib.removeClass(parent, 'dropdown--open', 200);
-    parent.classList.remove('dropdown--right', 'dropdown--bottom');
+    await lib.removeClass(parent, 'dropdown_open', 200);
+    parent.classList.remove('dropdown_right', 'dropdown_bottom');
   
     this._fireEvent(parent, 'afterhide');
   
@@ -551,8 +551,8 @@ class Dropdown {
     if (Dropdown._globalListenersAttached) return;
 
     this._globalClickHandler = e => {
-      if (e.target.closest('[x-dropdown-open]') || e.target.closest('[x-dropdown] .dropdown--stay')) return;
-      if (!document.querySelector('.dropdown--open')) return;
+      if (e.target.closest('[x-dropdown-open]') || e.target.closest('[x-dropdown] .dropdown_stay')) return;
+      if (!document.querySelector('.dropdown_open')) return;
       this.closeAllDropdowns();
     };
     document.addEventListener('click', this._globalClickHandler);

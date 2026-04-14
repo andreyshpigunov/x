@@ -9,9 +9,11 @@ All right reserved.
 
 /*
   .scroll
-  .scroll--contain
-  .scroll--x-proximity
-  .scroll--x-mandatory
+  .scroll_x
+  .scroll_y
+  .scroll_contain
+  .scroll_x-proximity
+  .scroll_x-mandatory
 */
 
 :root {
@@ -61,38 +63,38 @@ All right reserved.
   }
 }
 
-.scroll.scroll--x {
+.scroll_x {
   overflow-x: scroll;
   overflow-y: hidden;
   touch-action: pan-x;
 }
 
-.scroll.scroll--y {
+.scroll_y {
   overflow-x: hidden;
   overflow-y: scroll;
   touch-action: pan-y;
 }
 
-.scroll--contain {
+.scroll_contain {
   overscroll-behavior: contain;
 }
 
-.scroll--x-proximity {
+.scroll_x-proximity {
   scroll-snap-type: x proximity;
 }
-.scroll--x-mandatory {
+.scroll_x-mandatory {
   scroll-snap-type: x mandatory;
 }
 
-.scroll--x-proximity,
-.scroll--x-mandatory {
+.scroll_x-proximity,
+.scroll_x-mandatory {
   & > * {
     scroll-snap-align: start;
   }
-  &.scroll--align-center > * {
+  &.scroll_align-center > * {
     scroll-snap-align: center;
   }
-  &.scroll--align-end > * {
+  &.scroll_align-end > * {
     scroll-snap-align: end;
   }
 }
