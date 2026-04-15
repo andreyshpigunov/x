@@ -1140,22 +1140,21 @@ html.touch .touch-hide { display: none }
 
 /* !- Letter spacing */
 @for $i from 0 to 4 {
-  .ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  .ls$(i) { letter-spacing: calc(.1em * $(i)) }
 }
-
 @media (min-width: 768px) {
   @for $i from 0 to 4 {
-    .m\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    .m\:ls$(i) { letter-spacing: calc(.1em * $(i)) }
   }
 }
 @media (min-width: 1024px) {
   @for $i from 0 to 4 {
-    .l\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    .l\:ls$(i) { letter-spacing: calc(.1em * $(i)) }
   }
 }
 @media (min-width: 1280px) {
   @for $i from 0 to 4 {
-    .xl\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    .xl\:ls$(i) { letter-spacing: calc(.1em * $(i)) }
   }
 }
 
