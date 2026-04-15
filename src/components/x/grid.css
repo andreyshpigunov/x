@@ -6,13 +6,13 @@ Created by Andrey Shpigunov at 20.03.2025
 All right reserved.
 ----------------------------------------*/
 
+
 /*
   .grid                   (s,m,l,xl)
   .grid.g[1-12]           (s,m,l,xl)  - columns limit in grid
   .grid > .c[1-12]        (s,m,l,xl)  - column width
   .grid > .c[1-12]/[1-12] (s,m,l,xl)  - columns range for content
 */
-
 
 @layer grid {
   

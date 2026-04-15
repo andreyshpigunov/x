@@ -19,32 +19,6 @@ All right reserved.
   All queries are mobile first.
 */
 
-:root {
-  /* Base variables */
-  --font-family: system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif,
-                 "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-family-mono: SFMono-Regular, Consolas, Liberation Mono, Menlo, monospace;
-  --line-height: 1.5;
-  --font-size-base: 62.5%;
-  --font-size: 1.6rem;
-  --font-scale: 1;
-  --font-color: #000;
-  --background-color: #fff;
-
-  /* Spaces */
-  --space-0:  0;
-  --space-1:  0.4rem;
-  --space-2:  0.8rem;
-  --space-3:  1.2rem;
-  --space-4:  1.6rem;
-  --space-5:  2.0rem;
-  --space-6:  2.4rem;
-  --space-7:  3.2rem;
-  --space-8:  4.0rem;
-  --space-9:  4.8rem;
-  --space-10: 6.4rem;
-}
-
 @layer reset {
   
   html, body, main, div, span, object, iframe,

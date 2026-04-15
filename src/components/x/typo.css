@@ -11,42 +11,6 @@ All right reserved.
   .h[1-6]
 */
 
-:root {
-  --headers-margin-top: 1em;
-  --headers-margin-bottom: .5em;
-  --headers-font-family: var(--font-family);
-  --headers-font-weight: 700;
-  --headers-font-color: var(--font-color);
-
-  --h1-font-size: 3.2rem;
-  --h2-font-size: 2.4rem;
-  --h3-font-size: 2.0rem;
-  --h4-font-size: 1.6rem;
-  --h5-font-size: 1.4rem;
-  --h6-font-size: 1.2rem;
-
-  --h1-line-height: 1.2;
-  --h2-line-height: 1.3;
-  --h3-line-height: 1.4;
-
-  --paragraph-margin: 1em;
-
-  --figure-margin: 2.5em auto 2em;
-  --figcaption-margin-top: .5em;
-  --figcaption-font-size: var(--font-size);
-  --figcaption-color: #999;
-  
-  --blockquote-margin: 2em 0;
-  --blockquote-padding: 1em 2em;
-  --blockquote-border: none;
-  --blockquote-font-style: italic;
-
-  --table-padding: .5em .75em;
-  --table-border: 1px solid #e4e4e4;
-  --table-caption-font-weight: 700;
-  --table-header-font-weight: 700;
-}
-
 @layer typo {
   
   /* !- Headers */

@@ -7,21 +7,6 @@ All right reserved.
 ----------------------------------------*/
 
 
-:root {
-  --slider-point-color: #ffffff66;
-  --slider-point-color-active: #fff;
-  --slider-point-size: .3rem;
-  --slider-indicators-gap: .3rem;
-  --slider-indicators-top: auto;
-  --slider-indicators-left: 1.2rem;
-  --slider-indicators-right: 1.2rem;
-  --slider-indicators-bottom: 1rem;
-  --slider-indicators-width: auto;
-  --slider-indicators-height: var(--slider-point-size);
-  --slider-indicators-init-opacity: 0;
-  --slider-object-fit: cover;
-}
-
 @layer slider {
   
   .slider {

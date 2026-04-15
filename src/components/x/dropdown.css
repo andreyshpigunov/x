@@ -7,21 +7,6 @@ All right reserved.
 ----------------------------------------*/
 
 
-:root {
-  --dropdown-border-radius: 1.2rem;
-  --dropdown-backgroud-color: white;
-  --dropdown-box-shadow: var(--shadow-4);
-  --dropdown-padding: .8rem;
-  --dropdown-max-width: 28rem;
-  --dropdown-item-padding: .6rem 2.4rem .6rem 1.2rem;
-  --dropdown-item-font-size: inherit;
-  --dropdown-item-font-color: black;
-  --dropdown-item-font-color-hover: black;
-  --dropdown-item-background-color: white;
-  --dropdown-item-background-color-hover: var(--color-grey);
-  --dropdown-divider-color: var(--color-grey);
-}
-
 @layer dropdown {
   
   [x-dropdown] {

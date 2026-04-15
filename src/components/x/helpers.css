@@ -112,22 +112,6 @@ All right reserved.
   .no-print
 */
 
-
-:root {
-  --container-max-width: 160rem;
-  
-  --shadow-1:  0 2px 4px #00000016;
-  --shadow-2:  0 4px 8px #00000016;
-  --shadow-3:  0 6px 12px #00000016;
-  --shadow-4:  0 8px 16px #00000016;
-  --shadow-5:  0 10px 20px #00000016;
-  --shadow-6:  0 12px 24px #00000016;
-  --shadow-7:  0 14px 28px #00000016;
-  --shadow-8:  0 16px 32px #00000016;
-  --shadow-9:  0 18px 36px #00000016;
-  --shadow-10: 0 20px 40px #00000016;
-}
-
 @layer helpers {
   
   /* !- Font smoothing */

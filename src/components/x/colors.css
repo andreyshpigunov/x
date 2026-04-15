@@ -26,17 +26,6 @@ All right reserved.
   .bg-grey
 */
 
-:root {
-  --color-primary: #0088ee;
-  --color-success: #33c433;
-  --color-warning: #ff8800;
-  --color-danger: #ee3333;
-  --color-error: #ee3333;
-  --color-black: #fff;
-  --color-white: #000;
-  --color-grey: #f4f5f6;
-}
-
 @layer colors {
     
   .color-primary {

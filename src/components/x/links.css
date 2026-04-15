@@ -21,26 +21,6 @@ All right reserved.
   a.link_wavy
 */
 
-:root {
-  --link-color: #0060cc;
-  --link-decoration-line: underline;
-  --link-decoration-style: solid;
-  
-  /*
-    Additional variables and their default values:
-    --link-color-hover: var(--link-color);
-    --link-color-visited: var(--link-color);
-    --link-decoration-line-hover: var(--link-decoration-line-hover, var(--link-decoration-line));
-    --link-decoration-style-hover: var(--link-decoration-style-hover, var(--link-decoration-style));
-    --link-decoration-thickness: .06em;
-    --link-decoration-color: color-mix(in srgb, currentcolor, transparent 75%);
-    --link-decoration-color-hover: currentcolor;
-    --link-decoration-color-visited: currentcolor;
-    --link-underline-offset: .25em;
-    --link-transition: all .1s ease-out;
-  */
-}
-
 @layer links {
   
   a {

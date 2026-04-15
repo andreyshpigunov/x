@@ -6,6 +6,7 @@ Created by Andrey Shpigunov at 20.03.2025
 All right reserved.
 ----------------------------------------*/
 
+
 /*
   .button
   .button_label
@@ -19,53 +20,6 @@ All right reserved.
   .button_dropdown
   .buttons-group
 */
-
-:root {
-  /*
-    External variables:
-    typo.css
-      --font-family
-      --font-size
-    colors.css
-      --color-grey
-      --color-primary
-      --color-success
-      --color-warning
-      --color-danger
-  */
-  
-  /* Required variables */
-  --button-height-coeff: 2.5;
-  --button-side-padding-coeff: 1.25;
-  --button-color: var(--color-grey);
-  --button-font-family: var(--font-family);
-  --button-font-color: #000;
-  --button-font-weight: 400;
-  --button-transition: all .1s ease-out;
-  --button-font-size: var(--font-size);
-  --button-transform: translate(0,0);
-  --button-transform-hover: none;
-  --button-transform-active: translate(0,.1rem);
-  --button-transform-origin: center bottom;
-  --button-box-shadow: 0 .1rem .1rem #00000011;
-  --button-box-shadow-hover: 0 .1rem .1rem #00000022;
-  --button-box-shadow-active: inset 0 0 .1rem #00000011;
-  --button-disabled-opacity: .5;
-  --button-border-radius: calc(var(--button-font-size) * 0.6);
-
-  /* Strength of hover (lighten) / active (darken). Override on :root or .button--* to tune. */
-  --button-hover-lighten: 10%;
-  --button-active-darken: 5%;
-  
-  /*
-    Additional variables and their default values:
-    --button-height: 4rem;
-    --button-side-padding: 2rem;
-    --button-hover-lighten: 20%  (how much white to mix on hover);
-    --button-active-darken: 20%  (how much black to mix on active).
-    Override --button-color-hover / --button-color-active for custom behaviour (e.g. .button--clear).
-  */
-}
 
 @layer buttons {
   

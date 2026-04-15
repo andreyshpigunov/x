@@ -16,12 +16,6 @@ All right reserved.
   .scroll_x-mandatory
 */
 
-:root {
-  --scroll-scrollbar-size: 6px;
-  --scroll-scrollbar-thumb-background: #00000011;
-  --scroll-scrollbar-thumb-background-hover: #00000022;
-}
-
 @layer scroll {
   
   .scroll {
