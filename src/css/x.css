@@ -9,13 +9,6 @@ All right reserved.
 
 @layer variables, reset, space, typo, links, grid, flex, flow, form, buttons, dropdown, sheets, slider, sticky, modal, scroll, icons, app, helpers, colors;
 
-@layer app {
-  /*
-    Фейковый слой, чтобы можно было обернуть в него стили
-    приложения без повторного перечисления слоев.
-  */
-}
-
 @import "../components/x/variables.css";
 @import "../components/x/reset.css";
 @import "../components/x/space.css";
@@ -37,6 +30,12 @@ All right reserved.
 @import "../components/x/helpers.css";
 @import "../components/x/colors.css";
 
+@layer app {
+  /*
+    Фейковый слой, чтобы можно было обернуть в него стили
+    приложения без повторного перечисления слоев.
+  */
+}
 
 /*
   .button
