@@ -36,103 +36,107 @@ All right reserved.
   */
 }
 
-input[type="color"],
-input[type="date"],
-input[type="datetime"],
-input[type="tel"],
-input[type="email"],
-input[type="month"],
-input[type="number"],
-input[type="password"],
-input[type="search"],
-input[type="text"],
-input[type="time"],
-input[type="url"],
-input[type="week"],
-input:not([type]),
-textarea,
-select {
-  position: relative;
-  width: 100%;
-  height: var(--form-height);
-  height: var(--form-height, calc(var(--form-font-size) * var(--form-height-coeff)));
-  margin: 0;
-  padding: 0 var(--form-side-padding);
-  font-size: var(--form-font-size);
-  color: var(--form-font-color);
-  outline: none;
-  border-width: var(--form-border-width);
-  border-style: solid;
-  border-color: var(--form-border-color);
-  border-radius: var(--form-border-radius);
-  background-color: var(--form-background-color);
-  appearance: none;
-
-  &[readonly],
-  &[readonly]:focus {
-    color: var(--form-font-color-readonly);
-    border-color: var(--form-border-color-readonly);
-    background-color: var(--form-background-color-readonly);
+@layer form {
+  
+  input[type="color"],
+  input[type="date"],
+  input[type="datetime"],
+  input[type="tel"],
+  input[type="email"],
+  input[type="month"],
+  input[type="number"],
+  input[type="password"],
+  input[type="search"],
+  input[type="text"],
+  input[type="time"],
+  input[type="url"],
+  input[type="week"],
+  input:not([type]),
+  textarea,
+  select {
+    position: relative;
+    width: 100%;
+    height: var(--form-height);
+    height: var(--form-height, calc(var(--form-font-size) * var(--form-height-coeff)));
+    margin: 0;
+    padding: 0 var(--form-side-padding);
+    font-size: var(--form-font-size);
+    color: var(--form-font-color);
+    outline: none;
+    border-width: var(--form-border-width);
+    border-style: solid;
+    border-color: var(--form-border-color);
+    border-radius: var(--form-border-radius);
+    background-color: var(--form-background-color);
+    appearance: none;
+  
+    &[readonly],
+    &[readonly]:focus {
+      color: var(--form-font-color-readonly);
+      border-color: var(--form-border-color-readonly);
+      background-color: var(--form-background-color-readonly);
+      box-shadow: none;
+    }
+    &[disabled],
+    &[disabled]:focus {
+      color: var(--form-font-color-disabled);
+      border-color: var(--form-border-color-disabled);
+      background-color: var(--form-background-color-disabled);
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+  
+    &:focus {
+      border-color: var(--form-border-color-focused);
+      box-shadow: 0 0 0 1px var(--form-border-color-focused);
+    }
+    &.error,
+    &.error:focus,
+    &[pattern]:invalid,
+    &[pattern]:invalid:focus {
+      border-color: var(--form-border-color-error);
+      box-shadow: 0 0 0 1px var(--form-border-color-error);
+    }
+  }
+  
+  select {
+    padding-right: calc(var(--form-side-padding) * 2.6);
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' class='lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down'%3E%3Cpath d='m7 15 5 5 5-5M7 9l5-5 5 5'/%3E%3C/svg%3E");
+    background-position: right calc(var(--form-side-padding) - 4px) top 52%, 0 0;
+    background-repeat: no-repeat;
+    background-size: 1.6rem;
+  }
+  
+  ::placeholder {
+    color: var(--form-font-color-placeholder);
+  }
+  
+  input[placeholder],
+  input::-moz-placeholder,
+  input:-moz-placeholder,
+  input:-ms-input-placeholder {
+    text-overflow: ellipsis;
+  }
+  
+  input,
+  textarea,
+  select,
+  button {
+    max-width: var(--form-width);
+    font-family: inherit;
+    font-size: var(--font-size);
+    box-sizing: border-box;
     box-shadow: none;
   }
-  &[disabled],
-  &[disabled]:focus {
-    color: var(--form-font-color-disabled);
-    border-color: var(--form-border-color-disabled);
-    background-color: var(--form-background-color-disabled);
-    cursor: not-allowed;
-    box-shadow: none;
+  
+  textarea {
+    height: auto;
+    padding-top: calc(var(--form-side-padding) / 2);
+    padding-bottom: calc(var(--form-side-padding) / 2);
+  }
+  
+  ::-webkit-file-upload-button {
+      cursor:pointer;
   }
 
-  &:focus {
-    border-color: var(--form-border-color-focused);
-    box-shadow: 0 0 0 1px var(--form-border-color-focused);
-  }
-  &.error,
-  &.error:focus,
-  &[pattern]:invalid,
-  &[pattern]:invalid:focus {
-    border-color: var(--form-border-color-error);
-    box-shadow: 0 0 0 1px var(--form-border-color-error);
-  }
-}
-
-select {
-  padding-right: calc(var(--form-side-padding) * 2.6);
-  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' stroke='%23888' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' class='lucide lucide-chevrons-up-down-icon lucide-chevrons-up-down'%3E%3Cpath d='m7 15 5 5 5-5M7 9l5-5 5 5'/%3E%3C/svg%3E");
-  background-position: right calc(var(--form-side-padding) - 4px) top 52%, 0 0;
-  background-repeat: no-repeat;
-  background-size: 1.6rem;
-}
-
-::placeholder {
-  color: var(--form-font-color-placeholder);
-}
-
-input[placeholder],
-input::-moz-placeholder,
-input:-moz-placeholder,
-input:-ms-input-placeholder {
-  text-overflow: ellipsis;
-}
-
-input,
-textarea,
-select,
-button {
-  max-width: var(--form-width);
-  font-family: inherit;
-  font-size: var(--font-size);
-  box-sizing: border-box;
-  box-shadow: none;
-}
-
-textarea {
-  height: auto;
-  padding-top: calc(var(--form-side-padding) / 2);
-  padding-bottom: calc(var(--form-side-padding) / 2);
-}
-
-::-webkit-file-upload-button {
-    cursor:pointer;
 }

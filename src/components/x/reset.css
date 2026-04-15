@@ -45,176 +45,180 @@ All right reserved.
   --space-10: 6.4rem;
 }
 
-html, body, main, div, span, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center, dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  vertical-align: baseline;
-  box-sizing: border-box;
-}
-:before,
-:after {
-  box-sizing: border-box;
-}
-html,
-body {
-  min-width: 320px;
-  min-height: 100vh;
-  max-height: none;
-}
-html {
-  line-height: var(--line-height);
-  font-family: var(--font-family);
-  font-size: calc(var(--font-size-base) * var(--font-scale));
-  background-color: var(--background-color);
-  font-synthesis: initial;
-  text-rendering: optimizeLegibility;
-  -webkit-text-size-adjust: 100%;
-  -webkit-tap-highlight-color: #00000000;
-  font-feature-settings: 'liga', 'kern';
-  color: var(--font-color);
-  scroll-behavior: smooth;
-  scroll-padding-top: 10vh;
-  scroll-padding-bottom: 10vh;
-
-  /* !- Scaling */
-  &.scale5n { --font-scale: 0.75 }
-  &.scale4n { --font-scale: 0.80 }
-  &.scale3n { --font-scale: 0.85 }
-  &.scale2n { --font-scale: 0.90 }
-  &.scale1n { --font-scale: 0.95 }
-  &.scale0  { --font-scale: 1.00 }
-  &.scale1  { --font-scale: 1.05 }
-  &.scale2  { --font-scale: 1.10 }
-  &.scale3  { --font-scale: 1.15 }
-  &.scale4  { --font-scale: 1.20 }
-  &.scale5  { --font-scale: 1.25 }
+@layer reset {
   
-  &.no-transitions * {
-    transition: none !important;
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-}
-body {
-  font-size: var(--font-size);
-}
-blockquote, q {
-  quotes: none;
-  
-  &:before,
-  &:after {
-    content: none;
-  }
-}
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-
-  & tr td,
-  & tr th {
-    vertical-align: top;
-    text-align: left;
-  }
-}
-input[type=button],
-input[type=submit],
-input[type=reset],
-input[type=radio],
-input[type=checkbox],
-select, button {
-  cursor: pointer;
-}
-input, textarea,
-select, button {
-  margin: 0;
-}
-textarea {
-  line-height: var(--line-height);
-}
-a, button, .button,
-input[type=button] {
-  touch-action: manipulation;
-}
-:focus {
-  outline: 0;
-}
-:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
-}
-[hidden] {
-  display: none !important;
-}
-hr {
-  display: block;
-  height: .1rem;
-  margin: 1.6rem 0;
-  border: none;
-  background-color: #88888822;
-}
-sup, sub {
-  position: relative;
-  top: -.8em;
-  font-size: 1.1em;
-}
-sub {
-  top: auto;
-  bottom: -.8em;
-}
-mark {
-  margin: 0 -.4em;
-  padding: 0 .4em;
-  background-color: #fe0;
-}
-code, kbd, samp {
-  font-family: var(--font-family-mono);
-}
-strong, b {
-  font-weight: 700;
-}
-em, i, var, dfn, cite {
-  font-style: italic;
-}
-ins, u {
-  text-decoration: underline;
-}
-del, s {
-  text-decoration: line-through;
-}
-img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-}
-ul.reset,
-ol.reset {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  
-  & > li {
+  html, body, main, div, span, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center, dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
     margin: 0;
     padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
   }
-}
-pre {
-  font-family: var(--font-family-mono);
-  white-space: pre-wrap;
+  :before,
+  :after {
+    box-sizing: border-box;
+  }
+  html,
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    max-height: none;
+  }
+  html {
+    line-height: var(--line-height);
+    font-family: var(--font-family);
+    font-size: calc(var(--font-size-base) * var(--font-scale));
+    background-color: var(--background-color);
+    font-synthesis: initial;
+    text-rendering: optimizeLegibility;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: #00000000;
+    font-feature-settings: 'liga', 'kern';
+    color: var(--font-color);
+    scroll-behavior: smooth;
+    scroll-padding-top: 10vh;
+    scroll-padding-bottom: 10vh;
+  
+    /* !- Scaling */
+    &.scale5n { --font-scale: 0.75 }
+    &.scale4n { --font-scale: 0.80 }
+    &.scale3n { --font-scale: 0.85 }
+    &.scale2n { --font-scale: 0.90 }
+    &.scale1n { --font-scale: 0.95 }
+    &.scale0  { --font-scale: 1.00 }
+    &.scale1  { --font-scale: 1.05 }
+    &.scale2  { --font-scale: 1.10 }
+    &.scale3  { --font-scale: 1.15 }
+    &.scale4  { --font-scale: 1.20 }
+    &.scale5  { --font-scale: 1.25 }
+    
+    &.no-transitions * {
+      transition: none !important;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+  body {
+    font-size: var(--font-size);
+  }
+  blockquote, q {
+    quotes: none;
+    
+    &:before,
+    &:after {
+      content: none;
+    }
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  
+    & tr td,
+    & tr th {
+      vertical-align: top;
+      text-align: left;
+    }
+  }
+  input[type=button],
+  input[type=submit],
+  input[type=reset],
+  input[type=radio],
+  input[type=checkbox],
+  select, button {
+    cursor: pointer;
+  }
+  input, textarea,
+  select, button {
+    margin: 0;
+  }
+  textarea {
+    line-height: var(--line-height);
+  }
+  a, button, .button,
+  input[type=button] {
+    touch-action: manipulation;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+  [hidden] {
+    display: none !important;
+  }
+  hr {
+    display: block;
+    height: .1rem;
+    margin: 1.6rem 0;
+    border: none;
+    background-color: #88888822;
+  }
+  sup, sub {
+    position: relative;
+    top: -.8em;
+    font-size: 1.1em;
+  }
+  sub {
+    top: auto;
+    bottom: -.8em;
+  }
+  mark {
+    margin: 0 -.4em;
+    padding: 0 .4em;
+    background-color: #fe0;
+  }
+  code, kbd, samp {
+    font-family: var(--font-family-mono);
+  }
+  strong, b {
+    font-weight: 700;
+  }
+  em, i, var, dfn, cite {
+    font-style: italic;
+  }
+  ins, u {
+    text-decoration: underline;
+  }
+  del, s {
+    text-decoration: line-through;
+  }
+  img {
+    display: block;
+    width: auto;
+    height: auto;
+    max-width: 100%;
+  }
+  ul.reset,
+  ol.reset {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+    & > li {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  pre {
+    font-family: var(--font-family-mono);
+    white-space: pre-wrap;
+  }
+
 }

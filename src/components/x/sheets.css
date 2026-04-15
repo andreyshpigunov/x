@@ -7,6 +7,10 @@ All right reserved.
 ----------------------------------------*/
 
 
-[x-sheet]:not(.active) {
-  display: none;
+@layer sheets {
+
+  [x-sheet]:not(.active) {
+    display: none;
+  }
+
 }

@@ -37,52 +37,56 @@ All right reserved.
   --color-grey: #f4f5f6;
 }
 
-.color-primary {
-  color: var(--color-primary);
-}
-.color-success {
-  color: var(--color-success);
-}
-.color-warning {
-  color: var(--color-warning);
-}
-.color-danger {
-  color: var(--color-danger);
-}
-.color-error {
-  color: var(--color-error);
-}
-.color-black {
-  color: var(--color-black);
-}
-.color-white {
-  color: var(--color-white);
-}
-.color-grey {
-  color: var(--color-grey);
-}
+@layer colors {
+    
+  .color-primary {
+    color: var(--color-primary);
+  }
+  .color-success {
+    color: var(--color-success);
+  }
+  .color-warning {
+    color: var(--color-warning);
+  }
+  .color-danger {
+    color: var(--color-danger);
+  }
+  .color-error {
+    color: var(--color-error);
+  }
+  .color-black {
+    color: var(--color-black);
+  }
+  .color-white {
+    color: var(--color-white);
+  }
+  .color-grey {
+    color: var(--color-grey);
+  }
+  
+  .bg-primary {
+    background-color: var(--color-primary);
+  }
+  .bg-success {
+    background-color: var(--color-success);
+  }
+  .bg-warning {
+    background-color: var(--color-warning);
+  }
+  .bg-danger {
+    background-color: var(--color-danger);
+  }
+  .bg-error {
+    background-color: var(--color-error);
+  }
+  .bg-black {
+    background-color: var(--color-black);
+  }
+  .bg-white {
+    background-color: var(--color-white);
+  }
+  .bg-grey {
+    background-color: var(--color-grey);
+  }
 
-.bg-primary {
-  background-color: var(--color-primary);
-}
-.bg-success {
-  background-color: var(--color-success);
-}
-.bg-warning {
-  background-color: var(--color-warning);
-}
-.bg-danger {
-  background-color: var(--color-danger);
-}
-.bg-error {
-  background-color: var(--color-error);
-}
-.bg-black {
-  background-color: var(--color-black);
-}
-.bg-white {
-  background-color: var(--color-white);
-}
-.bg-grey {
-  background-color: var(--color-grey);
 }

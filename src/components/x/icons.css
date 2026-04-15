@@ -12,47 +12,51 @@ All right reserved.
   .icon[10-60] step 2 (m,l) - icon size in px
 */
 
-.icon,
-.icon > svg,
-.icon > img {
-  display: inline-block;
-  width: 1em;
-  height: 1em;
-  max-width: none;
-  max-height: none;
-}
-.icon > svg,
-.icon > img {
-  display: block;
-}
-
-@for $i from 10 to 60 by 2 {
-  .icon$(i),
-  .icon$(i) > svg,
-  .icon$(i) > img {
-    width: calc($(i)rem / 10);
-    height: calc($(i)rem / 10);
+@layer icons {
+    
+  .icon,
+  .icon > svg,
+  .icon > img {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    max-width: none;
+    max-height: none;
   }
-}
-
-@media (min-width: 768px) {
+  .icon > svg,
+  .icon > img {
+    display: block;
+  }
+  
   @for $i from 10 to 60 by 2 {
-    .m\:icon$(i),
-    .m\:icon$(i) > svg,
-    .m\:icon$(i) > img {
+    .icon$(i),
+    .icon$(i) > svg,
+    .icon$(i) > img {
       width: calc($(i)rem / 10);
       height: calc($(i)rem / 10);
     }
   }
-}
-
-@media (min-width: 1024px) {
-  @for $i from 10 to 60 by 2 {
-    .l\:icon$(i),
-    .l\:icon$(i) > svg,
-    .l\:icon$(i) > img {
-      width: calc($(i)rem / 10);
-      height: calc($(i)rem / 10);
+  
+  @media (min-width: 768px) {
+    @for $i from 10 to 60 by 2 {
+      .m\:icon$(i),
+      .m\:icon$(i) > svg,
+      .m\:icon$(i) > img {
+        width: calc($(i)rem / 10);
+        height: calc($(i)rem / 10);
+      }
     }
   }
+  
+  @media (min-width: 1024px) {
+    @for $i from 10 to 60 by 2 {
+      .l\:icon$(i),
+      .l\:icon$(i) > svg,
+      .l\:icon$(i) > img {
+        width: calc($(i)rem / 10);
+        height: calc($(i)rem / 10);
+      }
+    }
+  }
+
 }

@@ -41,70 +41,74 @@ All right reserved.
   */
 }
 
-a {
+@layer links {
   
-  &[role=button] {
-    cursor: pointer;
-  }
-  &:link,
-  &.link {
-    outline: none;
-    cursor: pointer;
-    color: var(--link-color);
-    transition: var(--link-transition, all .1s ease-out);
+  a {
     
-    text-decoration-line: var(--link-decoration-line);
-    text-decoration-style: var(--link-decoration-style);
-    text-decoration-color: var(--link-decoration-color, color-mix(in srgb, currentcolor, transparent 75%));
-    text-decoration-thickness: clamp(1px, var(--link-decoration-thickness, .06em), 10px);
-    text-underline-offset: var(--link-underline-offset, .25em);
-  }
-  &:visited {
-    color: var(--link-color-visited, var(--link-color));
-    text-decoration-color: var(--link-decoration-color-visited, currentcolor);
-  }
-  @media (any-hover: hover) {
-    &:hover,
-    &.hover {
+    &[role=button] {
+      cursor: pointer;
+    }
+    &:link,
+    &.link {
+      outline: none;
+      cursor: pointer;
+      color: var(--link-color);
+      transition: var(--link-transition, all .1s ease-out);
+      
+      text-decoration-line: var(--link-decoration-line);
+      text-decoration-style: var(--link-decoration-style);
+      text-decoration-color: var(--link-decoration-color, color-mix(in srgb, currentcolor, transparent 75%));
+      text-decoration-thickness: clamp(1px, var(--link-decoration-thickness, .06em), 10px);
+      text-underline-offset: var(--link-underline-offset, .25em);
+    }
+    &:visited {
+      color: var(--link-color-visited, var(--link-color));
+      text-decoration-color: var(--link-decoration-color-visited, currentcolor);
+    }
+    @media (any-hover: hover) {
+      &:hover,
+      &.hover {
+        color: var(--link-color-hover, var(--link-color));
+        text-decoration-line: var(--link-decoration-line-hover, var(--link-decoration-line));
+        text-decoration-style: var(--link-decoration-style-hover, var(--link-decoration-style));
+        text-decoration-color: var(--link-decoration-color-hover, currentcolor);
+      }
+    }
+    &:active,
+    &.active {
       color: var(--link-color-hover, var(--link-color));
       text-decoration-line: var(--link-decoration-line-hover, var(--link-decoration-line));
       text-decoration-style: var(--link-decoration-style-hover, var(--link-decoration-style));
       text-decoration-color: var(--link-decoration-color-hover, currentcolor);
     }
-  }
-  &:active,
-  &.active {
-    color: var(--link-color-hover, var(--link-color));
-    text-decoration-line: var(--link-decoration-line-hover, var(--link-decoration-line));
-    text-decoration-style: var(--link-decoration-style-hover, var(--link-decoration-style));
-    text-decoration-color: var(--link-decoration-color-hover, currentcolor);
+    
+    /* Link predefined styles */
+    
+    &.link_noline {
+      --link-decoration-line: none;
+    }
+    &.link_underline {
+      --link-decoration-line: underline;
+    }
+    &.link_dashed {
+      --link-decoration-style: dashed;
+    }
+    &.link_dotted {
+      --link-decoration-style: dotted;
+    }
+    &.link_wavy {
+      --link-decoration-style: wavy;
+    }
   }
   
-  /* Link predefined styles */
   
-  &.link_noline {
-    --link-decoration-line: none;
+  /* Remove underline from phones */
+  
+  a[href^="tel"],
+  a[href^="tel"]:hover,
+  a[href^="tel"]:active {
+    color: inherit;
+    text-decoration: inherit;
   }
-  &.link_underline {
-    --link-decoration-line: underline;
-  }
-  &.link_dashed {
-    --link-decoration-style: dashed;
-  }
-  &.link_dotted {
-    --link-decoration-style: dotted;
-  }
-  &.link_wavy {
-    --link-decoration-style: wavy;
-  }
-}
 
-
-/* Remove underline from phones */
-
-a[href^="tel"],
-a[href^="tel"]:hover,
-a[href^="tel"]:active {
-  color: inherit;
-  text-decoration: inherit;
 }

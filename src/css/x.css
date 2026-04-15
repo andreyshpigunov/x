@@ -7,6 +7,8 @@ All right reserved.
 ----------------------------------------*/
 
 
+@layer reset, space, links, grid, flex, flow, form, buttons, dropdown, sheets, slider, sticky, modal, scroll, icons, typo, helpers, colors;
+
 @import "../components/x/reset.css";
 @import "../components/x/space.css";
 @import "../components/x/links.css";
@@ -26,6 +28,7 @@ All right reserved.
 @import "../components/x/typo.css";
 @import "../components/x/helpers.css";
 @import "../components/x/colors.css";
+
 
 /*
   .button

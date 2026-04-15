@@ -55,235 +55,238 @@ All right reserved.
   --table-header-font-weight: 700;
 }
 
-
-/* !- Headers */
-
-h1, .h1,
-h2, .h2,
-h3, .h3,
-h4, .h4,
-h5, .h5,
-h6, .h6 {
-  margin-top: 0;
-  margin-bottom: var(--headers-margin-bottom);
-  font-family: var(--headers-font-family);
-  font-weight: var(--headers-font-weight);
-  color: var(--headers-font-color);
-}
-* + h2, * + .h2,
-* + h3, * + .h3,
-* + h4, * + .h4,
-* + h5, * + .h5,
-* + h6, * + .h6 {
-  margin-top: var(--headers-margin-top);
-}
-
-h1, .h1 {
-  line-height: var(--h1-line-height);
-  font-size: var(--h1-font-size);
-}
-h2, .h2 {
-  line-height: var(--h2-line-height);
-  font-size: var(--h2-font-size);
-}
-h3, .h3 {
-  line-height: var(--h3-line-height);
-  font-size: var(--h3-font-size);
-}
-h4, .h4 { font-size: var(--h4-font-size) }
-h5, .h5 { font-size: var(--h5-font-size) }
-h6, .h6 { font-size: var(--h6-font-size) }
-
-
-/* !- Paragraph */
-
-p {
-  margin: var(--paragraph-margin) 0;
-  font-style: inherit;
+@layer typo {
   
-  &:first-child { margin-top: 0 }
-  &:last-child  { margin-bottom: 0 }
-}
-
-
-/* !- Figure  */
-
-figure {
-  margin: var(--figure-margin);
-}
-figcaption {
-  margin-top: var(--figcaption-margin-top);
-  /* Negative margin pulls next block closer (optical balance) */
-  margin-bottom: calc(var(--figcaption-margin-top) * -1);
-  font-size: var(--figcaption-font-size);
-  color: var(--figcaption-color);
-}
-
-
-/* !- Blockquote */
-
-blockquote {
-  margin: var(--blockquote-margin);
-  padding: var(--blockquote-padding);
-  font-style: var(--blockquote-font-style);
-  hyphens: auto;
-  border-left: var(--blockquote-border);
-}
-
-
-/* !- Preformatted */
-
-pre {
-  margin: var(--paragraph-margin) 0;
-  font-family: var(--font-family-mono, monospace);
-}
-
-
-/* !- Lists */
-
-ul,
-ol,
-dl {
-  margin: var(--paragraph-margin) 0;
-  padding-left: calc(var(--paragraph-margin) * 1.5);
+  /* !- Headers */
   
-  & ul,
-  & ol,
-  & dl,
-  & li {
-    margin: var(--space-1) 0;
+  h1, .h1,
+  h2, .h2,
+  h3, .h3,
+  h4, .h4,
+  h5, .h5,
+  h6, .h6 {
+    margin-top: 0;
+    margin-bottom: var(--headers-margin-bottom);
+    font-family: var(--headers-font-family);
+    font-weight: var(--headers-font-weight);
+    color: var(--headers-font-color);
   }
-}
-dl {
-  padding-left: 0;
+  * + h2, * + .h2,
+  * + h3, * + .h3,
+  * + h4, * + .h4,
+  * + h5, * + .h5,
+  * + h6, * + .h6 {
+    margin-top: var(--headers-margin-top);
+  }
   
-  & dt,
-  & dd { margin: var(--space-1) 0 }
-  & dt { font-weight: bold }
-}
-
-
-/* !- Table */
-
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-
-  & caption {
-    margin-bottom: var(--space-1);
-    padding: 0 var(--space-3);
-    font-weight: var(--table-caption-font-weight);
-    text-align: left;
+  h1, .h1 {
+    line-height: var(--h1-line-height);
+    font-size: var(--h1-font-size);
   }
-  & tr th {
-    font-weight: var(--table-header-font-weight);
+  h2, .h2 {
+    line-height: var(--h2-line-height);
+    font-size: var(--h2-font-size);
   }
-  & tr th,
-  & tr td {
-    padding: var(--table-padding);
-    border: var(--table-border);
-    vertical-align: top;
+  h3, .h3 {
+    line-height: var(--h3-line-height);
+    font-size: var(--h3-font-size);
   }
-}
-
-
-/* !- Font styles */
-
-.mono   { font-family: var(--font-family-mono, monospace) }
-.italic { font-style: italic }
-.strike { text-decoration: line-through }
-
-
-/* !- Font sizes */
-
-@for $i from 10 to 19 {
-  .fs$(i) { font-size: calc($(i)rem / 10) }
-}
-@for $i from 20 to 64 by 2 {
-  .fs$(i) { font-size: calc($(i)rem / 10) }
-}
-@for $i from 100 to 900 by 100 {
-  .fw$(i) { font-weight: $(i) }
-}
-
-@media (min-width: 768px) {
+  h4, .h4 { font-size: var(--h4-font-size) }
+  h5, .h5 { font-size: var(--h5-font-size) }
+  h6, .h6 { font-size: var(--h6-font-size) }
+  
+  
+  /* !- Paragraph */
+  
+  p {
+    margin: var(--paragraph-margin) 0;
+    font-style: inherit;
+    
+    &:first-child { margin-top: 0 }
+    &:last-child  { margin-bottom: 0 }
+  }
+  
+  
+  /* !- Figure  */
+  
+  figure {
+    margin: var(--figure-margin);
+  }
+  figcaption {
+    margin-top: var(--figcaption-margin-top);
+    /* Negative margin pulls next block closer (optical balance) */
+    margin-bottom: calc(var(--figcaption-margin-top) * -1);
+    font-size: var(--figcaption-font-size);
+    color: var(--figcaption-color);
+  }
+  
+  
+  /* !- Blockquote */
+  
+  blockquote {
+    margin: var(--blockquote-margin);
+    padding: var(--blockquote-padding);
+    font-style: var(--blockquote-font-style);
+    hyphens: auto;
+    border-left: var(--blockquote-border);
+  }
+  
+  
+  /* !- Preformatted */
+  
+  pre {
+    margin: var(--paragraph-margin) 0;
+    font-family: var(--font-family-mono, monospace);
+  }
+  
+  
+  /* !- Lists */
+  
+  ul,
+  ol,
+  dl {
+    margin: var(--paragraph-margin) 0;
+    padding-left: calc(var(--paragraph-margin) * 1.5);
+    
+    & ul,
+    & ol,
+    & dl,
+    & li {
+      margin: var(--space-1) 0;
+    }
+  }
+  dl {
+    padding-left: 0;
+    
+    & dt,
+    & dd { margin: var(--space-1) 0 }
+    & dt { font-weight: bold }
+  }
+  
+  
+  /* !- Table */
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  
+    & caption {
+      margin-bottom: var(--space-1);
+      padding: 0 var(--space-3);
+      font-weight: var(--table-caption-font-weight);
+      text-align: left;
+    }
+    & tr th {
+      font-weight: var(--table-header-font-weight);
+    }
+    & tr th,
+    & tr td {
+      padding: var(--table-padding);
+      border: var(--table-border);
+      vertical-align: top;
+    }
+  }
+  
+  
+  /* !- Font styles */
+  
+  .mono   { font-family: var(--font-family-mono, monospace) }
+  .italic { font-style: italic }
+  .strike { text-decoration: line-through }
+  
+  
+  /* !- Font sizes */
+  
   @for $i from 10 to 19 {
-    .m\:fs$(i) { font-size: calc($(i)rem / 10) }
+    .fs$(i) { font-size: calc($(i)rem / 10) }
   }
   @for $i from 20 to 64 by 2 {
-    .m\:fs$(i) { font-size: calc($(i)rem / 10) }
+    .fs$(i) { font-size: calc($(i)rem / 10) }
   }
   @for $i from 100 to 900 by 100 {
-    .m\:fw$(i) { font-weight: $(i) }
+    .fw$(i) { font-weight: $(i) }
   }
-}
-
-@media (min-width: 1024px) {
-  @for $i from 10 to 19 {
-    .l\:fs$(i) { font-size: calc($(i)rem / 10) }
+  
+  @media (min-width: 768px) {
+    @for $i from 10 to 19 {
+      .m\:fs$(i) { font-size: calc($(i)rem / 10) }
+    }
+    @for $i from 20 to 64 by 2 {
+      .m\:fs$(i) { font-size: calc($(i)rem / 10) }
+    }
+    @for $i from 100 to 900 by 100 {
+      .m\:fw$(i) { font-weight: $(i) }
+    }
   }
-  @for $i from 20 to 64 by 2 {
-    .l\:fs$(i) { font-size: calc($(i)rem / 10) }
+  
+  @media (min-width: 1024px) {
+    @for $i from 10 to 19 {
+      .l\:fs$(i) { font-size: calc($(i)rem / 10) }
+    }
+    @for $i from 20 to 64 by 2 {
+      .l\:fs$(i) { font-size: calc($(i)rem / 10) }
+    }
+    @for $i from 100 to 900 by 100 {
+      .l\:fw$(i) { font-weight: $(i) }
+    }
   }
-  @for $i from 100 to 900 by 100 {
-    .l\:fw$(i) { font-weight: $(i) }
+  
+  @media (min-width: 1280px) {
+    @for $i from 10 to 19 {
+      .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
+    }
+    @for $i from 20 to 64 by 2 {
+      .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
+    }
+    @for $i from 100 to 900 by 100 {
+      .xl\:fw$(i) { font-weight: $(i) }
+    }
   }
-}
-
-@media (min-width: 1280px) {
-  @for $i from 10 to 19 {
-    .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
-  }
-  @for $i from 20 to 64 by 2 {
-    .xl\:fs$(i) { font-size: calc($(i)rem / 10) }
-  }
-  @for $i from 100 to 900 by 100 {
-    .xl\:fw$(i) { font-weight: $(i) }
-  }
-}
-
-
-/* !- Letter spacing */
-
-@for $i from 0 to 4 {
-  .ls$(i) { letter-spacing: calc($(i)em * 0.625) }
-}
-
-@media (min-width: 768px) {
+  
+  
+  /* !- Letter spacing */
+  
   @for $i from 0 to 4 {
-    .m\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    .ls$(i) { letter-spacing: calc($(i)em * 0.625) }
   }
-}
-@media (min-width: 1024px) {
-  @for $i from 0 to 4 {
-    .l\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  
+  @media (min-width: 768px) {
+    @for $i from 0 to 4 {
+      .m\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    }
   }
-}
-@media (min-width: 1280px) {
-  @for $i from 0 to 4 {
-    .xl\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+  @media (min-width: 1024px) {
+    @for $i from 0 to 4 {
+      .l\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    }
   }
-}
-
-
-/* !- Line height */
-
-@for $i from 0 to 9 {
-  .lh$(i)  { line-height: 1.$(i) }
-}
-
-@media (min-width: 768px) {
+  @media (min-width: 1280px) {
+    @for $i from 0 to 4 {
+      .xl\:ls$(i) { letter-spacing: calc($(i)em * 0.625) }
+    }
+  }
+  
+  
+  /* !- Line height */
+  
   @for $i from 0 to 9 {
-    .m\:lh$(i)  { line-height: 1.$(i) }
+    .lh$(i)  { line-height: 1.$(i) }
   }
-}
-@media (min-width: 1024px) {
-  @for $i from 0 to 9 {
-    .l\:lh$(i)  { line-height: 1.$(i) }
+  
+  @media (min-width: 768px) {
+    @for $i from 0 to 9 {
+      .m\:lh$(i)  { line-height: 1.$(i) }
+    }
   }
-}
-@media (min-width: 1280px) {
-  @for $i from 0 to 9 {
-    .xl\:lh$(i)  { line-height: 1.$(i) }
+  @media (min-width: 1024px) {
+    @for $i from 0 to 9 {
+      .l\:lh$(i)  { line-height: 1.$(i) }
+    }
   }
+  @media (min-width: 1280px) {
+    @for $i from 0 to 9 {
+      .xl\:lh$(i)  { line-height: 1.$(i) }
+    }
+  }
+
 }

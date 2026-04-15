@@ -29,168 +29,172 @@ All right reserved.
   .flex > .c[1-12]/[1-12] (s,m,l,xl) - column width "column/columns"
 */
 
-.flex { display: flex }
-
-[class*=flex] {
-  /* Columns */
-  @for $cols from 1 to 12 {
-    @for $col from 1 to $cols {
-      & > .c$(col)\/$(cols) {
-        flex-basis: calc($(col) / $(cols) * 100%);
-        max-width: calc($(col) / $(cols) * 100%);
-      }
-    }
-  }
+@layer flex {
+    
+  .flex { display: flex }
   
-  @media (min-width: 640px) {
+  [class*=flex] {
+    /* Columns */
     @for $cols from 1 to 12 {
       @for $col from 1 to $cols {
-        & > .s\:c$(col)\/$(cols) {
+        & > .c$(col)\/$(cols) {
           flex-basis: calc($(col) / $(cols) * 100%);
           max-width: calc($(col) / $(cols) * 100%);
         }
       }
     }
+    
+    @media (min-width: 640px) {
+      @for $cols from 1 to 12 {
+        @for $col from 1 to $cols {
+          & > .s\:c$(col)\/$(cols) {
+            flex-basis: calc($(col) / $(cols) * 100%);
+            max-width: calc($(col) / $(cols) * 100%);
+          }
+        }
+      }
+    }
+    
+    @media (min-width: 768px) {
+      @for $cols from 1 to 12 {
+        @for $col from 1 to $cols {
+          & > .m\:c$(col)\/$(cols) {
+            flex-basis: calc($(col) / $(cols) * 100%);
+            max-width: calc($(col) / $(cols) * 100%);
+          }
+        }
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      @for $cols from 1 to 12 {
+        @for $col from 1 to $cols {
+          & > .l\:c$(col)\/$(cols) {
+            flex-basis: calc($(col) / $(cols) * 100%);
+            max-width: calc($(col) / $(cols) * 100%);
+          }
+        }
+      }
+    }
+    
+    @media (min-width: 1280px) {
+      @for $cols from 1 to 12 {
+        @for $col from 1 to $cols {
+          & > .xl\:c$(col)\/$(cols) {
+            flex-basis: calc($(col) / $(cols) * 100%);
+            max-width: calc($(col) / $(cols) * 100%);
+          }
+        }
+      }
+    }
+  }
+  
+  .fr  { flex-direction: row }
+  .fc  { flex-direction: column }
+  .fw  { flex-wrap: wrap }
+  .fnw { flex-wrap: nowrap }
+  
+  .ais  { align-items: stretch }
+  .aifs { align-items: flex-start }
+  .aic  { align-items: center }
+  .aife { align-items: flex-end }
+  
+  .jcfs { justify-content: flex-start }
+  .jcc  { justify-content: center }
+  .jcfe { justify-content: flex-end }
+  .jcsb { justify-content: space-between }
+  .jcsa { justify-content: space-around }
+  .jcse { justify-content: space-evenly }
+  
+  .no-shrink { flex-shrink: 0 }
+  .no-grow { flex-grow: 0 }
+  
+  @media (min-width: 640px) {
+    .s\:fr  { flex-direction: row }
+    .s\:fc  { flex-direction: column }
+    .s\:fw  { flex-wrap: wrap }
+    .s\:fnw { flex-wrap: nowrap }
+    
+    .s\:ais  { align-items: stretch }
+    .s\:aifs { align-items: flex-start }
+    .s\:aic  { align-items: center }
+    .s\:aife { align-items: flex-end }
+    
+    .s\:jcfs { justify-content: flex-start }
+    .s\:jcc  { justify-content: center }
+    .s\:jcfe { justify-content: flex-end }
+    .s\:jcsb { justify-content: space-between }
+    .s\:jcsa { justify-content: space-around }
+    .s\:jcse { justify-content: space-evenly }
+    
+    .s\:no-shrink { flex-shrink: 0 }
+    .s\:no-grow { flex-grow: 0 }
   }
   
   @media (min-width: 768px) {
-    @for $cols from 1 to 12 {
-      @for $col from 1 to $cols {
-        & > .m\:c$(col)\/$(cols) {
-          flex-basis: calc($(col) / $(cols) * 100%);
-          max-width: calc($(col) / $(cols) * 100%);
-        }
-      }
-    }
+    .m\:fr  { flex-direction: row }
+    .m\:fc  { flex-direction: column }
+    .m\:fw  { flex-wrap: wrap }
+    .m\:fnw { flex-wrap: nowrap }
+    
+    .m\:ais  { align-items: stretch }
+    .m\:aifs { align-items: flex-start }
+    .m\:aic  { align-items: center }
+    .m\:aife { align-items: flex-end }
+    
+    .m\:jcfs { justify-content: flex-start }
+    .m\:jcc  { justify-content: center }
+    .m\:jcfe { justify-content: flex-end }
+    .m\:jcsb { justify-content: space-between }
+    .m\:jcsa { justify-content: space-around }
+    .m\:jcse { justify-content: space-evenly }
+    
+    .m\:no-shrink { flex-shrink: 0 }
+    .m\:no-grow { flex-grow: 0 }
   }
   
   @media (min-width: 1024px) {
-    @for $cols from 1 to 12 {
-      @for $col from 1 to $cols {
-        & > .l\:c$(col)\/$(cols) {
-          flex-basis: calc($(col) / $(cols) * 100%);
-          max-width: calc($(col) / $(cols) * 100%);
-        }
-      }
-    }
+    .l\:fr  { flex-direction: row }
+    .l\:fc  { flex-direction: column }
+    .l\:fw  { flex-wrap: wrap }
+    .l\:fnw { flex-wrap: nowrap }
+    
+    .l\:ais  { align-items: stretch }
+    .l\:aifs { align-items: flex-start }
+    .l\:aic  { align-items: center }
+    .l\:aife { align-items: flex-end }
+    
+    .l\:jcfs { justify-content: flex-start }
+    .l\:jcc  { justify-content: center }
+    .l\:jcfe { justify-content: flex-end }
+    .l\:jcsb { justify-content: space-between }
+    .l\:jcsa { justify-content: space-around }
+    .l\:jcse { justify-content: space-evenly }
+    
+    .l\:no-shrink { flex-shrink: 0 }
+    .l\:no-grow { flex-grow: 0 }
   }
   
   @media (min-width: 1280px) {
-    @for $cols from 1 to 12 {
-      @for $col from 1 to $cols {
-        & > .xl\:c$(col)\/$(cols) {
-          flex-basis: calc($(col) / $(cols) * 100%);
-          max-width: calc($(col) / $(cols) * 100%);
-        }
-      }
-    }
+    .xl\:fr  { flex-direction: row }
+    .xl\:fc  { flex-direction: column }
+    .xl\:fw  { flex-wrap: wrap }
+    .xl\:fnw { flex-wrap: nowrap }
+    
+    .xl\:ais  { align-items: stretch }
+    .xl\:aifs { align-items: flex-start }
+    .xl\:aic  { align-items: center }
+    .xl\:aife { align-items: flex-end }
+    
+    .xl\:jcfs { justify-content: flex-start }
+    .xl\:jcc  { justify-content: center }
+    .xl\:jcfe { justify-content: flex-end }
+    .xl\:jcsb { justify-content: space-between }
+    .xl\:jcsa { justify-content: space-around }
+    .xl\:jcse { justify-content: space-evenly }
+    
+    .xl\:no-shrink { flex-shrink: 0 }
+    .xl\:no-grow { flex-grow: 0 }
   }
-}
 
-.fr  { flex-direction: row }
-.fc  { flex-direction: column }
-.fw  { flex-wrap: wrap }
-.fnw { flex-wrap: nowrap }
-
-.ais  { align-items: stretch }
-.aifs { align-items: flex-start }
-.aic  { align-items: center }
-.aife { align-items: flex-end }
-
-.jcfs { justify-content: flex-start }
-.jcc  { justify-content: center }
-.jcfe { justify-content: flex-end }
-.jcsb { justify-content: space-between }
-.jcsa { justify-content: space-around }
-.jcse { justify-content: space-evenly }
-
-.no-shrink { flex-shrink: 0 }
-.no-grow { flex-grow: 0 }
-
-@media (min-width: 640px) {
-  .s\:fr  { flex-direction: row }
-  .s\:fc  { flex-direction: column }
-  .s\:fw  { flex-wrap: wrap }
-  .s\:fnw { flex-wrap: nowrap }
-  
-  .s\:ais  { align-items: stretch }
-  .s\:aifs { align-items: flex-start }
-  .s\:aic  { align-items: center }
-  .s\:aife { align-items: flex-end }
-  
-  .s\:jcfs { justify-content: flex-start }
-  .s\:jcc  { justify-content: center }
-  .s\:jcfe { justify-content: flex-end }
-  .s\:jcsb { justify-content: space-between }
-  .s\:jcsa { justify-content: space-around }
-  .s\:jcse { justify-content: space-evenly }
-  
-  .s\:no-shrink { flex-shrink: 0 }
-  .s\:no-grow { flex-grow: 0 }
-}
-
-@media (min-width: 768px) {
-  .m\:fr  { flex-direction: row }
-  .m\:fc  { flex-direction: column }
-  .m\:fw  { flex-wrap: wrap }
-  .m\:fnw { flex-wrap: nowrap }
-  
-  .m\:ais  { align-items: stretch }
-  .m\:aifs { align-items: flex-start }
-  .m\:aic  { align-items: center }
-  .m\:aife { align-items: flex-end }
-  
-  .m\:jcfs { justify-content: flex-start }
-  .m\:jcc  { justify-content: center }
-  .m\:jcfe { justify-content: flex-end }
-  .m\:jcsb { justify-content: space-between }
-  .m\:jcsa { justify-content: space-around }
-  .m\:jcse { justify-content: space-evenly }
-  
-  .m\:no-shrink { flex-shrink: 0 }
-  .m\:no-grow { flex-grow: 0 }
-}
-
-@media (min-width: 1024px) {
-  .l\:fr  { flex-direction: row }
-  .l\:fc  { flex-direction: column }
-  .l\:fw  { flex-wrap: wrap }
-  .l\:fnw { flex-wrap: nowrap }
-  
-  .l\:ais  { align-items: stretch }
-  .l\:aifs { align-items: flex-start }
-  .l\:aic  { align-items: center }
-  .l\:aife { align-items: flex-end }
-  
-  .l\:jcfs { justify-content: flex-start }
-  .l\:jcc  { justify-content: center }
-  .l\:jcfe { justify-content: flex-end }
-  .l\:jcsb { justify-content: space-between }
-  .l\:jcsa { justify-content: space-around }
-  .l\:jcse { justify-content: space-evenly }
-  
-  .l\:no-shrink { flex-shrink: 0 }
-  .l\:no-grow { flex-grow: 0 }
-}
-
-@media (min-width: 1280px) {
-  .xl\:fr  { flex-direction: row }
-  .xl\:fc  { flex-direction: column }
-  .xl\:fw  { flex-wrap: wrap }
-  .xl\:fnw { flex-wrap: nowrap }
-  
-  .xl\:ais  { align-items: stretch }
-  .xl\:aifs { align-items: flex-start }
-  .xl\:aic  { align-items: center }
-  .xl\:aife { align-items: flex-end }
-  
-  .xl\:jcfs { justify-content: flex-start }
-  .xl\:jcc  { justify-content: center }
-  .xl\:jcfe { justify-content: flex-end }
-  .xl\:jcsb { justify-content: space-between }
-  .xl\:jcsa { justify-content: space-around }
-  .xl\:jcse { justify-content: space-evenly }
-  
-  .xl\:no-shrink { flex-shrink: 0 }
-  .xl\:no-grow { flex-grow: 0 }
 }
