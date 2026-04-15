@@ -7,6 +7,35 @@ All right reserved.
 ----------------------------------------*/
 
 
+:root {
+  --form-width: 40rem;
+  --form-height-coeff: 2.6;
+  --form-side-padding: 1rem;
+
+  --form-font-size: var(--font-size);
+  --form-font-color: #000;
+  --form-font-color-readonly: #000;
+  --form-font-color-disabled: #666;
+  --form-font-color-placeholder: #ccc;
+
+  --form-border-width: .1rem;
+  --form-border-radius: .8rem;
+  --form-border-color: #d4d4d4;
+  --form-border-color-focused: #8cf;
+  --form-border-color-error: #f00;
+  --form-border-color-readonly: #ddd;
+  --form-border-color-disabled: #ddd;
+
+  --form-background-color: #fff;
+  --form-background-color-readonly: #fafafa;
+  --form-background-color-disabled: #f6f6f6;
+  
+  /*
+    Additional variables and their default values:
+    --form-height: 4rem;
+  */
+}
+
 @layer form {
   
   input[type="color"],
