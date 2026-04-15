@@ -187,6 +187,14 @@ All right reserved.
   .br100     (s,m,l,xl)
   .sh[0-10]  (s,m,l,xl)
   .o[0-10]   (s,m,l,xl)
+  .mono
+  .italic
+  .strike
+  .fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
+  .fs[20-64] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 6.4
+  .fw[100-900] step 100 (m,l,xl)
+  .ls[0-4] (m,l,xl)
+  .lh[0-9] (m,l,xl)  - values: 1.0-1.9
   .no-print
 */
 
@@ -222,12 +230,4 @@ All right reserved.
 
 /*
   .h[1-6]
-  .mono
-  .italic
-  .strike
-  .fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
-  .fs[20-64] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 6.4
-  .fw[100-900] step 100 (m,l,xl)
-  .ls[0-4] (m,l,xl)
-  .lh[0-9] (m,l,xl)  - values: 1.0-1.9
 */
