@@ -96,14 +96,14 @@ pre {
 
 /* !- Lists */
 
-ul,
-ol,
+ul:not(.reset),
+ol:not(.reset),
 dl {
   margin: var(--paragraph-margin) 0;
   padding-left: calc(var(--paragraph-margin) * 1.5);
   
-  & ul,
-  & ol,
+  & ul:not(.reset),
+  & ol:not(.reset),
   & dl,
   & li {
     margin: var(--space-1) 0;
