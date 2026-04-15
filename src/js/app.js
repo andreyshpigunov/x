@@ -31,7 +31,7 @@ window.element3 = (params) => {
 }
 window.headerAnimation = (params) => {
   // console.log(x.device.size.s);
-  let _height = 100;
+  let _height = (x.device.size.xs || x.device.size.s) ? 100 : 120;
   // console.log(_height);
   let header = x.qs('.header');
   let headerLogo = x.qs('.header-logo img');
