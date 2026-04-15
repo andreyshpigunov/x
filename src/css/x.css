@@ -7,10 +7,11 @@ All right reserved.
 ----------------------------------------*/
 
 
-@layer reset, space, links, grid, flex, flow, form, buttons, dropdown, sheets, slider, sticky, modal, scroll, icons, typo, helpers, colors;
+@layer reset, space, typo, links, grid, flex, flow, form, buttons, dropdown, sheets, slider, sticky, modal, scroll, icons, helpers, colors;
 
 @import "../components/x/reset.css";
 @import "../components/x/space.css";
+@import "../components/x/typo.css";
 @import "../components/x/links.css";
 @import "../components/x/grid.css";
 @import "../components/x/flex.css";
@@ -25,7 +26,6 @@ All right reserved.
 /* @import "../components/x/debug.css"; */
 @import "../components/x/scroll.css";
 @import "../components/x/icons.css";
-@import "../components/x/typo.css";
 @import "../components/x/helpers.css";
 @import "../components/x/colors.css";
 
