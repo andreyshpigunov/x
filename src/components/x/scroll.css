@@ -15,84 +15,80 @@ All right reserved.
   .scroll_x-proximity
   .scroll_x-mandatory
 */
+  
+.scroll {
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Hide scrollbar in IE and Edge */
+  -ms-overflow-style: none;
+  /* Hide scrollbar in Firefox */
+  scrollbar-width: none;
+  touch-action: pan-x;
 
-@layer scroll {
-  
-  .scroll {
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    /* Hide scrollbar in IE and Edge */
-    -ms-overflow-style: none;
-    /* Hide scrollbar in Firefox */
-    scrollbar-width: none;
-    touch-action: pan-x;
-  
-    &::-webkit-scrollbar {
-      width: var(--scroll-scrollbar-size);
-      height: var(--scroll-scrollbar-size);
-    }
-  
-    &::-webkit-scrollbar-track {
-      background-color: none;
-      border-radius: var(--scroll-scrollbar-size);
-    }
-  
-    &::-webkit-scrollbar-thumb {
-      border-radius: var(--scroll-scrollbar-size);
-      background-color: var(--scroll-scrollbar-thumb-background);
-      will-change: background-color;
-      transition: background .2s ease-out;
-      cursor: pointer;
-    }
-  
-    &::-webkit-scrollbar-thumb:hover {
-      background-color: var(--scroll-scrollbar-thumb-background-hover);
-    }
-  
-    &::-webkit-scrollbar-button,
-    &::-webkit-scrollbar-track-piece,
-    &::-webkit-scrollbar-corner,
-    &::-webkit-resizer {
-      display: none;
-    }
-  }
-  
-  .scroll_x {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    touch-action: pan-x;
-  }
-  
-  .scroll_y {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    touch-action: pan-y;
-  }
-  
-  .scroll_contain {
-    overscroll-behavior: contain;
-  }
-  
-  .scroll_x-proximity {
-    scroll-snap-type: x proximity;
-  }
-  .scroll_x-mandatory {
-    scroll-snap-type: x mandatory;
-  }
-  
-  .scroll_x-proximity,
-  .scroll_x-mandatory {
-    & > * {
-      scroll-snap-align: start;
-    }
-    &.scroll_align-center > * {
-      scroll-snap-align: center;
-    }
-    &.scroll_align-end > * {
-      scroll-snap-align: end;
-    }
+  &::-webkit-scrollbar {
+    width: var(--scroll-scrollbar-size);
+    height: var(--scroll-scrollbar-size);
   }
 
+  &::-webkit-scrollbar-track {
+    background-color: none;
+    border-radius: var(--scroll-scrollbar-size);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: var(--scroll-scrollbar-size);
+    background-color: var(--scroll-scrollbar-thumb-background);
+    will-change: background-color;
+    transition: background .2s ease-out;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scroll-scrollbar-thumb-background-hover);
+  }
+
+  &::-webkit-scrollbar-button,
+  &::-webkit-scrollbar-track-piece,
+  &::-webkit-scrollbar-corner,
+  &::-webkit-resizer {
+    display: none;
+  }
+}
+
+.scroll_x {
+  overflow-x: scroll;
+  overflow-y: hidden;
+  touch-action: pan-x;
+}
+
+.scroll_y {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  touch-action: pan-y;
+}
+
+.scroll_contain {
+  overscroll-behavior: contain;
+}
+
+.scroll_x-proximity {
+  scroll-snap-type: x proximity;
+}
+.scroll_x-mandatory {
+  scroll-snap-type: x mandatory;
+}
+
+.scroll_x-proximity,
+.scroll_x-mandatory {
+  & > * {
+    scroll-snap-align: start;
+  }
+  &.scroll_align-center > * {
+    scroll-snap-align: center;
+  }
+  &.scroll_align-end > * {
+    scroll-snap-align: end;
+  }
 }

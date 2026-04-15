@@ -14,116 +14,112 @@ All right reserved.
   .grid > .c[1-12]/[1-12] (s,m,l,xl)  - columns range for content
 */
 
-@layer grid {
-  
-  .grid { display: grid }
-  
-  [class*=grid] {
-    width: 100%;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-flow: dense;
-  
-    @for $i from 1 to 12 {
-      &.g$(i) { grid-template-columns: repeat($(i), 1fr) }
-      & > .c$(i) { grid-column: span $(i) }
-      @for $m from 12 to $i {
-        & > .c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
-      }
-    }
-    
-    @media (min-width: 640px) {
-      @for $i from 1 to 12 {
-        &.s\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-        & > .s\:c$(i) { grid-column: span $(i) }
-        @for $m from 12 to $i {
-          & > .s\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
-        }
-      }
-    }
-  
-    @media (min-width: 768px) {
-      @for $i from 1 to 12 {
-        &.m\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-        & > .m\:c$(i) { grid-column: span $(i) }
-        @for $m from 12 to $i {
-          & > .m\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
-        }
-      }
-    }
-  
-    @media (min-width: 1024px) {
-      @for $i from 1 to 12 {
-        &.l\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-        & > .l\:c$(i) { grid-column: span $(i) }
-        @for $m from 12 to $i {
-          & > .l\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
-        }
-      }
-    }
-  
-    @media (min-width: 1280px) {
-      @for $i from 1 to 12 {
-        &.xl\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
-        & > .xl\:c$(i) { grid-column: span $(i) }
-        @for $m from 12 to $i {
-          & > .xl\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
-        }
-      }
+.grid { display: grid }
+
+[class*=grid] {
+  width: 100%;
+  grid-template-columns: repeat(12, 1fr);
+  grid-auto-flow: dense;
+
+  @for $i from 1 to 12 {
+    &.g$(i) { grid-template-columns: repeat($(i), 1fr) }
+    & > .c$(i) { grid-column: span $(i) }
+    @for $m from 12 to $i {
+      & > .c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
     }
   }
-  
-  .jss { justify-self: start }
-  .jse { justify-self: end }
-  .jsc { justify-self: center }
-  .jsstr { justify-self: stretch }
-  .ass { align-self: start }
-  .ase { align-self: end }
-  .asc { align-self: center }
-  .asstr { align-self: stretch }
   
   @media (min-width: 640px) {
-    .s\:jss { justify-self: start }
-    .s\:jse { justify-self: end }
-    .s\:jsc { justify-self: center }
-    .s\:jsstr { justify-self: stretch }
-    .s\:ass { align-self: start }
-    .s\:ase { align-self: end }
-    .s\:asc { align-self: center }
-    .s\:asstr { align-self: stretch }
-  }
-  
-  @media (min-width: 768px) {
-    .m\:jss { justify-self: start }
-    .m\:jse { justify-self: end }
-    .m\:jsc { justify-self: center }
-    .m\:jsstr { justify-self: stretch }
-    .m\:ass { align-self: start }
-    .m\:ase { align-self: end }
-    .m\:asc { align-self: center }
-    .m\:asstr { align-self: stretch }
-  }
-  
-  @media (min-width: 1024px) {
-    .l\:jss { justify-self: start }
-    .l\:jse { justify-self: end }
-    .l\:jsc { justify-self: center }
-    .l\:jsstr { justify-self: stretch }
-    .l\:ass { align-self: start }
-    .l\:ase { align-self: end }
-    .l\:asc { align-self: center }
-    .l\:asstr { align-self: stretch }
-  }
-  
-  
-  @media (min-width: 1280px) {
-    .xl\:jss { justify-self: start }
-    .xl\:jse { justify-self: end }
-    .xl\:jsc { justify-self: center }
-    .xl\:jsstr { justify-self: stretch }
-    .xl\:ass { align-self: start }
-    .xl\:ase { align-self: end }
-    .xl\:asc { align-self: center }
-    .xl\:asstr { align-self: stretch }
+    @for $i from 1 to 12 {
+      &.s\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
+      & > .s\:c$(i) { grid-column: span $(i) }
+      @for $m from 12 to $i {
+        & > .s\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
+      }
+    }
   }
 
+  @media (min-width: 768px) {
+    @for $i from 1 to 12 {
+      &.m\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
+      & > .m\:c$(i) { grid-column: span $(i) }
+      @for $m from 12 to $i {
+        & > .m\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
+      }
+    }
+  }
+
+  @media (min-width: 1024px) {
+    @for $i from 1 to 12 {
+      &.l\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
+      & > .l\:c$(i) { grid-column: span $(i) }
+      @for $m from 12 to $i {
+        & > .l\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
+      }
+    }
+  }
+
+  @media (min-width: 1280px) {
+    @for $i from 1 to 12 {
+      &.xl\:g$(i) { grid-template-columns: repeat($(i), 1fr) }
+      & > .xl\:c$(i) { grid-column: span $(i) }
+      @for $m from 12 to $i {
+        & > .xl\:c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
+      }
+    }
+  }
+}
+
+.jss { justify-self: start }
+.jse { justify-self: end }
+.jsc { justify-self: center }
+.jsstr { justify-self: stretch }
+.ass { align-self: start }
+.ase { align-self: end }
+.asc { align-self: center }
+.asstr { align-self: stretch }
+
+@media (min-width: 640px) {
+  .s\:jss { justify-self: start }
+  .s\:jse { justify-self: end }
+  .s\:jsc { justify-self: center }
+  .s\:jsstr { justify-self: stretch }
+  .s\:ass { align-self: start }
+  .s\:ase { align-self: end }
+  .s\:asc { align-self: center }
+  .s\:asstr { align-self: stretch }
+}
+
+@media (min-width: 768px) {
+  .m\:jss { justify-self: start }
+  .m\:jse { justify-self: end }
+  .m\:jsc { justify-self: center }
+  .m\:jsstr { justify-self: stretch }
+  .m\:ass { align-self: start }
+  .m\:ase { align-self: end }
+  .m\:asc { align-self: center }
+  .m\:asstr { align-self: stretch }
+}
+
+@media (min-width: 1024px) {
+  .l\:jss { justify-self: start }
+  .l\:jse { justify-self: end }
+  .l\:jsc { justify-self: center }
+  .l\:jsstr { justify-self: stretch }
+  .l\:ass { align-self: start }
+  .l\:ase { align-self: end }
+  .l\:asc { align-self: center }
+  .l\:asstr { align-self: stretch }
+}
+
+
+@media (min-width: 1280px) {
+  .xl\:jss { justify-self: start }
+  .xl\:jse { justify-self: end }
+  .xl\:jsc { justify-self: center }
+  .xl\:jsstr { justify-self: stretch }
+  .xl\:ass { align-self: start }
+  .xl\:ase { align-self: end }
+  .xl\:asc { align-self: center }
+  .xl\:asstr { align-self: stretch }
 }

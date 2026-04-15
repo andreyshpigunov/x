@@ -9,22 +9,18 @@ All right reserved.
 
 /* .sticky (s,m,l,xl) */
 
-@layer sticky {
-  
-  .sticky {
-    position: sticky;
-  }
-  @media (max-width: 640px) {
-    .s\:sticky { position: sticky }
-  }
-  @media (min-width: 768px) {
-    .m\:sticky { position: sticky }
-  }
-  @media (min-width: 1024px) {
-    .l\:sticky { position: sticky }
-  }
-  @media (min-width: 1280px) {
-    .xl\:sticky { position: sticky }
-  }
-
+.sticky {
+  position: sticky;
+}
+@media (max-width: 640px) {
+  .s\:sticky { position: sticky }
+}
+@media (min-width: 768px) {
+  .m\:sticky { position: sticky }
+}
+@media (min-width: 1024px) {
+  .l\:sticky { position: sticky }
+}
+@media (min-width: 1280px) {
+  .xl\:sticky { position: sticky }
 }

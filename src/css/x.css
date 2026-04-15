@@ -7,35 +7,39 @@ All right reserved.
 ----------------------------------------*/
 
 
-@layer variables, reset, space, typo, links, grid, flex, flow, form, buttons, dropdown, sheets, slider, sticky, modal, scroll, icons, app, helpers, colors;
+/*! Доступные слои */
+/* @layer variables, reset, space, typo, links, grid, flex, flow, form, buttons, dropdown, sheets, slider, sticky, modal, scroll, icons, app, helpers, colors; */
 
-@import "../components/x/variables.css";
-@import "../components/x/reset.css";
-@import "../components/x/space.css";
-@import "../components/x/typo.css";
-@import "../components/x/links.css";
-@import "../components/x/grid.css";
-@import "../components/x/flex.css";
-@import "../components/x/flow.css";
-@import "../components/x/form.css";
-@import "../components/x/buttons.css";
-@import "../components/x/dropdown.css";
-@import "../components/x/sheets.css";
-@import "../components/x/slider.css";
-@import "../components/x/sticky.css";
-@import "../components/x/modal.css";
+
+@import "../components/x/variables.css" layer(variables);
+@import "../components/x/reset.css"     layer(reset);
+@import "../components/x/space.css"     layer(space);
+@import "../components/x/typo.css"      layer(typo);
+@import "../components/x/links.css"     layer(links);
+@import "../components/x/grid.css"      layer(grid);
+@import "../components/x/flex.css"      layer(flex);
+@import "../components/x/flow.css"      layer(flow);
+@import "../components/x/form.css"      layer(form);
+@import "../components/x/buttons.css"   layer(buttons);
+@import "../components/x/dropdown.css"  layer(dropdown);
+@import "../components/x/sheets.css"    layer(sheets);
+@import "../components/x/slider.css"    layer(slider);
+@import "../components/x/sticky.css"    layer(sticky);
+@import "../components/x/modal.css"     layer(modal);
 /* @import "../components/x/debug.css"; */
-@import "../components/x/scroll.css";
-@import "../components/x/icons.css";
-@import "../components/x/helpers.css";
-@import "../components/x/colors.css";
+@import "../components/x/scroll.css"    layer(scroll);
+@import "../components/x/icons.css"     layer(icons);
+@import "../components/x/app.css"       layer(app);
+@import "../components/x/helpers.css"   layer(helpers);
+@import "../components/x/colors.css"    layer(colors);
 
-@layer app {
-  /*
-    Фейковый слой, чтобы можно было обернуть в него стили
-    приложения без повторного перечисления слоев.
-  */
-}
+
+
+/*
+  Фейковый слой, чтобы можно было обернуть в него стили
+  приложения без повторного перечисления слоев.
+*/
+/* @layer app {} */
 
 /*
   .button
