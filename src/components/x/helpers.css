@@ -24,6 +24,7 @@ All right reserved.
   .oh
   .touch-show
   .touch-hide
+  .fix
   .rel
   .abs
   .ins
@@ -211,6 +212,7 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Position */
+.fix { position: fixed }
 .rel { position: relative }
 .abs { position: absolute }
 .ins { position: absolute; inset: 0 }
