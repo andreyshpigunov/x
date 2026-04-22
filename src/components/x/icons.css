@@ -11,18 +11,18 @@ All right reserved.
   .icon - base icon style
   .icon[10-60] step 2 (m,l) - icon size in px
 */
-  
-.icon,
-.icon > svg,
-.icon > img {
+
+[class*=icon],
+[class*=icon] > svg,
+[class*=icon] > img {
   display: inline-block;
   width: 1em;
   height: 1em;
   max-width: none;
   max-height: none;
 }
-.icon > svg,
-.icon > img {
+[class*=icon] > svg,
+[class*=icon] > img {
   display: block;
 }
 
