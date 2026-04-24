@@ -61,7 +61,6 @@ class X {
       this.scroll.init();
       this.sticky.init();
       this.slider.init();
-      this.typograf.init();
       hover.init();
       
       this.initialized = true;
