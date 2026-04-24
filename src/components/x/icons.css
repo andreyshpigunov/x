@@ -12,24 +12,21 @@ All right reserved.
   .icon[10-60] step 2 (m,l) - icon size in px
 */
 
-[class*=icon],
-[class*=icon] > svg,
-[class*=icon] > img {
+.icon,
+.icon > svg,
+.icon > img {
   display: inline-block;
   width: 1em;
   height: 1em;
   max-width: none;
   max-height: none;
 }
-[class*=icon] > svg,
-[class*=icon] > img {
-  display: block;
-}
 
 @for $i from 10 to 60 by 2 {
   .icon$(i),
   .icon$(i) > svg,
   .icon$(i) > img {
+    display: inline-block;
     width: calc($(i)rem / 10);
     height: calc($(i)rem / 10);
   }
@@ -40,6 +37,7 @@ All right reserved.
     .m\:icon$(i),
     .m\:icon$(i) > svg,
     .m\:icon$(i) > img {
+      display: inline-block;
       width: calc($(i)rem / 10);
       height: calc($(i)rem / 10);
     }
@@ -51,8 +49,14 @@ All right reserved.
     .l\:icon$(i),
     .l\:icon$(i) > svg,
     .l\:icon$(i) > img {
+      display: inline-block;
       width: calc($(i)rem / 10);
       height: calc($(i)rem / 10);
     }
   }
+}
+
+[class*=icon] > svg,
+[class*=icon] > img {
+  display: block;
 }
