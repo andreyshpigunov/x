@@ -1,6 +1,6 @@
 {
   "name": "@andreyshpigunov/x",
-  "version": "0.5.20",
+  "version": "0.5.21",
   "x-js": "dist/x.js",
   "app-js": "assets/js/app.js",
   "targets": {
