@@ -25,12 +25,11 @@ All right reserved.
   --space-2:  0.8rem;
   --space-3:  1.2rem;
   --space-4:  1.6rem;
-  --space-5:  2.0rem;
-  --space-6:  2.4rem;
-  --space-7:  3.2rem;
-  --space-8:  4.0rem;
-  --space-9:  4.8rem;
-  --space-10: 6.4rem;
+  --space-5:  2.4rem;
+  --space-6:  3.2rem;
+  --space-7:  4.8rem;
+  --space-8:  6.4rem;
+  --space-9:  8.0rem;
   
   --headers-margin-top: 1em;
   --headers-margin-bottom: .5em;
@@ -39,15 +38,15 @@ All right reserved.
   --headers-font-color: var(--font-color);
   
   --h1-font-size: 3.6rem;
-  --h2-font-size: 2.4rem;
-  --h3-font-size: 2.0rem;
-  --h4-font-size: 1.6rem;
-  --h5-font-size: 1.4rem;
-  --h6-font-size: 1.2rem;
+  --h2-font-size: 2.8rem;
+  --h3-font-size: 2.2rem;
+  --h4-font-size: 1.8rem;
+  --h5-font-size: 1.6rem;
+  --h6-font-size: 1.4rem;
   
   --h1-line-height: 1.2;
-  --h2-line-height: 1.3;
-  --h3-line-height: 1.4;
+  --h2-line-height: 1.25;
+  --h3-line-height: 1.3;
   
   --paragraph-margin: 1em;
   
@@ -68,17 +67,12 @@ All right reserved.
   
   --container-max-width: 160rem;
   
-  --shadow-1:  0 2px 4px #00000016;
-  --shadow-2:  0 4px 8px #00000016;
-  --shadow-3:  0 6px 12px #00000016;
-  --shadow-4:  0 8px 16px #00000016;
-  --shadow-5:  0 10px 20px #00000016;
-  --shadow-6:  0 12px 24px #00000016;
-  --shadow-7:  0 14px 28px #00000016;
-  --shadow-8:  0 16px 32px #00000016;
-  --shadow-9:  0 18px 36px #00000016;
-  --shadow-10: 0 20px 40px #00000016;
-  
+  --shadow-1: 0 1px 2px #00000012, 0 1px 1px #0000000a;
+  --shadow-2: 0 2px 6px #00000014, 0 1px 2px #0000000c;
+  --shadow-3: 0 6px 16px #00000016, 0 2px 4px #0000000c;
+  --shadow-4: 0 12px 32px #00000018, 0 4px 8px #0000000e;
+  --shadow-5: 0 20px 48px #0000001a, 0 8px 16px #00000010;
+
   --link-color: #0060cc;
   --link-decoration-line: underline;
   --link-decoration-style: solid;
