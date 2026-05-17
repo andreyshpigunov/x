@@ -30,7 +30,7 @@ All right reserved.
 @import "../components/x/scroll.css"    layer(scroll);
 @import "../components/x/icons.css"     layer(icons);
 @import "../components/x/app.css"       layer(app);
-@import "../components/x/helpers.css"   layer(helpers);
+@import "../components/x/lib.css"       layer(lib);
 @import "../components/x/colors.css"    layer(colors);
 
 

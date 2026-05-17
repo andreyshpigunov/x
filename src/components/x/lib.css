@@ -551,112 +551,131 @@ html.touch .touch-hide { display: none }
 .wscreen { width: 100vw; }
 .hscreen { height: 100vh; }
 .max { max-width: 100%; }
-.hmax { max-height: 100%; }
 
 @for $i from 10 to 190 by 10 {
   .w$(i)   { width: $(i)px }
-  .max$(i) { width: 100%; max-width: $(i)px }
+  .max$(i) { max-width: $(i)px }
   .min$(i) { min-width: $(i)px }
 }
 @for $i from 200 to 380 by 20 {
   .w$(i)   { width: $(i)px }
-  .max$(i) { width: 100%; max-width: $(i)px }
+  .max$(i) { max-width: $(i)px }
   .min$(i) { min-width: $(i)px }
 }
 @for $i from 400 to 1600 by 100 {
   .w$(i)   { width: $(i)px }
-  .max$(i) { width: 100%; max-width: $(i)px }
+  .max$(i) { max-width: $(i)px }
   .min$(i) { min-width: $(i)px }
 }
 
 @media (min-width: 640px) {
-  .s\:max {
-    width: 100%;
-    max-width: 100%;
+  .s\:fullscreen {
+    width: 100vw;
+    height: 100vh;
   }
+  .s\:wmax { width: 100%; }
+  .s\:hmax { width: 100%; }
+  .s\:wscreen { width: 100vw; }
+  .s\:hscreen { height: 100vh; }
+  .s\:max { max-width: 100%; }
   
   @for $i from 10 to 190 by 10 {
     .s\:w$(i)   { width: $(i)px }
-    .s\:max$(i) { width: 100%; max-width: $(i)px }
+    .s\:max$(i) { max-width: $(i)px }
     .s\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
     .s\:w$(i)   { width: $(i)px }
-    .s\:max$(i) { width: 100%; max-width: $(i)px }
+    .s\:max$(i) { max-width: $(i)px }
     .s\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
     .s\:w$(i)   { width: $(i)px }
-    .s\:max$(i) { width: 100%; max-width: $(i)px }
+    .s\:max$(i) { max-width: $(i)px }
     .s\:min$(i) { min-width: $(i)px }
   }
 }
 
 @media (min-width: 768px) {
-  .m\:max {
-    width: 100%;
-    max-width: 100%;
+  .m\:fullscreen {
+    width: 100vw;
+    height: 100vh;
   }
+  .m\:wmax { width: 100%; }
+  .m\:hmax { width: 100%; }
+  .m\:wscreen { width: 100vw; }
+  .m\:hscreen { height: 100vh; }
+  .m\:max { max-width: 100%; }
   
   @for $i from 10 to 190 by 10 {
     .m\:w$(i)   { width: $(i)px }
-    .m\:max$(i) { width: 100%; max-width: $(i)px }
+    .m\:max$(i) { max-width: $(i)px }
     .m\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
     .m\:w$(i)   { width: $(i)px }
-    .m\:max$(i) { width: 100%; max-width: $(i)px }
+    .m\:max$(i) { max-width: $(i)px }
     .m\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
     .m\:w$(i)   { width: $(i)px }
-    .m\:max$(i) { width: 100%; max-width: $(i)px }
+    .m\:max$(i) { max-width: $(i)px }
     .m\:min$(i) { min-width: $(i)px }
   }
 }
 
 @media (min-width: 1024px) {
-  .l\:max {
-    width: 100%;
-    max-width: 100%;
+  .l\:fullscreen {
+    width: 100vw;
+    height: 100vh;
   }
+  .l\:wmax { width: 100%; }
+  .l\:hmax { width: 100%; }
+  .l\:wscreen { width: 100vw; }
+  .l\:hscreen { height: 100vh; }
+  .l\:max { max-width: 100%; }
   
   @for $i from 10 to 190 by 10 {
     .l\:w$(i)   { width: $(i)px }
-    .l\:max$(i) { width: 100%; max-width: $(i)px }
+    .l\:max$(i) { max-width: $(i)px }
     .l\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
     .l\:w$(i)   { width: $(i)px }
-    .l\:max$(i) { width: 100%; max-width: $(i)px }
+    .l\:max$(i) { max-width: $(i)px }
     .l\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
     .l\:w$(i)   { width: $(i)px }
-    .l\:max$(i) { width: 100%; max-width: $(i)px }
+    .l\:max$(i) { max-width: $(i)px }
     .l\:min$(i) { min-width: $(i)px }
   }
 }
 
 @media (min-width: 1280px) {
-  .xl\:max {
-    width: 100%;
-    max-width: 100%;
+  .xl\:fullscreen {
+    width: 100vw;
+    height: 100vh;
   }
+  .xl\:wmax { width: 100%; }
+  .xl\:hmax { width: 100%; }
+  .xl\:wscreen { width: 100vw; }
+  .xl\:hscreen { height: 100vh; }
+  .xl\:max { max-width: 100%; }
   
   @for $i from 10 to 190 by 10 {
     .xl\:w$(i)   { width: $(i)px }
-    .xl\:max$(i) { width: 100%; max-width: $(i)px }
+    .xl\:max$(i) { max-width: $(i)px }
     .xl\:min$(i) { min-width: $(i)px }
   }
   @for $i from 200 to 380 by 20 {
     .xl\:w$(i)   { width: $(i)px }
-    .xl\:max$(i) { width: 100%; max-width: $(i)px }
+    .xl\:max$(i) { max-width: $(i)px }
     .xl\:min$(i) { min-width: $(i)px }
   }
   @for $i from 400 to 1600 by 100 {
     .xl\:w$(i)   { width: $(i)px }
-    .xl\:max$(i) { width: 100%; max-width: $(i)px }
+    .xl\:max$(i) { max-width: $(i)px }
     .xl\:min$(i) { min-width: $(i)px }
   }
 }
