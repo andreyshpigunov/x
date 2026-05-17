@@ -36,21 +36,21 @@ All right reserved.
   .b[0-9][n]   (s,m,l,xl)
   .l[0-9][n]   (s,m,l,xl)
   .r[0-9][n]   (s,m,l,xl)
-  .z[0-9]   (s,m,l,xl)
+  .z[0-9]      (s,m,l,xl)
   .op[0-10]
-  .ratio1x1  (s,m,l,xl)
-  .ratio2x1  (s,m,l,xl)
-  .ratio3x1  (s,m,l,xl)
-  .ratio4x1  (s,m,l,xl)
-  .ratio3x2  (s,m,l,xl)
-  .ratio4x3  (s,m,l,xl)
-  .ratio16x9 (s,m,l,xl)
-  .ratio1x2  (s,m,l,xl)
-  .ratio1x3  (s,m,l,xl)
-  .ratio1x4  (s,m,l,xl)
-  .ratio2x3  (s,m,l,xl)
-  .ratio3x4  (s,m,l,xl)
-  .ratio9x16 (s,m,l,xl)
+  .ratio1x1   (s,m,l,xl)
+  .ratio2x1   (s,m,l,xl)
+  .ratio3x1   (s,m,l,xl)
+  .ratio4x1   (s,m,l,xl)
+  .ratio3x2   (s,m,l,xl)
+  .ratio4x3   (s,m,l,xl)
+  .ratio16x9  (s,m,l,xl)
+  .ratio1x2   (s,m,l,xl)
+  .ratio1x3   (s,m,l,xl)
+  .ratio1x4   (s,m,l,xl)
+  .ratio2x3   (s,m,l,xl)
+  .ratio3x4   (s,m,l,xl)
+  .ratio9x16  (s,m,l,xl)
   .breakWord
   .visuallyHidden
   .invisible
@@ -64,27 +64,27 @@ All right reserved.
   .flex         (s,m,l,xl)
   .grid         (s,m,l,xl)
   .fullscreen
-  .max                    (s,m,l,xl)
-  .w[10-190] step 10      (s,m,l,xl)
-  .w[200-380] step 20     (s,m,l,xl)
-  .w[400-1600] step 100   (s,m,l,xl)
-  .max[10-190] step 10    (s,m,l,xl)
-  .max[200-380] step 20   (s,m,l,xl)
-  .max[400-1600] step 100 (s,m,l,xl)
-  .min[10-190] step 10    (s,m,l,xl)
-  .min[200-380] step 20   (s,m,l,xl)
-  .min[400-1600] step 100 (s,m,l,xl)
-  .al      (s,m,l,xl)
-  .ar      (s,m,l,xl)
-  .ac      (s,m,l,xl)
-  .aj      (s,m,l,xl)
-  .m[0-12][n]  (s,m,l,xl)
-  .mx[0-12][n] (s,m,l,xl)
-  .my[0-12][n] (s,m,l,xl)
-  .mt[0-12][n] (s,m,l,xl)
-  .mb[0-12][n] (s,m,l,xl)
-  .ml[0-12][n] (s,m,l,xl)
-  .mr[0-12][n] (s,m,l,xl)
+  .max                     (s,m,l,xl)
+  .w[10-190] step 10       (s,m,l,xl)
+  .w[200-380] step 20      (s,m,l,xl)
+  .w[400-1600] step 100    (s,m,l,xl)
+  .max[10-190] step 10     (s,m,l,xl)
+  .max[200-380] step 20    (s,m,l,xl)
+  .max[400-1600] step 100  (s,m,l,xl)
+  .min[10-190] step 10     (s,m,l,xl)
+  .min[200-380] step 20    (s,m,l,xl)
+  .min[400-1600] step 100  (s,m,l,xl)
+  .al  (s,m,l,xl)
+  .ar  (s,m,l,xl)
+  .ac  (s,m,l,xl)
+  .aj  (s,m,l,xl)
+  .m[0-12][n]   (s,m,l,xl)
+  .mx[0-12][n]  (s,m,l,xl)
+  .my[0-12][n]  (s,m,l,xl)
+  .mt[0-12][n]  (s,m,l,xl)
+  .mb[0-12][n]  (s,m,l,xl)
+  .ml[0-12][n]  (s,m,l,xl)
+  .mr[0-12][n]  (s,m,l,xl)
   .ma  (s,m,l,xl)
   .mxa (s,m,l,xl)
   .mya (s,m,l,xl)
@@ -92,20 +92,20 @@ All right reserved.
   .mba (s,m,l,xl)
   .mla (s,m,l,xl)
   .mra (s,m,l,xl)
-  .p[0-12]  (s,m,l,xl)
-  .px[0-12] (s,m,l,xl)
-  .py[0-12] (s,m,l,xl)
-  .pt[0-12] (s,m,l,xl)
-  .pb[0-12] (s,m,l,xl)
-  .pl[0-12] (s,m,l,xl)
-  .pr[0-12] (s,m,l,xl)
+  .p[0-12]    (s,m,l,xl)
+  .px[0-12]   (s,m,l,xl)
+  .py[0-12]   (s,m,l,xl)
+  .pt[0-12]   (s,m,l,xl)
+  .pb[0-12]   (s,m,l,xl)
+  .pl[0-12]   (s,m,l,xl)
+  .pr[0-12]   (s,m,l,xl)
   .gap[0-12]  (s,m,l,xl)
   .gapx[0-12] (s,m,l,xl)
   .gapy[0-12] (s,m,l,xl)
-  .br[0-12]  (s,m,l,xl)
-  .br100     (s,m,l,xl)
-  .sh[0-5]  (s,m,l,xl)
-  .o[0-9]   (s,m,l,xl)
+  .br[0-12]   (s,m,l,xl)
+  .br100      (s,m,l,xl)
+  .sh[0-5]    (s,m,l,xl)
+  .o[0-9]     (s,m,l,xl)
   .mono
   .italic
   .strike
@@ -1004,11 +1004,6 @@ html.touch .touch-hide { display: none }
 .sh3  { box-shadow: var(--shadow-3) }
 .sh4  { box-shadow: var(--shadow-4) }
 .sh5  { box-shadow: var(--shadow-5) }
-.sh6  { box-shadow: var(--shadow-6) }
-.sh7  { box-shadow: var(--shadow-7) }
-.sh8  { box-shadow: var(--shadow-8) }
-.sh9  { box-shadow: var(--shadow-9) }
-.sh10 { box-shadow: var(--shadow-10) }
 
 @media (min-width: 640px) {
   .s\:sh0 { box-shadow: none }
@@ -1017,11 +1012,6 @@ html.touch .touch-hide { display: none }
   .s\:sh3  { box-shadow: var(--shadow-3) }
   .s\:sh4  { box-shadow: var(--shadow-4) }
   .s\:sh5  { box-shadow: var(--shadow-5) }
-  .s\:sh6  { box-shadow: var(--shadow-6) }
-  .s\:sh7  { box-shadow: var(--shadow-7) }
-  .s\:sh8  { box-shadow: var(--shadow-8) }
-  .s\:sh9  { box-shadow: var(--shadow-9) }
-  .s\:sh10 { box-shadow: var(--shadow-10) }
 }
 
 @media (min-width: 768px) {
@@ -1031,11 +1021,6 @@ html.touch .touch-hide { display: none }
   .m\:sh3  { box-shadow: var(--shadow-3) }
   .m\:sh4  { box-shadow: var(--shadow-4) }
   .m\:sh5  { box-shadow: var(--shadow-5) }
-  .m\:sh6  { box-shadow: var(--shadow-6) }
-  .m\:sh7  { box-shadow: var(--shadow-7) }
-  .m\:sh8  { box-shadow: var(--shadow-8) }
-  .m\:sh9  { box-shadow: var(--shadow-9) }
-  .m\:sh10 { box-shadow: var(--shadow-10) }
 }
 
 @media (min-width: 1024px) {
@@ -1045,11 +1030,6 @@ html.touch .touch-hide { display: none }
   .l\:sh3  { box-shadow: var(--shadow-3) }
   .l\:sh4  { box-shadow: var(--shadow-4) }
   .l\:sh5  { box-shadow: var(--shadow-5) }
-  .l\:sh6  { box-shadow: var(--shadow-6) }
-  .l\:sh7  { box-shadow: var(--shadow-7) }
-  .l\:sh8  { box-shadow: var(--shadow-8) }
-  .l\:sh9  { box-shadow: var(--shadow-9) }
-  .l\:sh10 { box-shadow: var(--shadow-10) }
 }
 
 @media (min-width: 1280px) {
@@ -1059,11 +1039,6 @@ html.touch .touch-hide { display: none }
   .xl\:sh3  { box-shadow: var(--shadow-3) }
   .xl\:sh4  { box-shadow: var(--shadow-4) }
   .xl\:sh5  { box-shadow: var(--shadow-5) }
-  .xl\:sh6  { box-shadow: var(--shadow-6) }
-  .xl\:sh7  { box-shadow: var(--shadow-7) }
-  .xl\:sh8  { box-shadow: var(--shadow-8) }
-  .xl\:sh9  { box-shadow: var(--shadow-9) }
-  .xl\:sh10 { box-shadow: var(--shadow-10) }
 }
 
 
