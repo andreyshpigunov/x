@@ -64,16 +64,13 @@ All right reserved.
   .flex         (s,m,l,xl)
   .grid         (s,m,l,xl)
   .fullscreen
-  .max                     (s,m,l,xl)
-  .w[10-190] step 10       (s,m,l,xl)
-  .w[200-380] step 20      (s,m,l,xl)
-  .w[400-1600] step 100    (s,m,l,xl)
-  .max[10-190] step 10     (s,m,l,xl)
-  .max[200-380] step 20    (s,m,l,xl)
-  .max[400-1600] step 100  (s,m,l,xl)
-  .min[10-190] step 10     (s,m,l,xl)
-  .min[200-380] step 20    (s,m,l,xl)
-  .min[400-1600] step 100  (s,m,l,xl)
+  .max                  (s,m,l,xl)
+  .w[2-38] step 2       (s,m,l,xl)
+  .w[40-160] step 10    (s,m,l,xl)
+  .max[2-38] step 2     (s,m,l,xl)
+  .max[40-160] step 10  (s,m,l,xl)
+  .min[2-38] step 2     (s,m,l,xl)
+  .min[40-160] step 10  (s,m,l,xl)
   .al  (s,m,l,xl)
   .ar  (s,m,l,xl)
   .ac  (s,m,l,xl)
@@ -552,20 +549,15 @@ html.touch .touch-hide { display: none }
 .hscreen { height: 100vh; }
 .max { max-width: 100%; }
 
-@for $i from 10 to 190 by 10 {
-  .w$(i)   { width: $(i)px }
-  .max$(i) { max-width: $(i)px }
-  .min$(i) { min-width: $(i)px }
+@for $i from 2 to 38 by 2 {
+  .w$(i)   { width: $(i)rem }
+  .max$(i) { max-width: $(i)rem }
+  .min$(i) { min-width: $(i)rem }
 }
-@for $i from 200 to 380 by 20 {
-  .w$(i)   { width: $(i)px }
-  .max$(i) { max-width: $(i)px }
-  .min$(i) { min-width: $(i)px }
-}
-@for $i from 400 to 1600 by 100 {
-  .w$(i)   { width: $(i)px }
-  .max$(i) { max-width: $(i)px }
-  .min$(i) { min-width: $(i)px }
+@for $i from 40 to 160 by 10 {
+  .w$(i)   { width: $(i)rem }
+  .max$(i) { max-width: $(i)rem }
+  .min$(i) { min-width: $(i)rem }
 }
 
 @media (min-width: 640px) {
@@ -579,20 +571,15 @@ html.touch .touch-hide { display: none }
   .s\:hscreen { height: 100vh; }
   .s\:max { max-width: 100%; }
   
-  @for $i from 10 to 190 by 10 {
-    .s\:w$(i)   { width: $(i)px }
-    .s\:max$(i) { max-width: $(i)px }
-    .s\:min$(i) { min-width: $(i)px }
+  @for $i from 2 to 38 by 2 {
+    .s\:w$(i)   { width: $(i)rem }
+    .s\:max$(i) { max-width: $(i)rem }
+    .s\:min$(i) { min-width: $(i)rem }
   }
-  @for $i from 200 to 380 by 20 {
-    .s\:w$(i)   { width: $(i)px }
-    .s\:max$(i) { max-width: $(i)px }
-    .s\:min$(i) { min-width: $(i)px }
-  }
-  @for $i from 400 to 1600 by 100 {
-    .s\:w$(i)   { width: $(i)px }
-    .s\:max$(i) { max-width: $(i)px }
-    .s\:min$(i) { min-width: $(i)px }
+  @for $i from 40 to 160 by 10 {
+    .s\:w$(i)   { width: $(i)rem }
+    .s\:max$(i) { max-width: $(i)rem }
+    .s\:min$(i) { min-width: $(i)rem }
   }
 }
 
@@ -607,20 +594,15 @@ html.touch .touch-hide { display: none }
   .m\:hscreen { height: 100vh; }
   .m\:max { max-width: 100%; }
   
-  @for $i from 10 to 190 by 10 {
-    .m\:w$(i)   { width: $(i)px }
-    .m\:max$(i) { max-width: $(i)px }
-    .m\:min$(i) { min-width: $(i)px }
+  @for $i from 2 to 38 by 2 {
+    .m\:w$(i)   { width: $(i)rem }
+    .m\:max$(i) { max-width: $(i)rem }
+    .m\:min$(i) { min-width: $(i)rem }
   }
-  @for $i from 200 to 380 by 20 {
-    .m\:w$(i)   { width: $(i)px }
-    .m\:max$(i) { max-width: $(i)px }
-    .m\:min$(i) { min-width: $(i)px }
-  }
-  @for $i from 400 to 1600 by 100 {
-    .m\:w$(i)   { width: $(i)px }
-    .m\:max$(i) { max-width: $(i)px }
-    .m\:min$(i) { min-width: $(i)px }
+  @for $i from 40 to 160 by 10 {
+    .m\:w$(i)   { width: $(i)rem }
+    .m\:max$(i) { max-width: $(i)rem }
+    .m\:min$(i) { min-width: $(i)rem }
   }
 }
 
@@ -635,20 +617,15 @@ html.touch .touch-hide { display: none }
   .l\:hscreen { height: 100vh; }
   .l\:max { max-width: 100%; }
   
-  @for $i from 10 to 190 by 10 {
-    .l\:w$(i)   { width: $(i)px }
-    .l\:max$(i) { max-width: $(i)px }
-    .l\:min$(i) { min-width: $(i)px }
+  @for $i from 2 to 38 by 2 {
+    .l\:w$(i)   { width: $(i)rem }
+    .l\:max$(i) { max-width: $(i)rem }
+    .l\:min$(i) { min-width: $(i)rem }
   }
-  @for $i from 200 to 380 by 20 {
-    .l\:w$(i)   { width: $(i)px }
-    .l\:max$(i) { max-width: $(i)px }
-    .l\:min$(i) { min-width: $(i)px }
-  }
-  @for $i from 400 to 1600 by 100 {
-    .l\:w$(i)   { width: $(i)px }
-    .l\:max$(i) { max-width: $(i)px }
-    .l\:min$(i) { min-width: $(i)px }
+  @for $i from 40 to 160 by 10 {
+    .l\:w$(i)   { width: $(i)rem }
+    .l\:max$(i) { max-width: $(i)rem }
+    .l\:min$(i) { min-width: $(i)rem }
   }
 }
 
@@ -663,20 +640,15 @@ html.touch .touch-hide { display: none }
   .xl\:hscreen { height: 100vh; }
   .xl\:max { max-width: 100%; }
   
-  @for $i from 10 to 190 by 10 {
-    .xl\:w$(i)   { width: $(i)px }
-    .xl\:max$(i) { max-width: $(i)px }
-    .xl\:min$(i) { min-width: $(i)px }
+  @for $i from 2 to 38 by 2 {
+    .xl\:w$(i)   { width: $(i)rem }
+    .xl\:max$(i) { max-width: $(i)rem }
+    .xl\:min$(i) { min-width: $(i)rem }
   }
-  @for $i from 200 to 380 by 20 {
-    .xl\:w$(i)   { width: $(i)px }
-    .xl\:max$(i) { max-width: $(i)px }
-    .xl\:min$(i) { min-width: $(i)px }
-  }
-  @for $i from 400 to 1600 by 100 {
-    .xl\:w$(i)   { width: $(i)px }
-    .xl\:max$(i) { max-width: $(i)px }
-    .xl\:min$(i) { min-width: $(i)px }
+  @for $i from 40 to 160 by 10 {
+    .xl\:w$(i)   { width: $(i)rem }
+    .xl\:max$(i) { max-width: $(i)rem }
+    .xl\:min$(i) { min-width: $(i)rem }
   }
 }
 
