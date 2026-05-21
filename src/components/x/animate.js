@@ -241,27 +241,23 @@ class Animate {
       
       if (hasStart && hasEnd) {
         item.duration = start - end;
-        const inRange = top <= start && top >= end;
-        if (inRange) {
-          item.lockedOut = false;
-          if (item.class && !item.element.classList.contains(item.class)) item.element.classList.add(item.class);
-          if (fn) {
-            item.progress = ((start - top) / item.duration).toFixed(4);
-            fn(item);
+        
+        const rawProgress = (start - top) / item.duration;
+        const progress = Math.min(1, Math.max(0, rawProgress));
+        
+        const isActive = progress > 0 && progress < 1;
+        
+        if (item.class) {
+          if ((isActive || progress === 1) && !item.element.classList.contains(item.class)) {
+            item.element.classList.add(item.class);
+          } else if (progress === 0 && item.classRemove && item.element.classList.contains(item.class)) {
+            item.element.classList.remove(item.class);
           }
-        } else {
-          if (item.class && item.classRemove && item.element.classList.contains(item.class)) item.element.classList.remove(item.class);
-          if (!item.lockedOut && fn) {
-            if (top >= start) {
-              item.progress = 0;
-              fn(item);
-              item.lockedOut = true;
-            } else if (top <= end) {
-              item.progress = 1;
-              fn(item);
-              item.lockedOut = true;
-            }
-          }
+        }
+        
+        if (fn && item.progress !== progress) {
+          item.progress = progress;
+          fn(item);
         }
       } else if (hasStart) {
         const pastStart = top <= start;
