@@ -32,11 +32,11 @@ All right reserved.
   .fit-none    (s,m,l,xl)
   .fit-cover   (s,m,l,xl)
   .fit-contain (s,m,l,xl)
-  .t[0-9][n]   (s,m,l,xl)
-  .b[0-9][n]   (s,m,l,xl)
-  .l[0-9][n]   (s,m,l,xl)
-  .r[0-9][n]   (s,m,l,xl)
-  .z[0-9]      (s,m,l,xl)
+  .t[0-10][n]   (s,m,l,xl)
+  .b[0-10][n]   (s,m,l,xl)
+  .l[0-10][n]   (s,m,l,xl)
+  .r[0-10][n]   (s,m,l,xl)
+  .z[0-10]      (s,m,l,xl)
   .op[0-10]
   .ratio1x1   (s,m,l,xl)
   .ratio2x1   (s,m,l,xl)
@@ -102,13 +102,13 @@ All right reserved.
   .br[0-12]   (s,m,l,xl)
   .br100      (s,m,l,xl)
   .sh[0-5]    (s,m,l,xl)
-  .o[0-9]     (s,m,l,xl)
+  .o[0-10]     (s,m,l,xl)
   .mono
   .italic
   .strike
   .fs[10-19] step 1 (m,l,xl) - size in rem - 1.0, 1.1, 1.2, ..., 1.9
   .fs[20-100] step 2 (m,l,xl) - size in rem - 2.0, 2.2, 2.4, ..., 6.4
-  .fw[100-900] step 100 (m,l,xl)
+  .fw[100-1000] step 100 (m,l,xl)
   .ls[0-4] (m,l,xl)
   .lh[0-9] (m,l,xl)  - values: 1.0-1.9
   .no-print
@@ -246,7 +246,7 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Top, bottom, left, right, z-index */
-@for $i from 0 to 9 {
+@for $i from 0 to 10 {
   .t$(i) { top: var(--space-$(i)) }
   .b$(i) { bottom: var(--space-$(i)) }
   .l$(i) { left: var(--space-$(i)) }
@@ -258,7 +258,7 @@ html.touch .touch-hide { display: none }
   .z$(i) { z-index: $(i) }
 }
 @media (min-width: 640px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .s\:t$(i) { top: var(--space-$(i)) }
     .s\:b$(i) { bottom: var(--space-$(i)) }
     .s\:l$(i) { left: var(--space-$(i)) }
@@ -271,7 +271,7 @@ html.touch .touch-hide { display: none }
   }
 }
 @media (min-width: 768px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .m\:t$(i) { top: var(--space-$(i)) }
     .m\:b$(i) { bottom: var(--space-$(i)) }
     .m\:l$(i) { left: var(--space-$(i)) }
@@ -284,7 +284,7 @@ html.touch .touch-hide { display: none }
   }
 }
 @media (min-width: 1024px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .l\:t$(i) { top: var(--space-$(i)) }
     .l\:b$(i) { bottom: var(--space-$(i)) }
     .l\:l$(i) { left: var(--space-$(i)) }
@@ -297,7 +297,7 @@ html.touch .touch-hide { display: none }
   }
 }
 @media (min-width: 1280px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .xl\:t$(i) { top: var(--space-$(i)) }
     .xl\:b$(i) { bottom: var(--space-$(i)) }
     .xl\:l$(i) { left: var(--space-$(i)) }
@@ -689,7 +689,7 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Margin */
-@for $i from 0 to 9 {
+@for $i from 0 to 10 {
   .m$(i)  { margin: var(--space-$(i)) }
   .mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
   .my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
@@ -721,7 +721,7 @@ html.touch .touch-hide { display: none }
 .mra { margin-right: auto }
 
 @media (min-width: 640px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .s\:m$(i)  { margin: var(--space-$(i)) }
     .s\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
     .s\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
@@ -754,7 +754,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 768px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .m\:m$(i)  { margin: var(--space-$(i)) }
     .m\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
     .m\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
@@ -787,7 +787,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 1024px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .l\:m$(i)  { margin: var(--space-$(i)) }
     .l\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
     .l\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
@@ -820,7 +820,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 1280px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .xl\:m$(i)  { margin: var(--space-$(i)) }
     .xl\:mx$(i) { margin-left: var(--space-$(i)); margin-right: var(--space-$(i)) }
     .xl\:my$(i) { margin-top: var(--space-$(i)); margin-bottom: var(--space-$(i)) }
@@ -854,7 +854,7 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Padding */
-@for $i from 0 to 9 {
+@for $i from 0 to 10 {
   .p$(i)  { padding: var(--space-$(i)) }
   .px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
   .py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
@@ -865,7 +865,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 640px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .s\:p$(i)  { padding: var(--space-$(i)) }
     .s\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
     .s\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
@@ -877,7 +877,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 768px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .m\:p$(i)  { padding: var(--space-$(i)) }
     .m\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
     .m\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
@@ -889,7 +889,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 1024px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .l\:p$(i)  { padding: var(--space-$(i)) }
     .l\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
     .l\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
@@ -901,7 +901,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 1280px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .xl\:p$(i)  { padding: var(--space-$(i)) }
     .xl\:px$(i) { padding-left: var(--space-$(i)); padding-right: var(--space-$(i)) }
     .xl\:py$(i) { padding-top: var(--space-$(i)); padding-bottom: var(--space-$(i)) }
@@ -914,14 +914,14 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Gap */
-@for $i from 0 to 9 {
+@for $i from 0 to 10 {
   .gap$(i) { gap: var(--space-$(i)) }
   .gapx$(i) { column-gap: var(--space-$(i)) }
   .gapy$(i) { row-gap: var(--space-$(i)) }
 }
 
 @media (min-width: 640px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .s\:gap$(i) { gap: var(--space-$(i)) }
     .s\:gapx$(i) { column-gap: var(--space-$(i)) }
     .s\:gapy$(i) { row-gap: var(--space-$(i)) }
@@ -929,7 +929,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 768px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .m\:gap$(i) { gap: var(--space-$(i)) }
     .m\:gapx$(i) { column-gap: var(--space-$(i)) }
     .m\:gapy$(i) { row-gap: var(--space-$(i)) }
@@ -937,7 +937,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 1024px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .l\:gap$(i) { gap: var(--space-$(i)) }
     .l\:gapx$(i) { column-gap: var(--space-$(i)) }
     .l\:gapy$(i) { row-gap: var(--space-$(i)) }
@@ -945,7 +945,7 @@ html.touch .touch-hide { display: none }
 }
 
 @media (min-width: 1280px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .xl\:gap$(i) { gap: var(--space-$(i)) }
     .xl\:gapx$(i) { column-gap: var(--space-$(i)) }
     .xl\:gapy$(i) { row-gap: var(--space-$(i)) }
@@ -954,34 +954,34 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Border radius */
-@for $i from 0 to 9 {
+@for $i from 0 to 10 {
   .br$(i) { border-radius: var(--space-$(i)) }
 }
 .br100 { border-radius: 100% }
 
 @media (min-width: 640px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .s\:br$(i) { border-radius: var(--space-$(i)) }
   }
   .s\:br100 { border-radius: 100% }
 }
 
 @media (min-width: 768px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .m\:br$(i) { border-radius: var(--space-$(i)) }
   }
   .m\:br100 { border-radius: 100% }
 }
 
 @media (min-width: 1024px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .l\:br$(i) { border-radius: var(--space-$(i)) }
   }
   .l\:br100 { border-radius: 100% }
 }
 
 @media (min-width: 1280px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .xl\:br$(i) { border-radius: var(--space-$(i)) }
   }
   .xl\:br100 { border-radius: 100% }
@@ -1034,26 +1034,26 @@ html.touch .touch-hide { display: none }
 
 
 /* !- Order */
-@for $i from 0 to 9 {
+@for $i from 0 to 10 {
   .o$(i) { order: $(i) }
 }
 @media (min-width: 640px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .s\:o$(i) { order: $(i) }
   }
 }
 @media (min-width: 768px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .m\:o$(i) { order: $(i) }
   }
 }
 @media (min-width: 1024px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .l\:o$(i) { order: $(i) }
   }
 }
 @media (min-width: 1280px) {
-  @for $i from 0 to 9 {
+  @for $i from 0 to 10 {
     .xl\:o$(i) { order: $(i) }
   }
 }
