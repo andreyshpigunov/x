@@ -544,7 +544,7 @@ html.touch .touch-hide { display: none }
   height: 100vh;
 }
 .wmax { width: 100%; }
-.hmax { width: 100%; }
+.hmax { height: 100%; }
 .wscreen { width: 100vw; }
 .hscreen { height: 100vh; }
 .max { max-width: 100%; }
