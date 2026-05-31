@@ -23,7 +23,7 @@ All right reserved.
 
   @for $i from 1 to 12 {
     &.g$(i) { grid-template-columns: repeat($(i), 1fr) }
-    & > .c$(i) { grid-column: span $(i) }
+    & > .c$(i) { grid-column: span $(i); min-width: 0 }
     @for $m from 12 to $i {
       & > .c$(i)\/$(m) { grid-column: $(i) / calc($(m) + 1) }
     }
