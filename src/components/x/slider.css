@@ -78,3 +78,6 @@ html.touch .slider .slider-indicators,
 .slider:hover .slider-indicators {
   opacity: 1;
 }
+[x-slider]:not(.slider) > .slider-item:not(:first-child) {
+  display: none;
+}
