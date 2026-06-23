@@ -52,9 +52,11 @@ class Autocomplete {
 
   constructor() {
     this._clicked = false;
+    this._selecting = false;
     this._currentLoadId = 0;
     this._loadData = this._loadData.bind(this);
     this._keyHandler = this._keyHandler.bind(this);
+    this._pointerDownHandler = this._pointerDownHandler.bind(this);
     this._clickHandler = this._clickHandler.bind(this);
     this._hideHandler = this._hideHandler.bind(this);
   }
@@ -92,6 +94,7 @@ class Autocomplete {
     this.field.addEventListener('focus', this.debouncedLoadData);
     this.field.addEventListener('input', this.debouncedLoadData);
     this.field.addEventListener('keydown', this._keyHandler);
+    this.list.addEventListener('pointerdown', this._pointerDownHandler);
     this.list.addEventListener('click', this._clickHandler);
     this.dropdown.addEventListener('dropdown:afterhide', this._hideHandler);
   }
@@ -104,6 +107,7 @@ class Autocomplete {
     this.field.removeEventListener('focus', this.debouncedLoadData);
     this.field.removeEventListener('input', this.debouncedLoadData);
     this.field.removeEventListener('keydown', this._keyHandler);
+    this.list.removeEventListener('pointerdown', this._pointerDownHandler);
     this.list.removeEventListener('click', this._clickHandler);
     this.dropdown.removeEventListener('dropdown:afterhide', this._hideHandler);
   }
@@ -114,14 +118,23 @@ class Autocomplete {
       this.field?.blur();
     }
   }
-
+  
+  _pointerDownHandler(e) {
+    if (e.target.closest('[data-item]')) {
+      this._selecting = true;
+    }
+  }
+  
   _clickHandler(e) {
     if (this._clicked) return;
     this._clicked = true;
 
     const el = e.target.closest('[data-item]');
     if (!el || !this.onSelect) {
-      setTimeout(() => { this._clicked = false; }, 0);
+      setTimeout(() => {
+        this._clicked = false;
+        this._selecting = false;
+      }, 0);
       return;
     }
 
@@ -131,11 +144,14 @@ class Autocomplete {
     } catch (err) {
       console.error('Autocomplete: error parsing data-item JSON', err);
     }
-    setTimeout(() => { this._clicked = false; }, 0);
+    setTimeout(() => {
+      this._clicked = false;
+      this._selecting = false;
+    }, 0);
   }
   
   _hideHandler() {
-    if (this._clicked) {
+    if (this._clicked || this._selecting) {
       this._clicked = false;
       return;
     }
