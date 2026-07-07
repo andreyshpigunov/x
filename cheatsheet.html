@@ -3,430 +3,676 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSS Framework Cheatsheet</title>
+    <title>X CSS Cheatsheet</title>
     <style>
+        :root {
+            color-scheme: light;
+            --page: #f7f8fa;
+            --paper: #fff;
+            --ink: #1d232f;
+            --muted: #697386;
+            --line: #e4e7ec;
+            --line-soft: #eef0f3;
+            --accent: #0969da;
+            --code: #f4f6f8;
+            --code-ink: #b42318;
+        }
+
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
         }
 
+        html {
+            font-size: 10px;
+        }
+
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #f0f2f5;
-            padding: 16px;
-            font-size: 13px;
-            line-height: 1.4;
+            margin: 0;
+            padding: 2.4rem;
+            color: var(--ink);
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            font-size: 1.3rem;
+            line-height: 1.45;
+            background: var(--page);
         }
 
-        /* Контейнер для компактного отображения */
-        .cheatsheet {
-            max-width: 1400px;
+        .page {
+            max-width: 148rem;
             margin: 0 auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
         }
 
-        /* Заголовок */
         .header {
-            background: #1a1a2e;
-            color: white;
-            padding: 16px 20px;
-            border-bottom: 3px solid #08e;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 0 0 1.8rem;
+            border-bottom: 1px solid var(--line);
         }
 
-        .header h1 {
-            font-size: 20px;
-            margin-bottom: 4px;
+        h1 {
+            margin: 0;
+            font-size: clamp(2.4rem, 4vw, 3.6rem);
+            line-height: 1;
+            letter-spacing: 0;
         }
 
-        .header p {
-            opacity: 0.7;
-            font-size: 12px;
+        .lead {
+            max-width: 72rem;
+            margin: .8rem 0 0;
+            color: var(--muted);
         }
 
-        /* Сетка для таблиц */
-        .grid-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 1px;
-            background: #ddd;
-        }
-
-        .card {
-            background: white;
-            padding: 12px 14px;
-            min-width: 0;
-        }
-
-        .card-title {
-            font-weight: 700;
-            font-size: 14px;
-            color: #08e;
-            border-left: 3px solid #08e;
-            padding-left: 8px;
-            margin-bottom: 10px;
-            margin-top: 4px;
-        }
-
-        .card-title:first-child {
-            margin-top: 0;
-        }
-
-        .class-list {
+        .meta {
             display: flex;
             flex-wrap: wrap;
-            gap: 4px 6px;
-            margin-bottom: 8px;
+            justify-content: flex-end;
+            gap: .6rem;
+            min-width: 28rem;
+            color: var(--muted);
+            font-size: 1.1rem;
         }
 
-        .class-item {
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 11px;
-            background: #f5f7fa;
-            padding: 2px 6px;
-            border-radius: 4px;
-            color: #d63384;
-            border: 1px solid #e9ecef;
+        .pill,
+        code {
+            display: inline-flex;
+            align-items: center;
+            min-height: 2rem;
+            padding: .2rem .6rem;
+            border: 1px solid var(--line);
+            border-radius: .4rem;
+            background: var(--paper);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 1.1rem;
+            line-height: 1.2;
             white-space: nowrap;
         }
 
-        .class-item-prefix {
-            background: #e8f0fe;
-            color: #0066cc;
-        }
-
-        .badge {
-            display: inline-block;
-            font-size: 9px;
-            background: #e9ecef;
-            padding: 1px 4px;
-            border-radius: 4px;
-            margin-left: 4px;
-            font-family: monospace;
-            font-weight: normal;
+        .toolbar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+            gap: .8rem;
+            margin: 1.6rem 0;
         }
 
         .note {
-            font-size: 10px;
-            color: #6c757d;
-            margin-top: 6px;
-            border-top: 1px solid #f0f0f0;
-            padding-top: 6px;
+            padding: 1rem 1.2rem;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            border-radius: .6rem;
+            background: var(--paper);
         }
 
-        hr {
-            margin: 8px 0;
-            border: none;
-            border-top: 1px solid #eee;
+        .note strong {
+            color: var(--ink);
+            font-weight: 650;
         }
 
-        .subtitle {
-            font-weight: 600;
-            font-size: 12px;
-            color: #495057;
-            margin: 8px 0 4px 0;
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+            gap: 1px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            border-radius: .8rem;
+            background: var(--line);
+        }
+
+        .section {
+            min-width: 0;
+            padding: 1.4rem;
+            background: var(--paper);
+        }
+
+        .section h2 {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 0 0 1rem;
+            font-size: 1.35rem;
+            line-height: 1.2;
+            letter-spacing: 0;
+        }
+
+        .tag {
+            color: var(--muted);
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        h3 {
+            margin: 1rem 0 .45rem;
+            color: var(--muted);
+            font-size: 1.1rem;
+            font-weight: 650;
+            letter-spacing: 0;
+        }
+
+        h3:first-of-type {
+            margin-top: 0;
+        }
+
+        .classes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: .4rem;
+            margin: 0 0 .75rem;
+        }
+
+        .classes:last-child {
+            margin-bottom: 0;
+        }
+
+        .class {
+            display: inline-flex;
+            align-items: center;
+            min-height: 2rem;
+            padding: .25rem .55rem;
+            overflow: hidden;
+            max-width: 100%;
+            color: var(--code-ink);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+            font-size: 1.1rem;
+            line-height: 1.2;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            border: 1px solid var(--line-soft);
+            border-radius: .4rem;
+            background: var(--code);
+        }
+
+        .class.pattern {
+            color: var(--accent);
+            background: #f0f6ff;
+            border-color: #d8e7fb;
+        }
+
+        .text {
+            color: var(--muted);
+            font-size: 1.15rem;
+        }
+
+        .footer {
+            margin-top: 1.6rem;
+            color: var(--muted);
+            font-size: 1.15rem;
+        }
+
+        @media (max-width: 760px) {
+            body {
+                padding: 1.4rem;
+            }
+
+            .header {
+                display: block;
+            }
+
+            .meta {
+                justify-content: flex-start;
+                min-width: 0;
+                margin-top: 1.2rem;
+            }
         }
 
         @media print {
             body {
-                background: white;
                 padding: 0;
+                background: #fff;
             }
-            .cheatsheet {
-                box-shadow: none;
+
+            .page {
+                max-width: none;
             }
-            .card {
+
+            .section {
                 break-inside: avoid;
-            }
-            .grid-cards {
-                gap: 0;
             }
         }
     </style>
 </head>
 <body>
-<div class="cheatsheet">
-    <div class="header">
-        <h1>📄 CSS Framework Cheatsheet</h1>
-        <p>Все классы в одном месте · s/m/l/xl — адаптивные брейкпоинты (640/768/1024/1280px)</p>
+<main class="page">
+    <header class="header">
+        <div>
+            <h1>X CSS Cheatsheet</h1>
+            <p class="lead">Компактная памятка по CSS-классам библиотеки X. Диапазоны указаны так же, как они заданы в исходниках.</p>
+        </div>
+        <div class="meta" aria-label="Брейкпоинты">
+            <span class="pill">s: 640px</span>
+            <span class="pill">m: 768px</span>
+            <span class="pill">l: 1024px</span>
+            <span class="pill">xl: 1280px</span>
+        </div>
+    </header>
+
+    <div class="toolbar">
+        <div class="note"><strong>Responsive:</strong> префиксы пишутся как <code>s:flex</code>, <code>m:c6</code>, <code>l:w40</code>, <code>xl:hidden</code>.</div>
+        <div class="note"><strong>Space:</strong> классы <code>*0</code> - <code>*10</code> используют переменные <code>--space-0</code> - <code>--space-10</code>.</div>
+        <div class="note"><strong>Size:</strong> <code>w2</code> означает <code>2rem</code>, <code>icon24</code> означает <code>2.4rem</code>.</div>
     </div>
 
-    <div class="grid-cards">
-
-        <!-- ======================= -->
-        <!-- BUTTONS -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🔘 Buttons</div>
-            <div class="class-list">
-                <span class="class-item">.button</span>
-                <span class="class-item">.button_label</span>
-                <span class="class-item">.button_primary</span>
-                <span class="class-item">.button_success</span>
-                <span class="class-item">.button_warning</span>
-                <span class="class-item">.button_danger</span>
-                <span class="class-item">.button_white</span>
-                <span class="class-item">.button_black</span>
-                <span class="class-item">.button_clear</span>
-                <span class="class-item">.button_dropdown</span>
-                <span class="class-item">.buttons-group</span>
+    <section class="grid" aria-label="CSS classes">
+        <article class="section">
+            <h2>Buttons <span class="tag">component</span></h2>
+            <div class="classes">
+                <span class="class">.button</span>
+                <span class="class">[type=submit]</span>
+                <span class="class">.button_spacy</span>
+                <span class="class">.button_label</span>
+                <span class="class">.button_primary</span>
+                <span class="class">.button_success</span>
+                <span class="class">.button_warning</span>
+                <span class="class">.button_danger</span>
+                <span class="class">.button_white</span>
+                <span class="class">.button_black</span>
+                <span class="class">.button_clear</span>
+                <span class="class">.button_dropdown</span>
+                <span class="class">.buttons-group</span>
             </div>
-        </div>
+        </article>
 
-        <!-- ======================= -->
-        <!-- COLORS & BG -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🎨 Colors & Backgrounds</div>
-            <div class="class-list">
-                <span class="class-item">.color-primary</span>
-                <span class="class-item">.color-success</span>
-                <span class="class-item">.color-warning</span>
-                <span class="class-item">.color-danger</span>
-                <span class="class-item">.color-error</span>
-                <span class="class-item">.color-black</span>
-                <span class="class-item">.color-white</span>
-                <span class="class-item">.color-grey</span>
+        <article class="section">
+            <h2>Colors <span class="tag">tokens</span></h2>
+            <h3>Text</h3>
+            <div class="classes">
+                <span class="class">.color-primary</span>
+                <span class="class">.color-success</span>
+                <span class="class">.color-warning</span>
+                <span class="class">.color-danger</span>
+                <span class="class">.color-error</span>
+                <span class="class">.color-black</span>
+                <span class="class">.color-white</span>
+                <span class="class">.color-grey</span>
             </div>
-            <div class="class-list">
-                <span class="class-item">.bg-primary</span>
-                <span class="class-item">.bg-success</span>
-                <span class="class-item">.bg-warning</span>
-                <span class="class-item">.bg-danger</span>
-                <span class="class-item">.bg-error</span>
-                <span class="class-item">.bg-black</span>
-                <span class="class-item">.bg-white</span>
-                <span class="class-item">.bg-grey</span>
+            <h3>Background</h3>
+            <div class="classes">
+                <span class="class">.bg-primary</span>
+                <span class="class">.bg-success</span>
+                <span class="class">.bg-warning</span>
+                <span class="class">.bg-danger</span>
+                <span class="class">.bg-error</span>
+                <span class="class">.bg-black</span>
+                <span class="class">.bg-white</span>
+                <span class="class">.bg-grey</span>
             </div>
-        </div>
+        </article>
 
-        <!-- ======================= -->
-        <!-- FLEX -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🧩 Flex <span class="badge">+ s/m/l/xl</span></div>
-            <div class="subtitle">Включение</div>
-            <div class="class-list"><span class="class-item">.flex</span><span class="class-item">.s:flex</span><span class="class-item">.m:flex</span><span class="class-item">.l:flex</span><span class="class-item">.xl:flex</span></div>
-            <div class="subtitle">Направление / Wrap</div>
-            <div class="class-list"><span class="class-item">.fr</span><span class="class-item">.fc</span><span class="class-item">.fw</span><span class="class-item">.fnw</span><span class="class-item badge">s/m/l/xl:*</span></div>
-            <div class="subtitle">Align-items</div>
-            <div class="class-list"><span class="class-item">.ais</span><span class="class-item">.aifs</span><span class="class-item">.aic</span><span class="class-item">.aife</span></div>
-            <div class="subtitle">Justify-content</div>
-            <div class="class-list"><span class="class-item">.jcfs</span><span class="class-item">.jcc</span><span class="class-item">.jcfe</span><span class="class-item">.jcsb</span><span class="class-item">.jcsa</span><span class="class-item">.jcse</span></div>
-            <div class="subtitle">Flex-колонки</div>
-            <div class="class-list"><span class="class-item">.c1/2</span><span class="class-item">.c1/3</span><span class="class-item">.c2/3</span><span class="class-item">.c1/4</span><span class="class-item">.c3/4</span><span class="class-item">.c1/6</span><span class="class-item">.c5/6</span><span class="class-item">.c1/12</span><span class="class-item">.c11/12</span><span class="class-item badge">+ s/m/l/xl</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- GRID -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📐 Grid <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.grid</span><span class="class-item">.g1</span><span class="class-item">.g2</span><span class="class-item">.g3</span><span class="class-item">.g4</span><span class="class-item">.g5</span><span class="class-item">.g6</span><span class="class-item">.g7</span><span class="class-item">.g8</span><span class="class-item">.g9</span><span class="class-item">.g10</span><span class="class-item">.g11</span><span class="class-item">.g12</span></div>
-            <div class="subtitle">Колонки (span)</div>
-            <div class="class-list"><span class="class-item">.c1</span><span class="class-item">.c2</span><span class="class-item">.c3</span>…<span class="class-item">.c12</span></div>
-            <div class="subtitle">Диапазон</div>
-            <div class="class-list"><span class="class-item">.c1/12</span><span class="class-item">.c2/12</span><span class="class-item">.c5/11</span><span class="class-item">.c6/12</span><span class="class-item badge">+ s/m/l/xl</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- FLOW / SPACE / STICKY -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📏 Flow & Vertical Space</div>
-            <div class="class-list"><span class="class-item">.flow</span><span class="class-item">.flow.s0</span>…<span class="class-item">.flow.s10</span><span class="class-item badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.space0</span>…<span class="class-item">.space10</span><span class="class-item badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.sticky</span><span class="class-item badge">+ s/m/l/xl</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- UTILITIES (текст, позиционирование, видимость) -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">⚙️ Утилиты</div>
-            <div class="class-list">
-                <span class="class-item">.antialiased</span>
-                <span class="class-item">.container</span>
-                <span class="class-item">.unselectable</span>
-                <span class="class-item">.unclickable</span>
-                <span class="class-item">.upper</span>
-                <span class="class-item">.lower</span>
-                <span class="class-item">.capitalize</span>
-                <span class="class-item">.nowrap</span>
-                <span class="class-item">.hyphens</span>
-                <span class="class-item">.pointer</span>
-                <span class="class-item">.toe</span>
-                <span class="class-item">.oh</span>
-                <span class="class-item">.fix</span>
-                <span class="class-item">.rel</span>
-                <span class="class-item">.abs</span>
-                <span class="class-item">.ins</span>
-                <span class="class-item">.break-word</span>
-                <span class="class-item">.visually-hidden</span>
-                <span class="class-item">.invisible</span>
-                <span class="class-item">.scroll-responsive</span>
-                <span class="class-item">.fullscreen</span>
-                <span class="class-item">.no-print</span>
-                <span class="class-item">.touch-show</span>
-                <span class="class-item">.touch-hide</span>
+        <article class="section">
+            <h2>Flex <span class="tag">+ s/m/l/xl</span></h2>
+            <h3>Container</h3>
+            <div class="classes">
+                <span class="class">.flex</span>
+                <span class="class pattern">.s:flex</span>
+                <span class="class pattern">.m:flex</span>
+                <span class="class pattern">.l:flex</span>
+                <span class="class pattern">.xl:flex</span>
             </div>
-            <div class="subtitle">Line Clamp</div>
-            <div class="class-list"><span class="class-item">.lc1</span><span class="class-item">.lc2</span><span class="class-item">.lc3</span><span class="class-item">.lc4</span><span class="class-item">.lc5</span><span class="class-item badge">+ s/m/l/xl</span></div>
-            <div class="subtitle">Object-fit</div>
-            <div class="class-list"><span class="class-item">.fit-none</span><span class="class-item">.fit-cover</span><span class="class-item">.fit-contain</span><span class="class-item badge">+ s/m/l/xl</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- SHOW / HIDE -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">👁️ Show / Hide <span class="badge">s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.hidden</span><span class="class-item">.hidden-next</span><span class="class-item">.block</span><span class="class-item">.inline</span><span class="class-item">.inline-block</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- MARGIN, PADDING, GAP -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📐 Margin <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.m0</span>…<span class="class-item">.m12</span><span class="class-item">.m0n</span>…<span class="class-item">.m12n</span></div>
-            <div class="class-list"><span class="class-item">.mx0</span>…<span class="class-item">.mx12</span><span class="class-item">.my0</span>…<span class="class-item">.my12</span></div>
-            <div class="class-list"><span class="class-item">.mt0</span>…<span class="class-item">.mt12</span><span class="class-item">.mb0</span>…<span class="class-item">.mb12</span></div>
-            <div class="class-list"><span class="class-item">.ml0</span>…<span class="class-item">.ml12</span><span class="class-item">.mr0</span>…<span class="class-item">.mr12</span></div>
-            <div class="class-list"><span class="class-item">.ma</span><span class="class-item">.mxa</span><span class="class-item">.mya</span><span class="class-item">.mta</span><span class="class-item">.mba</span><span class="class-item">.mla</span><span class="class-item">.mra</span></div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">📦 Padding <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.p0</span>…<span class="class-item">.p12</span><span class="class-item">.px0</span>…<span class="class-item">.px12</span><span class="class-item">.py0</span>…<span class="class-item">.py12</span></div>
-            <div class="class-list"><span class="class-item">.pt0</span>…<span class="class-item">.pt12</span><span class="class-item">.pb0</span>…<span class="class-item">.pb12</span></div>
-            <div class="class-list"><span class="class-item">.pl0</span>…<span class="class-item">.pl12</span><span class="class-item">.pr0</span>…<span class="class-item">.pr12</span></div>
-        </div>
-
-        <div class="card">
-            <div class="card-title">🔲 Gap <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.gap0</span>…<span class="class-item">.gap12</span><span class="class-item">.gapx0</span>…<span class="class-item">.gapx12</span><span class="class-item">.gapy0</span>…<span class="class-item">.gapy12</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- POSITION (top/bottom/left/right/z-index) -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📍 Position offsets <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.t0</span>…<span class="class-item">.t12</span><span class="class-item">.t0n</span>…<span class="class-item">.t12n</span></div>
-            <div class="class-list"><span class="class-item">.b0</span>…<span class="class-item">.b12</span><span class="class-item">.b0n</span>…<span class="class-item">.b12n</span></div>
-            <div class="class-list"><span class="class-item">.l0</span>…<span class="class-item">.l12</span><span class="class-item">.l0n</span>…<span class="class-item">.l12n</span></div>
-            <div class="class-list"><span class="class-item">.r0</span>…<span class="class-item">.r12</span><span class="class-item">.r0n</span>…<span class="class-item">.r12n</span></div>
-            <div class="class-list"><span class="class-item">.z0</span>…<span class="class-item">.z12</span><span class="class-item badge">+ s/m/l/xl</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- OPACITY -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🌀 Opacity</div>
-            <div class="class-list"><span class="class-item">.op0</span><span class="class-item">.op1</span><span class="class-item">.op2</span><span class="class-item">.op3</span><span class="class-item">.op4</span><span class="class-item">.op5</span><span class="class-item">.op6</span><span class="class-item">.op7</span><span class="class-item">.op8</span><span class="class-item">.op9</span><span class="class-item">.op10</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- RATIO -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📐 Ratio <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list">
-                <span class="class-item">.ratio1x1</span><span class="class-item">.ratio2x1</span><span class="class-item">.ratio3x1</span><span class="class-item">.ratio4x1</span>
-                <span class="class-item">.ratio3x2</span><span class="class-item">.ratio4x3</span><span class="class-item">.ratio16x9</span>
-                <span class="class-item">.ratio1x2</span><span class="class-item">.ratio1x3</span><span class="class-item">.ratio1x4</span>
-                <span class="class-item">.ratio2x3</span><span class="class-item">.ratio3x4</span><span class="class-item">.ratio9x16</span>
+            <h3>Direction and wrap</h3>
+            <div class="classes">
+                <span class="class">.fr</span>
+                <span class="class">.fc</span>
+                <span class="class">.fw</span>
+                <span class="class">.fnw</span>
             </div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- WIDTH (w, max, min) -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📏 Width <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.max</span></div>
-            <div class="class-list"><span class="class-item">.w10</span>…<span class="class-item">.w190</span> step 10</div>
-            <div class="class-list"><span class="class-item">.w200</span>…<span class="class-item">.w380</span> step 20</div>
-            <div class="class-list"><span class="class-item">.w400</span>…<span class="class-item">.w1600</span> step 100</div>
-            <div class="class-list"><span class="class-item">.max10</span>…<span class="class-item">.max1600</span> (аналогично)</div>
-            <div class="class-list"><span class="class-item">.min10</span>…<span class="class-item">.min1600</span> (аналогично)</div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- TEXT ALIGN -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📌 Text align <span class="badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.al</span><span class="class-item">.ar</span><span class="class-item">.ac</span><span class="class-item">.aj</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- BORDER RADIUS / SHADOW / ORDER -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🎨 Border Radius, Shadow, Order</div>
-            <div class="class-list"><span class="class-item">.br0</span>…<span class="class-item">.br12</span><span class="class-item">.br100</span><span class="class-item badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.sh0</span>…<span class="class-item">.sh10</span><span class="class-item badge">+ s/m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.o0</span>…<span class="class-item">.o12</span><span class="class-item badge">+ s/m/l/xl</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- ICON -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🔷 Icon</div>
-            <div class="class-list"><span class="class-item">.icon</span><span class="class-item">.icon.s10</span>…<span class="class-item">.icon.s60</span> step 2 <span class="badge">+ m/l</span></div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- LINKS -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">🔗 Links</div>
-            <div class="class-list">
-                <span class="class-item">a</span><span class="class-item">a.link</span><span class="class-item">a.hover</span><span class="class-item">a.active</span>
-                <span class="class-item">a.link_noline</span><span class="class-item">a.link_underline</span>
-                <span class="class-item">a.link_dashed</span><span class="class-item">a.link_dotted</span><span class="class-item">a.link_wavy</span>
+            <h3>Alignment</h3>
+            <div class="classes">
+                <span class="class">.ais</span>
+                <span class="class">.aifs</span>
+                <span class="class">.aic</span>
+                <span class="class">.aife</span>
+                <span class="class">.jcfs</span>
+                <span class="class">.jcc</span>
+                <span class="class">.jcfe</span>
+                <span class="class">.jcsb</span>
+                <span class="class">.jcsa</span>
+                <span class="class">.jcse</span>
             </div>
-        </div>
-
-        <!-- ======================= -->
-        <!-- SCROLL -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📜 Scroll</div>
-            <div class="class-list">
-                <span class="class-item">.scroll</span>
-                <span class="class-item">.scroll_contain</span>
-                <span class="class-item">.scroll_x-proximity</span>
-                <span class="class-item">.scroll_x-mandatory</span>
+            <h3>Items</h3>
+            <div class="classes">
+                <span class="class">.no-shrink</span>
+                <span class="class">.no-grow</span>
+                <span class="class pattern">.c1/2</span>
+                <span class="class pattern">.c1/3</span>
+                <span class="class pattern">.c2/3</span>
+                <span class="class pattern">.c1/12...c11/12</span>
             </div>
-        </div>
+        </article>
 
-        <!-- ======================= -->
-        <!-- TYPOGRAPHY (h, fs, fw, ls, lh) -->
-        <!-- ======================= -->
-        <div class="card">
-            <div class="card-title">📝 Typography</div>
-            <div class="class-list"><span class="class-item">.h1</span>…<span class="class-item">.h6</span><span class="class-item">.mono</span><span class="class-item">.italic</span><span class="class-item">.strike</span></div>
-            <div class="class-list"><span class="class-item">.fs10</span>…<span class="class-item">.fs19</span> step 1 <span class="badge">+ m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.fs20</span><span class="class-item">.fs22</span>…<span class="class-item">.fs100</span> step 2 <span class="badge">+ m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.fw100</span>…<span class="class-item">.fw900</span> step 100 <span class="badge">+ m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.ls0</span>…<span class="class-item">.ls4</span><span class="class-item badge">+ m/l/xl</span></div>
-            <div class="class-list"><span class="class-item">.lh0</span>…<span class="class-item">.lh9</span><span class="class-item badge">+ m/l/xl</span> (1.0–1.9)</div>
-        </div>
+        <article class="section">
+            <h2>Grid <span class="tag">+ s/m/l/xl</span></h2>
+            <h3>Container</h3>
+            <div class="classes">
+                <span class="class">.grid</span>
+                <span class="class pattern">.g1...g12</span>
+            </div>
+            <h3>Children</h3>
+            <div class="classes">
+                <span class="class pattern">.c1...c12</span>
+                <span class="class pattern">.c1/12</span>
+                <span class="class pattern">.c2/12</span>
+                <span class="class pattern">.c5/11</span>
+                <span class="class pattern">.c6/12</span>
+            </div>
+            <h3>Self alignment</h3>
+            <div class="classes">
+                <span class="class">.jss</span>
+                <span class="class">.jse</span>
+                <span class="class">.jsc</span>
+                <span class="class">.jsstr</span>
+                <span class="class">.ass</span>
+                <span class="class">.ase</span>
+                <span class="class">.asc</span>
+                <span class="class">.asstr</span>
+            </div>
+        </article>
 
-    </div>
-    <div class="note" style="padding: 12px 16px; background: #f8f9fa; border-top: 1px solid #ddd; font-size: 11px;">
-        🧠 <strong>Примечание:</strong> <code>.s:</code> — 640px, <code>.m:</code> — 768px, <code>.l:</code> — 1024px, <code>.xl:</code> — 1280px.<br>
-        📐 Отступы <code>.m0–m12</code> используют CSS-переменные <code>--space-0</code> … <code>--space-12</code>.<br>
-        🎯 <code>.c1/2</code> = ширина 50%, <code>.c1/3</code> ≈ 33.33%, <code>.c2/3</code> ≈ 66.66% и т.д.
-    </div>
-</div>
+        <article class="section">
+            <h2>Flow and space <span class="tag">+ s/m/l/xl</span></h2>
+            <div class="classes">
+                <span class="class">.flow</span>
+                <span class="class pattern">.flow.s0...s10</span>
+                <span class="class pattern">.flow.m:s0...m:s10</span>
+                <span class="class pattern">.space0...space10</span>
+                <span class="class">.sticky</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Text helpers <span class="tag">utility</span></h2>
+            <div class="classes">
+                <span class="class">.antialiased</span>
+                <span class="class">.container</span>
+                <span class="class">.unselectable</span>
+                <span class="class">.unclickable</span>
+                <span class="class">.upper</span>
+                <span class="class">.lower</span>
+                <span class="class">.capitalize</span>
+                <span class="class">.nowrap</span>
+                <span class="class">.hyphens</span>
+                <span class="class">.pointer</span>
+                <span class="class">.toe</span>
+                <span class="class">.breakWord</span>
+            </div>
+            <h3>Line clamp</h3>
+            <div class="classes">
+                <span class="class pattern">.lc0...lc5</span>
+                <span class="class pattern">.s:lc0...xl:lc5</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Position <span class="tag">+ s/m/l/xl</span></h2>
+            <div class="classes">
+                <span class="class">.oh</span>
+                <span class="class">.fix</span>
+                <span class="class">.rel</span>
+                <span class="class">.abs</span>
+                <span class="class">.inset</span>
+                <span class="class">.fill</span>
+                <span class="class pattern">.t0...t10</span>
+                <span class="class pattern">.b0...b10</span>
+                <span class="class pattern">.l0...l10</span>
+                <span class="class pattern">.r0...r10</span>
+                <span class="class pattern">.t0n...r10n</span>
+                <span class="class pattern">.z0...z10</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Display <span class="tag">+ s/m/l/xl</span></h2>
+            <div class="classes">
+                <span class="class">.hidden</span>
+                <span class="class">.hidden-next</span>
+                <span class="class">.block</span>
+                <span class="class">.inline</span>
+                <span class="class">.inlineBlock</span>
+                <span class="class">.table</span>
+                <span class="class">.flex</span>
+                <span class="class">.grid</span>
+                <span class="class">.visuallyHidden</span>
+                <span class="class">.invisible</span>
+                <span class="class">.no-print</span>
+                <span class="class">.touch-show</span>
+                <span class="class">.touch-hide</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Object and ratio <span class="tag">+ s/m/l/xl</span></h2>
+            <h3>Object fit</h3>
+            <div class="classes">
+                <span class="class">.fit-cover</span>
+                <span class="class">.fit-contain</span>
+                <span class="class pattern">.s:fit-none</span>
+                <span class="class pattern">.s:fit-cover</span>
+                <span class="class pattern">.s:fit-contain</span>
+            </div>
+            <h3>Ratio</h3>
+            <div class="classes">
+                <span class="class">.ratio1x1</span>
+                <span class="class">.ratio2x1</span>
+                <span class="class">.ratio3x1</span>
+                <span class="class">.ratio4x1</span>
+                <span class="class">.ratio3x2</span>
+                <span class="class">.ratio4x3</span>
+                <span class="class">.ratio16x9</span>
+                <span class="class">.ratio1x2</span>
+                <span class="class">.ratio1x3</span>
+                <span class="class">.ratio1x4</span>
+                <span class="class">.ratio2x3</span>
+                <span class="class">.ratio3x4</span>
+                <span class="class">.ratio9x16</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Sizing <span class="tag">+ s/m/l/xl</span></h2>
+            <div class="classes">
+                <span class="class">.fullscreen</span>
+                <span class="class">.wmax</span>
+                <span class="class">.hmax</span>
+                <span class="class">.wscreen</span>
+                <span class="class">.hscreen</span>
+                <span class="class">.max</span>
+                <span class="class pattern">.w2...w38 step 2</span>
+                <span class="class pattern">.h2...h38 step 2</span>
+                <span class="class pattern">.h40...h80 step 10</span>
+                <span class="class pattern">.w40...w160 step 10</span>
+                <span class="class pattern">.max2...max160</span>
+                <span class="class pattern">.min2...min160</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Spacing <span class="tag">+ s/m/l/xl</span></h2>
+            <h3>Margin</h3>
+            <div class="classes">
+                <span class="class pattern">.m0...m10</span>
+                <span class="class pattern">.mx0...mx10</span>
+                <span class="class pattern">.my0...my10</span>
+                <span class="class pattern">.mt0...mr10</span>
+                <span class="class pattern">.m0n...mr10n</span>
+                <span class="class">.ma</span>
+                <span class="class">.mxa</span>
+                <span class="class">.mya</span>
+                <span class="class">.mta</span>
+                <span class="class">.mba</span>
+                <span class="class">.mla</span>
+                <span class="class">.mra</span>
+            </div>
+            <h3>Padding and gap</h3>
+            <div class="classes">
+                <span class="class pattern">.p0...p10</span>
+                <span class="class pattern">.px0...px10</span>
+                <span class="class pattern">.py0...py10</span>
+                <span class="class pattern">.pt0...pr10</span>
+                <span class="class pattern">.gap0...gap10</span>
+                <span class="class pattern">.gapx0...gapx10</span>
+                <span class="class pattern">.gapy0...gapy10</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Visual utility <span class="tag">+ s/m/l/xl</span></h2>
+            <div class="classes">
+                <span class="class pattern">.br0...br10</span>
+                <span class="class">.br100</span>
+                <span class="class pattern">.sh0...sh5</span>
+                <span class="class pattern">.o0...o10</span>
+                <span class="class pattern">.op0...op10</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Typography <span class="tag">base + utility</span></h2>
+            <h3>Base</h3>
+            <div class="classes">
+                <span class="class">h1...h6</span>
+                <span class="class">.h1...h6</span>
+                <span class="class">p</span>
+                <span class="class">figure</span>
+                <span class="class">figcaption</span>
+                <span class="class">blockquote</span>
+                <span class="class">pre</span>
+                <span class="class">ul/ol/dl</span>
+                <span class="class">table</span>
+            </div>
+            <h3>Utility</h3>
+            <div class="classes">
+                <span class="class">.mono</span>
+                <span class="class">.italic</span>
+                <span class="class">.strike</span>
+                <span class="class pattern">.fs10...fs19 step 1</span>
+                <span class="class pattern">.fs20...fs100 step 2</span>
+                <span class="class pattern">.fw100...fw900</span>
+                <span class="class pattern">.ls0...ls4</span>
+                <span class="class pattern">.lh0...lh9</span>
+                <span class="class">.al</span>
+                <span class="class">.ar</span>
+                <span class="class">.ac</span>
+                <span class="class">.aj</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Links <span class="tag">base</span></h2>
+            <div class="classes">
+                <span class="class">a</span>
+                <span class="class">a.link</span>
+                <span class="class">a.hover</span>
+                <span class="class">a.active</span>
+                <span class="class">a.link_noline</span>
+                <span class="class">a.link_underline</span>
+                <span class="class">a.link_dashed</span>
+                <span class="class">a.link_dotted</span>
+                <span class="class">a.link_wavy</span>
+                <span class="class">a[href^="tel"]</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Forms <span class="tag">base</span></h2>
+            <div class="classes">
+                <span class="class">input</span>
+                <span class="class">textarea</span>
+                <span class="class">select</span>
+                <span class="class">button</span>
+                <span class="class">[readonly]</span>
+                <span class="class">[disabled]</span>
+                <span class="class">.error</span>
+                <span class="class">[pattern]:invalid</span>
+                <span class="class">::placeholder</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Scroll <span class="tag">component</span></h2>
+            <div class="classes">
+                <span class="class">.scroll</span>
+                <span class="class">.scroll_x</span>
+                <span class="class">.scroll_y</span>
+                <span class="class">.scroll_contain</span>
+                <span class="class">.scroll_x-proximity</span>
+                <span class="class">.scroll_x-mandatory</span>
+                <span class="class">.scroll_align-center</span>
+                <span class="class">.scroll_align-end</span>
+                <span class="class">.scroll-responsive</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Icons <span class="tag">+ m/l</span></h2>
+            <div class="classes">
+                <span class="class">.icon</span>
+                <span class="class pattern">.icon10...icon60 step 2</span>
+                <span class="class pattern">.m:icon10...m:icon60</span>
+                <span class="class pattern">.l:icon10...l:icon60</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Dropdown <span class="tag">component</span></h2>
+            <div class="classes">
+                <span class="class">.dropdown</span>
+                <span class="class">[x-dropdown]</span>
+                <span class="class">.dropdown_right</span>
+                <span class="class">.dropdown_bottom</span>
+                <span class="class">.dropdown_ready</span>
+                <span class="class">.dropdown_open</span>
+                <span class="class">.dropdown_wrap</span>
+                <span class="class">li.divider</span>
+                <span class="class">.focus-visible</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Modal <span class="tag">component</span></h2>
+            <div class="classes">
+                <span class="class">[x-modal]</span>
+                <span class="class">.modal</span>
+                <span class="class">.modal_ready</span>
+                <span class="class">.modal_active</span>
+                <span class="class pattern">.modal_z1...modal_z10</span>
+                <span class="class">.modal-overlay</span>
+                <span class="class">.modal-outer</span>
+                <span class="class">.modal-inner</span>
+                <span class="class">.modal-window</span>
+                <span class="class">.modal-rail</span>
+                <span class="class">.modal-close</span>
+            </div>
+            <h3>Effects</h3>
+            <div class="classes">
+                <span class="class">.modal_effect-in</span>
+                <span class="class">.modal_effect-out</span>
+                <span class="class">.modal_effect-up</span>
+                <span class="class">.modal_effect-down</span>
+                <span class="class">.modal_effect-left</span>
+                <span class="class">.modal_effect-right</span>
+            </div>
+        </article>
+
+        <article class="section">
+            <h2>Slider and sheets <span class="tag">component</span></h2>
+            <h3>Slider</h3>
+            <div class="classes">
+                <span class="class">.slider</span>
+                <span class="class">.slider_touch</span>
+                <span class="class">.slider-wrapper</span>
+                <span class="class">.slider-item</span>
+                <span class="class">.slider-indicators</span>
+                <span class="class">[x-slider]</span>
+            </div>
+            <h3>Sheets</h3>
+            <div class="classes">
+                <span class="class">[x-sheet]</span>
+                <span class="class">.active</span>
+            </div>
+        </article>
+    </section>
+
+    <p class="footer">Обновлено по исходникам из <code>src/components/x</code>. Для responsive-вариантов добавляй префикс перед классом: <code>m:gap4</code>, <code>l:grid</code>, <code>xl:ratio16x9</code>.</p>
+</main>
 </body>
 </html>

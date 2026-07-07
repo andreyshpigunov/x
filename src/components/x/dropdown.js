@@ -115,7 +115,7 @@
  * @since 2025-07-17
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 /**
  * Dropdown menu controller.

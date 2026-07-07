@@ -148,7 +148,7 @@
  * @since 2025-07-18
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 /**
  * Sheets system for tabs and content switching.

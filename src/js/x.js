@@ -7,22 +7,22 @@
 //
 
 
-import { modal } from "../components/x/modal";
-import { animate } from "../components/x/animate";
-import { appear } from "../components/x/appear";
-import { lazyload } from "../components/x/lazyload";
-import { loadmore } from "../components/x/loadmore";
-import { sheets } from "../components/x/sheets";
-import { dropdown } from "../components/x/dropdown";
-import { autocomplete } from "../components/x/autocomplete";
-import { scroll } from "../components/x/scroll";
-import { hover } from "../components/x/hover";
-import { device } from "../components/x/device";
-import { lib } from "../components/x/lib";
-import { form } from "../components/x/form";
-import { sticky } from "../components/x/sticky";
-import { slider } from "../components/x/slider";
-import { typograf } from "../components/x/typograf";
+import { modal } from "../components/x/modal.js";
+import { animate } from "../components/x/animate.js";
+import { appear } from "../components/x/appear.js";
+import { lazyload } from "../components/x/lazyload.js";
+import { loadmore } from "../components/x/loadmore.js";
+import { sheets } from "../components/x/sheets.js";
+import { dropdown } from "../components/x/dropdown.js";
+import { autocomplete } from "../components/x/autocomplete.js";
+import { scroll } from "../components/x/scroll.js";
+import { hover } from "../components/x/hover.js";
+import { device } from "../components/x/device.js";
+import { lib } from "../components/x/lib.js";
+import { form } from "../components/x/form.js";
+import { sticky } from "../components/x/sticky.js";
+import { slider } from "../components/x/slider.js";
+import { typograf } from "../components/x/typograf.js";
 
 
 class X {

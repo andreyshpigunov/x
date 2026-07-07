@@ -112,7 +112,7 @@
  * @since 2025-07-17
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 /**
  * Lazyload class for handling image loading on viewport entry.

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ru" class="antialiased">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>x documentation</title>
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <style>
+    :root {
+      --docs-sidebar-width: 24rem;
+      --docs-border: color-mix(in srgb, currentcolor, transparent 88%);
+      --docs-muted: color-mix(in srgb, currentcolor, transparent 42%);
+      --docs-code: color-mix(in srgb, currentcolor, transparent 94%);
+    }
+
+    body {
+      line-height: 1.65;
+    }
+
+    .docs-layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3.2rem;
+    }
+
+    .docs-nav {
+      border: 1px solid var(--docs-border);
+      border-radius: .8rem;
+      padding: 1.6rem;
+    }
+
+    .docs-nav a {
+      display: block;
+      padding: .2rem 0;
+    }
+
+    .docs-content {
+      min-width: 0;
+    }
+
+    .docs-section {
+      padding: 3.2rem 0;
+      border-top: 1px solid var(--docs-border);
+    }
+
+    .docs-section:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .docs-card {
+      border: 1px solid var(--docs-border);
+      border-radius: .8rem;
+      padding: 1.6rem;
+    }
+
+    .docs-muted {
+      color: var(--docs-muted);
+    }
+
+    .docs-table {
+      width: 100%;
+      margin: 1.6rem 0;
+    }
+
+    .docs-table th,
+    .docs-table td {
+      vertical-align: top;
+    }
+
+    .docs-code {
+      margin: 1.6rem 0;
+      padding: 1.6rem;
+      overflow: auto;
+      border-radius: .8rem;
+      background: var(--docs-code);
+    }
+
+    .docs-code code {
+      display: block;
+      padding: 0;
+      background: transparent;
+    }
+
+    .docs-kbd {
+      display: inline-block;
+      min-width: 2.2rem;
+      padding: 0 .6rem;
+      border: 1px solid var(--docs-border);
+      border-radius: .4rem;
+      text-align: center;
+    }
+
+    @media (min-width: 1024px) {
+      .docs-layout {
+        grid-template-columns: var(--docs-sidebar-width) minmax(0, 1fr);
+        align-items: start;
+      }
+
+      .docs-nav {
+        position: sticky;
+        top: 2rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="px5 m:px6 l:px8 py6">
+    <div class="container max120">
+      <div class="flex fw aic jcsb gap4">
+        <div>
+          <h1>x documentation</h1>
+          <p class="mt1 docs-muted">Полная справка по CSS-утилитам, JS-компонентам и публичному API библиотеки.</p>
+        </div>
+        <nav class="flex fw gap3">
+          <a class="link" href="index.html">Demo</a>
+          <a class="link" href="cheatsheet.html">Cheatsheet</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main class="px5 m:px6 l:px8 pb8">
+    <div class="container max120 docs-layout">
+      <aside class="docs-nav">
+        <h2 class="fs18">Разделы</h2>
+        <a class="link" href="#start">Быстрый старт</a>
+        <a class="link" href="#architecture">Как устроен x</a>
+        <a class="link" href="#css">CSS</a>
+        <a class="link" href="#components">JS-компоненты</a>
+        <a class="link" href="#lib">x.lib</a>
+        <a class="link" href="#form">x.form</a>
+        <a class="link" href="#lifecycle">Жизненный цикл</a>
+        <a class="link" href="#security">Безопасность</a>
+      </aside>
+
+      <div class="docs-content">
+        <section id="start" class="docs-section">
+          <h2>Быстрый старт</h2>
+          <p><strong>x</strong> состоит из CSS-утилит и набора маленьких JS-компонентов. Для обычной HTML-страницы достаточно подключить CSS, JS и вызвать <code>x.init()</code>. В демо-проекте это делает <code>assets/js/app.js</code>.</p>
+
+          <div class="docs-code">
+            <code>&lt;link rel="stylesheet" href="dist/x.css" /&gt;</code>
+            <code>&lt;script src="dist/x.js"&gt;&lt;/script&gt;</code>
+            <code>&lt;script&gt;x.init()&lt;/script&gt;</code>
+          </div>
+
+          <p>Если используешь исходники как ESM, импортируй публичный entrypoint:</p>
+          <div class="docs-code">
+            <code>import x from './index.js';</code>
+            <code>x.init();</code>
+          </div>
+
+          <p><code>x.init()</code> инициализирует: Device, Modal, Animate, Appear, Lazyload, Loadmore, Sheets, Dropdown, Scroll, Sticky, Slider и Hover. Autocomplete и Typograf запускаются вручную, потому что им нужны пользовательские данные или явно выбранные селекторы.</p>
+        </section>
+
+        <section id="architecture" class="docs-section">
+          <h2>Как устроен x</h2>
+          <div class="grid g1 m:g2 gap4">
+            <div class="docs-card">
+              <h3>CSS</h3>
+              <p>CSS собран из независимых файлов в <code>src/components/x/*.css</code>. Утилиты используют rem-шкалу: например <code>.max70</code> означает <code>max-width: 70rem</code>, а не 700px.</p>
+            </div>
+            <div class="docs-card">
+              <h3>JavaScript</h3>
+              <p>Каждый компонент экспортирует singleton. <code>src/js/x.js</code> собирает их в объект <code>x</code> и кладёт его в <code>window.x</code> для браузерного использования.</p>
+            </div>
+          </div>
+
+          <h3>Глобальные сокращения</h3>
+          <table class="docs-table dataTable">
+            <tr><th>Сокращение</th><th>Что делает</th></tr>
+            <tr><td><code>x.id(id)</code></td><td>Возвращает <code>document.getElementById(id)</code>.</td></tr>
+            <tr><td><code>x.qs(selector, context)</code></td><td>Возвращает первый элемент. Принимает селектор, NodeList, массив или Node.</td></tr>
+            <tr><td><code>x.qsa(selector, context)</code></td><td>Возвращает массив элементов. Принимает селектор, NodeList, массив или Node.</td></tr>
+            <tr><td><code>x.render(...)</code></td><td>Сокращение для <code>x.lib.render(...)</code>.</td></tr>
+          </table>
+        </section>
+
+        <section id="css" class="docs-section">
+          <h2>CSS</h2>
+
+          <h3>Breakpoints</h3>
+          <p>Все responsive-утилиты mobile-first. Префикс добавляет правило внутри <code>min-width</code>.</p>
+          <table class="docs-table dataTable">
+            <tr><th>Префикс</th><th>Условие</th><th>Пример</th></tr>
+            <tr><td><code>s:</code></td><td><code>min-width: 640px</code></td><td><code>s:flex</code></td></tr>
+            <tr><td><code>m:</code></td><td><code>min-width: 768px</code></td><td><code>m:g2</code></td></tr>
+            <tr><td><code>l:</code></td><td><code>min-width: 1024px</code></td><td><code>l:px8</code></td></tr>
+            <tr><td><code>xl:</code></td><td><code>min-width: 1280px</code></td><td><code>xl:g4</code></td></tr>
+          </table>
+
+          <h3>Сетки и поток</h3>
+          <p><code>.grid</code> включает CSS Grid. <code>.g1</code>…<code>.g12</code> задают число колонок, <code>.c1</code>…<code>.c12</code> задают span элемента. <code>.flow</code> создаёт вертикальный поток, а <code>.flow.s0</code>…<code>.flow.s10</code> меняют расстояние между соседними элементами.</p>
+          <div class="docs-code">
+            <code>&lt;div class="grid g1 m:g2 l:g4 gap4"&gt;</code>
+            <code>  &lt;div class="c1"&gt;Card&lt;/div&gt;</code>
+            <code>  &lt;div class="c1 l:c2"&gt;Wide card&lt;/div&gt;</code>
+            <code>&lt;/div&gt;</code>
+          </div>
+
+          <h3>Flex</h3>
+          <p><code>.flex</code> включает flex-контейнер. Направление: <code>.fr</code>, <code>.fc</code>. Перенос: <code>.fw</code>. Выравнивание: <code>.aic</code>, <code>.ais</code>, <code>.aie</code>, <code>.jcc</code>, <code>.jcsb</code>, <code>.jcse</code>, <code>.jce</code>.</p>
+
+          <h3>Размеры</h3>
+          <p>Все числовые width/max/min/height утилиты используют rem. Это основной принцип новой шкалы.</p>
+          <table class="docs-table dataTable">
+            <tr><th>Класс</th><th>Диапазон</th><th>Что задаёт</th></tr>
+            <tr><td><code>.w*</code></td><td><code>2-38</code> step 2, <code>40-160</code> step 10</td><td><code>width</code></td></tr>
+            <tr><td><code>.h*</code></td><td><code>2-38</code> step 2, <code>40-80</code> step 10</td><td><code>height</code></td></tr>
+            <tr><td><code>.max*</code></td><td><code>2-38</code> step 2, <code>40-160</code> step 10</td><td><code>max-width</code></td></tr>
+            <tr><td><code>.min*</code></td><td><code>2-38</code> step 2, <code>40-160</code> step 10</td><td><code>min-width</code></td></tr>
+          </table>
+          <p>Примеры: <code>.max70</code> = 70rem, <code>.w16</code> = 16rem, <code>.h40</code> = 40rem.</p>
+
+          <h3>Lib utilities</h3>
+          <p>В CSS-разделе <code>Lib</code> собраны классы общего назначения: <code>.container</code>, <code>.unselectable</code>, <code>.unclickable</code>, <code>.pointer</code>, <code>.toe</code>, <code>.lc1</code>…<code>.lc5</code>, <code>.oh</code>, <code>.fix</code>, <code>.rel</code>, <code>.abs</code>, <code>.inset</code>, <code>.fill</code>, <code>.hidden</code>, <code>.hidden-next</code>, <code>.visuallyHidden</code>, <code>.scroll-responsive</code>.</p>
+          <p>Aspect ratio: <code>.ratio1x1</code>, <code>.ratio2x1</code>, <code>.ratio3x1</code>, <code>.ratio4x1</code>, <code>.ratio3x2</code>, <code>.ratio4x3</code>, <code>.ratio16x9</code>, <code>.ratio1x2</code>, <code>.ratio1x3</code>, <code>.ratio1x4</code>, <code>.ratio2x3</code>, <code>.ratio3x4</code>, <code>.ratio9x16</code>.</p>
+
+          <h3>Spacing, radius, shadow, order</h3>
+          <p>Spacing построен на переменных <code>--space-0</code>…<code>--space-10</code>, но классы margin/padding/gap идут до 12. Для отрицательных margin используется суффикс <code>n</code>: <code>.mt2n</code>.</p>
+          <p>Радиусы: <code>.br0</code>…<code>.br12</code>, <code>.br100</code>. Тени: <code>.sh0</code>…<code>.sh5</code>. Порядок flex/grid элемента: <code>.o0</code>…<code>.o10</code>.</p>
+
+          <h3>Типографика и цвета</h3>
+          <p>Размеры шрифта: <code>.fs10</code>…<code>.fs19</code> step 1 и <code>.fs20</code>…<code>.fs100</code> step 2. Вес: <code>.fw100</code>…<code>.fw900</code>. Также есть <code>.mono</code>, <code>.italic</code>, <code>.strike</code>, <code>.ls0</code>…<code>.ls4</code>, <code>.lh0</code>…<code>.lh9</code>.</p>
+          <p>Цвета: <code>.color-primary</code>, <code>.color-success</code>, <code>.color-warning</code>, <code>.color-danger</code>, <code>.color-error</code>, <code>.color-black</code>, <code>.color-white</code>, <code>.color-grey</code>. Для фона используются соответствующие <code>.bg-*</code>.</p>
+        </section>
+
+        <section id="components" class="docs-section">
+          <h2>JS-компоненты</h2>
+
+          <h3>Animate</h3>
+          <p><code>x-animate</code> привязывает элемент к прогрессу скролла. Компонент может вызывать глобальную функцию, добавлять класс, убирать класс после выхода из диапазона и работать с кастомным trigger.</p>
+          <table class="docs-table dataTable">
+            <tr><th>Параметр JSON</th><th>Описание</th></tr>
+            <tr><td><code>trigger</code></td><td>Селектор элемента, относительно которого считается прогресс. Если не указан, используется сам элемент.</td></tr>
+            <tr><td><code>start</code>, <code>end</code></td><td>Границы диапазона. Поддерживаются px, vh, проценты и числовые значения.</td></tr>
+            <tr><td><code>functionName</code></td><td>Имя глобальной функции. Она получает объект с прогрессом и состоянием.</td></tr>
+            <tr><td><code>class</code></td><td>Класс, который добавляется при попадании в диапазон.</td></tr>
+            <tr><td><code>classRemove</code></td><td>Если true, класс снимается после выхода из диапазона.</td></tr>
+          </table>
+          <div class="docs-code">
+            <code>&lt;div x-animate='{"start":"80vh","end":"20vh","functionName":"onProgress","class":"active"}'&gt;&lt;/div&gt;</code>
+            <code>&lt;script&gt;function onProgress(data) { console.log(data.progress); }&lt;/script&gt;</code>
+          </div>
+
+          <h3>Appear</h3>
+          <p><code>x-appear</code> добавляет <code>.appeared</code> при первом появлении и переключает <code>.visible</code>, пока элемент виден. Подходит для простых reveal-анимаций.</p>
+          <p>API: <code>x.appear.init({ once, rootMargin, threshold })</code>, <code>x.appear.destroy()</code>.</p>
+
+          <h3>Autocomplete</h3>
+          <p>Autocomplete работает поверх Dropdown: нужен контейнер с id, поле <code>x-dropdown-open</code> и список <code>x-dropdown</code>. Данные можно грузить асинхронно, фильтровать через <code>mapData</code>, рендерить через <code>renderItem</code>.</p>
+          <div class="docs-code">
+            <code>&lt;div id="searchDropdown"&gt;</code>
+            <code>  &lt;input x-dropdown-open type="text" placeholder="Search" /&gt;</code>
+            <code>  &lt;ul x-dropdown&gt;&lt;/ul&gt;</code>
+            <code>&lt;/div&gt;</code>
+            <code>x.autocomplete.init('searchDropdown', {</code>
+            <code>  loadData: async (ctx) =&gt; fetch('/api?q=' + encodeURIComponent(ctx.field.value)).then(r =&gt; r.json()),</code>
+            <code>  renderItem: item =&gt; `&lt;li data-item='${JSON.stringify(item)}'&gt;${item.name}&lt;/li&gt;`,</code>
+            <code>  onSelect: item =&gt; x.form.setValue('#searchDropdown input', item.name)</code>
+            <code>});</code>
+          </div>
+          <p>API: <code>x.autocomplete.init(dropdownId, options)</code>, <code>x.autocomplete.destroy(dropdownId)</code>, <code>x.autocomplete.destroy()</code>, <code>x.autocomplete.get(dropdownId)</code>.</p>
+
+          <h3>Device</h3>
+          <p><code>x.device</code> определяет breakpoint, touch, browser, OS и добавляет классы на <code>html</code>. На resize состояние пересчитывается. Это удобно для CSS-ветвлений и диагностики.</p>
+          <p>API: <code>x.device.init()</code>, <code>x.device.destroy()</code>.</p>
+
+          <h3>Dropdown</h3>
+          <p>Dropdown связывает trigger <code>x-dropdown-open</code> и соседний список <code>x-dropdown</code>. Поддерживает клики вне меню, keyboard navigation, ARIA-роли и события жизненного цикла.</p>
+          <table class="docs-table dataTable">
+            <tr><th>Событие</th><th>Когда вызывается</th></tr>
+            <tr><td><code>dropdown:beforeshow</code></td><td>Перед открытием.</td></tr>
+            <tr><td><code>dropdown:aftershow</code></td><td>После открытия.</td></tr>
+            <tr><td><code>dropdown:beforehide</code></td><td>Перед закрытием.</td></tr>
+            <tr><td><code>dropdown:afterhide</code></td><td>После закрытия.</td></tr>
+          </table>
+          <p>API: <code>x.dropdown.init()</code>, <code>x.dropdown.closeAllDropdowns()</code>, <code>x.dropdown.destroy()</code>.</p>
+
+          <h3>Hover</h3>
+          <p><code>x-hover</code> синхронизирует класс <code>.hover</code> у ссылок с одинаковым <code>href</code>. Наиболее полезно, когда карточка и текстовая ссылка ведут в одно место.</p>
+          <p>API: <code>x.hover.init()</code>, <code>x.hover.destroy()</code>.</p>
+
+          <h3>Lazyload</h3>
+          <p><code>x-lazyload</code> наблюдает изображения через IntersectionObserver, переносит <code>data-src</code>/<code>data-srcset</code> в реальные атрибуты и добавляет <code>.loaded</code>. Если данных для загрузки нет, элемент просто снимается с наблюдения.</p>
+          <div class="docs-code">
+            <code>&lt;img x-lazyload src="placeholder.png" data-src="photo.jpg" data-srcset="photo@2x.jpg 2x" alt="" /&gt;</code>
+          </div>
+          <p>API: <code>x.lazyload.init()</code>, <code>x.lazyload.destroy()</code>.</p>
+
+          <h3>Loadmore</h3>
+          <p><code>x-loadmore</code> вызывает глобальную функцию при приближении маркера к viewport. Функция получает номер страницы и должна вернуть truthy, если можно продолжать загрузку, или falsy, если данных больше нет.</p>
+          <div class="docs-code">
+            <code>&lt;div x-loadmore='{"functionName":"loadPosts"}'&gt;&lt;/div&gt;</code>
+            <code>window.loadPosts = async (page) =&gt; {</code>
+            <code>  const ok = await fetchPage(page);</code>
+            <code>  return ok;</code>
+            <code>};</code>
+          </div>
+          <p>API: <code>x.loadmore.init()</code>, <code>x.loadmore.reset(selector)</code>, <code>x.loadmore.destroy()</code>.</p>
+
+          <h3>Modal</h3>
+          <p>Modal открывается через <code>x-modal-open="id"</code>, а содержимое задаётся блоком <code>x-modal="id"</code>. При инициализации содержимое переносится в modal-контейнер. Поддерживаются hash-модалки, уникальные модалки, вложенные окна, overlay click и <span class="docs-kbd">Esc</span>.</p>
+          <div class="docs-code">
+            <code>&lt;a x-modal-open="profile"&gt;Open&lt;/a&gt;</code>
+            <code>&lt;div x-modal="profile" class="modal_hash" data-window-class="max80"&gt;...&lt;/div&gt;</code>
+          </div>
+          <table class="docs-table dataTable">
+            <tr><th>API</th><th>Описание</th></tr>
+            <tr><td><code>x.modal.show(id)</code></td><td>Открыть модалку.</td></tr>
+            <tr><td><code>x.modal.hide(id)</code></td><td>Закрыть модалку.</td></tr>
+            <tr><td><code>x.modal.hideAll()</code></td><td>Закрыть все активные модалки.</td></tr>
+            <tr><td><code>x.modal.isActive(id)</code></td><td>Проверить активность.</td></tr>
+            <tr><td><code>x.modal.destroy()</code></td><td>Снять глобальные обработчики.</td></tr>
+          </table>
+          <p>События: <code>modal:ready</code>, <code>modal:open</code>, <code>modal:close</code>.</p>
+
+          <h3>Scroll</h3>
+          <p><code>x-scrollto</code> скроллит к id, selector или JSON-конфигу. Для модалок можно указать внутренний scroll-parent.</p>
+          <div class="docs-code">
+            <code>&lt;a x-scrollto="#top"&gt;Наверх&lt;/a&gt;</code>
+            <code>&lt;a x-scrollto='{"parent":"#modal .modal-outer","target":"#api","offset":100}'&gt;API&lt;/a&gt;</code>
+          </div>
+          <p>API: <code>x.scroll.init()</code>, <code>x.scroll.destroy()</code>.</p>
+
+          <h3>Sheets</h3>
+          <p>Sheets - это табы. Контейнер помечается <code>x-sheets</code>, кнопки - <code>x-sheet-open</code>, панели - <code>x-sheet</code>. Активная кнопка получает <code>.active</code>, активная панель показывается.</p>
+          <div class="docs-code">
+            <code>&lt;div x-sheets&gt;</code>
+            <code>  &lt;a x-sheet-open="a" class="active"&gt;A&lt;/a&gt;</code>
+            <code>  &lt;a x-sheet-open="b"&gt;B&lt;/a&gt;</code>
+            <code>  &lt;div x-sheet="a"&gt;Panel A&lt;/div&gt;</code>
+            <code>  &lt;div x-sheet="b"&gt;Panel B&lt;/div&gt;</code>
+            <code>&lt;/div&gt;</code>
+          </div>
+          <p>API: <code>x.sheets.init()</code>, <code>x.sheets.show(xSheet, options)</code>, <code>x.sheets.destroy()</code>. События: <code>sheets:beforeshow</code>, <code>sheets:aftershow</code>.</p>
+
+          <h3>Slider</h3>
+          <p><code>x-slider</code> подготавливает слайды, lazy-загружает изображения, поддерживает touch-drag на мобильных и hover-preview на desktop. Конфиг передаётся JSON-атрибутом.</p>
+          <p>Частые параметры: <code>gap</code>, <code>touch</code>, <code>hover</code>, <code>rubber</code>, <code>indicators</code>, <code>resetOnMouseout</code>.</p>
+          <p>API: <code>x.slider.init()</code>, <code>x.slider.destroy()</code>, <code>x.slider.observeSliders()</code>.</p>
+
+          <h3>Sticky</h3>
+          <p><code>x.sticky</code> наблюдает элементы <code>.sticky</code>. Когда элемент начинает “прилипать”, добавляется <code>.sticky_on</code> и отправляется событие <code>sticky:on</code>. При возврате отправляется <code>sticky:off</code>.</p>
+          <p>API: <code>x.sticky.init()</code>, <code>x.sticky.reset()</code>, <code>x.sticky.destroy()</code>.</p>
+
+          <h3>Typograf</h3>
+          <p><code>x.typograf.process(html)</code> обрабатывает кавычки, многоточия, дроби, степени, тире, минус в числах и неразрывные пробелы. Теги <code>code</code>, <code>pre</code>, <code>script</code>, <code>style</code> пропускаются.</p>
+          <p><code>x.typograf.live(staticSelector, interactiveSelector, root)</code> обрабатывает статичный текст и вешает live-обработку на input, textarea и contenteditable.</p>
+        </section>
+
+        <section id="form" class="docs-section">
+          <h2>x.form</h2>
+          <p><code>x.form</code> нужен, чтобы программно менять поля и при этом запускать правильные события. Он работает с input, textarea, select, checkbox/radio и contenteditable.</p>
+          <table class="docs-table dataTable">
+            <tr><th>Метод</th><th>Описание</th></tr>
+            <tr><td><code>x.form.setValue(selector, value)</code></td><td>Записывает value и dispatch-ит подходящее событие.</td></tr>
+            <tr><td><code>x.form.setChecked(selector, checked)</code></td><td>Меняет checked у checkbox/radio и dispatch-ит input.</td></tr>
+            <tr><td><code>x.form.onUpdate(selector, callback)</code></td><td>Подписывает callback на input/change в зависимости от типа поля.</td></tr>
+            <tr><td><code>x.form.offUpdate(selector)</code></td><td>Снимает подписку с выбранных элементов.</td></tr>
+            <tr><td><code>x.form.update(selector)</code></td><td>Принудительно dispatch-ит update-событие.</td></tr>
+            <tr><td><code>x.form.destroy()</code></td><td>Снимает все подписки, созданные через form.</td></tr>
+            <tr><td><code>x.form.getEventType(element)</code></td><td>Возвращает событие, которое будет использоваться для элемента.</td></tr>
+          </table>
+        </section>
+
+        <section id="lib" class="docs-section">
+          <h2>x.lib</h2>
+
+          <h3>DOM и классы</h3>
+          <p><code>x.lib.id</code>, <code>x.lib.qs</code>, <code>x.lib.qsa</code>, <code>x.lib.hide</code>, <code>x.lib.show</code>, <code>x.lib.toggle</code>, <code>x.lib.switch</code>, <code>x.lib.addClass</code>, <code>x.lib.removeClass</code>, <code>x.lib.toggleClass</code>, <code>x.lib.switchClass</code>.</p>
+
+          <h3>Навигация</h3>
+          <p><code>x.lib.reload()</code>, <code>x.lib.reloadWithHash(hash)</code>, <code>x.lib.redirectTo(url)</code>, <code>x.lib.updateURL(url, title)</code>.</p>
+
+          <h3>Форматирование и валидация</h3>
+          <p><code>x.lib.random(a, b)</code>, <code>x.lib.price(price)</code>, <code>x.lib.number(num)</code>, <code>x.lib.numberDecline(number, one, few, many)</code>, <code>x.lib.isEmail(email)</code>, <code>x.lib.isValidJSON(str)</code>, <code>x.lib.isInteger(value)</code>, <code>x.lib.isDouble(value)</code>, <code>x.lib.makeId()</code>, <code>x.lib.makePassword(length, selector)</code>.</p>
+
+          <h3>Runtime</h3>
+          <p><code>x.lib.loadScript(path, callback, type)</code> грузит внешний скрипт один раз. <code>x.lib.deferred(callback, delay)</code> запускает код после пользовательской активности или таймера. <code>x.lib.deffered</code> сохранён как алиас с исторической опечаткой.</p>
+          <p><code>x.lib.throttle(fn, wait, options)</code> и <code>x.lib.debounce(fn, wait, options)</code> возвращают функцию с методом <code>cancel()</code>. Options: <code>leading</code>, <code>trailing</code>.</p>
+          <p><code>x.lib.onAppear(selector, appearCallback, disappearCallback, options)</code> создаёт IntersectionObserver. Если <code>disappearCallback</code> не передан, элемент снимается с наблюдения после первого появления.</p>
+
+          <h3>Render</h3>
+          <p><code>x.lib.render(selector, data, placement = null, escapeHtml = false)</code> рендерит строку, функцию или async-функцию. Если <code>placement</code> не указан, заменяет <code>innerHTML</code>. Если включён <code>escapeHtml</code>, вставляет безопасный текст.</p>
+          <div class="docs-code">
+            <code>x.lib.render('.out', '&lt;b&gt;HTML&lt;/b&gt;');</code>
+            <code>x.lib.render('.out', userInput, null, true);</code>
+            <code>x.lib.render('.list', () =&gt; '&lt;li&gt;Item&lt;/li&gt;', 'beforeend');</code>
+          </div>
+        </section>
+
+        <section id="lifecycle" class="docs-section">
+          <h2>Жизненный цикл</h2>
+          <p>Большинство компонентов можно безопасно переинициализировать: <code>init()</code> либо сам снимает старые обработчики, либо пропускает уже обработанные элементы. Для SPA лучше вызывать <code>destroy()</code> при размонтировании страницы или перед полной заменой DOM.</p>
+          <table class="docs-table dataTable">
+            <tr><th>Когда</th><th>Что делать</th></tr>
+            <tr><td>Обычная статичная страница</td><td>Один раз вызвать <code>x.init()</code>.</td></tr>
+            <tr><td>После AJAX-вставки HTML</td><td>Повторно вызвать нужный компонент или <code>x.init()</code>, если менялась большая часть страницы.</td></tr>
+            <tr><td>SPA route leave</td><td>Вызвать <code>destroy()</code> у компонентов с глобальными обработчиками.</td></tr>
+          </table>
+        </section>
+
+        <section id="security" class="docs-section">
+          <h2>Безопасность и ограничения</h2>
+          <p><code>x-render</code> использует JavaScript expression из HTML-атрибута. Используй его только в доверенной разметке. Для пользовательского текста предпочитай <code>x.lib.render(selector, userInput, null, true)</code>.</p>
+          <p><code>x-loadmore</code> и <code>x-animate</code> вызывают функции по имени из глобальной области. Не передавай туда непроверенные имена функций из пользовательских данных.</p>
+          <p>Lazyload и Autocomplete зависят от браузерных API и внешних ресурсов. Для локального открытия через <code>file://</code> лучше использовать обычный script bundle и локальные placeholder-изображения, как в <code>index.html</code>.</p>
+        </section>
+      </div>
+    </div>
+  </main>
+</body>
+
+</html>

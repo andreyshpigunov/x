@@ -131,7 +131,7 @@
  * @since 2026-02-02
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 class Form {
   /**

@@ -154,7 +154,7 @@
  * @since 2025-07-18
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 /**
  * Modal window controller.

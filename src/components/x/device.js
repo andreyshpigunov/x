@@ -113,7 +113,7 @@
  * @since 2026-02-02
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 const CLASSES_TO_REMOVE = [
   'js', 'windows', 'macos', 'ios', 'android', 'linux', 'unknown',

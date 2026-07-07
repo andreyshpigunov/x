@@ -25,7 +25,6 @@ All right reserved.
   -ms-overflow-style: none;
   /* Hide scrollbar in Firefox */
   scrollbar-width: none;
-  touch-action: pan-x;
 
   &::-webkit-scrollbar {
     width: var(--scroll-scrollbar-size);

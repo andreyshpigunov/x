@@ -551,8 +551,12 @@ html.touch .touch-hide { display: none }
 
 @for $i from 2 to 38 by 2 {
   .w$(i)   { width: $(i)rem }
+  .h$(i)   { height: $(i)rem }
   .max$(i) { max-width: $(i)rem }
   .min$(i) { min-width: $(i)rem }
+}
+@for $i from 40 to 80 by 10 {
+  .h$(i)   { height: $(i)rem }
 }
 @for $i from 40 to 160 by 10 {
   .w$(i)   { width: $(i)rem }
@@ -566,15 +570,19 @@ html.touch .touch-hide { display: none }
     height: 100vh;
   }
   .s\:wmax { width: 100%; }
-  .s\:hmax { width: 100%; }
+  .s\:hmax { height: 100%; }
   .s\:wscreen { width: 100vw; }
   .s\:hscreen { height: 100vh; }
   .s\:max { max-width: 100%; }
   
   @for $i from 2 to 38 by 2 {
     .s\:w$(i)   { width: $(i)rem }
+    .s\:h$(i)   { height: $(i)rem }
     .s\:max$(i) { max-width: $(i)rem }
     .s\:min$(i) { min-width: $(i)rem }
+  }
+  @for $i from 40 to 80 by 10 {
+    .s\:h$(i)   { height: $(i)rem }
   }
   @for $i from 40 to 160 by 10 {
     .s\:w$(i)   { width: $(i)rem }
@@ -589,15 +597,19 @@ html.touch .touch-hide { display: none }
     height: 100vh;
   }
   .m\:wmax { width: 100%; }
-  .m\:hmax { width: 100%; }
+  .m\:hmax { height: 100%; }
   .m\:wscreen { width: 100vw; }
   .m\:hscreen { height: 100vh; }
   .m\:max { max-width: 100%; }
   
   @for $i from 2 to 38 by 2 {
     .m\:w$(i)   { width: $(i)rem }
+    .m\:h$(i)   { height: $(i)rem }
     .m\:max$(i) { max-width: $(i)rem }
     .m\:min$(i) { min-width: $(i)rem }
+  }
+  @for $i from 40 to 80 by 10 {
+    .m\:h$(i)   { height: $(i)rem }
   }
   @for $i from 40 to 160 by 10 {
     .m\:w$(i)   { width: $(i)rem }
@@ -612,15 +624,19 @@ html.touch .touch-hide { display: none }
     height: 100vh;
   }
   .l\:wmax { width: 100%; }
-  .l\:hmax { width: 100%; }
+  .l\:hmax { height: 100%; }
   .l\:wscreen { width: 100vw; }
   .l\:hscreen { height: 100vh; }
   .l\:max { max-width: 100%; }
   
   @for $i from 2 to 38 by 2 {
     .l\:w$(i)   { width: $(i)rem }
+    .l\:h$(i)   { height: $(i)rem }
     .l\:max$(i) { max-width: $(i)rem }
     .l\:min$(i) { min-width: $(i)rem }
+  }
+  @for $i from 40 to 80 by 10 {
+    .l\:h$(i)   { height: $(i)rem }
   }
   @for $i from 40 to 160 by 10 {
     .l\:w$(i)   { width: $(i)rem }
@@ -635,15 +651,19 @@ html.touch .touch-hide { display: none }
     height: 100vh;
   }
   .xl\:wmax { width: 100%; }
-  .xl\:hmax { width: 100%; }
+  .xl\:hmax { height: 100%; }
   .xl\:wscreen { width: 100vw; }
   .xl\:hscreen { height: 100vh; }
   .xl\:max { max-width: 100%; }
   
   @for $i from 2 to 38 by 2 {
     .xl\:w$(i)   { width: $(i)rem }
+    .xl\:h$(i)   { height: $(i)rem }
     .xl\:max$(i) { max-width: $(i)rem }
     .xl\:min$(i) { min-width: $(i)rem }
+  }
+  @for $i from 40 to 80 by 10 {
+    .xl\:h$(i)   { height: $(i)rem }
   }
   @for $i from 40 to 160 by 10 {
     .xl\:w$(i)   { width: $(i)rem }

@@ -136,7 +136,7 @@
  * @since 2025-07-17
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 /**
  * Sticky scroll behavior controller with events.
@@ -172,7 +172,6 @@ class Sticky {
      */
     this._initialized = false;
 
-    this._initObserver();
   }
 
   /**
@@ -180,6 +179,10 @@ class Sticky {
    * @private
    */
   _initObserver() {
+    if (typeof window === 'undefined' || typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
     if (!('IntersectionObserver' in window)) {
       console.warn('sticky: IntersectionObserver is not supported');
       return;
@@ -232,6 +235,12 @@ class Sticky {
    * Initializes observation of `.sticky` elements.
    */
   init() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
+    if (!this._observer) {
+      this._initObserver();
+    }
+
     if (!this._observer) {
       console.warn('sticky.init: IntersectionObserver is not available');
       return;

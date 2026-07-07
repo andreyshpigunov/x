@@ -142,7 +142,7 @@
  * @since 2025-07-18
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 export class Slider {
   constructor() {
@@ -210,8 +210,10 @@ export class Slider {
         target.removeEventListener('touchmove',  data.events.touchmove,  true);
         target.removeEventListener('touchend',   data.events.touchend,   true);
         target.removeEventListener('touchcancel',data.events.touchcancel,true);
+        if (data.events.firstTouch) target.removeEventListener('touchstart', data.events.firstTouch, true);
       } else {
         el.removeEventListener('mousemove', data.events.mousemove);
+        if (data.events.firstHover) el.removeEventListener('mouseenter', data.events.firstHover);
         if (data.events.mouseout) el.removeEventListener('mouseleave', data.events.mouseout);
         if (data.events.mouseenter) el.removeEventListener('mouseenter', data.events.mouseenter);
         if (data.events.resize) {
@@ -474,6 +476,7 @@ export class Slider {
           loadAllImages();
           el.removeEventListener('touchstart', firstTouch);
         };
+        events.firstTouch = firstTouch;
         el.addEventListener('touchstart', firstTouch, { passive:false, capture:true });
 
         events.touchstart = e => {
@@ -532,6 +535,7 @@ export class Slider {
           loadAllImages();
           el.removeEventListener('mouseenter', firstHover);
         };
+        events.firstHover = firstHover;
         el.addEventListener('mouseenter', firstHover);
 
         events.mousemove = e => {
@@ -549,7 +553,8 @@ export class Slider {
           }
         };
         el.addEventListener('mousemove', events.mousemove);
-        el.addEventListener('mouseenter', e => events.mousemove(e));
+        events.mouseenter = e => events.mousemove(e);
+        el.addEventListener('mouseenter', events.mouseenter);
 
         if (resetOnMouseout) {
           events.mouseout = () => setSlide(0,true);

@@ -116,7 +116,7 @@
  * @since 2025-07-18
  */
 
-import { lib } from './lib';
+import { lib } from './lib.js';
 
 /**
  * Scroll utility class.
@@ -129,9 +129,9 @@ class Scroll {
   constructor() {
     /**
      * Default scroll parent. Can be window or a DOM element.
-     * @type {Window|HTMLElement}
+     * @type {Window|HTMLElement|null}
      */
-    this.parent = window;
+    this.parent = null;
 
     /**
      * Default offset in pixels.
@@ -172,6 +172,13 @@ class Scroll {
     this._scrollHandlers = new Map();
 
     /**
+     * Click event handlers for cleanup.
+     * @type {Map<HTMLElement, Function>}
+     * @private
+     */
+    this._clickHandlers = new Map();
+
+    /**
      * Initialization flag to prevent duplicate setup.
      * @type {boolean}
      * @private
@@ -201,8 +208,14 @@ class Scroll {
    * Safe to call multiple times.
    */
   init() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
     if (this._initialized) {
       this.destroy();
+    }
+
+    if (!this.parent) {
+      this.parent = window;
     }
 
     const links = lib.qsa('[x-scrollto]');
@@ -302,7 +315,7 @@ class Scroll {
 
           this._linksHash[id] = item;
 
-          link.addEventListener('click', event => {
+          const clickHandler = event => {
             event.preventDefault();
             this.scrollTo({
               parent: item.parent,
@@ -311,7 +324,10 @@ class Scroll {
               classActive: item.classActive,
               hash: item.hash
             });
-          });
+          };
+
+          this._clickHandlers.set(link, clickHandler);
+          link.addEventListener('click', clickHandler);
         }
       } catch (err) {
         console.error('scroll.init: Error processing link', link, err);
@@ -330,11 +346,18 @@ class Scroll {
    * Safe to call multiple times.
    */
   destroy() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
     for (const [parent, handler] of this._scrollHandlers.entries()) {
       parent.removeEventListener('scroll', handler);
     }
 
+    for (const [link, handler] of this._clickHandlers.entries()) {
+      link.removeEventListener('click', handler);
+    }
+
     this._scrollHandlers.clear();
+    this._clickHandlers.clear();
     this._linksHash = {};
     this._initialized = false;
   }

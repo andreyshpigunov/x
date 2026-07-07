@@ -41,7 +41,7 @@
   </div>
 
   <section class="section-header mt8 px5 m:px6 l:px8" x-appear>
-    <h1 class="mxa ac max800">Small and simple CSS & JavaScript library with interesting features</h1>
+    <h1 class="mxa ac max80">Small and simple CSS & JavaScript library with interesting features</h1>
 
     <div class="flex">
       <div class="mt4">
@@ -199,26 +199,51 @@
         </div>
 
         <div class="c1">
+          <h3><a class="link" x-modal-open="modalAutocomplete">Autocomplete</a></h3>
+          <div>Async suggestions for dropdown inputs.</div>
+          <div class="mt2" id="autocompleteExample">
+            <input x-dropdown-open type="text" placeholder="Type app name" />
+            <ul x-dropdown></ul>
+          </div>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const autocompleteData = [
+                { id: 1, name: 'Animate' },
+                { id: 2, name: 'Autocomplete' },
+                { id: 3, name: 'Dropdown' },
+                { id: 4, name: 'Modal' },
+                { id: 5, name: 'Slider' }
+              ];
+              x.autocomplete.init('autocompleteExample', {
+                loadData: async (ctx) => autocompleteData.filter(item => item.name.toLowerCase().includes(ctx.field.value.trim().toLowerCase())),
+                renderItem: (item) => `<li data-item='${JSON.stringify(item)}'>${item.name}</li>`,
+                onSelect: (item) => x.form.setValue('#autocompleteExample input', item.name)
+              });
+            })
+          </script>
+        </div>
+
+        <div class="c1">
           <h3><a class="link" x-modal-open="modalForm">Form</a></h3>
           <div>Form fields binding.</div>
           <div class="flex aic gap2 my2">
-            <input class="max160" type="text" name="exampleText" placeholder="Type something" />
+            <input class="max16" type="text" name="exampleText" placeholder="Type something" />
             <span class="jsExampleTextValue m2">...</span>
           </div>
           <div>Simple calculator</div>
           <div class="my2">
-            <input class="max40 ac" name="exampleVal1" type="text" value="2" maxlength="1" pattern="[0-9]{1}" /> +
-            <input class="max40 ac" name="exampleVal2" type="text" value="2" maxlength="1" pattern="[0-9]{1}" /> =
-            <input class="max40 ac" name="exampleSum" type="text" pattern="[0-9]{1}" readonly />
+            <input class="max4 ac" name="exampleVal1" type="text" value="2" maxlength="1" pattern="[0-9]{1}" /> +
+            <input class="max4 ac" name="exampleVal2" type="text" value="2" maxlength="1" pattern="[0-9]{1}" /> =
+            <input class="max4 ac" name="exampleSum" type="text" pattern="[0-9]{1}" readonly />
           </div>
           <div>Custom logic</div>
           <div class="my2">
-            <select class="max80" name="exampleSelect">
+            <select class="max8" name="exampleSelect">
               <option value="1">One</option>
               <option value="2">Two</option>
               <option value="3">Three</option>
             </select> →
-            <input class="max60" type="text" name="exampleSelectValue" />
+            <input class="max6" type="text" name="exampleSelectValue" />
           </div>
           <div class="flex aic gap2">
             <label><input id="radio1" type="radio" name="exampleSelectRadio" value="1" /> 1</label>
@@ -274,7 +299,7 @@
             })
           </script>
 
-          <div x-modal="modalForm" class="modal_hash" data-window-class="max1000">
+          <div x-modal="modalForm" class="modal_hash" data-window-class="max100">
             <h2>Form</h2>
 
             <p>Useful utilities for forms interactivity.</p>
@@ -311,6 +336,14 @@
                     <code>callback</code> — callback function
                   </td>
                 </tr>
+                <tr>
+                  <td><code>x.form.offUpdate(element)</code></td>
+                  <td>Remove update listener from selector or element.</td>
+                </tr>
+                <tr>
+                  <td><code>x.form.destroy()</code></td>
+                  <td>Remove all form update listeners registered by x.form.</td>
+                </tr>
               </table>
             </div>
           </div>
@@ -337,7 +370,21 @@
           <h3><a class="link" x-modal-open="modalLazyload">Lazyload</a></h3>
           <div>Image loaded lazy.</div>
           <div class="mt2">
-            <img class="br3" src="https://seosecret.id/placeholder/800x600/ffffff/584959/Loading.../png" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
+            <img class="br3" src="assets/img/alpha.png" x-lazyload data-src="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg" data-srcset="https://anapa-surfing.ru/-/data/articles/photos/416/800x600q80c/img-0426.jpg 1x" width="800" height="600" />
+          </div>
+        </div>
+
+        <div class="c1">
+          <h3><a class="link" x-modal-open="modalSticky">Sticky</a></h3>
+          <div>Tracks sticky state and toggles <code>.sticky_on</code>.</div>
+          <div class="mt2 fs14">The page header and modal navigation bars use it.</div>
+        </div>
+
+        <div class="c1">
+          <h3><a class="link" x-modal-open="modalTypograf">Typograf</a></h3>
+          <div>Text cleanup for quotes, dashes, fractions and short-word spaces.</div>
+          <div class="mt2">
+            <code>x.typograf.process('"Hello" - 1/2')</code>
           </div>
         </div>
 
@@ -386,7 +433,7 @@
               <h2>Posts</h2>
             </div>
             <div id="postsLoader" class="flex jcc py5">
-              <div class="max100">
+              <div class="max10">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><circle fill="none" stroke-opacity="1" stroke="#888888" stroke-width=".5" cx="100" cy="100" r="0"><animate attributeName="r" calcMode="spline" dur="2" values="1;80" keyTimes="0;1" keySplines="0 .2 .5 1" repeatCount="indefinite"></animate><animate attributeName="stroke-width" calcMode="spline" dur="2" values="0;25" keyTimes="0;1" keySplines="0 .2 .5 1" repeatCount="indefinite"></animate><animate attributeName="stroke-opacity" calcMode="spline" dur="2" values="1;0" keyTimes="0;1" keySplines="0 .2 .5 1" repeatCount="indefinite"></animate></circle></svg>
               </div>
             </div>
@@ -721,7 +768,7 @@
 
 
   <section class="mt7 px5 m:px6 l:px8">
-    <div class="container max1000">
+    <div class="container max100">
       <div class="grid g1 m:g2 gap6">
         <div class="c1 ac">
           <h2>CSS</h2>
@@ -732,7 +779,7 @@
             <li><a class="link" x-modal-open="modalLinks">Links</a></li>
             <li><a class="link" x-modal-open="modalTypo">Typo</a></li>
             <li><a class="link" x-modal-open="modalForms">Forms</a></li>
-            <li><a class="link" x-modal-open="modalHelpers">Helpers</a></li>
+            <li><a class="link" x-modal-open="modalHelpers">Lib</a></li>
             <li><a class="link" x-modal-open="modalButtons">Buttons</a></li>
             <li><a class="link" x-modal-open="modalGrid">Grid</a></li>
             <li><a class="link" x-modal-open="modalFlex">Flex</a></li>
@@ -745,6 +792,7 @@
           <h2>JS</h2>
           <ul class="reset fs18 flow s1" style="column-count:2">
             <li><a class="link" x-modal-open="modalAnimate">Animate</a></li>
+            <li><a class="link" x-modal-open="modalAutocomplete">Autocomplete</a></li>
             <li><a class="link" x-modal-open="modalAppear">Appear</a></li>
             <li><a class="link" x-modal-open="modalDevice">Device</a></li>
             <li><a class="link" x-modal-open="modalForm">Form</a></li>
@@ -757,12 +805,11 @@
             <li><a class="link" x-modal-open="modalSheets">Sheets</a></li>
             <li><a class="link" x-modal-open="modalSlider">Slider</a></li>
             <li><a class="link" x-modal-open="modalSticky">Sticky</a></li>
+            <li><a class="link" x-modal-open="modalTypograf">Typograf</a></li>
           </ul>
         </div>
         <div class="c1 m:c2 ac fw600 flex fc m:fr jcc gap2">
-          <div>⚠️</div>
-          <div>Documentation in progress, read details in code</div>
-          <div>⚠️</div>
+          <div>Documentation in progress, read details in <a class="link" href="docs.html">docs.html</a> or code</div>
         </div>
       </div>
     </div>
@@ -783,10 +830,10 @@
   </div>
 
   <section class="section-content mt7 px5 m:px6 l:px8">
-    <div class="container max700">
+    <div class="container max70">
 
       <h3>HTML</h3>
-      <p>Manually download <a class="button button_label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js">x.js</a> and <a class="button button_label" href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">x.css</a> and connect them in HTML.</p>
+      <p>Manually download <a class="button button_label" href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.js">x.js</a> and <a class="button button_label" href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.css">x.css</a> and connect them in HTML.</p>
       <p>In the <code>&lt;head&gt;</code> tag, as first style.</p>
       <div class="codeBlock">
         <code>&lt;link rel="stylesheet" href="x.css"/&gt;</code>
@@ -816,14 +863,14 @@
       <hr class="my7" />
       <h3>CDN links</h3>
       <p class="breakWord">
-        Latest release:<br>
-        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@0.4/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@0.4/dist/x.css</a><br>
-        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@0.4/dist/x.js">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@0.4/dist/x.js</a>
+        Current release:<br>
+        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.31/dist/x.css">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.31/dist/x.css</a><br>
+        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.31/dist/x.js">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.31/dist/x.js</a>
       </p>
       <p class="breakWord">
-        Latest build:<br>
-        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.css</a><br>
-        <a href="https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js">https://cdn.jsdelivr.net/gh/andreyshpigunov/x@latest/dist/x.js</a>
+        Latest release:<br>
+        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.css">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.css</a><br>
+        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.js">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.js</a>
       </p>
 
       <hr class="my7" />
@@ -836,7 +883,7 @@
   </section>
 
 
-  <div x-modal="modalBreakpoints" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalBreakpoints" class="modal_hash" data-window-class="max100">
       <h2>Breakpoints</h2>
       <p>Mobile first breakpoints</p>
       <p>
@@ -869,7 +916,7 @@
   </div>
 
 
-  <div x-modal="modalReset" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalReset" class="modal_hash" data-window-class="max100">
     <h2>Reset</h2>
     <p>Global styles reset and base variables.</p>
 
@@ -885,7 +932,7 @@
   </div>
 
 
-  <div x-modal="modalSpaces" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalSpaces" class="modal_hash" data-window-class="max100">
     <h2>Spaces</h2>
     <p>Global spaces.</p>
     <p class="fs12">
@@ -909,7 +956,7 @@
   </div>
 
 
-  <div x-modal="modalLinks" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalLinks" class="modal_hash" data-window-class="max100">
     <h2>Links</h2>
     <p>Links styling.</p>
 
@@ -954,7 +1001,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalIcons" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalIcons" class="modal_hash" data-window-class="max100">
     <h2>Icons</h2>
     <div class="mt6">
       <pre class="fs14 mono">.icon - icon with default size 1em
@@ -963,7 +1010,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalColors" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalColors" class="modal_hash" data-window-class="max100">
     <h2>Colors</h2>
     <div class="mt6">
       <pre class="fs14 mono"><span class="textPrimary">.colorPrimary</span>
@@ -985,7 +1032,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalTypo" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalTypo" class="modal_hash" data-window-class="max100">
     <h2>Typo</h2>
 
     <h3>Elements</h3>
@@ -1035,7 +1082,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalForms" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalForms" class="modal_hash" data-window-class="max100">
     <h2>Forms</h2>
     <p>Form elements.</p>
 
@@ -1069,7 +1116,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalButtons" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalButtons" class="modal_hash" data-window-class="max100">
     <h2>Buttons</h2>
 
     <div class="flow s4">
@@ -1166,7 +1213,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalFlex" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalFlex" class="modal_hash" data-window-class="max100">
     <h2>Flex</h2>
     <p>Flexbox.</p>
 
@@ -1197,7 +1244,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalGrid" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalGrid" class="modal_hash" data-window-class="max100">
     <h2>Grid</h2>
     <p>Multicolumn adaptive grid (1–12 columns).</p>
 
@@ -1210,7 +1257,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalFlow" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalFlow" class="modal_hash" data-window-class="max100">
     <h2>Flow</h2>
     <p>Vertical flow of elements with equal spaces between them.</p>
 
@@ -1223,12 +1270,13 @@ a.link_wavy</pre>
 
 
 
-  <div x-modal="modalHelpers" class="modal_hash" data-window-class="max1000">
-    <h2>Helpers</h2>
-    <p>Helper classes.</p>
+  <div x-modal="modalHelpers" class="modal_hash" data-window-class="max100">
+    <h2>Lib</h2>
+    <p>Utility classes for layout, visibility, sizing, spacing, typography and small UI states.</p>
 
     <h3>Elements</h3>
     <pre class="fs14 mono">
+.antialiased
 .container
 .unselectable
 .unclickable
@@ -1237,162 +1285,152 @@ a.link_wavy</pre>
 .capitalize
 .nowrap
 .hyphens
-.pointer    | cursor pointer
-.toe        | text overflow ellipsis
-.toe2       | toe 2 lines
-.toe3       | toe 3 lines
-.oh         | overflow hidden
-.touch-show | show on touch devices
-.touch-hide | hide on touch devices
-.rel        | position relative
-.abs        | position absolute
-.ins        | position absolute inset 0
+.pointer
+.toe       | text overflow ellipsis
+.lc[1-5]   (m,l,xl) | line clamp
+.oh        | overflow hidden
+.touch-show
+.touch-hide
+.fix
+.rel
+.abs
+.inset
+.fill
 
-.fit-none (m,l,xl)    | object fit none
-.fit-cover (m,l,xl)   | object fit cover
-.fit-contain (m,l,xl) | object fit containt
+.fit-none    (s,m,l,xl)
+.fit-cover   (s,m,l,xl)
+.fit-contain (s,m,l,xl)
 
-.t[0-10] (m,l,xl)  | top
-.b[0-10] (m,l,xl)  | bottom
-.z[0-10] (m,l,xl)  | z-index
-.op[0-10] (m,l,xl) | opacity
+.t[0-10][n] (s,m,l,xl) | top
+.b[0-10][n] (s,m,l,xl) | bottom
+.l[0-10][n] (s,m,l,xl) | left
+.r[0-10][n] (s,m,l,xl) | right
+.z[0-10]    (s,m,l,xl) | z-index
+.op[0-10]                | opacity
 
-.ratio1x1 (m,l,xl)
-.ratio2x1 (m,l,xl)
-.ratio3x1 (m,l,xl)
-.ratio4x1 (m,l,xl)
-.ratio3x2 (m,l,xl)
-.ratio4x3 (m,l,xl)
-.ratio16x9 (m,l,xl)
-.ratio1x2 (m,l,xl)
-.ratio1x3 (m,l,xl)
-.ratio1x4 (m,l,xl)
-.ratio2x3 (m,l,xl)
-.ratio3x4 (m,l,xl)
-.ratio9x16 (m,l,xl)
+.ratio1x1   (s,m,l,xl)
+.ratio2x1   (s,m,l,xl)
+.ratio3x1   (s,m,l,xl)
+.ratio4x1   (s,m,l,xl)
+.ratio3x2   (s,m,l,xl)
+.ratio4x3   (s,m,l,xl)
+.ratio16x9  (s,m,l,xl)
+.ratio1x2   (s,m,l,xl)
+.ratio1x3   (s,m,l,xl)
+.ratio1x4   (s,m,l,xl)
+.ratio2x3   (s,m,l,xl)
+.ratio3x4   (s,m,l,xl)
+.ratio9x16  (s,m,l,xl)
 
 .breakWord
 .visuallyHidden
 .invisible
-.scrollResponsive
+.scroll-responsive
 
-.hidden     =(s,m,l-xl)
-.hiddenNext =(s,m,l-xl)
+.hidden      (s,m,l,xl)
+.hidden-next (s,m,l,xl)
+.block       (s,m,l,xl)
+.inline      (s,m,l,xl)
+.inlineBlock (s,m,l,xl)
+.table       (s,m,l,xl)
+.flex        (s,m,l,xl)
+.grid        (s,m,l,xl)
 
-.fulscreen | min width and min height 100vw/vh
+.fullscreen
+.wmax
+.hmax
+.wscreen
+.hscreen
+.max         (s,m,l,xl)
 
-.max (m,l,xl)  | max width 100%
+.w[2-38] step 2     (s,m,l,xl)
+.w[40-160] step 10  (s,m,l,xl)
+.h[2-38] step 2     (s,m,l,xl)
+.h[40-80] step 10   (s,m,l,xl)
+.max[2-38] step 2   (s,m,l,xl)
+.max[40-160] step 10 (s,m,l,xl)
+.min[2-38] step 2   (s,m,l,xl)
+.min[40-160] step 10 (s,m,l,xl)
 
-.w[10-190] step 10    (m,l,xl) | width
-.w[200-380] step 20   (m,l,xl)
-.w[400-1600] step 100 (m,l,xl)
+.al (s,m,l,xl)
+.ar (s,m,l,xl)
+.ac (s,m,l,xl)
+.aj (s,m,l,xl)
 
-.max[10-190] step 10    (m,l,xl) | max width
-.max[200-380] step 20   (m,l,xl)
-.max[400-1600] step 100 (m,l,xl)
+.m[0-12][n]  (s,m,l,xl)
+.mx[0-12][n] (s,m,l,xl)
+.my[0-12][n] (s,m,l,xl)
+.mt[0-12][n] (s,m,l,xl)
+.mb[0-12][n] (s,m,l,xl)
+.ml[0-12][n] (s,m,l,xl)
+.mr[0-12][n] (s,m,l,xl)
+.ma           (s,m,l,xl)
+.mxa          (s,m,l,xl)
+.mya          (s,m,l,xl)
+.mta          (s,m,l,xl)
+.mba          (s,m,l,xl)
+.mla          (s,m,l,xl)
+.mra          (s,m,l,xl)
 
-.min[10-190] step 10    (m,l,xl) | min width
-.min[200-380] step 20   (m,l,xl)
-.min[400-1600] step 100 (m,l,xl)
+.p[0-12]    (s,m,l,xl)
+.px[0-12]   (s,m,l,xl)
+.py[0-12]   (s,m,l,xl)
+.pt[0-12]   (s,m,l,xl)
+.pb[0-12]   (s,m,l,xl)
+.pl[0-12]   (s,m,l,xl)
+.pr[0-12]   (s,m,l,xl)
+.gap[0-12]  (s,m,l,xl)
+.gapx[0-12] (s,m,l,xl)
+.gapy[0-12] (s,m,l,xl)
 
-.block       (m,l,xl)
-.inline      (m,l,xl)
-.inlineBlock (m,l,xl)
+.br[0-12] (s,m,l,xl)
+.br100    (s,m,l,xl)
+.sh[0-5]  (s,m,l,xl)
+.o[0-10]  (s,m,l,xl)
 
-.al (m,l,xl) | aligh left
-.ar (m,l,xl) | align right
-.ac (m,l,xl) | align center
-.aj (m,l,xl) | align justify
-
-.m[0-10]  (m,l,xl)  | margin
-.mx[0-10] (m,l,xl) | margin x
-.my[0-10] (m,l,xl) | margin y
-.mt[0-10] (m,l,xl) | margin top
-.mb[0-10] (m,l,xl) | margin bottom
-.ml[0-10] (m,l,xl) | margin left
-.mr[0-10] (m,l,xl) | margin right
-
-.ma  (m,l,xl)  | margin auto
-.mxa (m,l,xl)
-.mya (m,l,xl)
-.mta (m,l,xl)
-.mba (m,l,xl)
-.mla (m,l,xl)
-.mra (m,l,xl)
-
-.p[0-10]  (m,l,xl) | padding
-.px[0-10] (m,l,xl) | padding x
-.py[0-10] (m,l,xl) | padding y
-.pt[0-10] (m,l,xl) | padding top
-.pb[0-10] (m,l,xl) | padding bottom
-.pl[0-10] (m,l,xl) | padding left
-.pr[0-10] (m,l,xl) | padding right
-
-.gap[0-10]  (m,l,xl)
-.gapx[0-10] (m,l,xl)
-.gapy[0-10] (m,l,xl)
-
-.r[0-10] (m,l,xl) | radius
-.r100    (m,l,xl) | radius 100%
-
-.sh[0-10] (m,l) | shadow
-
-.o[0-12] (m,l,xl) | order
-.noPrint</pre>
+.mono
+.italic
+.strike
+.fs[10-19] step 1    (m,l,xl)
+.fs[20-100] step 2   (m,l,xl)
+.fw[100-900] step 100 (m,l,xl)
+.ls[0-4] (m,l,xl)
+.lh[0-9] (m,l,xl)
+.no-print</pre>
 
     <h3>Variables</h3>
     <pre class="fs14 mono">
---container-max-width: 1600px;
+--container-max-width: 160rem;
 
---shadow-1:  0 2px 4px #00000018;
---shadow-2:  0 4px 8px #00000018;
---shadow-3:  0 6px 12px #00000018;
---shadow-4:  0 8px 16px #00000018;
---shadow-5:  0 10px 20px #00000018;
---shadow-6:  0 12px 24px #00000018;
---shadow-7:  0 14px 28px #00000018;
---shadow-8:  0 16px 32px #00000018;
---shadow-9:  0 18px 36px #00000018;
---shadow-10: 0 20px 40px #00000018;</pre>
+--shadow-1: 0 1px 2px #00000012, 0 1px 1px #0000000a;
+--shadow-2: 0 2px 6px #00000014, 0 1px 2px #0000000c;
+--shadow-3: 0 6px 16px #00000016, 0 2px 4px #0000000c;
+--shadow-4: 0 12px 32px #00000018, 0 4px 8px #0000000e;
+--shadow-5: 0 20px 48px #0000001a, 0 8px 16px #00000010;</pre>
 
     <h3>Shadows</h3>
     <div class="grid g1 m:g2 l:g3 gap6">
-      <div class="c1 p6 r4 sh1">
-        --shadow-1
+      <div class="c1 p6 br4 sh1">
+        .sh1
       </div>
-      <div class="c1 p6 r4 sh2">
-        --shadow-2
+      <div class="c1 p6 br4 sh2">
+        .sh2
       </div>
-      <div class="c1 p6 r4 sh3">
-        --shadow-3
+      <div class="c1 p6 br4 sh3">
+        .sh3
       </div>
-      <div class="c1 p6 r4 sh4">
-        --shadow-4
+      <div class="c1 p6 br4 sh4">
+        .sh4
       </div>
-      <div class="c1 p6 r4 sh5">
-        --shadow-5
-      </div>
-      <div class="c1 p6 r4 sh6">
-        --shadow-6
-      </div>
-      <div class="c1 p6 r4 sh7">
-        --shadow-7
-      </div>
-      <div class="c1 p6 r4 sh8">
-        --shadow-8
-      </div>
-      <div class="c1 p6 r4 sh9">
-        --shadow-9
-      </div>
-      <div class="c1 p6 r4 sh10">
-        --shadow-10
+      <div class="c1 p6 br4 sh5">
+        .sh5
       </div>
     </div>
   </div>
 
 
 
-  <div x-modal="modalModal" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalModal" class="modal_hash" data-window-class="max100">
     <h2>Modals</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1619,7 +1657,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalScroll" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalScroll" class="modal_hash" data-window-class="max100">
     <h2>Scroll</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1726,7 +1764,7 @@ a.link_wavy</pre>
     </div>
   </div>
 
-  <div x-modal="modalAnimate" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalAnimate" class="modal_hash" data-window-class="max100">
     <h2>Animate</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1816,7 +1854,7 @@ a.link_wavy</pre>
     </div>
   </div>
 
-  <div x-modal="modalSheets" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalSheets" class="modal_hash" data-window-class="max100">
     <h2>Sheets</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1877,7 +1915,7 @@ a.link_wavy</pre>
 
   </div>
 
-  <div x-modal="modalLoadmore" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalLoadmore" class="modal_hash" data-window-class="max100">
     <h2>Loadmore</h2>
 
     <nav class="modalNavigation sticky unselectable">
@@ -1938,7 +1976,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalLazyload" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalLazyload" class="modal_hash" data-window-class="max100">
     <h2>Lazyload</h2>
 
     <p>Отложенная загрузка изображений.</p>
@@ -1959,7 +1997,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalAppear" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalAppear" class="modal_hash" data-window-class="max100">
     <h2>Appear</h2>
 
     <p>Добавляет классы <code>.appeared</code> и <code>.visible</code> на элементе, появившемся в зоне видимости.</p>
@@ -1973,7 +2011,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalHover" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalHover" class="modal_hash" data-window-class="max100">
     <h2>Hover</h2>
 
     <p>Синхронизирует наведение <code>.hover</code> у отдельно расположенных элементов, имеющих общую ссылку. Для активации элементам нужно добавить класс <code>.syncHover</code>.</p>
@@ -1996,7 +2034,7 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalDevice" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalDevice" class="modal_hash" data-window-class="max100">
     <h2>Device</h2>
 
     <p>Определяет устройство и браузер пользователя.</p>
@@ -2031,7 +2069,113 @@ a.link_wavy</pre>
   </div>
 
 
-  <div x-modal="modalLib" class="modal_hash" data-window-class="max1000">
+  <div x-modal="modalAutocomplete" class="modal_hash" data-window-class="max100">
+    <h2>Autocomplete</h2>
+
+    <p>Autocomplete builds a searchable dropdown from local or async data. It works with the same markup as Dropdown: a wrapper with an id, a field marked with <code>x-dropdown-open</code>, and a list marked with <code>x-dropdown</code>.</p>
+
+    <h3>Markup</h3>
+    <div class="codeBlock">
+      <code>&lt;div id="searchDropdown"&gt;</code>
+      <code>  &lt;input x-dropdown-open type="text" placeholder="Search..." /&gt;</code>
+      <code>  &lt;ul x-dropdown&gt;&lt;/ul&gt;</code>
+      <code>&lt;/div&gt;</code>
+    </div>
+
+    <h3>API</h3>
+    <div class="scroll">
+      <table class="dataTable">
+        <tr>
+          <th>Method</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><code>x.autocomplete.init(dropdownId, options)</code></td>
+          <td>Bind autocomplete behavior to wrapper id.</td>
+        </tr>
+        <tr>
+          <td><code>x.autocomplete.destroy(dropdownId)</code></td>
+          <td>Destroy one instance. Without id destroys all instances.</td>
+        </tr>
+        <tr>
+          <td><code>x.autocomplete.get(dropdownId)</code></td>
+          <td>Return an initialized instance.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Options</h3>
+    <p><code>loadData(ctx)</code>, <code>mapData(data)</code>, <code>renderItem(item)</code>, <code>onSelect(item)</code>, <code>resetFunc()</code>, <code>defaultStateHtml</code>, <code>loadingStateHtml</code>, <code>emptyStateHtml</code>.</p>
+  </div>
+
+
+  <div x-modal="modalSticky" class="modal_hash" data-window-class="max100">
+    <h2>Sticky</h2>
+
+    <p>Sticky observes elements with <code>.sticky</code>. When an element starts sticking, the component adds <code>.sticky_on</code> and dispatches <code>sticky:on</code>. When it returns to normal visibility, it removes the class and dispatches <code>sticky:off</code>.</p>
+
+    <h3>Markup</h3>
+    <div class="codeBlock">
+      <code>&lt;header class="sticky t0"&gt;...&lt;/header&gt;</code>
+      <code>&lt;script&gt;x.sticky.init()&lt;/script&gt;</code>
+    </div>
+
+    <h3>API</h3>
+    <div class="scroll">
+      <table class="dataTable">
+        <tr>
+          <th>Method</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><code>x.sticky.init()</code></td>
+          <td>Observe all <code>.sticky</code> elements. Called by <code>x.init()</code>.</td>
+        </tr>
+        <tr>
+          <td><code>x.sticky.reset()</code></td>
+          <td>Stop observing current sticky elements and clear observation flags.</td>
+        </tr>
+        <tr>
+          <td><code>x.sticky.destroy()</code></td>
+          <td>Disconnect observer and reset component state.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+
+  <div x-modal="modalTypograf" class="modal_hash" data-window-class="max100">
+    <h2>Typograf</h2>
+
+    <p>Typograf processes text and HTML fragments: replaces three dots with ellipsis, straight quotes with «елочки», hyphen ranges with minus, simple fractions with Unicode fractions, and adds non-breaking spaces after short words.</p>
+
+    <h3>API</h3>
+    <div class="scroll">
+      <table class="dataTable">
+        <tr>
+          <th>Method</th>
+          <th>Description</th>
+        </tr>
+        <tr>
+          <td><code>x.typograf.process(html)</code></td>
+          <td>Return processed HTML string. Skips <code>code</code>, <code>pre</code>, <code>script</code>, <code>style</code>.</td>
+        </tr>
+        <tr>
+          <td><code>x.typograf.live(staticSelector, interactiveSelector, root)</code></td>
+          <td>Process static text and attach live processing to inputs, textareas and contenteditable elements.</td>
+        </tr>
+      </table>
+    </div>
+
+    <h3>Example</h3>
+    <div class="codeBlock">
+      <code>x.typograf.process('"Hello" - 1/2...')</code>
+      <code>// «Hello» — ½…</code>
+    </div>
+  </div>
+
+
+  <div x-modal="modalLib" class="modal_hash" data-window-class="max100">
 
     <h2>Lib</h2>
 
@@ -2096,27 +2240,27 @@ a.link_wavy</pre>
       <code>x.lib.numberDecline(10, 'час', 'часа', 'часов') -> 10 часов</code>
     </div>
 
-    <h4><code class="fs16">x.lib.addClass(element, readyClass = 'ready', activeClass = 'active', delay = 50)
+    <h4><code class="fs16">x.lib.addClass(element, className, delay = 0)
       </code></h4>
     <p>Последовательное добавление класса. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация.</p>
     <p>Пример:</p>
     <div class="codeBlock">
-      <code>x.lib.addClass('.product-info', 'ready', 'show')</code>
+      <code>x.lib.addClass('.product-info', 'show', 50)</code>
     </div>
-    <p>Добавляет элементу <code>.product-info</code> сначала класс <code>.ready</code>, а через 50 мс (по умолчанию) класс <code>.show</code>.</p>
+    <p>Добавляет элементу <code>.product-info</code> класс <code>.show</code>. Если указан delay, перед задержкой добавляется служебный класс <code>.show_ready</code>.</p>
 
-    <h4><code class="fs16">x.lib.removeClass(element, readyClass = 'ready', activeClass = 'active', delay = 200)
+    <h4><code class="fs16">x.lib.removeClass(element, className, delay = 0)
       </code></h4>
     <p>Последовательное удаление класса. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация.</p>
     <p>Пример:</p>
     <div class="codeBlock">
-      <code>x.lib.removeClass('.product-info', 'ready', 'show')</code>
+      <code>x.lib.removeClass('.product-info', 'show', 200)</code>
     </div>
-    <p>У элемента <code>.product-info</code> сначала убирает класс <code>.show</code>, а через 50 мс (по умолчанию) класс <code>.ready</code>.</p>
+    <p>У элемента <code>.product-info</code> сначала убирает <code>.show</code>, а после задержки убирает служебный <code>.show_ready</code>.</p>
 
-    <h4><code class="fs16">x.lib.toggleClass(element, readyClass, activeClass, delayAdd, delayRemove)
+    <h4><code class="fs16">x.lib.toggleClass(element, className, delay = 0)
       </code></h4>
-    <p>Последовательное переключение классов. Иногда удобно использовать, когда требуется задержка, пока не завершится анимация. По очереди запускает <code>addClass</code> и <code>removeClass</code>.</p>
+    <p>Переключает класс. Если элемент уже содержит класс, запускает <code>removeClass</code>, иначе <code>addClass</code>.</p>
 
     <h4><code class="fs16">x.lib.makePassword(length, selector)
       </code></h4>
@@ -2145,11 +2289,11 @@ a.link_wavy</pre>
       <code>)</code>
     </div>
 
-    <h4><code class="fs16">x.lib.runOnAppear(selector, callback, options)</code></h4>
+    <h4><code class="fs16">x.lib.onAppear(selector, appearCallback, disappearCallback = null, options = {})</code></h4>
     <p>Выполнение кода при его появлении во Viewport (по умолчанию ближе чем за 100px за Viewport). Анонимная функция с кодом <code>() => { code }</code> будет запущена при приближении указанного блока к Viewport.</p>
     <p>Пример:</p>
     <div class="codeBlock">
-      <code>x.lib.runOnAppear(</code>
+      <code>x.lib.onAppear(</code>
       <code>  '.css_selector',</code>
       <code>  () => { Code... },</code>
       <code>  options (не обязательно)</code>
@@ -2158,6 +2302,21 @@ a.link_wavy</pre>
 
     <h4><code class="fs16">x.lib.isEmail(email)</code></h4>
     <p>Определяет валидность адреса электропочты.</p>
+
+    <h4><code class="fs16">x.lib.isValidJSON(str)</code></h4>
+    <p>Проверяет, можно ли распарсить строку как JSON.</p>
+
+    <h4><code class="fs16">x.lib.isInteger(value)</code></h4>
+    <p>Проверяет, является ли значение целым числом.</p>
+
+    <h4><code class="fs16">x.lib.isDouble(value)</code></h4>
+    <p>Проверяет, является ли значение числом с дробной частью.</p>
+
+    <h4><code class="fs16">x.lib.throttle(fn, wait, options = {})</code></h4>
+    <p>Ограничивает частоту вызова функции. Поддерживает <code>leading</code>, <code>trailing</code> и метод <code>cancel()</code>.</p>
+
+    <h4><code class="fs16">x.lib.debounce(fn, wait, options = {})</code></h4>
+    <p>Откладывает вызов функции до паузы в событиях. Поддерживает <code>leading</code>, <code>trailing</code> и метод <code>cancel()</code>.</p>
 
     <h4><code class="fs16">x.lib.alertErrors(data)</code></h4>
     <p>
@@ -2172,7 +2331,14 @@ a.link_wavy</pre>
       <code>data</code> — объект (ключ: значение), массив или строка.<br>
       Каждая ошибка будет выведена с новой строки (разделены <code>&lt;br/&gt;</code>).
     </p>
-    <h4><code class="fs16">async render(selector, data, placement = null)</code></h4>
+    <h4><code class="fs16">x.lib.transitionsOff()</code></h4>
+    <p>Временно отключает CSS transitions на странице.</p>
+
+    <h4><code class="fs16">x.lib.transitionsOn(delay = 0)</code></h4>
+    <p>Возвращает transitions после указанной задержки.</p>
+
+    <h4><code class="fs16">async x.lib.render(selector, data, placement = null, escapeHtml = false)</code></h4>
+    <p>Рендерит строку, функцию или async-функцию в один или несколько элементов. Если <code>escapeHtml</code> включён, вставляет безопасный текст вместо HTML.</p>
     <h4><code class="fs16">[x-render]  |  Render JavaScript in 'x-render' attribute</code></h4>
   </div>
 
@@ -2194,7 +2360,7 @@ a.link_wavy</pre>
       </ul>
     </div>
   </div>
-  <script type="module" src="assets/js/app.js"></script>
+  <script src="assets/js/app.js"></script>
 </body>
 
 </html>

@@ -31,7 +31,7 @@ All right reserved.
   display: flex;
   position: relative;
   min-width: 100%;
-  flex: 0 0 100%,
+  flex: 0 0 100%;
 }
 .slider-item a {
   display: block;
