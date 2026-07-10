@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky t0 px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.5.31</div>
+    <div class="header-version nowrap">0.5.32</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/img/logo.png" alt="x" />
@@ -397,6 +397,7 @@
             <span class="jsLibNumberDecline"></span><br>
             x.lib.isEmail('hello@mail.dev') → <span class="jsLibIsEmailTrue"></span><br>
             x.lib.isEmail('hello@mail') → <span class="jsLibIsEmailFalse"></span><br>
+            x.lib.phone('8 (912) 345-67-89') → <span class="jsLibPhone"></span><br>
             x.lib.makePassword(8) → <code class="jsLibMakePassword"></code><br>
           </div>
           <div class="flex gap3 aic mt1">
@@ -413,6 +414,7 @@
                 x.lib.render('.jsLibNumberDecline', random + ' ' + x.lib.numberDecline(random, 'item', 'items', 'items'));
                 x.lib.render('.jsLibIsEmailTrue', x.lib.isEmail('hello@mail.dev') ? 'true' : 'false');
                 x.lib.render('.jsLibIsEmailFalse', x.lib.isEmail('hello@mail') ? 'true' : 'false');
+                x.lib.render('.jsLibPhone', x.lib.phone('8 (912) 345-67-89'));
                 x.lib.render('.jsLibMakePassword', x.lib.makePassword(8))
               }
 
@@ -2238,6 +2240,19 @@ a.link_wavy</pre>
     <p>Пример:</p>
     <div class="codeBlock">
       <code>x.lib.numberDecline(10, 'час', 'часа', 'часов') -> 10 часов</code>
+    </div>
+
+    <h4><code class="fs16">x.lib.phoneCleaner(phone = '')</code></h4>
+    <p>Очищает номер от любых символов, кроме цифр, приводит российский префикс <code>8</code> к <code>7</code> (кроме номеров <code>8 800</code>), добавляет <code>7</code>, если код страны отсутствует, и ограничивает результат 11 цифрами.</p>
+    <div class="codeBlock">
+      <code>x.lib.phoneCleaner('8 (912) 345-67-89') -> 79123456789</code>
+    </div>
+
+    <h4><code class="fs16">x.lib.phone(phone = '')</code></h4>
+    <p>Очищает и форматирует полный телефонный номер. Неполный номер возвращается в очищенном виде.</p>
+    <div class="codeBlock">
+      <code>x.lib.phone('8 (912) 345-67-89') -> +7 912 345-67-89</code>
+      <code>x.lib.phone('8 800 555-35-35') -> 8 800 555-35-35</code>
     </div>
 
     <h4><code class="fs16">x.lib.addClass(element, className, delay = 0)

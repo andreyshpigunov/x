@@ -58,6 +58,8 @@
  *   - price(price) - Format price with thin spaces
  *   - number(num) - Format number with thin spaces
  *   - numberDecline(number, nominative, genitiveSingular, genitivePlural) - Russian declension
+ *   - phoneCleaner(phone) - Normalize a phone number to digits
+ *   - phone(phone) - Normalize and format a phone number
  *
  * Validation:
  *   - isEmail(email) - Validate email format
@@ -99,6 +101,8 @@
  *   lib.number(1234567);      // "1 234 567"
  *   lib.numberDecline(1, 'товар', 'товара', 'товаров'); // "товар"
  *   lib.numberDecline(5, 'товар', 'товара', 'товаров'); // "товаров"
+ *   lib.phoneCleaner('8 (912) 345-67-89'); // "79123456789"
+ *   lib.phone('8 (912) 345-67-89'); // "+7 912 345-67-89"
  *
  * Throttle and Debounce:
  *   const throttledScroll = lib.throttle(() => {
@@ -487,6 +491,47 @@ class Lib {
       case 4: return genitiveSingular;
       default: return genitivePlural;
     }
+  }
+
+  /**
+   * Normalizes a phone number to digits, converts Russian domestic prefix 8 to 7
+   * (except toll-free 8 800 numbers), adds country code 7 when missing,
+   * and limits the result to 11 digits.
+   * @param {string|number} [phone='']
+   * @returns {string}
+   */
+  phoneCleaner(phone = '') {
+    let result = String(phone).replace(/[^0-9]/g, '');
+
+    if (result && !result.startsWith('7')) {
+      if (result.startsWith('8')) {
+        if (!result.startsWith('8800')) {
+          result = '7' + result.slice(1);
+        }
+      } else {
+        result = '7' + result;
+      }
+    }
+
+    return result.slice(0, 11);
+  }
+
+  /**
+   * Normalizes and formats a phone number as `+7 999 999-99-99`.
+   * Toll-free 8 800 numbers retain their leading 8. Incomplete values are
+   * returned normalized but unformatted.
+   * @param {string|number} [phone='']
+   * @returns {string}
+   */
+  phone(phone = '') {
+    const result = this.phoneCleaner(phone);
+    const match = result.match(/^(\d+)?(\d{3})(\d{3})(\d{2})(\d{2})$/);
+    if (!match) return result;
+
+    const country = match[1] || '';
+    const prefix = country === '7' ? '+' : '';
+
+    return `${prefix}${country} ${match[2]} ${match[3]}-${match[4]}-${match[5]}`;
   }
 
   /**

@@ -378,7 +378,13 @@
           <p><code>x.lib.reload()</code>, <code>x.lib.reloadWithHash(hash)</code>, <code>x.lib.redirectTo(url)</code>, <code>x.lib.updateURL(url, title)</code>.</p>
 
           <h3>Форматирование и валидация</h3>
-          <p><code>x.lib.random(a, b)</code>, <code>x.lib.price(price)</code>, <code>x.lib.number(num)</code>, <code>x.lib.numberDecline(number, one, few, many)</code>, <code>x.lib.isEmail(email)</code>, <code>x.lib.isValidJSON(str)</code>, <code>x.lib.isInteger(value)</code>, <code>x.lib.isDouble(value)</code>, <code>x.lib.makeId()</code>, <code>x.lib.makePassword(length, selector)</code>.</p>
+          <p><code>x.lib.random(a, b)</code>, <code>x.lib.price(price)</code>, <code>x.lib.number(num)</code>, <code>x.lib.numberDecline(number, one, few, many)</code>, <code>x.lib.phoneCleaner(phone)</code>, <code>x.lib.phone(phone)</code>, <code>x.lib.isEmail(email)</code>, <code>x.lib.isValidJSON(str)</code>, <code>x.lib.isInteger(value)</code>, <code>x.lib.isDouble(value)</code>, <code>x.lib.makeId()</code>, <code>x.lib.makePassword(length, selector)</code>.</p>
+          <p><code>x.lib.phoneCleaner(phone)</code> оставляет только цифры, приводит российский префикс <code>8</code> к <code>7</code> (кроме номеров <code>8 800</code>), добавляет <code>7</code>, если код страны отсутствует, и возвращает не более 11 цифр. <code>x.lib.phone(phone)</code> дополнительно форматирует полный номер.</p>
+          <div class="docs-code">
+            <code>x.lib.phoneCleaner('8 (912) 345-67-89'); // '79123456789'</code>
+            <code>x.lib.phone('8 (912) 345-67-89'); // '+7 912 345-67-89'</code>
+            <code>x.lib.phone('8 800 555-35-35'); // '8 800 555-35-35'</code>
+          </div>
 
           <h3>Runtime</h3>
           <p><code>x.lib.loadScript(path, callback, type)</code> грузит внешний скрипт один раз. <code>x.lib.deferred(callback, delay)</code> запускает код после пользовательской активности или таймера. <code>x.lib.deffered</code> сохранён как алиас с исторической опечаткой.</p>
