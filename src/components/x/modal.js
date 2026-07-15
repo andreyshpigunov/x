@@ -304,14 +304,22 @@ class Modal {
    */
   _setupGlobalListeners() {
     this._clickHandler = e => {
-      if (!lib.qs('.modal_active')) return;
       const target = e.target;
-      const isClose = target.classList && target.classList.contains('modal-close');
-      const isOverlay = !target.closest || !target.closest('.modal-window');
-      if (!isClose && !isOverlay) return;
-      e.preventDefault();
+      if (!(target instanceof Element)) return;
+    
+      // Обрабатываем только клики внутри активной модалки.
+      // Ссылки и кнопки остальной страницы не перехватываем.
       const modal = target.closest('.modal');
-      const id = modal ? modal.getAttribute('id') : null;
+      if (!modal || !modal.classList.contains('modal_active')) return;
+    
+      const isClose = Boolean(target.closest('.modal-close'));
+      const isOutsideWindow = !target.closest('.modal-window');
+    
+      if (!isClose && !isOutsideWindow) return;
+    
+      e.preventDefault();
+    
+      const id = modal.getAttribute('id');
       if (id && this._isValidId(id)) this.hide(id);
     };
 
