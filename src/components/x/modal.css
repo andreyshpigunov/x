@@ -95,52 +95,52 @@ html.modal_active body {
 /* !- Close cross */
 .modal-rail {
   position: absolute;
-  top: var(--modal-closer-margin);
-  bottom: var(--modal-closer-margin);
-  right: var(--modal-closer-margin);
+  top: var(--modal-closer-margin-top);
+  bottom: var(--modal-closer-margin-top);
+  right: var(--modal-closer-margin-right);
   width: 0;
+}
+.modal-close {
+  display: block;
+  position: sticky;
+  z-index: 10040;
+  top: calc(var(--modal-closer-margin-top) - var(--modal-margin-top));
+  background: var(--modal-background);
+  width: var(--modal-closer-area);
+  height: var(--modal-closer-area);
+  margin-left: calc(-1 * var(--modal-closer-area));
+  font-weight: 200;
+  border: none;
+  border-radius: var(--modal-border-radius);
   
-  .modal-close {
+  will-change: opacity;
+  opacity: 0;
+  transition: opacity .15s ease-out;
+  
+  &:before,
+  &:after {
+    content: "";
     display: block;
-    position: sticky;
-    z-index: 10040;
-    top: calc(var(--modal-closer-margin) - var(--modal-margin-top));
-    background: var(--modal-background);
-    width: var(--modal-closer-area);
-    height: var(--modal-closer-area);
-    margin-left: calc(-1 * var(--modal-closer-area));
-    font-weight: 200;
-    border: none;
-    border-radius: var(--modal-border-radius);
+    position: absolute;
+    top: calc(var(--modal-closer-area) / 2 - var(--modal-closer-width) / 2);
+    left: calc((var(--modal-closer-area) - var(--modal-closer-size)) / 2);
+    width: var(--modal-closer-size);
+    height: var(--modal-closer-width);
     
-    will-change: opacity;
-    opacity: 0;
-    transition: opacity .15s ease-out;
-    
-    &:before,
-    &:after {
-      content: "";
-      display: block;
-      position: absolute;
-      top: calc(var(--modal-closer-area) / 2 - var(--modal-closer-width) / 2);
-      left: calc((var(--modal-closer-area) - var(--modal-closer-size)) / 2);
-      width: var(--modal-closer-size);
-      height: var(--modal-closer-width);
-      
-      will-change: color;
-      background: var(--modal-closer-color);
-      transition: background .15s ease-out;
-      transform-origin: center;
-    }
-    &:before {
-      transform: rotate(-45deg);
-    }
-    &:after {
-      transform: rotate(45deg);
-    }
+    will-change: color;
+    background: var(--modal-closer-color);
+    transition: background .15s ease-out;
+    transform-origin: center;
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+  &:after {
+    transform: rotate(45deg);
   }
 }
-.modal_active .modal-rail {
+
+.modal_active {
   
   .modal-close {
     opacity: 1;

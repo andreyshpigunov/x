@@ -15,6 +15,7 @@ All right reserved.
   .color-black
   .color-white
   .color-grey
+  .color-current
   
   .bg-primary
   .bg-success
@@ -24,6 +25,7 @@ All right reserved.
   .bg-black
   .bg-white
   .bg-grey
+  .bg-current
 */
     
 .color-primary {
@@ -50,6 +52,9 @@ All right reserved.
 .color-grey {
   color: var(--color-grey);
 }
+.color-current {
+  color: currentcolor;
+}
 
 .bg-primary {
   background-color: var(--color-primary);
@@ -74,4 +79,7 @@ All right reserved.
 }
 .bg-grey {
   background-color: var(--color-grey);
+}
+.bg-current {
+  background-color: currentcolor;
 }
