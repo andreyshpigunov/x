@@ -925,6 +925,84 @@ class Lib {
   
     return debounced;
   }
+  
+  runAfterInteraction(callback, delay = 5000) {
+    if (typeof window === 'undefined') return () => {};
+  
+    if (typeof callback !== 'function') {
+      throw new TypeError('runAfterInteraction callback must be a function');
+    }
+  
+    const events = [
+      'pointerdown',
+      'pointermove',
+      'touchstart',
+      'touchmove',
+      'scroll',
+      'mousemove',
+      'click',
+      'keydown'
+    ];
+  
+    const timeout = Number.isFinite(Number(delay))
+      ? Math.max(0, Number(delay))
+      : 5000;
+  
+    const listenerOptions = {
+      passive: true,
+      capture: true
+    };
+  
+    let completed = false;
+    let timerId = null;
+  
+    const cleanup = () => {
+      events.forEach(eventName => {
+        window.removeEventListener(
+          eventName,
+          handleInteraction,
+          listenerOptions
+        );
+      });
+  
+      if (timerId !== null) {
+        window.clearTimeout(timerId);
+        timerId = null;
+      }
+    };
+  
+    const run = reason => {
+      if (completed) return;
+  
+      completed = true;
+      cleanup();
+      callback(reason);
+    };
+  
+    const handleInteraction = event => {
+      run(event.type);
+    };
+  
+    events.forEach(eventName => {
+      window.addEventListener(
+        eventName,
+        handleInteraction,
+        listenerOptions
+      );
+    });
+  
+    timerId = window.setTimeout(() => {
+      run('timeout');
+    }, timeout);
+  
+    // Возвращает функцию отмены конкретного экземпляра.
+    return () => {
+      if (completed) return;
+  
+      completed = true;
+      cleanup();
+    };
+  }
 }
 
 export const lib = new Lib();

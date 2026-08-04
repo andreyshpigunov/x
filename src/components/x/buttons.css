@@ -129,6 +129,11 @@ All right reserved.
   --button-border-radius: .5em;
   vertical-align: baseline;
 }
+.button_link,
+.button_inline {
+  --button-height: 0;
+  --button-side-padding: 0;
+}
 
 .button_primary {
   --button-color: var(--color-primary);
@@ -156,6 +161,7 @@ All right reserved.
 }
 .button_clear {
   --button-color: transparent;
+  --button-color-active: transparent;
   --button-box-shadow: none;
   --button-box-shadow-hover: none;
   --button-box-shadow-active: none;
