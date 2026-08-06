@@ -102,7 +102,7 @@ All right reserved.
   --color-grey: #f4f5f6;
   
   /* Required variables */
-  --button-height-coeff: 2.5;
+  --button-height-coeff: 2.6;
   --button-side-padding-coeff: 1.25;
   --button-color: var(--color-grey);
   --button-font-family: var(--font-family);
