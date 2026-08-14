@@ -305,6 +305,28 @@ export class Slider {
       return;
     }
 
+    // A single slide does not need slider behavior. Keep the original DOM so
+    // horizontal gestures can be handled by a parent scroller, but activate a
+    // deferred image just as the regular initialization path would.
+    if (rawSlides.length === 1) {
+      const slide = el.firstElementChild;
+      const img = slide?.querySelector('img');
+
+      slide?.classList.add('slider-item', 'active');
+      if (img?.dataset.srcset) {
+        img.srcset = img.dataset.srcset;
+        img.removeAttribute('data-srcset');
+      }
+      if (img?.dataset.src) {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      }
+      if (img) img.setAttribute('loading', 'eager');
+
+      this.io?.unobserve(el);
+      return;
+    }
+
     el.classList.add('slider');
     el.style.overflow = 'hidden';
     el.style.overscrollBehavior = 'contain';
