@@ -3,11 +3,35 @@ import assert from 'node:assert/strict';
 
 import { autocomplete } from '../src/components/x/autocomplete.js';
 
+class FakeClassList {
+  constructor() {
+    this.values = new Set();
+  }
+
+  add(...names) {
+    names.forEach(name => this.values.add(name));
+  }
+
+  remove(...names) {
+    names.forEach(name => this.values.delete(name));
+  }
+
+  contains(name) {
+    return this.values.has(name);
+  }
+}
+
 class FakeElement extends EventTarget {
   constructor() {
     super();
+    this.attributes = new Map();
+    this.classList = new FakeClassList();
     this.dataset = {};
+    this.id = '';
     this.innerHTML = '';
+    this.items = [];
+    this.blurCalls = 0;
+    this.scrollCalls = 0;
     this.value = '';
     this.selectors = new Map();
   }
@@ -16,8 +40,35 @@ class FakeElement extends EventTarget {
     return this.selectors.get(selector) ?? null;
   }
 
+  querySelectorAll(selector) {
+    return selector === '[data-item]' ? this.items : [];
+  }
+
+  getAttribute(name) {
+    if (name === 'id') return this.id || null;
+    return this.attributes.get(name) ?? null;
+  }
+
+  setAttribute(name, value) {
+    if (name === 'id') this.id = String(value);
+    else this.attributes.set(name, String(value));
+  }
+
+  removeAttribute(name) {
+    if (name === 'id') this.id = '';
+    else this.attributes.delete(name);
+  }
+
   closest(selector) {
     return selector === '[data-item]' && this.dataset.item ? this : null;
+  }
+
+  blur() {
+    this.blurCalls += 1;
+  }
+
+  scrollIntoView() {
+    this.scrollCalls += 1;
   }
 }
 
@@ -27,6 +78,20 @@ let dropdown;
 let field;
 let list;
 
+const keyEvent = key => ({
+  key,
+  defaultPrevented: false,
+  preventDefault() {
+    this.defaultPrevented = true;
+  }
+});
+
+const suggestion = item => {
+  const element = new FakeElement();
+  element.dataset.item = JSON.stringify(item);
+  return element;
+};
+
 beforeEach(() => {
   dropdown = new FakeElement();
   field = new FakeElement();
@@ -34,6 +99,7 @@ beforeEach(() => {
   field.value = 'query';
   dropdown.selectors.set('[x-dropdown-open]', field);
   dropdown.selectors.set('[x-dropdown]', list);
+  dropdown.classList.add('dropdown_open');
 
   globalThis.Node = FakeElement;
   globalThis.NodeList = FakeNodeList;
@@ -97,8 +163,8 @@ test('explicit pointer selection wins when hide happens before click', () => {
 
   const instance = autocomplete.get('search');
   instance.data = [{ id: 1 }, { id: 2 }];
-  const item = new FakeElement();
-  item.dataset.item = JSON.stringify({ id: 2 });
+  const item = suggestion({ id: 2 });
+  list.items = [item];
 
   instance._pointerDownHandler({ target: item });
   dropdown.dispatchEvent(new Event('dropdown:afterhide'));
@@ -119,12 +185,149 @@ test('explicit click selection is not replaced when hide happens afterwards', ()
 
   const instance = autocomplete.get('search');
   instance.data = [{ id: 1 }, { id: 2 }];
-  const item = new FakeElement();
-  item.dataset.item = JSON.stringify({ id: 2 });
+  const item = suggestion({ id: 2 });
+  list.items = [item];
 
   instance._clickHandler({ target: item });
   dropdown.dispatchEvent(new Event('dropdown:afterhide'));
 
   assert.deepEqual(selected, [{ id: 2 }]);
   assert.equal(resets, 0);
+});
+
+test('adds combobox ARIA semantics and cycles through rendered suggestions', () => {
+  autocomplete.init('search', {
+    renderItem: item => `<li data-item='${JSON.stringify(item)}'>${item.id}</li>`
+  });
+
+  const instance = autocomplete.get('search');
+  const items = [suggestion({ id: 1 }), suggestion({ id: 2 }), suggestion({ id: 3 })];
+  list.items = items;
+  instance.data = [{ id: 1 }, { id: 2 }, { id: 3 }];
+  instance.render();
+
+  assert.equal(field.getAttribute('role'), 'combobox');
+  assert.equal(field.getAttribute('aria-autocomplete'), 'list');
+  assert.equal(field.getAttribute('aria-controls'), list.id);
+  assert.equal(list.getAttribute('role'), 'listbox');
+  assert.ok(items.every(item => item.getAttribute('role') === 'option'));
+
+  instance._keyHandler(keyEvent('ArrowDown'));
+  assert.equal(instance._activeItem, items[0]);
+  assert.equal(items[0].getAttribute('aria-selected'), 'true');
+  assert.equal(field.getAttribute('aria-activedescendant'), items[0].id);
+
+  instance._keyHandler(keyEvent('ArrowUp'));
+  assert.equal(instance._activeItem, items[2]);
+  assert.equal(items[0].getAttribute('aria-selected'), 'false');
+  assert.equal(items[2].classList.contains('active'), true);
+
+  instance._keyHandler(keyEvent('ArrowDown'));
+  assert.equal(instance._activeItem, items[0]);
+});
+
+test('does not navigate suggestions while the dropdown is closed', () => {
+  autocomplete.init('search', {
+    renderItem: item => `<li data-item='${JSON.stringify(item)}'>${item.id}</li>`
+  });
+
+  const instance = autocomplete.get('search');
+  const item = suggestion({ id: 1 });
+  list.items = [item];
+  instance.data = [{ id: 1 }];
+  instance.render();
+  dropdown.classList.remove('dropdown_open');
+
+  const event = keyEvent('ArrowDown');
+  instance._keyHandler(event);
+
+  assert.equal(event.defaultPrevented, false);
+  assert.equal(instance._activeItem, null);
+});
+
+test('Enter explicitly selects the active suggestion', () => {
+  const selected = [];
+  autocomplete.init('search', {
+    selectFirstOnBlur: false,
+    renderItem: item => `<li data-item='${JSON.stringify(item)}'>${item.id}</li>`,
+    onSelect: item => selected.push(item)
+  });
+
+  const instance = autocomplete.get('search');
+  const items = [suggestion({ id: 1 }), suggestion({ id: 2 })];
+  list.items = items;
+  instance.data = [{ id: 1 }, { id: 2 }];
+  instance.render();
+  instance._keyHandler(keyEvent('ArrowDown'));
+  instance._keyHandler(keyEvent('ArrowDown'));
+  instance._keyHandler(keyEvent('Enter'));
+
+  assert.deepEqual(selected, [{ id: 2 }]);
+  assert.equal(field.blurCalls, 1);
+});
+
+test('Enter without an active suggestion does not select the first result when disabled', () => {
+  const selected = [];
+  let resets = 0;
+  autocomplete.init('search', {
+    selectFirstOnBlur: false,
+    onSelect: item => selected.push(item),
+    resetFunc: () => { resets += 1; }
+  });
+
+  const instance = autocomplete.get('search');
+  instance.data = [{ id: 1 }, { id: 2 }];
+  instance._keyHandler(keyEvent('Enter'));
+  dropdown.dispatchEvent(new Event('dropdown:afterhide'));
+
+  assert.deepEqual(selected, []);
+  assert.equal(resets, 1);
+  assert.equal(field.blurCalls, 1);
+});
+
+test('Escape closes without selection and clears the active suggestion', () => {
+  const selected = [];
+  autocomplete.init('search', {
+    renderItem: item => `<li data-item='${JSON.stringify(item)}'>${item.id}</li>`,
+    onSelect: item => selected.push(item)
+  });
+
+  const instance = autocomplete.get('search');
+  const items = [suggestion({ id: 1 }), suggestion({ id: 2 })];
+  list.items = items;
+  instance.data = [{ id: 1 }, { id: 2 }];
+  instance.render();
+  instance._keyHandler(keyEvent('ArrowDown'));
+  instance._keyHandler(keyEvent('Escape'));
+  dropdown.dispatchEvent(new Event('dropdown:afterhide'));
+
+  assert.deepEqual(selected, []);
+  assert.equal(instance._activeItem, null);
+  assert.equal(field.getAttribute('aria-activedescendant'), null);
+  assert.equal(items[0].classList.contains('active'), false);
+  assert.equal(field.blurCalls, 1);
+});
+
+test('re-render clears the previous active suggestion and prepares new items', () => {
+  autocomplete.init('search', {
+    renderItem: item => `<li data-item='${JSON.stringify(item)}'>${item.id}</li>`
+  });
+
+  const instance = autocomplete.get('search');
+  const oldItem = suggestion({ id: 1 });
+  list.items = [oldItem];
+  instance.data = [{ id: 1 }];
+  instance.render();
+  instance._keyHandler(keyEvent('ArrowDown'));
+
+  const newItem = suggestion({ id: 2 });
+  list.items = [newItem];
+  instance.data = [{ id: 2 }];
+  instance.render();
+
+  assert.equal(oldItem.classList.contains('active'), false);
+  assert.equal(instance._activeItem, null);
+  assert.equal(field.getAttribute('aria-activedescendant'), null);
+  assert.equal(newItem.getAttribute('role'), 'option');
+  assert.equal(newItem.getAttribute('aria-selected'), 'false');
 });

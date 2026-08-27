@@ -147,4 +147,18 @@ All right reserved.
       }
     }
   }
+
+  & [data-item] {
+    cursor: pointer;
+
+    &.active,
+    &[aria-selected="true"],
+    &.active > a,
+    &.active > span,
+    &[aria-selected="true"] > a,
+    &[aria-selected="true"] > span {
+      color: var(--dropdown-item-font-color-hover);
+      background: var(--dropdown-item-background-color-hover);
+    }
+  }
 }

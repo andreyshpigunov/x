@@ -244,15 +244,18 @@ class Lib {
    * @param {HTMLElement|Document} [context=document]
    * @returns {HTMLElement|null}
    */
-  qs(selector, context = document) {
+  qs(selector, context = null) {
     if (!selector) return null;
-    if (!HAS_DOM()) return selector instanceof Node ? selector : null;
+    const isNode = typeof Node !== 'undefined' && selector instanceof Node;
+    if (!HAS_DOM()) return isNode ? selector : null;
+    const root = context || document;
 
-    if (typeof selector === 'string') return context.querySelector(selector);
-    if (selector instanceof Node) return selector;
-    if (selector instanceof NodeList) return selector.length ? selector[0] : null;
+    if (typeof selector === 'string') return root.querySelector(selector);
+    if (isNode) return selector;
+    if (typeof NodeList !== 'undefined' && selector instanceof NodeList) return selector.length ? selector[0] : null;
     if (Array.isArray(selector) && selector.length) {
-      return selector[0] instanceof Node ? selector[0] : context.querySelector(selector[0]);
+      const first = selector[0];
+      return (typeof Node !== 'undefined' && first instanceof Node) ? first : root.querySelector(first);
     }
     if (selector === window) return selector;
     return null;
@@ -264,20 +267,22 @@ class Lib {
    * @param {HTMLElement|Document} [context=document]
    * @returns {HTMLElement[]}
    */
-  qsa(selector, context = document) {
+  qsa(selector, context = null) {
     if (!selector) return [];
-    if (!HAS_DOM()) return selector instanceof Node ? [selector] : [];
+    const isNode = typeof Node !== 'undefined' && selector instanceof Node;
+    if (!HAS_DOM()) return isNode ? [selector] : [];
+    const root = context || document;
 
-    if (typeof selector === 'string') return Array.from(context.querySelectorAll(selector));
-    if (selector instanceof NodeList) return Array.from(selector);
-    if (selector instanceof Node) return [selector];
+    if (typeof selector === 'string') return Array.from(root.querySelectorAll(selector));
+    if (typeof NodeList !== 'undefined' && selector instanceof NodeList) return Array.from(selector);
+    if (isNode) return [selector];
     if (Array.isArray(selector) && selector.length) {
       const arr = [];
       for (let i = 0; i < selector.length; i++) {
         const item = selector[i];
-        if (item instanceof Node) arr.push(item);
-        else if (item instanceof NodeList) arr.push(...item);
-        else arr.push(...context.querySelectorAll(item));
+        if (typeof Node !== 'undefined' && item instanceof Node) arr.push(item);
+        else if (typeof NodeList !== 'undefined' && item instanceof NodeList) arr.push(...item);
+        else arr.push(...root.querySelectorAll(item));
       }
       return arr.flat();
     }
@@ -780,7 +785,7 @@ class Lib {
 
     try {
       const content = typeof data === 'function' ? await data() : data;
-      const text = String(content || '');
+      const text = String(content ?? '');
 
       for (let i = 0; i < len; i++) {
         const el = items[i];

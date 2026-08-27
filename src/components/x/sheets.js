@@ -243,7 +243,7 @@ class Sheets {
         
         const handler = (e) => {
           e.preventDefault();
-          this.show(sheetValue);
+          this.show(sheetValue, { source: 'user', container: sheet });
         };
         
         tab.addEventListener('click', handler);
@@ -254,7 +254,7 @@ class Sheets {
       if (active) {
         const activeValue = active.getAttribute('x-sheet-open');
         if (activeValue && this._isValidSheetValue(activeValue)) {
-          this.show(activeValue);
+          this.show(activeValue, { source: 'api', container: sheet });
         }
       }
       
@@ -325,14 +325,15 @@ class Sheets {
     
     // SECURITY: Use CSS.escape() to prevent XSS in selectors
     const escapedValue = CSS.escape(xSheet);
-    const targetBody = lib.qs(`[x-sheet="${escapedValue}"]`);
+    const requestedContainer = options.container || null;
+    const targetBody = lib.qs(`[x-sheet="${escapedValue}"]`, requestedContainer || document);
     
     if (!targetBody) {
       console.warn('sheets.show: Target content not found:', xSheet);
       return;
     }
     
-    const container = targetBody.closest('[x-sheets]');
+    const container = requestedContainer || targetBody.closest('[x-sheets]');
     if (!container) {
       console.warn('sheets.show: Sheets container not found for:', xSheet);
       return;

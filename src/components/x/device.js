@@ -165,6 +165,10 @@ export class Device {
     if (this._initialized) this._cleanup();
 
     this._html = document.documentElement;
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.breakpoint = this._getBreakpointName(this.width);
+    this.size = SIZE_FLAGS[this.breakpoint] || SIZE_FLAGS.xs;
     this._detect();
     this._applyHtmlClasses();
     window.addEventListener('resize', this._debouncedResize);

@@ -174,6 +174,8 @@ class Modal {
     this._clickHandler = null;
     /** @type {function(Event): void | null} @private */
     this._keydownHandler = null;
+    /** @type {Map<HTMLElement, function(Event): void>} @private */
+    this._linkHandlers = new Map();
   }
 
   /**
@@ -205,6 +207,10 @@ class Modal {
       document.removeEventListener('keydown', this._keydownHandler);
       this._keydownHandler = null;
     }
+    this._linkHandlers.forEach((handler, link) => {
+      link.removeEventListener('click', handler);
+    });
+    this._linkHandlers.clear();
     this.modalLevel = 0;
     this.lockCount = 0;
     this.html = null;
@@ -284,10 +290,12 @@ class Modal {
       const id = link.getAttribute('x-modal-open');
       if (!id || !this._isValidId(id)) continue;
 
-      link.addEventListener('click', e => {
+      const handler = e => {
         e.preventDefault();
         this.show(id);
-      });
+      };
+      link.addEventListener('click', handler);
+      this._linkHandlers.set(link, handler);
 
       if (window.location.hash === '#' + id) {
         const el = lib.qs('#' + id);
@@ -456,4 +464,3 @@ class Modal {
  * @type {Modal}
  */
 export const modal = new Modal();
-

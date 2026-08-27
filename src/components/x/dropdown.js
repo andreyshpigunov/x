@@ -233,7 +233,14 @@ class Dropdown {
     const throttledHandler = lib.throttle(() => this._toggleDropdown(parent, trigger), 400);
     const tag = trigger.tagName;
     const isInputLike = tag === 'INPUT' || tag === 'TEXTAREA';
-    let blurTimeout = null;
+    const handlerState = {
+      clickListener: null,
+      keyListener: null,
+      focusListener: null,
+      blurListener: null,
+      blurTimeout: null,
+      throttledHandler
+    };
 
     const clickListener = e => {
       if (!isInputLike) {
@@ -273,7 +280,10 @@ class Dropdown {
 
     const focusListener = () => {
       if (isInputLike) {
-        if (blurTimeout) clearTimeout(blurTimeout);
+        if (handlerState.blurTimeout) {
+          clearTimeout(handlerState.blurTimeout);
+          handlerState.blurTimeout = null;
+        }
         this.closeAllDropdowns();
         this._open(parent, trigger);
       } else {
@@ -283,19 +293,17 @@ class Dropdown {
 
     const blurListener = () => {
       if (isInputLike) {
-        blurTimeout = setTimeout(() => this._close(parent), 200);
+        handlerState.blurTimeout = setTimeout(() => {
+          handlerState.blurTimeout = null;
+          this._close(parent);
+        }, 200);
       } else {
         trigger.classList.remove('hover');
       }
     };
 
-    this._handlers.set(trigger, {
-      clickListener,
-      keyListener,
-      focusListener,
-      blurListener,
-      blurTimeout
-    });
+    Object.assign(handlerState, { clickListener, keyListener, focusListener, blurListener });
+    this._handlers.set(trigger, handlerState);
 
     trigger.addEventListener('click', clickListener);
     trigger.addEventListener('keydown', keyListener);
@@ -393,6 +401,7 @@ class Dropdown {
         element.removeEventListener('focusout', handlers.blurListener);
       }
       if (handlers.blurTimeout) clearTimeout(handlers.blurTimeout);
+      if (handlers.throttledHandler?.cancel) handlers.throttledHandler.cancel();
     });
     this._handlers.clear();
     this._menus.clear();

@@ -13,3 +13,5 @@ export { form } from './src/components/x/form.js';
 export { sticky } from './src/components/x/sticky.js';
 export { slider } from './src/components/x/slider.js';
 export { lib } from './src/components/x/lib.js';
+export { typograf } from './src/components/x/typograf.js';
+export { X, x } from './src/js/x.js';

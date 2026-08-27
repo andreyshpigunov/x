@@ -172,6 +172,9 @@ class Sticky {
      */
     this._initialized = false;
 
+    /** @type {Set<HTMLElement>} @private */
+    this._observed = new Set();
+
   }
 
   /**
@@ -258,6 +261,7 @@ class Sticky {
         try {
           this._observer.observe(item);
           item.dataset.stickyObserved = 'true';
+          this._observed.add(item);
         } catch (err) {
           console.error('sticky.init: Error observing element', item, err);
         }
@@ -273,28 +277,23 @@ class Sticky {
   reset() {
     if (!this._observer) return;
 
-    const stickies = lib.qsa('.sticky');
-    for (const item of stickies) {
-      if (!item || !(item instanceof HTMLElement)) continue;
-
-      if (item.dataset.stickyObserved) {
-        try {
-          if (document.body.contains(item)) {
-            this._observer.unobserve(item);
-          }
-          delete item.dataset.stickyObserved;
-        } catch (err) {
-          console.error('sticky.reset: Error unobserving element', item, err);
-          delete item.dataset.stickyObserved;
-        }
+    for (const item of this._observed) {
+      try {
+        this._observer.unobserve(item);
+        delete item.dataset.stickyObserved;
+      } catch (err) {
+        console.error('sticky.reset: Error unobserving element', item, err);
+        delete item.dataset.stickyObserved;
       }
     }
+    this._observed.clear();
   }
 
   /**
    * Fully disconnects observer and clears state.
    */
   destroy() {
+    this.reset();
     if (this._observer) {
       this._observer.disconnect();
       this._observer = null;

@@ -25,7 +25,7 @@ import { slider } from "../components/x/slider.js";
 import { typograf } from "../components/x/typograf.js";
 
 
-class X {
+export class X {
   constructor() {
     this.modal = modal;
     this.animate = animate;
@@ -49,6 +49,7 @@ class X {
   }
   
   init() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
     if (!this.initialized) {
       this.device.init();
       this.modal.init();
@@ -68,12 +69,14 @@ class X {
   }
 };
 
-const x = new X();
+export const x = new X();
 
 // Make 'x' as global variable
-window.x = x;
+if (typeof window !== 'undefined') {
+  window.x = x;
 
-// Shortcuts for selectors
-window.x.id = x.lib.id;
-window.x.qs = x.lib.qs;
-window.x.qsa = x.lib.qsa;
+  // Shortcuts for selectors
+  window.x.id = x.lib.id;
+  window.x.qs = x.lib.qs;
+  window.x.qsa = x.lib.qsa;
+}

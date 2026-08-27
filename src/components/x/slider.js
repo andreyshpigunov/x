@@ -170,13 +170,17 @@ export class Slider {
      * @type {MutationObserver|null}
      */
     this.mo = null;
+
+    this._initialized = false;
   }
 
   init() {
+    if (typeof window === 'undefined' || typeof document === 'undefined' || this._initialized) return;
     this.observeSliders();
 
     if (!('MutationObserver' in window)) {
       console.warn('slider: MutationObserver is not supported');
+      this._initialized = true;
       return;
     }
 
@@ -200,9 +204,11 @@ export class Slider {
       }
     });
     this.mo.observe(document.body, { childList: true, subtree: true });
+    this._initialized = true;
   }
 
   destroy() {
+    if (typeof window === 'undefined') return;
     this.instances.forEach((data, el) => {
       const target = data.listenerTarget || data.wrapper || el;
       if (data.touch) {
@@ -212,22 +218,27 @@ export class Slider {
         target.removeEventListener('touchcancel',data.events.touchcancel,true);
         if (data.events.firstTouch) target.removeEventListener('touchstart', data.events.firstTouch, true);
       } else {
-        el.removeEventListener('mousemove', data.events.mousemove);
+        if (data.events.mousemove) el.removeEventListener('mousemove', data.events.mousemove);
         if (data.events.firstHover) el.removeEventListener('mouseenter', data.events.firstHover);
         if (data.events.mouseout) el.removeEventListener('mouseleave', data.events.mouseout);
         if (data.events.mouseenter) el.removeEventListener('mouseenter', data.events.mouseenter);
-        if (data.events.resize) {
-          window.removeEventListener('resize', data.events.resize);
-          window.removeEventListener('orientationchange', data.events.resize);
-        }
+      }
+      if (data.events.resize) {
+        window.removeEventListener('resize', data.events.resize);
+        window.removeEventListener('orientationchange', data.events.resize);
       }
     });
     if (this.io) this.io.disconnect();
     if (this.mo) this.mo.disconnect();
     this.instances.clear();
+    this.io = null;
+    this.mo = null;
+    this.sliders = [];
+    this._initialized = false;
   }
 
   observeSliders() {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
     if (!('IntersectionObserver' in window)) {
       console.warn('slider: IntersectionObserver is not supported');
       return;
@@ -407,6 +418,7 @@ export class Slider {
       // Touch interactions for sliding are disabled by config.
       // Do not attach slider touch handlers; other handlers should receive touch events.
       slides[0].classList.add('active');
+      this.io?.unobserve(el);
       return;
     }
 

@@ -543,8 +543,6 @@ class Scroll {
    * @private
    */
   _scrollObserve() {
-    const threshold = document.documentElement.clientHeight / 4;
-
     for (const key in this._linksHash) {
       if (!this._linksHash.hasOwnProperty(key)) continue;
 
@@ -553,6 +551,9 @@ class Scroll {
 
       try {
         const rect = item.target.getBoundingClientRect();
+        const threshold = item.parent === window
+          ? document.documentElement.clientHeight / 4
+          : item.parent.getBoundingClientRect().top + item.parent.clientHeight / 4;
         const isActive = rect.top <= threshold && rect.bottom > threshold;
 
         if (item.classActive != null) {

@@ -241,8 +241,10 @@ class Animate {
       
       if (hasStart && hasEnd) {
         item.duration = start - end;
-        
-        const rawProgress = (start - top) / item.duration;
+
+        const rawProgress = item.duration === 0
+          ? (top <= start ? 1 : 0)
+          : (start - top) / item.duration;
         const progress = Math.min(1, Math.max(0, rawProgress));
         
         const isActive = progress > 0 && progress < 1;
