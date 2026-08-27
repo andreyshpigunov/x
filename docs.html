@@ -261,9 +261,11 @@
             <code>x.autocomplete.init('searchDropdown', {</code>
             <code>  loadData: async (ctx) =&gt; fetch('/api?q=' + encodeURIComponent(ctx.field.value)).then(r =&gt; r.json()),</code>
             <code>  renderItem: item =&gt; `&lt;li data-item='${JSON.stringify(item)}'&gt;${item.name}&lt;/li&gt;`,</code>
+            <code>  selectFirstOnBlur: false,</code>
             <code>  onSelect: item =&gt; x.form.setValue('#searchDropdown input', item.name)</code>
             <code>});</code>
           </div>
+          <p><code>selectFirstOnBlur</code> по умолчанию равен <code>true</code>. При <code>false</code> закрытие списка вызывает <code>resetFunc</code>, не выбирая первое предложение автоматически.</p>
           <p>API: <code>x.autocomplete.init(dropdownId, options)</code>, <code>x.autocomplete.destroy(dropdownId)</code>, <code>x.autocomplete.destroy()</code>, <code>x.autocomplete.get(dropdownId)</code>.</p>
 
           <h3>Device</h3>

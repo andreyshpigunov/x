@@ -35,6 +35,7 @@
  * //         return r.json();
  * //       },
  * //       renderItem: (item) => `<li data-item='${JSON.stringify(item)}'>${item.name}</li>`,
+ * //       selectFirstOnBlur: false,
  * //       onSelect: (item) => { console.log('selected', item); }
  * //     });
  * //   });
@@ -61,6 +62,7 @@ class AutocompleteInstance {
     this.renderItem = options.renderItem ?? null;
     this.onSelect = options.onSelect ?? null;
     this.resetFunc = options.resetFunc ?? null;
+    this.selectFirstOnBlur = options.selectFirstOnBlur ?? true;
 
     this.dropdown = null;
     this.field = null;
@@ -173,6 +175,11 @@ class AutocompleteInstance {
       this._skipNextHideSelect = false;
       this._clicked = false;
       this._selecting = false;
+      return;
+    }
+
+    if (!this.selectFirstOnBlur) {
+      this._reset();
       return;
     }
 

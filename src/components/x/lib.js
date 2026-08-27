@@ -20,7 +20,7 @@
  *   lib.show('.element');
  *
  *   // Formatting
- *   lib.price(1234.56);        // "1 234.56"
+ *   lib.price(1234.56);        // "1234.56"
  *   lib.number(1234567);       // "1 234 567"
  *
  *   // Validation
@@ -96,8 +96,8 @@
  *   await lib.removeClass('.element', 'active', 200); // Removes active, waits 200ms, removes _ready
  *
  * Formatting:
- *   lib.price(1234.56);        // "1 234.56"
- *   lib.price(1000);          // "1 000"
+ *   lib.price(1234.56);        // "1234.56"
+ *   lib.price(1000);          // "1000"
  *   lib.number(1234567);      // "1 234 567"
  *   lib.numberDecline(1, 'товар', 'товара', 'товаров'); // "товар"
  *   lib.numberDecline(5, 'товар', 'товара', 'товаров'); // "товаров"
@@ -460,7 +460,10 @@ class Lib {
    */
   price(price) {
     let p = parseFloat(price).toFixed(2);
-    return p.replace(/\d(?=(\d{3})+\.)/g, '$& ').replace('.00', '');
+    if (Math.abs(Number(p)) >= 10000) {
+      p = p.replace(/\d(?=(\d{3})+\.)/g, '$& ');
+    }
+    return p.replace('.00', '');
   }
 
   /**
