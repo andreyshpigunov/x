@@ -19,7 +19,7 @@
   "functionName": "headerAnimation"
 }'>
   <header class="header flex aic sticky t0 px5 m:px6 l:px8 unselectable">
-    <div class="header-version nowrap">0.5.39</div>
+    <div class="header-version nowrap">0.6.0-beta.1</div>
     <div class="header-logo mxa">
       <a role="button" x-scrollto="#top">
         <img src="assets/img/logo.png" alt="x" />
@@ -835,7 +835,7 @@
     <div class="container max70">
 
       <h3>HTML</h3>
-      <p>Manually download <a class="button button_label" href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.js">x.js</a> and <a class="button button_label" href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.css">x.css</a> and connect them in HTML.</p>
+      <p>Manually download <a class="button button_label" href="dist/x.js">x.js</a> and <a class="button button_label" href="dist/x.css">x.css</a> and connect them in HTML.</p>
       <p>In the <code>&lt;head&gt;</code> tag, as first style.</p>
       <div class="codeBlock">
         <code>&lt;link rel="stylesheet" href="x.css"/&gt;</code>
@@ -847,30 +847,42 @@
       </div>
 
       <hr class="my7" />
-      <h3>NPM</h3>
+      <h3>NPM — vanilla</h3>
+      <p>This page documents 0.6.0-beta.1. The npm and CDN commands for this version work after its GitHub Release has published successfully. The downloads above use files bundled with this site.</p>
       <p>Install package in project folder:</p>
       <div class="codeBlock">
-        <code>$ npm i @andreyshpigunov/x</code>
+        <code>$ npm i @andreyshpigunov/x@0.6.0-beta.1</code>
       </div>
       <p>Import module in app.js:</p>
       <div class="codeBlock">
         <code>import { x } from '@andreyshpigunov/x';</code>
         <code>x.init();</code>
       </div>
-      <p>Best way to connect styles, download them from CDN and import manually in app.css:</p>
+      <p>Import the full vanilla stylesheet in your application entry:</p>
       <div class="codeBlock">
-        <code>@import "../components/x.css";</code>
+        <code>import '@andreyshpigunov/x/x.css';</code>
       </div>
+
+      <hr class="my7" />
+      <h3 id="react">React 19 / Next.js</h3>
+      <p>Use the separate React entry and only the component styles you need. React DOM 19 is required; do not call <code>x.init()</code> for React components.</p>
+      <div class="codeBlock">
+        <code>import { Modal, Slider } from '@andreyshpigunov/x/react';</code>
+        <code>import '@andreyshpigunov/x/styles/modal.css';</code>
+        <code>import '@andreyshpigunov/x/styles/slider.css';</code>
+      </div>
+      <p>The package also includes Sheets, Dropdown, Autocomplete and utility hooks. Standalone styles preserve X variables without a global reset. A ready-made site can use selected components without adopting all of X.</p>
+      <p><a href="docs/react.md">React API and setup</a> · <a href="skills/x-library/SKILL.md">AI skill: x-library</a> · <a href="CHANGELOG.md">Changelog</a></p>
 
       <hr class="my7" />
       <h3>CDN links</h3>
       <p class="breakWord">
-        Current release:<br>
-        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.39/dist/x.css">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.39/dist/x.css</a><br>
-        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.39/dist/x.js">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.5.39/dist/x.js</a>
+        This prerelease (CDN available after npm publication):<br>
+        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.6.0-beta.1/dist/x.css">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.6.0-beta.1/dist/x.css</a><br>
+        <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.6.0-beta.1/dist/x.js">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@0.6.0-beta.1/dist/x.js</a>
       </p>
       <p class="breakWord">
-        Latest release:<br>
+        Latest stable release (does not include the beta automatically):<br>
         <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.css">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.css</a><br>
         <a href="https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.js">https://cdn.jsdelivr.net/npm/@andreyshpigunov/x@latest/dist/x.js</a>
       </p>
