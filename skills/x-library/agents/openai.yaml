@@ -1,0 +1,6 @@
+interface:
+  display_name: "X Library"
+  short_description: "Компоненты X для React 19 и обычных сайтов"
+  default_prompt: "Используй $x-library для подключения нужных компонентов X с сохранением дизайна сайта."
+policy:
+  allow_implicit_invocation: true

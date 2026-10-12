@@ -1,0 +1,224 @@
+/* X modal geometry and effects, isolated for React. No global reset. */
+.x-react-modal {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  background: transparent;
+  color: var(--modal-color, inherit);
+  font: inherit;
+}
+.x-react-modal[open] { display: block; }
+.x-react-modal::backdrop { background: transparent; }
+.x-react-modal, .x-react-modal__outer, .x-react-modal__window, .x-react-modal__close { box-sizing: border-box; }
+.x-react-modal__close { padding: 0; cursor: pointer; }
+.x-react-modal__close:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+.x-react-modal__title { margin-top: 0; }
+.x-react-modal__content { min-width: 0; overflow-wrap: anywhere; }
+/* !- Overlay */
+.x-react-modal__overlay {
+  position: absolute;
+  z-index: 10010;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--modal-overlay-background-color, #00000066);
+}
+
+/* ! -Main structure */
+.x-react-modal__outer {
+  position: relative;
+  z-index: 10020;
+  width: 100%;
+  height: 100%;
+  padding-top: var(--modal-margin-top, 3vw);
+  padding-bottom: var(--modal-margin-bottom, 3vw);
+  padding-left: var(--modal-margin-left, 3vw);
+  padding-right: var(--modal-margin-right, 3vw);
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.x-react-modal__inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+/* !- Modal window */
+.x-react-modal__window {
+  position: relative;
+  z-index: 10030;
+  width: 100%;
+  max-width: var(--modal-max-width, 80rem);
+  margin: auto;
+  padding-top: var(--modal-padding-top, clamp(2.5rem, 4vw, 5rem));
+  padding-bottom: var(--modal-padding-bottom, clamp(2.5rem, 4vw, 5rem));
+  padding-left: var(--modal-padding-left, clamp(2.5rem, 4vw, 5rem));
+  padding-right: var(--modal-padding-right, clamp(2.5rem, 4vw, 5rem));
+  text-align: left;
+  background: var(--modal-background, #fff);
+  box-shadow: var(--modal-box-shadow, 0 1rem 4rem #00000033);
+  border-radius: var(--modal-border-radius, 1.6rem);
+}
+
+/* !- Close cross */
+.x-react-modal__rail {
+  position: absolute;
+  top: var(--modal-closer-margin-top, .6rem);
+  bottom: var(--modal-closer-margin-top, .6rem);
+  right: var(--modal-closer-margin-right, .6rem);
+  width: 0;
+}
+.x-react-modal__close {
+  display: block;
+  position: sticky;
+  z-index: 10040;
+  top: calc(var(--modal-closer-margin-top, .6rem) - var(--modal-margin-top, 3vw));
+  background: var(--modal-background, #fff);
+  width: var(--modal-closer-area, 4rem);
+  height: var(--modal-closer-area, 4rem);
+  margin-left: calc(-1 * var(--modal-closer-area, 4rem));
+  font-weight: 200;
+  border: none;
+  border-radius: var(--modal-border-radius, 1.6rem);
+
+  will-change: opacity;
+  opacity: 0;
+  transition: opacity var(--modal-closer-duration, .15s) var(--modal-easing, ease-out);
+
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(var(--modal-closer-area, 4rem) / 2 - var(--modal-closer-width, .2rem) / 2);
+    left: calc((var(--modal-closer-area, 4rem) - var(--modal-closer-size, 2.4rem)) / 2);
+    width: var(--modal-closer-size, 2.4rem);
+    height: var(--modal-closer-width, .2rem);
+
+    will-change: color;
+    background: var(--modal-closer-color, #ccc);
+    transition: background .15s ease-out;
+    transform-origin: center;
+  }
+  &:before {
+    transform: rotate(-45deg);
+  }
+  &:after {
+    transform: rotate(45deg);
+  }
+}
+
+.x-react-modal[data-active] {
+
+  .x-react-modal__close {
+    opacity: 1;
+
+    @media (any-hover: hover) {
+      &:hover:before,
+      &:hover:after,
+      &:active:before,
+      &:active:after {
+        background: var(--modal-closer-color-hover, #f00);
+      }
+    }
+  }
+}
+
+/*
+  !- Effects
+  https://github.com/codrops/ModalWindowEffects
+*/
+.x-react-modal {
+  & .x-react-modal__overlay {
+    will-change: opacity;
+    opacity: 0;
+    transition: opacity var(--modal-duration, .2s) var(--modal-easing, ease-out);
+  }
+  &[data-active] .x-react-modal__overlay {
+    opacity: 1;
+  }
+}
+
+/* !- Default */
+.x-react-modal {
+  & .x-react-modal__window {
+    will-change: visibility, opacity, transform;
+    opacity: 0;
+    transform: scale(.97);
+    transform-origin: center top;
+    transition: opacity var(--modal-duration, .2s) var(--modal-easing, ease-out), transform var(--modal-duration, .2s) var(--modal-easing, ease-out);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* !- Zoom in */
+.x-react-modal[data-effect="in"] {
+  & .x-react-modal__window {
+    transform: scale(.9);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: scale(1);
+  }
+}
+
+/* !- Zoom out */
+.x-react-modal[data-effect="out"] {
+  & .x-react-modal__window {
+    transform: scale(1.1);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: scale(1);
+  }
+}
+
+/* !- Slide up */
+.x-react-modal[data-effect="up"] {
+  & .x-react-modal__window {
+    transform: translateY(30px);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: translateY(0);
+  }
+}
+
+/* !- Slide down */
+.x-react-modal[data-effect="down"] {
+  & .x-react-modal__window {
+    transform: translateY(-30px);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: translateY(0);
+  }
+}
+
+/* !- Slide from left */
+.x-react-modal[data-effect="left"] {
+  & .x-react-modal__window {
+    transform: translateX(-30px);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: translateX(0);
+  }
+}
+
+/* !- Slide from right */
+.x-react-modal[data-effect="right"] {
+  & .x-react-modal__window {
+    transform: translateX(30px);
+  }
+  &[data-active] .x-react-modal__window {
+    transform: translateX(0);
+  }
+}

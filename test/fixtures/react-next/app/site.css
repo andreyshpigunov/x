@@ -1,0 +1,30 @@
+/* Styles for the test site only; the package does not import this file. */
+/* Match the standard X rem scale in this demonstration only. */
+html { font-size: 62.5%; }
+body { margin: 0; background: #f4f5f7; color: #172033; font: 16px/1.55 system-ui, sans-serif; }
+main { max-width: 960px; margin: auto; padding: 64px 24px; }
+h1 { font-size: clamp(32px, 5vw, 56px); line-height: 1.12; letter-spacing: -.04em; }
+h2 { font-size: 24px; }
+.eyebrow { color: #405fc4; font-size: 12px; font-weight: 700; letter-spacing: .14em; }
+.intro { max-width: 680px; font-size: 19px; color: #536077; }
+.card { background: white; border: 1px solid #dce2eb; border-radius: 16px; padding: 24px; margin: 24px 0; }
+.card h2 { margin-top: 0; }
+button { border: 0; border-radius: 8px; padding: 12px 18px; background: #294fc4; color: white; font: inherit; cursor: pointer; }
+button.secondary { background: #edf0f7; color: #263f82; }
+button:focus-visible, a:focus-visible, input:focus-visible { outline: 3px solid #577bf0; outline-offset: 3px; }
+a { color: #294fc4; }
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+.setting { display: flex; align-items: center; gap: 8px; }
+input:not([type="checkbox"]) { display: block; box-sizing: border-box; width: 100%; margin-top: 8px; padding: 12px; border: 1px solid #aeb9cd; border-radius: 8px; font: inherit; }
+.scroll-root { height: 180px; overflow: auto; border: 1px dashed #91a0bc; padding: 12px; margin-top: 24px; }
+.inner-spacer { height: 350px; }
+[data-testid="inner-target"] { padding: 24px; background: #e4ecff; }
+.spacer { height: 100vh; }
+.appearance { padding: 32px; background: #dce7ff; border-radius: 16px; margin: 24px 0; }
+.appearance.once { background: #d7eee4; }
+@media (max-width: 600px) { main { padding: 32px 16px; } .card { padding: 20px; } }
+/* Demonstration styling: Sheets intentionally leaves tab design to the site. */
+.x-react-sheets > [role="tablist"] { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+.x-react-sheets > [role="tablist"] > button { background: #edf0f7; color: #263f82; }
+.x-react-sheets > [role="tablist"] > button[aria-selected="true"] { background: #294fc4; color: white; }
+.x-react-sheets > [role="tablist"] > button:disabled { opacity: .45; cursor: default; }

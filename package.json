@@ -1,6 +1,6 @@
 {
   "name": "@andreyshpigunov/x",
-  "version": "0.5.39",
+  "version": "0.6.0-beta.1",
   "x-js": "dist/x.js",
   "app-js": "assets/js/app.js",
   "targets": {
@@ -18,25 +18,38 @@
     }
   },
   "devDependencies": {
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
     "parcel": "^2.16.4",
+    "playwright": "1.63.0",
     "postcss": "^8.5.9",
     "postcss-cli": "^11.0.1",
     "postcss-each": "^1.1.0",
     "postcss-for": "^2.1.1",
     "postcss-import": "^16.1.1",
     "postcss-lightningcss": "^1.1.0",
-    "postcss-nesting": "^14.0.0"
+    "postcss-nesting": "^14.0.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "typescript": "6.0.3"
   },
   "files": [
     "dist",
     "src",
-    "index.js"
+    "index.js",
+    "docs/react.md",
+    "skills/x-library"
   ],
   "type": "module",
   "scripts": {
-    "build": "rm -rf dist assets/css assets/js && mkdir -p dist assets/css assets/js && parcel build --no-content-hash && postcss src/css/x.css -o dist/x.css --no-map && postcss src/css/app.css -o assets/css/app.css --no-map",
+    "build": "npm run build:vanilla && npm run build:react",
     "test": "node --test test/*.test.js",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "build:vanilla": "rm -rf dist assets/css assets/js && mkdir -p dist assets/css assets/js && parcel build --no-content-hash && postcss src/css/x.css -o dist/x.css --no-map && postcss src/css/app.css -o assets/css/app.css --no-map",
+    "build:react": "node scripts/build-react.mjs",
+    "test:react": "node scripts/test-react.mjs",
+    "dev:react": "node scripts/test-react.mjs --dev"
   },
   "repository": {
     "type": "git",
@@ -54,6 +67,27 @@
   "exports": {
     ".": "./index.js",
     "./x.css": "./dist/x.css",
-    "./x.js": "./dist/x.js"
+    "./x.js": "./dist/x.js",
+    "./react": {
+      "types": "./dist/react/index.d.ts",
+      "import": "./dist/react/index.js",
+      "default": "./dist/react/index.js"
+    },
+    "./styles/modal.css": "./dist/styles/modal.css",
+    "./styles/dropdown.css": "./dist/styles/dropdown.css",
+    "./styles/sheets.css": "./dist/styles/sheets.css",
+    "./styles/slider.css": "./dist/styles/slider.css"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    }
   }
 }
