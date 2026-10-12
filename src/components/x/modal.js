@@ -236,14 +236,7 @@ class Modal {
    * @private
    */
   _escapeHtml(text) {
-    if (text == null) return '';
-    const s = String(text);
-    if (typeof document !== 'undefined') {
-      const div = document.createElement('div');
-      div.textContent = s;
-      return div.innerHTML;
-    }
-    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    return lib._escapeHtml(text);
   }
 
   /**
@@ -410,7 +403,7 @@ class Modal {
     if (this.lockCount > 0) return;
 
     const modal = lib.qs('#' + id);
-    if (!modal) return;
+    if (!modal || !modal.classList.contains('modal_active')) return;
 
     this.lockCount++;
     try {

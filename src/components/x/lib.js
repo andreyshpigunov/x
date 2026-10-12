@@ -187,6 +187,7 @@ class Lib {
   constructor() {
     /** @type {Set<string>} @private */
     this.loadedScripts = new Set();
+    this._loadingScripts = new Map();
     if (HAS_DOM()) this._elementRender();
   }
 
@@ -220,11 +221,6 @@ class Lib {
   _escapeHtml(text) {
     if (text == null) return '';
     const s = String(text);
-    if (HAS_DOM()) {
-      const div = document.createElement('div');
-      div.textContent = s;
-      return div.innerHTML;
-    }
     return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
 
@@ -640,16 +636,38 @@ class Lib {
       return;
     }
 
+    const pending = this._loadingScripts.get(path);
+    if (pending) {
+      pending.push(callback);
+      return;
+    }
+
     try {
       const script = document.createElement('script');
-      script.onload = callback;
-      script.onerror = () => this.loadedScripts.delete(path);
+      const callbacks = [callback];
+      this._loadingScripts.set(path, callbacks);
+      script.onload = event => {
+        this._loadingScripts.delete(path);
+        this.loadedScripts.add(path);
+        for (const onLoad of callbacks) {
+          try {
+            onLoad.call(script, event);
+          } catch (error) {
+            console.error('loadScript: callback failed', error);
+          }
+        }
+      };
+      script.onerror = () => {
+        this._loadingScripts.delete(path);
+        script.remove();
+      };
       script.src = path;
       if (type) script.setAttribute(type, '');
       script.crossOrigin = 'anonymous';
       document.body.appendChild(script);
-      this.loadedScripts.add(path);
-    } catch (_) {}
+    } catch (_) {
+      this._loadingScripts.delete(path);
+    }
   }
 
   /**

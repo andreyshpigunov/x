@@ -158,6 +158,7 @@ export class Slider {
      * @type {Map<HTMLElement, Object>}
      */
     this.instances = new Map();
+    this._originalStates = new Map();
 
     /**
      * IntersectionObserver instance for lazy initialization.
@@ -209,6 +210,8 @@ export class Slider {
 
   destroy() {
     if (typeof window === 'undefined') return;
+    if (this.io) this.io.disconnect();
+    if (this.mo) this.mo.disconnect();
     this.instances.forEach((data, el) => {
       const target = data.listenerTarget || data.wrapper || el;
       if (data.touch) {
@@ -228,8 +231,14 @@ export class Slider {
         window.removeEventListener('orientationchange', data.events.resize);
       }
     });
-    if (this.io) this.io.disconnect();
-    if (this.mo) this.mo.disconnect();
+    for (const [el, state] of this._originalStates) {
+      el.replaceChildren(...state.nodes);
+      el.classList.toggle('slider', state.slider);
+      el.classList.toggle('slider_touch', state.touch);
+      el.style.overflow = state.overflow;
+      el.style.overscrollBehavior = state.overscrollBehavior;
+    }
+    this._originalStates.clear();
     this.instances.clear();
     this.io = null;
     this.mo = null;
@@ -310,6 +319,7 @@ export class Slider {
       return;
     }
 
+    if (this._originalStates.has(el)) return;
     const rawSlides = [...el.children].map(node => node.cloneNode(true));
     if (!rawSlides.length) {
       console.warn('slider.initSlider: No slides found', el);
@@ -337,6 +347,14 @@ export class Slider {
       this.io?.unobserve(el);
       return;
     }
+
+    this._originalStates.set(el, {
+      nodes: Array.from(el.childNodes),
+      slider: el.classList.contains('slider'),
+      touch: el.classList.contains('slider_touch'),
+      overflow: el.style.overflow,
+      overscrollBehavior: el.style.overscrollBehavior
+    });
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';

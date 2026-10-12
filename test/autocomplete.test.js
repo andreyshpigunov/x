@@ -331,3 +331,87 @@ test('re-render clears the previous active suggestion and prepares new items', (
   assert.equal(newItem.getAttribute('role'), 'option');
   assert.equal(newItem.getAttribute('aria-selected'), 'false');
 });
+
+test('clearing input immediately discards pending results and prevents blur selection', async () => {
+  let resolve;
+  const selected = [];
+  autocomplete.init('search', {
+    loadData: () => new Promise(done => { resolve = done; }),
+    renderItem: item => item.name,
+    onSelect: item => selected.push(item)
+  });
+  const instance = autocomplete.get('search');
+  const pending = instance._loadData();
+  field.value = '';
+  field.dispatchEvent(new Event('input'));
+  resolve([{ name: 'obsolete' }]);
+  await pending;
+  assert.equal(instance.data, null);
+  assert.equal(list.innerHTML, instance.defaultStateHtml);
+  dropdown.dispatchEvent(new Event('dropdown:afterhide'));
+  assert.deepEqual(selected, []);
+});
+
+test('new input invalidates old results before the debounce expires', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let resolve;
+  const selected = [];
+  autocomplete.init('search', {
+    loadData: () => new Promise(done => { resolve = done; }),
+    renderItem: item => item.name,
+    onSelect: item => selected.push(item)
+  });
+  const instance = autocomplete.get('search');
+  instance.data = [{ name: 'previous' }];
+  const pending = instance._loadData();
+  field.value = 'new query';
+  field.dispatchEvent(new Event('input'));
+  resolve([{ name: 'obsolete' }]);
+  await pending;
+  assert.equal(instance.data, null);
+  assert.equal(list.innerHTML, instance.loadingStateHtml);
+  dropdown.dispatchEvent(new Event('dropdown:afterhide'));
+  assert.deepEqual(selected, []);
+  t.mock.timers.tick(400);
+  assert.equal(list.innerHTML, instance.defaultStateHtml);
+});
+
+test('requests started in the same millisecond still discard older responses', async t => {
+  t.mock.method(Date, 'now', () => 100);
+  const responses = [];
+  autocomplete.init('search', {
+    loadData: () => new Promise(resolve => responses.push(resolve)),
+    renderItem: item => item.name
+  });
+  const instance = autocomplete.get('search');
+  const first = instance._loadData();
+  const second = instance._loadData();
+  responses[1]([{ name: 'latest' }]);
+  await second;
+  responses[0]([{ name: 'obsolete' }]);
+  await first;
+  assert.equal(list.innerHTML, 'latest');
+});
+
+test('destroy without reset cancels debounce and ignores in-flight responses', async t => {
+  t.mock.timers.enable({ apis: ['setTimeout'] });
+  let resolve;
+  let loads = 0, maps = 0, resets = 0;
+  autocomplete.init('search', {
+    loadData: () => { loads++; return new Promise(done => { resolve = done; }); },
+    mapData: data => { maps++; return data; },
+    resetFunc: () => { resets++; },
+    renderItem: item => item.name
+  });
+  const instance = autocomplete.get('search');
+  const pending = instance._loadData();
+  field.dispatchEvent(new Event('focus'));
+  autocomplete.destroy('search', { reset: false });
+  resolve([{ name: 'obsolete' }]);
+  await pending;
+  t.mock.timers.tick(400);
+  assert.equal(loads, 1);
+  assert.equal(maps, 0);
+  assert.equal(resets, 0);
+  assert.equal(instance.data, null);
+});
