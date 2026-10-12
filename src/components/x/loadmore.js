@@ -160,16 +160,9 @@ class Loadmore {
     /**
      * Stores tracked elements and their pagination state.
      * Key is the element ID.
-     * @type {Object.<string, {el: HTMLElement, page: number}>}
+     * @type {Object.<string, {el: HTMLElement, page: number, loading: boolean}>}
      */
     this.items = {};
-
-    /**
-     * Lock flag to prevent concurrent triggers.
-     * @type {boolean}
-     * @private
-     */
-    this.locked = false;
 
     /**
      * IntersectionObserver instance.
@@ -221,36 +214,34 @@ class Loadmore {
     const FN_NAME_REG = /^[a-zA-Z_$][a-zA-Z0-9_$.]*$/;
 
     const callback = async (entries, observer) => {
-      for (let i = 0; i < entries.length; i++) {
-        const entry = entries[i];
-        if (!entry.isIntersecting || this.locked) continue;
+      if (observer !== this.observer) return;
+      await Promise.all(entries.map(async entry => {
+        if (!entry.isIntersecting || !entry.target) return;
 
-        this.locked = true;
+        const el = entry.target;
+        const id = el.id;
+        const item = id ? this.items[id] : null;
+        if (!item || item.loading) return;
+        item.loading = true;
         try {
-          const el = entry.target;
-          if (!el) continue;
-
           const loadmoreAttr = el.getAttribute('x-loadmore');
-          if (!loadmoreAttr) continue;
+          if (!loadmoreAttr) return;
 
           let json;
           try {
             json = JSON.parse(loadmoreAttr);
           } catch (_) {
-            continue;
+            return;
           }
           const functionName = json && json.functionName;
-          if (typeof functionName !== 'string' || !FN_NAME_REG.test(functionName)) continue;
+          if (typeof functionName !== 'string' || !FN_NAME_REG.test(functionName)) return;
 
           const fn = window[functionName];
-          if (typeof fn !== 'function') continue;
-
-          const id = el.id;
-          const item = id ? this.items[id] : null;
-          if (!item) continue;
+          if (typeof fn !== 'function') return;
 
           const page = item.page || 1;
           const hasMore = await fn(page);
+          if (this.items[id] !== item) return;
 
           if (hasMore === true) {
             item.page = page + 1;
@@ -259,9 +250,9 @@ class Loadmore {
           }
         } catch (_) {
         } finally {
-          this.locked = false;
+          item.loading = false;
         }
-      }
+      }));
     };
 
     if (!('IntersectionObserver' in window)) return;
@@ -276,7 +267,7 @@ class Loadmore {
       const id = lib.makeId();
       if (!id) continue;
       block.setAttribute('id', id);
-      this.items[id] = { el: block, page: 1 };
+      this.items[id] = { el: block, page: 1, loading: false };
       this.observer.observe(block);
     }
 
@@ -294,7 +285,6 @@ class Loadmore {
       this.observer = null;
     }
     this.items = {};
-    this.locked = false;
     this._initialized = false;
   }
 

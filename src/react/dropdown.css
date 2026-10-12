@@ -1,0 +1,167 @@
+/* Isolated React styles derived from X. No global reset. */
+
+
+
+.x-react-dropdown__menu {
+  display: none;
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  z-index: 1000;
+  opacity: 0;
+  min-width: 22rem;
+  max-width: var(--dropdown-max-width, 28rem);
+  max-height: clamp(0px, 80vh, 500px);
+  overflow: auto;
+  list-style: none;
+  padding: var(--dropdown-padding, .8rem);
+  margin: 0;
+  background-color: var(--dropdown-backgroud-color, white);
+  border: none;
+  box-shadow: var(--dropdown-box-shadow, var(--shadow-4, 0 12px 32px #00000018, 0 4px 8px #0000000e));
+  border-radius: var(--dropdown-border-radius, 1.2rem);
+  transform: scale(.95);
+  transform-origin: top;
+  transition: opacity var(--dropdown-duration, .15s) ease-out,
+              transform var(--dropdown-duration, .15s) ease-out;
+  pointer-events: none;
+  overscroll-behavior: contain;
+
+  @media (min-width: 768px) {
+    max-width: calc(var(--dropdown-max-width, 28rem) * 1.2);
+  }
+
+  & > li {
+    margin: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: var(--scroll-scrollbar-size, 6px);
+    height: var(--scroll-scrollbar-size, 6px);
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: none;
+    border-radius: var(--scroll-scrollbar-size, 6px);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: var(--scroll-scrollbar-size, 6px);
+    background-color: var(--scroll-scrollbar-thumb-background, #00000011);
+    will-change: background-color;
+    transition: background .2s ease-out;
+    cursor: pointer;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: var(--scroll-scrollbar-thumb-background-hover, #00000022);
+  }
+
+  &::-webkit-scrollbar-button,
+  &::-webkit-scrollbar-track-piece,
+  &::-webkit-scrollbar-corner,
+  &::-webkit-resizer {
+    display: none;
+  }
+}
+
+.x-react-dropdown {
+  position: relative;
+
+  &.x-react-dropdown_right > .x-react-dropdown__menu {
+    right: 0;
+    left: auto;
+  }
+  &.x-react-dropdown_bottom > .x-react-dropdown__menu {
+    bottom: 100%;
+    top: auto;
+    transform-origin: bottom;
+  }
+  &.x-react-dropdown_ready > .x-react-dropdown__menu {
+    display: block;
+    pointer-events: auto;
+  }
+  &.x-react-dropdown_open > .x-react-dropdown__menu {
+    opacity: 1;
+    transform: scale(1);
+  }
+  &.x-react-dropdown_wrap > .x-react-dropdown__menu li {
+    & > a,
+    & > span,
+    & > button {
+      white-space: wrap;
+    }
+  }
+}
+
+
+.x-react-dropdown__menu {
+
+  & li {
+
+    &.divider {
+      height: 0;
+      padding: 0;
+      margin: var(--dropdown-padding, .8rem) calc(-1 * var(--dropdown-padding, .8rem));
+      border-bottom: 1px solid var(--dropdown-divider-color, var(--color-grey, #f4f5f6));
+    }
+
+    & > a,
+    & > span,
+    & > button {
+      display: block;
+      padding: var(--dropdown-item-padding, .6rem 2.4rem .6rem 1.2rem);
+      line-height: 1.4;
+      font-size: var(--dropdown-item-font-size, inherit);
+      color: var(--dropdown-item-font-color, black);
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      text-decoration: none;
+      overflow: hidden;
+      border: none;
+      border-radius: calc(var(--dropdown-border-radius, 1.2rem) / 2);
+      background: var(--dropdown-item-background-color, white);
+    }
+
+    & > a,
+    & > button {
+      will-change: color, background, transform;
+      transition: all .1s ease-out;
+      transform: scale(1);
+      transform-origin: bottom center;
+
+      &:focus-visible,
+      &.focus-visible,
+      &:hover,
+      &.hover,
+      &:active,
+      &.active {
+        color: var(--dropdown-item-font-color-hover, black);
+        background: var(--dropdown-item-background-color-hover, var(--color-grey, #f4f5f6));
+      }
+
+      &:active {
+        transform: scale(.99);
+      }
+    }
+  }
+
+  & [data-item] {
+    cursor: pointer;
+
+    &.active,
+    &[aria-selected="true"],
+    &.active > a,
+    &.active > span,
+    &[aria-selected="true"] > a,
+    &[aria-selected="true"] > span {
+      color: var(--dropdown-item-font-color-hover, black);
+      background: var(--dropdown-item-background-color-hover, var(--color-grey, #f4f5f6));
+    }
+  }
+}
+
+.x-react-dropdown__menu, .x-react-dropdown__menu * { box-sizing: border-box; }
+.x-react-dropdown__menu button { width: 100%; text-align: inherit; font-family: inherit; cursor: pointer; }
+.x-react-dropdown__menu [aria-disabled="true"] { opacity: .5; cursor: default; }
+.x-react-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

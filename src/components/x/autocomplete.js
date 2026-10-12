@@ -131,6 +131,7 @@ class AutocompleteInstance {
     if (typeof window === 'undefined') return;
     if (!this.field || !this.list || !this.dropdown) return;
 
+    this._invalidateLoad();
     if (reset) {
       this._reset();
     }
@@ -187,8 +188,20 @@ class AutocompleteInstance {
   }
 
   _inputHandler() {
+    this._invalidateLoad();
+    this.data = null;
     this._clearActiveItem();
+    if (!this.field.value.trim()) {
+      this._reset();
+      return;
+    }
+    this._loadingState();
     this.debouncedLoadData();
+  }
+
+  _invalidateLoad() {
+    this._currentLoadId++;
+    this.debouncedLoadData.cancel();
   }
 
   _pointerDownHandler(e) {
@@ -219,6 +232,7 @@ class AutocompleteInstance {
   }
 
   _hideHandler() {
+    this._invalidateLoad();
     this._clearActiveItem();
 
     if (this._skipNextHideSelect || this._clicked || this._selecting) {
@@ -258,6 +272,7 @@ class AutocompleteInstance {
   }
 
   _reset() {
+    this._invalidateLoad();
     if (this.resetFunc) {
       this.resetFunc();
     }
@@ -266,7 +281,9 @@ class AutocompleteInstance {
   }
 
   async _loadData() {
-    if (!this.field || !this.field.value.trim()) {
+    if (!this.field) return;
+    const loadId = ++this._currentLoadId;
+    if (!this.field.value.trim()) {
       this._reset();
       return;
     }
@@ -277,9 +294,6 @@ class AutocompleteInstance {
     }
 
     this._loadingState();
-
-    const loadId = Date.now();
-    this._currentLoadId = loadId;
 
     try {
       const data = await this.loadData(this);
@@ -393,6 +407,7 @@ class AutocompleteInstance {
 
   _selectItem(el) {
     if (!el || !this.onSelect) return false;
+    this._invalidateLoad();
     this._skipNextHideSelect = true;
 
     try {

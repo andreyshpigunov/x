@@ -62,6 +62,16 @@ export class FakeElement extends EventTarget {
     return this.children[0] ?? null;
   }
 
+  get childNodes() {
+    return this.children;
+  }
+
+  replaceChildren(...nodes) {
+    this.children.forEach(child => { child.parentElement = null; });
+    this.children = [];
+    nodes.forEach(node => this.appendChild(node));
+  }
+
   getAttribute(name) {
     if (name === 'id') return this.id || null;
     if (name === 'class') return [...this.classList.values].join(' ');

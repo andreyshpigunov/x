@@ -12,5 +12,7 @@ logo.pxd
 *.log
 
 node_modules
+.local/
 
-docs
+/docs/*
+!/docs/react.md

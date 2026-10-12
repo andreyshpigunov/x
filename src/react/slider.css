@@ -1,0 +1,78 @@
+/* Isolated React styles derived from X. No global reset. */
+
+
+
+.x-react-slider {
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  touch-action: auto; /* по умолчанию не блокируем жесты; класс `.x-react-slider_touch` включает pan-y */
+  overscroll-behavior: contain;    /* не отдаём overscroll родителю */
+}
+.x-react-slider_touch {
+  touch-action: pan-y;  /* разрешаем только вертикальные жесты браузеру */
+}
+.x-react-slider-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  will-change: transform;
+  transform: translateZ(0); /* создаёт отдельный композитный слой */
+  backface-visibility: hidden;
+}
+.x-react-slider-item {
+  display: flex;
+  position: relative;
+  min-width: 100%;
+  flex: 0 0 100%;
+}
+.x-react-slider-item a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.x-react-slider-item img {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  object-fit: var(--slider-object-fit, cover);
+  pointer-events: auto;
+}
+.x-react-slider-indicators {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: var(--slider-indicators-left, 1.2rem);
+  right: var(--slider-indicators-right, 1.2rem);
+  top: var(--slider-indicators-top, auto);
+  bottom: var(--slider-indicators-bottom, 1rem);
+  width: var(--slider-indicators-width, auto);
+  height: var(--slider-indicators-height, var(--slider-point-size, .3rem));
+  gap: var(--slider-indicators-gap, .3rem);
+  opacity: var(--slider-indicators-init-opacity, 0);
+  will-change: opacity;
+  transition: opacity .2s ease-out;
+  pointer-events: none;
+}
+.x-react-slider-indicators span {
+  display: flex;
+  flex: 1;
+  width: var(--slider-point-size, .3rem);
+  min-width: var(--slider-point-size, .3rem);
+  height: var(--slider-point-size, .3rem);
+  border-radius: var(--slider-point-size, .3rem);
+  background: var(--slider-point-color, #ffffff66);
+  transition: background .1s ease-out;
+}
+.x-react-slider-indicators span.active {
+  background: var(--slider-point-color-active, #fff);
+}
+.x-react-slider:hover .x-react-slider-indicators {
+  opacity: 1;
+}
+
+@media (any-hover: none) {
+  .x-react-slider_touch .x-react-slider-indicators { opacity: 1; }
+}
