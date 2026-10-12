@@ -140,6 +140,8 @@
       <div class="docs-content">
         <section id="start" class="docs-section">
           <h2>Быстрый старт</h2>
+          <p>Версия: <strong>0.6.0-beta.1</strong>. Примеры ниже относятся к vanilla X. Для React 19 используй отдельный вход <code>@andreyshpigunov/x/react</code> и CSS нужных компонентов, без вызова <code>x.init()</code>.</p>
+          <p><a href="docs/react.md">Документация React</a> · <a href="skills/x-library/SKILL.md">Скилл для ИИ</a> · <a href="CHANGELOG.md">Изменения версии</a></p>
           <p><strong>x</strong> состоит из CSS-утилит и набора маленьких JS-компонентов. Для обычной HTML-страницы достаточно подключить CSS, JS и вызвать <code>x.init()</code>. В демо-проекте это делает <code>assets/js/app.js</code>.</p>
 
           <div class="docs-code">
@@ -150,7 +152,7 @@
 
           <p>Если используешь исходники как ESM, импортируй публичный entrypoint:</p>
           <div class="docs-code">
-            <code>import x from './index.js';</code>
+            <code>import { x } from './index.js';</code>
             <code>x.init();</code>
           </div>
 
