@@ -117,6 +117,7 @@
  */
 
 import { lib } from './lib.js';
+import { createLifecycle } from './lifecycle.js';
 
 /**
  * Scroll utility class.
@@ -132,6 +133,7 @@ class Scroll {
      * @type {Window|HTMLElement|null}
      */
     this.parent = null;
+    this._scope = createLifecycle();
 
     /**
      * Default offset in pixels.
@@ -346,6 +348,13 @@ class Scroll {
    * Safe to call multiple times.
    */
   destroy() {
+    this._scope.dispose();
+    for (const item of Object.values(this._linksHash)) {
+      if (item.classActive) {
+        item.link.classList.remove(item.classActive);
+        item.target.classList.remove(item.classActive);
+      }
+    }
     if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
     for (const [parent, handler] of this._scrollHandlers.entries()) {
@@ -389,6 +398,10 @@ class Scroll {
    * @returns {Promise<void>} Resolves after scroll completes.
    */
   async scrollTo(params) {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+    this.parent ||= window;
+    if (!this._scope.active) this._scope = createLifecycle();
+    const scope = this._scope;
     return new Promise(resolve => {
       if (!params) {
         console.error('scroll.scrollTo: Parameters required');
@@ -491,7 +504,7 @@ class Scroll {
           behavior: 'smooth'
         });
 
-        setTimeout(resolve, 400);
+        scope.wait(400).then(() => resolve());
 
         // SECURITY: Validate ID before using in URL
         if (hash && target.id) {

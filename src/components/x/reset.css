@@ -77,7 +77,8 @@ html {
   &.scale4  { --font-scale: 1.20 }
   &.scale5  { --font-scale: 1.25 }
   
-  &.no-transitions * {
+  &.no-transitions *,
+  &.noTransitions * {
     transition: none !important;
   }
 }

@@ -81,6 +81,7 @@ let list;
 const keyEvent = key => ({
   key,
   defaultPrevented: false,
+  stopPropagation() { this.propagationStopped = true; },
   preventDefault() {
     this.defaultPrevented = true;
   }
@@ -298,7 +299,9 @@ test('Escape closes without selection and clears the active suggestion', () => {
   instance.data = [{ id: 1 }, { id: 2 }];
   instance.render();
   instance._keyHandler(keyEvent('ArrowDown'));
-  instance._keyHandler(keyEvent('Escape'));
+  const escape = keyEvent('Escape');
+  instance._keyHandler(escape);
+  assert.equal(escape.propagationStopped, true);
   dropdown.dispatchEvent(new Event('dropdown:afterhide'));
 
   assert.deepEqual(selected, []);
@@ -414,4 +417,59 @@ test('destroy without reset cancels debounce and ignores in-flight responses', a
   assert.equal(maps, 0);
   assert.equal(resets, 0);
   assert.equal(instance.data, null);
+});
+
+ test('loadData receives a signal aborted on replacement and destroy', async () => {
+  const signals = [], resolve = [];
+  autocomplete.init('search', { loadData: (ctx, {signal}) => {
+    assert.equal(ctx.field, field); signals.push(signal);
+    return new Promise(done => resolve.push(done));
+  }});
+  const instance = autocomplete.get('search');
+  const first = instance._loadData();
+  const second = instance._loadData();
+  assert.equal(signals[0].aborted, true);
+  assert.equal(signals[1].aborted, false);
+  autocomplete.destroy('search', {reset:false});
+  assert.equal(signals[1].aborted, true);
+  resolve.forEach(done => done([]));
+  await Promise.all([first, second]);
+});
+
+test('mapData can destroy the instance without resurrecting data or rendering', async () => {
+  autocomplete.init('search',{
+    loadData:()=>[{name:'stale'}],
+    mapData:data=>{autocomplete.destroy('search',{reset:false});return data;},
+    renderItem:()=>{throw new Error('must not render');}
+  });
+  const instance=autocomplete.get('search');
+  await instance._loadData();
+  assert.equal(instance.data,null);assert.equal(autocomplete.get('search'),null);
+});
+
+test('reset callback may replace an instance during destroy without losing new registration', () => {
+  autocomplete.init('search',{resetFunc:()=>autocomplete.init('search',{defaultStateHtml:'replacement'})});
+  const previous=autocomplete.get('search');
+  autocomplete.destroy('search');
+  const replacement=autocomplete.get('search');
+  assert.ok(replacement);assert.notEqual(replacement,previous);
+  assert.equal(list.innerHTML,'replacement');assert.equal(field.getAttribute('role'),'combobox');
+});
+
+test('reset callback can cancel initialization without installing orphan listeners', () => {
+  field.value='';
+  autocomplete.init('search',{resetFunc:()=>autocomplete.destroy('search',{reset:false})});
+  assert.equal(autocomplete.get('search'),null);
+  assert.notEqual(field.getAttribute('role'),'combobox');
+});
+
+test('destroy from renderItem stops remaining render callbacks and DOM writes', async () => {
+  let rendered=0;
+  autocomplete.init('search',{
+    loadData:()=>[{name:'one'},{name:'two'}],
+    renderItem:()=>{rendered++;autocomplete.destroy('search',{reset:false});return 'obsolete';}
+  });
+  const instance=autocomplete.get('search');await instance._loadData();
+  assert.equal(rendered,1);assert.notEqual(list.innerHTML,'obsolete');
+  assert.equal(autocomplete.get('search'),null);
 });

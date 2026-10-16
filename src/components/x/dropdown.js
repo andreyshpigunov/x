@@ -116,6 +116,7 @@
  */
 
 import { lib } from './lib.js';
+import { createLifecycle } from './lifecycle.js';
 
 /**
  * Dropdown menu controller.
@@ -137,6 +138,9 @@ class Dropdown {
      * @private
      */
     this._handlers = new Map();
+    this._transitions = new Map();
+    this._originalAttributes = new Map();
+    this._originalParents = new Map();
 
     /**
      * Stores menu elements with their related triggers and parents.
@@ -157,6 +161,7 @@ class Dropdown {
      * @type {boolean}
      * @private
      */
+    this._generation = 0;
     this._initialized = false;
 
     /** @type {function(Event): void | null} */
@@ -175,10 +180,13 @@ class Dropdown {
     if (typeof document === 'undefined') return;
     if (this._initialized) this._cleanup();
 
+    const generation = ++this._generation;
+    this._initialized = true;
     this._attachGlobalListeners();
 
     const menus = lib.qsa('[x-dropdown]');
     for (const menu of menus) {
+      if (generation !== this._generation) return;
       const parent = menu.parentElement;
       if (!parent) continue;
 
@@ -193,6 +201,7 @@ class Dropdown {
       this._parentToMenu.set(parent, menu);
 
       parent.dispatchEvent(new CustomEvent('dropdown:ready'));
+      if (generation !== this._generation) return;
     }
 
     this._initialized = true;
@@ -206,19 +215,27 @@ class Dropdown {
    * @param {HTMLElement} menu - The dropdown menu.
    * @private
    */
+  _attribute(element, name, value) {
+    if (!this._originalAttributes.has(element)) this._originalAttributes.set(element, new Map());
+    const values = this._originalAttributes.get(element);
+    if (!values.has(name)) values.set(name, element.getAttribute(name));
+    element.setAttribute(name, value);
+  }
+
   _setupAccessibility(parent, trigger, menu) {
+    if (!this._originalParents.has(parent)) this._originalParents.set(parent, parent.classList.contains('dropdown'));
     parent.classList.add('dropdown');
-    trigger.setAttribute('aria-expanded', 'false');
-    if (!menu.id) menu.id = lib.makeId();
-    trigger.setAttribute('aria-controls', menu.id);
-    menu.setAttribute('role', 'menu');
-    menu.setAttribute('tabindex', '-1');
+    this._attribute(trigger, 'aria-expanded', 'false');
+    if (!menu.id) this._attribute(menu, 'id', lib.makeId());
+    this._attribute(trigger, 'aria-controls', menu.id);
+    this._attribute(menu, 'role', 'menu');
+    this._attribute(menu, 'tabindex', '-1');
 
     const linkItems = menu.querySelectorAll('li > a');
     for (let i = 0; i < linkItems.length; i++) {
       const item = linkItems[i];
-      item.setAttribute('role', 'menuitem');
-      item.setAttribute('tabindex', '-1');
+      this._attribute(item, 'role', 'menuitem');
+      this._attribute(item, 'tabindex', '-1');
     }
   }
 
@@ -387,7 +404,25 @@ class Dropdown {
    * @private
    */
   _cleanup() {
-    this.closeAllDropdowns();
+    this._generation++;
+    for (const menu of this._menus.keys()) {
+      for (const item of menu.querySelectorAll('[role="menuitem"]')) item.classList.remove('hover');
+    }
+    for (const scope of this._transitions.values()) scope.dispose();
+    this._transitions.clear();
+    for (const [parent, original] of this._originalParents) {
+      parent.classList.remove('dropdown_ready', 'dropdown_open', 'dropdown_right', 'dropdown_bottom');
+      parent.classList.toggle('dropdown', original);
+      delete parent._dropdownClosing;
+      lib.qs('[x-dropdown-open]', parent)?.classList.remove('active', 'hover');
+    }
+    this._originalParents.clear();
+    for (const [element, attrs] of this._originalAttributes) {
+      for (const [name, value] of attrs) {
+        if (value === null) element.removeAttribute(name); else element.setAttribute(name, value);
+      }
+    }
+    this._originalAttributes.clear();
 
     this._handlers.forEach((handlers, element) => {
       if (handlers.clickListener) element.removeEventListener('click', handlers.clickListener);
@@ -436,14 +471,18 @@ class Dropdown {
   async _open(parent, trigger) {
     const menu = this._parentToMenu.get(parent);
     if (!menu) return;
-
+    this._transitions.get(parent)?.dispose();
+    const scope = createLifecycle();
+    this._transitions.set(parent, scope);
+    parent._dropdownClosing = false;
     this._fireEvent(parent, 'beforeshow');
+    if (!scope.active) return;
     this._adjustPosition(parent, menu);
-
-    lib.addClass(trigger, 'active');
-    lib.addClass(parent, 'dropdown_open', 20);
+    trigger.classList.add('active');
+    parent.classList.add('dropdown_ready');
     trigger.setAttribute('aria-expanded', 'true');
-
+    if (!await scope.wait(20) || !scope.active) return;
+    parent.classList.add('dropdown_open');
     this._fireEvent(parent, 'aftershow');
   }
 
@@ -507,10 +546,10 @@ class Dropdown {
    * dropdown.closeAllDropdowns();
    */
   closeAllDropdowns() {
-    if (!document.querySelector('.dropdown_open')) return;
-    const openDropdowns = lib.qsa('.dropdown_open');
-    for (const parent of openDropdowns) {
-      this._close(parent);
+    if (typeof document === 'undefined') return;
+    const parents = new Set([...this._parentToMenu.keys(), ...lib.qsa('.dropdown_open')]);
+    for (const parent of parents) {
+      if (parent.classList.contains('dropdown_ready') || parent.classList.contains('dropdown_open')) this._close(parent);
     }
   }
 
@@ -522,22 +561,21 @@ class Dropdown {
    */
   async _close(parent) {
     if (parent._dropdownClosing) return;
+    this._transitions.get(parent)?.dispose();
+    const scope = createLifecycle();
+    this._transitions.set(parent, scope);
     parent._dropdownClosing = true;
-  
     this._fireEvent(parent, 'beforehide');
-  
+    if (!scope.active) return;
     const trigger = lib.qs('[x-dropdown-open]', parent);
-    if (trigger) {
-      lib.removeClass(trigger, 'active');
-      trigger.setAttribute('aria-expanded', 'false');
-    }
-  
-    await lib.removeClass(parent, 'dropdown_open', 200);
-    parent.classList.remove('dropdown_right', 'dropdown_bottom');
-  
+    trigger?.classList.remove('active');
+    trigger?.setAttribute('aria-expanded', 'false');
+    parent.classList.remove('dropdown_open');
+    if (!await scope.wait(200) || !scope.active) return;
+    parent.classList.remove('dropdown_ready', 'dropdown_right', 'dropdown_bottom');
+    parent._dropdownClosing = false;
+    this._transitions.delete(parent);
     this._fireEvent(parent, 'afterhide');
-  
-    setTimeout(() => { parent._dropdownClosing = false }, 100);
   }
 
   /**

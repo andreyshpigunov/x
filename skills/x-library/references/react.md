@@ -1,6 +1,6 @@
 # React 19: контракты X
 
-Это ориентиры для выбора API. Точные типы установленного пакета проверяй в `dist/react/index.d.ts`, расширенные примеры — в `docs/react.md`. Нет экспортов `Tabs`, `useModal`, `Form`, `useDevice` или React-компонента `Typograf`.
+Это ориентиры для выбора API. Все props, callback-сигнатуры и defaults описаны в [React API](react-api.md). Точные типы установленного пакета проверяй в `dist/react/index.d.ts`, расширенные примеры — в `docs/react.md`. Нет экспортов `Tabs`, `useModal`, `Form`, `useDevice` или React-компонента `Typograf`.
 
 | Задача | API | Важная особенность |
 | --- | --- | --- |
@@ -48,7 +48,7 @@ export function Contact() {
 
 ## Вкладки, меню и слайдер
 
-Sheets: `value/defaultValue/onValueChange` используют строковый id. Уникальность id нужна внутри одной группы; вложенные группы независимы. Вкладки оформляет сайт, X только переключает панели и обеспечивает клавиатурное управление.
+Sheets: `value/defaultValue/onValueChange` используют строковый id. Уникальность id нужна внутри одной группы; вложенные группы в панелях имеют отдельное состояние и DOM-id. Вкладки оформляет сайт, X только переключает панели и обеспечивает клавиатурное управление.
 
 Dropdown: `open/defaultOpen/onOpenChange`; items с уникальным id и полями label, href, onSelect, disabled, divider, keepOpen. Стили общие с автодополнением. Сохраняй историческое имя переменной `--dropdown-backgroud-color` (именно так в X); не заменяй его выдуманным `--dropdown-background-color`. Есть `--dropdown-duration`.
 

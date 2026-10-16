@@ -123,6 +123,7 @@ export class Hover {
     /** @type {boolean} @private */
     this._initialized = false;
     /** @type {function(MouseEvent): void} @private */
+    this._touched = new Set();
     this._boundEnter = this._handleEnter.bind(this);
     /** @type {function(MouseEvent): void} @private */
     this._boundLeave = this._handleLeave.bind(this);
@@ -147,6 +148,8 @@ export class Hover {
     if (typeof document === 'undefined' || !this._initialized) return;
     document.removeEventListener('mouseenter', this._boundEnter, true);
     document.removeEventListener('mouseleave', this._boundLeave, true);
+    for (const el of this._touched) el.classList.remove('hover');
+    this._touched.clear();
     this._initialized = false;
   }
 
@@ -191,6 +194,8 @@ export class Hover {
       const list = lib.qsa(`[x-hover][href="${escaped}"]`);
       for (let i = 0; i < list.length; i++) {
         list[i].classList.toggle('hover', isEnter);
+        if (isEnter) this._touched.add(list[i]);
+        else this._touched.delete(list[i]);
       }
     } catch (_) {}
   }

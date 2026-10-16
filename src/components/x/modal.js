@@ -155,6 +155,7 @@
  */
 
 import { lib } from './lib.js';
+import { createLifecycle } from './lifecycle.js';
 
 /**
  * Modal window controller.
@@ -165,6 +166,9 @@ class Modal {
    */
   constructor() {
     this.modalLevel = 0;
+    this._scope = createLifecycle();
+    this._touched = new Set();
+    this._opened = new Map();
     this.lockCount = 0;
     /** @type {HTMLElement|null} */
     this.html = null;
@@ -184,8 +188,9 @@ class Modal {
    */
   init() {
     if (typeof document === 'undefined' || typeof window === 'undefined') return;
-    if (this._initialized) this.destroy();
+    this.destroy();
 
+    this._scope = createLifecycle();
     this.html = lib.qs('html');
     this._renderModalContents();
     this._setupModalLinks();
@@ -198,6 +203,18 @@ class Modal {
    * Safe to call multiple times.
    */
   destroy() {
+    this._scope.dispose();
+    for (const modal of this._touched) {
+      modal.classList.remove('modal_active', 'modal_ready');
+      for (const cls of (modal.getAttribute('class') || '').split(/\s+/)) {
+        if (/^modal_z\d+$/.test(cls)) modal.classList.remove(cls);
+      }
+      this.html?.classList.remove(modal.id + '_active');
+      lib.removeClass('[x-modal-open="' + modal.id + '"]', 'active');
+    }
+    this.html?.classList.remove('modal_active');
+    this._touched.clear();
+    this._opened.clear();
     if (typeof document === 'undefined') return;
     if (this._clickHandler) {
       document.removeEventListener('click', this._clickHandler);
@@ -209,6 +226,7 @@ class Modal {
     }
     this._linkHandlers.forEach((handler, link) => {
       link.removeEventListener('click', handler);
+      link.classList.remove('active');
     });
     this._linkHandlers.clear();
     this.modalLevel = 0;
@@ -254,7 +272,7 @@ class Modal {
       const item = items[i];
       const id = item.getAttribute('x-modal');
       if (!id || !this._isValidId(id)) continue;
-      if (lib.qs('#' + id)) continue;
+      if (lib.qs('#' + CSS.escape(id))) continue;
 
       const classes = item.getAttribute('class') || '';
       const windowClasses = (item.getAttribute('data-window-class') || '').replace(/\s+/g, ' ').trim();
@@ -291,7 +309,7 @@ class Modal {
       this._linkHandlers.set(link, handler);
 
       if (window.location.hash === '#' + id) {
-        const el = lib.qs('#' + id);
+        const el = lib.qs('#' + CSS.escape(id));
         if (el && el.classList.contains('modal_hash')) this.show(id);
       }
     }
@@ -326,7 +344,7 @@ class Modal {
 
     this._keydownHandler = e => {
       if (e.key !== 'Escape') return;
-      const modals = lib.qsa('.modal_active');
+      const modals = [...this._opened.keys()];
       const len = modals.length;
       if (!len) return;
       const id = modals[len - 1].getAttribute('id');
@@ -349,44 +367,37 @@ class Modal {
    * @returns {Promise<void>}
    */
   async show(id) {
-    if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return;
+    if (typeof document === 'undefined' || !this._isValidId(id)) return;
     if (this.lockCount > 0) return;
-
-    if (this.isActive(id)) {
-      await this.hide(id);
-      return;
-    }
-
-    const modal = lib.qs('#' + id);
+    if (this.isActive(id)) { await this.hide(id); return; }
+    const modal = lib.qs('#' + CSS.escape(id));
     if (!modal) return;
-
+    if (!this._scope.active) this._scope = createLifecycle();
+    const scope = this._scope;
     if (modal.classList.contains('modal_uniq')) await this.hideAll();
-
+    if (!scope.active || this.lockCount > 0) return;
+    this.html ||= lib.qs('html');
+    this._touched.add(modal);
     this.lockCount++;
+    let released = false;
     try {
-      await lib.addClass(modal, 'modal_ready');
-      await lib.sleep(10);
+      modal.classList.add('modal_ready');
+      if (!await scope.wait(10) || !scope.active) return;
       modal.dispatchEvent(new CustomEvent('modal:ready'));
-
+      if (!scope.active) return;
       if (modal.classList.contains('modal_hash')) history.replaceState(null, '', '#' + id);
-
-      if (this.html) {
-        lib.addClass(this.html, 'modal_active');
-        lib.addClass(this.html, id + '_active');
-      }
-      lib.addClass('[x-modal-open=' + id + ']', 'active');
-      this.modalLevel++;
-      lib.addClass(modal, 'modal_z' + this.modalLevel);
-      await lib.addClass(modal, 'modal_active');
-
-      const modalOuter = lib.qs('.modal-outer', modal);
-      if (modalOuter) modalOuter.scrollTo(0, 1);
-
-      await lib.sleep(200);
-      modal.dispatchEvent(new CustomEvent('modal:open'));
-    } catch (_) {
-    } finally {
+      this.html?.classList.add('modal_active', id + '_active');
+      lib.addClass('[x-modal-open="' + id + '"]', 'active');
+      this._opened.set(modal, this._opened.size + 1);
+      this.modalLevel = this._opened.size;
+      modal.classList.add('modal_z' + this.modalLevel, 'modal_active');
+      lib.qs('.modal-outer', modal)?.scrollTo(0, 1);
+      if (!await scope.wait(200) || !scope.active) return;
       this.lockCount--;
+      released = true;
+      modal.dispatchEvent(new CustomEvent('modal:open'));
+    } finally {
+      if (scope.active && !released) this.lockCount--;
     }
   }
 
@@ -399,27 +410,38 @@ class Modal {
    * @returns {Promise<void>}
    */
   async hide(id) {
-    if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return;
-    if (this.lockCount > 0) return;
-
-    const modal = lib.qs('#' + id);
-    if (!modal || !modal.classList.contains('modal_active')) return;
-
+    if (typeof document === 'undefined' || !this._isValidId(id) || this.lockCount > 0) return;
+    const modal = lib.qs('#' + CSS.escape(id));
+    if (!modal?.classList.contains('modal_active')) return;
+    if (!this._scope.active) this._scope = createLifecycle();
+    const scope = this._scope;
+    this._touched.add(modal);
     this.lockCount++;
+    let released = false;
     try {
       if (modal.classList.contains('modal_hash') && window.location.hash === '#' + id) {
         history.replaceState(null, document.title, window.location.pathname + window.location.search);
       }
-      lib.removeClass('[x-modal-open=' + id + ']', 'active');
-      await lib.removeClass(modal, 'modal_active', 200);
-      lib.removeClass(modal, 'modal_z' + this.modalLevel);
-      modal.dispatchEvent(new CustomEvent('modal:close'));
-      if (this.html) lib.removeClass(this.html, id + '_active');
-      this.modalLevel--;
-      if (this.modalLevel === 0 && this.html) lib.removeClass(this.html, 'modal_active');
-    } catch (_) {
-    } finally {
+      lib.removeClass('[x-modal-open="' + id + '"]', 'active');
+      modal.classList.remove('modal_active');
+      if (!await scope.wait(200) || !scope.active) return;
+      modal.classList.remove('modal_ready', 'modal_z' + this._opened.get(modal));
+      this._opened.delete(modal);
+      this._touched.delete(modal);
+      let level = 0;
+      for (const [other, previous] of this._opened) {
+        other.classList.remove('modal_z' + previous);
+        other.classList.add('modal_z' + (++level));
+        this._opened.set(other, level);
+      }
+      this.modalLevel = level;
+      this.html?.classList.remove(id + '_active');
+      if (!level) this.html?.classList.remove('modal_active');
       this.lockCount--;
+      released = true;
+      modal.dispatchEvent(new CustomEvent('modal:close'));
+    } finally {
+      if (scope.active && !released) this.lockCount--;
     }
   }
 
@@ -431,8 +453,10 @@ class Modal {
    */
   async hideAll() {
     if (typeof document === 'undefined') return;
+    const scope = this._scope;
     const modals = lib.qsa('.modal_active');
     for (let i = 0; i < modals.length; i++) {
+      if (!scope.active) return;
       const id = modals[i].getAttribute('id');
       if (id) await this.hide(id);
     }
@@ -445,7 +469,7 @@ class Modal {
    */
   isActive(id) {
     if (typeof document === 'undefined' || !id || typeof id !== 'string' || !this._isValidId(id)) return false;
-    const modal = lib.qs('#' + id);
+    const modal = lib.qs('#' + CSS.escape(id));
     return modal ? modal.classList.contains('modal_active') : false;
   }
 }

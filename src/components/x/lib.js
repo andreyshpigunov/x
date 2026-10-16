@@ -188,6 +188,7 @@ class Lib {
     /** @type {Set<string>} @private */
     this.loadedScripts = new Set();
     this._loadingScripts = new Map();
+    this._transitionTimer = null;
     if (HAS_DOM()) this._elementRender();
   }
 
@@ -674,27 +675,41 @@ class Lib {
    * Defers function execution by user activity or timeout. SSR-safe: no-op when window undefined.
    * @param {Function} callback
    * @param {number} [delay=10000]
+   * @returns {Function} Cancel pending interaction, timer, or load wait.
    */
   deferred(callback, delay = 10000) {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined') return () => {};
     const events = ['scroll', 'resize', 'click', 'keydown', 'mousemove', 'touchmove'];
-    let timer;
-
-    const run = () => {
-      for (let i = 0; i < events.length; i++) window.removeEventListener(events[i], run, { once: true });
-      if (document.readyState === 'complete') callback();
-      else window.addEventListener('load', callback, { once: true });
+    let cancelled = false, triggered = false;
+    const cleanup = () => {
+      cancelled = true;
       clearTimeout(timer);
+      events.forEach(name => window.removeEventListener(name, run));
+      window.removeEventListener('load', onLoad);
     };
-
-    timer = setTimeout(run, delay);
-    for (let i = 0; i < events.length; i++) window.addEventListener(events[i], run, { once: true });
+    const onLoad = event => {
+      if (cancelled) return;
+      cleanup();
+      callback.call(window, event);
+    };
+    const run = () => {
+      if (cancelled || triggered) return;
+      triggered = true;
+      clearTimeout(timer);
+      events.forEach(name => window.removeEventListener(name, run));
+      if (document.readyState === 'complete') { cleanup(); callback(); }
+      else window.addEventListener('load', onLoad, { once: true });
+    };
+    const timer = setTimeout(run, delay);
+    events.forEach(name => window.addEventListener(name, run, { once: true }));
+    return cleanup;
   }
 
   /**
    * Alias for deferred().
    * @param {Function} callback
    * @param {number} [delay=10000]
+   * @returns {Function} Cancel pending interaction, timer, or load wait.
    */
   deffered(callback, delay = 10000) {
     return this.deferred(callback, delay);
@@ -728,6 +743,7 @@ class Lib {
    * @param {Function} appearCallback
    * @param {Function} [disappearCallback]
    * @param {Object} [options]
+   * @returns {IntersectionObserver|undefined} Disconnect for cleanup; undefined without DOM, support, or matching elements.
    */
   onAppear(selector, appearCallback, disappearCallback = null, options = {}) {
     if (!HAS_DOM() || typeof appearCallback !== 'function') return;
@@ -750,6 +766,7 @@ class Lib {
     }, { root: null, rootMargin: '200px', threshold: 0.1, ...options });
 
     for (let i = 0; i < len; i++) observer.observe(elements[i]);
+    return observer;
   }
 
   /**
@@ -830,7 +847,11 @@ class Lib {
    */
   transitionsOn(delay = 0) {
     if (!HAS_DOM()) return;
-    setTimeout(() => document.documentElement.classList.remove('noTransitions'), delay);
+    clearTimeout(this._transitionTimer);
+    this._transitionTimer = setTimeout(() => {
+      document.documentElement.classList.remove('no-transitions', 'noTransitions');
+      this._transitionTimer = null;
+    }, delay);
   }
 
   /**
@@ -838,7 +859,9 @@ class Lib {
    */
   transitionsOff() {
     if (!HAS_DOM()) return;
-    document.documentElement.classList.add('noTransitions');
+    clearTimeout(this._transitionTimer);
+    this._transitionTimer = null;
+    document.documentElement.classList.add('no-transitions', 'noTransitions');
   }
 
   /**

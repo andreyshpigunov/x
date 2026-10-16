@@ -171,6 +171,8 @@ class Sheets {
      * @type {boolean}
      * @private
      */
+    this._generation = 0;
+    this._destroying = false;
     this._initialized = false;
   }
   
@@ -211,7 +213,12 @@ class Sheets {
    * - Safe for multiple calls; previous listeners are removed.
    * - Dispatches 'sheets:ready' event on each container when initialization is complete.
    */
+  _owned(selector, container) {
+    return Array.from(lib.qsa(selector, container)).filter(el => el.closest('[x-sheets]') === container);
+  }
+
   init() {
+    if (typeof document === 'undefined' || this._destroying) return;
     if (this._initialized) {
       this.destroy();
     }
@@ -221,10 +228,13 @@ class Sheets {
       return;
     }
     
+    const generation = ++this._generation;
+    this._initialized = true;
     for (const sheet of sheets) {
+      if (generation !== this._generation) return;
       if (!sheet) continue;
       
-      const tabs = lib.qsa('[x-sheet-open]:not([x-sheet-open] [x-sheet-open])', sheet);
+      const tabs = this._owned('[x-sheet-open]', sheet);
       
       for (const tab of tabs) {
         if (!tab) continue;
@@ -250,7 +260,7 @@ class Sheets {
         this._handlers.set(tab, handler);
       }
       
-      const active = lib.qs('[x-sheet-open].active', sheet);
+      const active = this._owned('[x-sheet-open].active', sheet)[0];
       if (active) {
         const activeValue = active.getAttribute('x-sheet-open');
         if (activeValue && this._isValidSheetValue(activeValue)) {
@@ -258,6 +268,7 @@ class Sheets {
         }
       }
       
+      if (generation !== this._generation) return;
       // Dispatch ready event on this container
       this._dispatchEvent(sheet, 'ready', {
         container: sheet,
@@ -266,7 +277,7 @@ class Sheets {
       });
     }
     
-    this._initialized = true;
+    if (generation !== this._generation) return;
   }
   
   /**
@@ -274,31 +285,36 @@ class Sheets {
    * Safe to call multiple times. Dispatches 'sheets:destroy' event on each container.
    */
   destroy() {
-    // Store containers before clearing handlers
-    const containers = new Set();
-    for (const [el] of this._handlers.entries()) {
-      const container = el.closest('[x-sheets]');
-      if (container) {
-        containers.add(container);
+    if (this._destroying) return;
+    this._generation++;
+    this._destroying = true;
+    try {
+      // Store containers before clearing handlers
+      const containers = new Set();
+      for (const [el] of this._handlers.entries()) {
+        const container = el.closest('[x-sheets]');
+        if (container) {
+          containers.add(container);
+        }
       }
-    }
     
-    // Remove all event listeners
-    for (const [el, handler] of this._handlers.entries()) {
-      el.removeEventListener('click', handler);
-    }
+      // Remove all event listeners
+      for (const [el, handler] of this._handlers.entries()) {
+        el.removeEventListener('click', handler);
+      }
     
-    this._handlers.clear();
-    this._initialized = false;
+      this._handlers.clear();
+      this._initialized = false;
     
-    // Dispatch destroy event on each container
-    for (const container of containers) {
-      this._dispatchEvent(container, 'destroy', {
-        container: container,
-        timestamp: Date.now(),
-        wasInitialized: true
-      });
-    }
+      // Dispatch destroy event on each container
+      for (const container of containers) {
+        this._dispatchEvent(container, 'destroy', {
+          container: container,
+          timestamp: Date.now(),
+          wasInitialized: true
+        });
+      }
+    } finally { this._destroying = false; }
   }
   
   /**
@@ -312,6 +328,7 @@ class Sheets {
    * @param {string} options.source - Source of the selection ('api' or 'user').
    */
   show(xSheet, options = { silent: false, source: 'api' }) {
+    if (typeof document === 'undefined') return;
     if (!xSheet || typeof xSheet !== 'string') {
       console.error('sheets.show: Sheet value is required and must be a string');
       return;
@@ -326,7 +343,9 @@ class Sheets {
     // SECURITY: Use CSS.escape() to prevent XSS in selectors
     const escapedValue = CSS.escape(xSheet);
     const requestedContainer = options.container || null;
-    const targetBody = lib.qs(`[x-sheet="${escapedValue}"]`, requestedContainer || document);
+    const targetBody = requestedContainer
+      ? this._owned(`[x-sheet="${escapedValue}"]`, requestedContainer)[0]
+      : lib.qs(`[x-sheet="${escapedValue}"]`);
     
     if (!targetBody) {
       console.warn('sheets.show: Target content not found:', xSheet);
@@ -339,7 +358,7 @@ class Sheets {
       return;
     }
     
-    const selectedTab = lib.qs(`[x-sheet-open="${escapedValue}"]`, container);
+    const selectedTab = this._owned(`[x-sheet-open="${escapedValue}"]`, container)[0];
     
     if (!selectedTab) {
       console.warn('sheets.show: Tab not found:', xSheet);
@@ -370,13 +389,13 @@ class Sheets {
     }
     
     // Get previous active tab and body for event data
-    const previousTab = lib.qs('[x-sheet-open].active', container);
-    const previousBody = lib.qs('[x-sheet].active', container);
+    const previousTab = this._owned('[x-sheet-open].active', container)[0];
+    const previousBody = this._owned('[x-sheet].active', container)[0];
     const previousSheet = previousTab ? previousTab.getAttribute('x-sheet-open') : null;
     
     // Remove active class from all tabs and bodies in this container
-    const tabs = lib.qsa('[x-sheet-open]', container);
-    const bodies = lib.qsa('[x-sheet]', container);
+    const tabs = this._owned('[x-sheet-open]', container);
+    const bodies = this._owned('[x-sheet]', container);
     
     for (const tab of tabs) {
       if (tab && tab.classList.contains('active')) {

@@ -189,6 +189,7 @@ export class Device {
    */
   _cleanup() {
     window.removeEventListener('resize', this._debouncedResize);
+    this._debouncedResize.cancel();
     if (this._html) this._html.classList.remove(...CLASSES_TO_REMOVE);
     this._initialized = false;
   }

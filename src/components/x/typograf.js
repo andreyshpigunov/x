@@ -8,6 +8,7 @@
 
 
 class Typograf {
+  #liveRoots = new Map();
   #skipTags = ['code', 'pre', 'script', 'style'];
   
   #decimal = {
@@ -122,7 +123,9 @@ class Typograf {
    * 1. Обрабатывает статичный текст (например .typograf)
    * 2. Навешивается на поля для live-обработки (например .typograf-live)
    */
-  live(staticSelector = '.typograf', interactiveSelector = '.typograf-live', root = document) {
+  live(staticSelector = '.typograf', interactiveSelector = '.typograf-live', root = globalThis.document) {
+    if (!root) return () => {};
+    this.destroy(root);
     // 1. Статическая обработка
     root.querySelectorAll(staticSelector).forEach(el => {
       if (el.isContentEditable) {
@@ -133,7 +136,7 @@ class Typograf {
     });
     
     // 2. Live-обработка полей
-    root.addEventListener('input', e => {
+    const handler = e => {
       const el = e.target;
       if (!el.matches(interactiveSelector)) return;
       if (el.disabled || el.readOnly) return;
@@ -158,7 +161,19 @@ class Typograf {
           if (range) this.#restoreCaret(el, range);
         }
       }
-    });
+    };
+    root.addEventListener('input', handler);
+    const cleanup = () => {
+      root.removeEventListener('input', handler);
+      if (this.#liveRoots.get(root) === cleanup) this.#liveRoots.delete(root);
+    };
+    this.#liveRoots.set(root, cleanup);
+    return cleanup;
+  }
+
+  destroy(root) {
+    if (root) this.#liveRoots.get(root)?.();
+    else for (const cleanup of this.#liveRoots.values()) cleanup();
   }
   
   #restoreCaret(el, oldRange) {
