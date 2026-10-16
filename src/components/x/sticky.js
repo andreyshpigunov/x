@@ -191,10 +191,12 @@ class Sticky {
       return;
     }
 
-    this._observer = new IntersectionObserver(
+    const observer = new IntersectionObserver(
       (entries) => {
+        if (this._observer !== observer) return;
         for (const entry of entries) {
-          if (entry && entry.target) {
+          if (this._observer !== observer) return;
+          if (entry && this._observed.has(entry.target)) {
             this._handleEntry(entry);
           }
         }
@@ -204,6 +206,7 @@ class Sticky {
         rootMargin: this.rootMargin
       }
     );
+    this._observer = observer;
   }
 
   /**
@@ -240,9 +243,8 @@ class Sticky {
   init() {
     if (typeof window === 'undefined' || typeof document === 'undefined') return;
 
-    if (!this._observer) {
-      this._initObserver();
-    }
+    this.destroy();
+    this._initObserver();
 
     if (!this._observer) {
       console.warn('sticky.init: IntersectionObserver is not available');
@@ -268,6 +270,7 @@ class Sticky {
       }
     }
 
+    this._observedClass = this.activeClass;
     this._initialized = true;
   }
 
@@ -280,6 +283,7 @@ class Sticky {
     for (const item of this._observed) {
       try {
         this._observer.unobserve(item);
+        item.classList.remove(this._observedClass || this.activeClass);
         delete item.dataset.stickyObserved;
       } catch (err) {
         console.error('sticky.reset: Error unobserving element', item, err);

@@ -90,7 +90,7 @@
  *
  * Behavior:
  *
- * - Automatically assigns unique ID to each [x-loadmore] element
+ * - Preserves existing marker IDs; generates an ID only when missing
  * - Tracks page number per element (starts from 1)
  * - Triggers when element is within 400px from viewport bottom
  * - Uses lock mechanism to prevent concurrent triggers
@@ -162,7 +162,7 @@ class Loadmore {
      * Key is the element ID.
      * @type {Object.<string, {el: HTMLElement, page: number, loading: boolean}>}
      */
-    this.items = {};
+    this.items = Object.create(null);
 
     /**
      * IntersectionObserver instance.
@@ -186,7 +186,8 @@ class Loadmore {
    * - If called multiple times, safely reinitializes by destroying previous observer.
    * - On each intersection, calls the specified `functionName` from `x-loadmore` JSON attribute.
    *
-   * The callback receives the current `page` number.
+   * The callback receives (page, {signal}). Reset/destroy abort the signal;
+   * pass it to fetch and check it before application-owned DOM writes.
    * If it returns `true`, the observer will continue watching.
    * If it returns `false`, the element will be unobserved.
    *
@@ -240,7 +241,9 @@ class Loadmore {
           if (typeof fn !== 'function') return;
 
           const page = item.page || 1;
-          const hasMore = await fn(page);
+          const controller = new AbortController();
+          item.controller = controller;
+          const hasMore = await fn(page, { signal: controller.signal });
           if (this.items[id] !== item) return;
 
           if (hasMore === true) {
@@ -264,7 +267,7 @@ class Loadmore {
 
     for (let i = 0; i < len; i++) {
       const block = blocks[i];
-      const id = lib.makeId();
+      const id = block.id || lib.makeId();
       if (!id) continue;
       block.setAttribute('id', id);
       this.items[id] = { el: block, page: 1, loading: false };
@@ -284,12 +287,13 @@ class Loadmore {
       this.observer.disconnect();
       this.observer = null;
     }
-    this.items = {};
+    for (const item of Object.values(this.items)) item.controller?.abort();
+    this.items = Object.create(null);
     this._initialized = false;
   }
 
   /**
-   * Resets page counter for an element. SSR-safe: no-op when document undefined.
+   * Aborts pending work, reobserves the marker and resets page counter for an element. SSR-safe: no-op when document undefined.
    * @param {string} selector - CSS selector for the element
    */
   reset(selector) {
@@ -297,7 +301,12 @@ class Loadmore {
     const el = lib.qs(selector);
     if (!el || !el.id) return;
     const item = this.items[el.id];
-    if (item) item.page = 1;
+    if (item) {
+      item.controller?.abort();
+      this.items[el.id] = { el, page: 1, loading: false };
+      this.observer?.unobserve(el);
+      this.observer?.observe(el);
+    }
   }
 }
 

@@ -102,7 +102,7 @@
  *
  * 2. innerHTML usage:
  *    - innerHTML is used to clear container (safe: el.innerHTML = '')
- *    - Content is cloned from existing DOM nodes (safe)
+ *    - Existing slide nodes are moved and restored on destroy; event listeners are preserved
  *
  * 3. Image sources:
  *    - Images use data-src and data-srcset attributes
@@ -151,6 +151,7 @@ export class Slider {
      * @type {NodeListOf<HTMLElement>}
      */
     this.sliders = [];
+    this._observed = new Set();
 
     /**
      * Map of slider instances with their event handlers and data.
@@ -176,8 +177,9 @@ export class Slider {
   }
 
   init() {
-    if (typeof window === 'undefined' || typeof document === 'undefined' || this._initialized) return;
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
     this.observeSliders();
+    if (this._initialized) return;
 
     if (!('MutationObserver' in window)) {
       console.warn('slider: MutationObserver is not supported');
@@ -185,87 +187,108 @@ export class Slider {
       return;
     }
 
-    this.mo = new MutationObserver(mutations => {
+    const observer = new MutationObserver(mutations => {
+      if (this.mo !== observer) return;
       for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
           if (node.nodeType === 1 && node instanceof HTMLElement) {
             if (node.hasAttribute('x-slider') && this.io) {
-              this.io.observe(node);
+              this._observe(node);
             }
             const sliders = node.querySelectorAll?.('[x-slider]');
             if (sliders && this.io) {
               for (const slider of sliders) {
                 if (slider && !this.instances.has(slider)) {
-                  this.io.observe(slider);
+                  this._observe(slider);
                 }
               }
             }
           }
         }
       }
+      this.sliders = Array.from(this.sliders).filter(el => el.isConnected);
+      for (const element of new Set([...this._observed, ...this._originalStates.keys()])) {
+        if (!element.isConnected) this._destroySlider(element);
+      }
     });
+    this.mo = observer;
     this.mo.observe(document.body, { childList: true, subtree: true });
     this._initialized = true;
   }
 
-  destroy() {
-    if (typeof window === 'undefined') return;
-    if (this.io) this.io.disconnect();
-    if (this.mo) this.mo.disconnect();
-    this.instances.forEach((data, el) => {
+  _destroySlider(el) {
+    const data = this.instances.get(el);
+    if (data) {
       const target = data.listenerTarget || data.wrapper || el;
-      if (data.touch) {
-        target.removeEventListener('touchstart', data.events.touchstart, true);
-        target.removeEventListener('touchmove',  data.events.touchmove,  true);
-        target.removeEventListener('touchend',   data.events.touchend,   true);
-        target.removeEventListener('touchcancel',data.events.touchcancel,true);
-        if (data.events.firstTouch) target.removeEventListener('touchstart', data.events.firstTouch, true);
-      } else {
-        if (data.events.mousemove) el.removeEventListener('mousemove', data.events.mousemove);
-        if (data.events.firstHover) el.removeEventListener('mouseenter', data.events.firstHover);
-        if (data.events.mouseout) el.removeEventListener('mouseleave', data.events.mouseout);
-        if (data.events.mouseenter) el.removeEventListener('mouseenter', data.events.mouseenter);
+      for (const name of ['touchstart', 'touchmove', 'touchend', 'touchcancel']) {
+        if (data.events[name]) target.removeEventListener(name, data.events[name], true);
+      }
+      if (data.events.firstTouch) el.removeEventListener('touchstart', data.events.firstTouch, true);
+      for (const [name, type] of [['mousemove','mousemove'], ['firstHover','mouseenter'], ['mouseout','mouseleave'], ['mouseenter','mouseenter']]) {
+        if (data.events[name]) el.removeEventListener(type, data.events[name]);
       }
       if (data.events.resize) {
         window.removeEventListener('resize', data.events.resize);
         window.removeEventListener('orientationchange', data.events.resize);
       }
-    });
-    for (const [el, state] of this._originalStates) {
+    }
+    const state = this._originalStates.get(el);
+    if (state) {
+      state.active = false;
+      for (const cleanup of state.cleanups) cleanup();
+      for (const frame of state.frames) cancelAnimationFrame(frame);
       el.replaceChildren(...state.nodes);
+      for (const [node, item, active] of state.classes) {
+        node.classList.toggle('slider-item', item);
+        node.classList.toggle('active', active);
+      }
       el.classList.toggle('slider', state.slider);
       el.classList.toggle('slider_touch', state.touch);
       el.style.overflow = state.overflow;
       el.style.overscrollBehavior = state.overscrollBehavior;
     }
-    this._originalStates.clear();
-    this.instances.clear();
+    this._unobserve(el);
+    this._originalStates.delete(el);
+    this.instances.delete(el);
+  }
+
+  destroy() {
+    if (typeof window === 'undefined') return;
+    this.io?.disconnect();
+    this._observed.clear();
+    this.mo?.disconnect();
+    for (const el of new Set([...this.instances.keys(), ...this._originalStates.keys()])) this._destroySlider(el);
     this.io = null;
     this.mo = null;
     this.sliders = [];
     this._initialized = false;
   }
 
+  _observe(el) {
+    if (!this.io || this._observed.has(el) || this._originalStates.has(el)) return;
+    this._observed.add(el);
+    this.io.observe(el);
+  }
+
+  _unobserve(el) {
+    this.io?.unobserve(el);
+    this._observed.delete(el);
+  }
+
   observeSliders() {
-    if (typeof window === 'undefined' || typeof document === 'undefined') return;
-    if (!('IntersectionObserver' in window)) {
-      console.warn('slider: IntersectionObserver is not supported');
-      return;
-    }
-
-    this.sliders = document.querySelectorAll('[x-slider]');
-    this.io = new IntersectionObserver(entries => {
-      for (const entry of entries) {
-        if (entry.isIntersecting && entry.target && !this.instances.has(entry.target)) {
-          this.initSlider(entry.target);
+    if (typeof window === 'undefined' || typeof document === 'undefined' || !('IntersectionObserver' in window)) return;
+    if (!this.io) {
+      const observer = new IntersectionObserver(entries => {
+        if (this.io !== observer) return;
+        for (const entry of entries) {
+          if (entry.isIntersecting && this._observed.has(entry.target) && entry.target.isConnected !== false && !this._originalStates.has(entry.target)) this.initSlider(entry.target);
         }
-      }
-    }, { rootMargin: '60px 0px 60px 0px', threshold: 0 });
-
-    for (const slider of this.sliders) {
-      if (slider) {
-        this.io.observe(slider);
-      }
+      }, { rootMargin: '60px 0px 60px 0px', threshold: 0 });
+      this.io = observer;
+    }
+    this.sliders = document.querySelectorAll('[x-slider]');
+    for (const element of this.sliders) {
+      if (!this._originalStates.has(element)) this._observe(element);
     }
   }
 
@@ -289,7 +312,7 @@ export class Slider {
 
     if ('gap' in config) {
       const gapValue = Number(config.gap);
-      validated.gap = isNaN(gapValue) || gapValue < 0 ? 0 : gapValue;
+      validated.gap = !Number.isFinite(gapValue) || gapValue < 0 ? 0 : gapValue;
     }
 
     if ('rubber' in config) {
@@ -320,7 +343,7 @@ export class Slider {
     }
 
     if (this._originalStates.has(el)) return;
-    const rawSlides = [...el.children].map(node => node.cloneNode(true));
+    const rawSlides = [...el.children];
     if (!rawSlides.length) {
       console.warn('slider.initSlider: No slides found', el);
       return;
@@ -329,6 +352,17 @@ export class Slider {
     // A single slide does not need slider behavior. Keep the original DOM so
     // horizontal gestures can be handled by a parent scroller, but activate a
     // deferred image just as the regular initialization path would.
+    this._originalStates.set(el, {
+      nodes: Array.from(el.childNodes),
+      classes: rawSlides.map(node => [node, node.classList.contains('slider-item'), node.classList.contains('active')]),
+      active: true, cleanups: new Set(), frames: new Set(),
+      slider: el.classList.contains('slider'),
+      touch: el.classList.contains('slider_touch'),
+      overflow: el.style.overflow,
+      overscrollBehavior: el.style.overscrollBehavior
+    });
+
+    const state = this._originalStates.get(el);
     if (rawSlides.length === 1) {
       const slide = el.firstElementChild;
       const img = slide?.querySelector('img');
@@ -344,17 +378,10 @@ export class Slider {
       }
       if (img) img.setAttribute('loading', 'eager');
 
-      this.io?.unobserve(el);
+      this._unobserve(el);
       return;
     }
 
-    this._originalStates.set(el, {
-      nodes: Array.from(el.childNodes),
-      slider: el.classList.contains('slider'),
-      touch: el.classList.contains('slider_touch'),
-      overflow: el.style.overflow,
-      overscrollBehavior: el.style.overscrollBehavior
-    });
 
     el.classList.add('slider');
     el.style.overflow = 'hidden';
@@ -436,7 +463,7 @@ export class Slider {
       // Touch interactions for sliding are disabled by config.
       // Do not attach slider touch handlers; other handlers should receive touch events.
       slides[0].classList.add('active');
-      this.io?.unobserve(el);
+      this._unobserve(el);
       return;
     }
 
@@ -446,7 +473,9 @@ export class Slider {
 
     const updateSlideWidth = () => slides[0].offsetWidth + gap;
 
+    let cancelTransition = null;
     const setSlide = (i, instant = false) => {
+      cancelTransition?.();
       const targetIndex = Math.max(0, Math.min(i, slides.length - 1));
       const slideWidth = updateSlideWidth();
       current = targetIndex;
@@ -464,16 +493,30 @@ export class Slider {
       }
 
       if (!instant) {
-        wrapper.addEventListener('transitionend', () => {
+        const onTransitionEnd = event => {
+          if (event.target !== wrapper || event.propertyName !== 'transform') return;
+          cancelTransition?.();
+          if (!state.active) return;
           wrapper.style.transition = 'none';
           if (isiOS) {
             wrapper.style.pointerEvents = 'none';
-            requestAnimationFrame(() => {
+            const frame = requestAnimationFrame(() => {
+              state.frames.delete(frame);
+              if (!state.active) return;
               void wrapper.offsetWidth;
               wrapper.style.pointerEvents = 'auto';
             });
+            state.frames.add(frame);
           }
-        }, { once: true });
+        };
+        const cleanup = () => {
+          wrapper.removeEventListener('transitionend', onTransitionEnd);
+          state.cleanups.delete(cleanup);
+          cancelTransition = null;
+        };
+        cancelTransition = cleanup;
+        wrapper.addEventListener('transitionend', onTransitionEnd);
+        state.cleanups.add(cleanup);
       }
     };
 
@@ -504,7 +547,13 @@ export class Slider {
         }
 
         if (!isTouch && (!img.complete || img.naturalWidth === 0)) {
-          img.addEventListener('load', () => {
+          const cleanup = () => {
+            img.removeEventListener('load', onLoad);
+            state.cleanups.delete(cleanup);
+          };
+          const onLoad = () => {
+            cleanup();
+            if (!state.active) return;
             if (cursorX != null) {
               const rect = el.getBoundingClientRect();
               const w = el.offsetWidth;
@@ -513,7 +562,9 @@ export class Slider {
                 if (idx === i) setSlide(i, true);
               }
             }
-          }, { once: true });
+          };
+          img.addEventListener('load', onLoad, { once: true });
+          state.cleanups.add(cleanup);
         }
       }
     };
@@ -526,7 +577,7 @@ export class Slider {
 
         const firstTouch = () => {
           loadAllImages();
-          el.removeEventListener('touchstart', firstTouch);
+          el.removeEventListener('touchstart', firstTouch, true);
         };
         events.firstTouch = firstTouch;
         el.addEventListener('touchstart', firstTouch, { passive:false, capture:true });
@@ -624,6 +675,7 @@ export class Slider {
     window.addEventListener('orientationchange', handleResize);
     events.resize = handleResize;
 
+    this._unobserve(el);
     this.instances.set(el, { wrapper, slides, events, touch:isTouch, listenerTarget:el });
   }
 }

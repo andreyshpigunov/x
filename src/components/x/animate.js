@@ -97,6 +97,8 @@ class Animate {
      * @private
      */
     this._elements = null;
+    this._frame = null;
+    this._loadHandler = null;
   }
   
   /**
@@ -130,6 +132,10 @@ class Animate {
       parent.removeEventListener('scroll', this._scrollHandler);
     });
     window.removeEventListener('resize', this._scrollHandler);
+    if (this._loadHandler) window.removeEventListener('load', this._loadHandler);
+    if (this._frame !== null) window.cancelAnimationFrame(this._frame);
+    this._frame = null;
+    this._loadHandler = null;
     
     this._ticking = false;
     this._animations = [];
@@ -161,7 +167,7 @@ class Animate {
           trigger: lib.qs(json.trigger) || element,
           parent: lib.qs(json.parent) || window,
           start: json.start,
-          end: json.end || false,
+          end: json.end ?? false,
           class: json.class,
           classRemove: json.classRemove !== false,
           functionName: json.functionName,
@@ -190,7 +196,8 @@ class Animate {
     }
     window.addEventListener('resize', this._scrollHandler);
     
-    const runScroll = () => requestAnimationFrame(() => this._scroll());
+    const runScroll = () => this._scrollHandler();
+    this._loadHandler = runScroll;
     if (document.readyState === 'complete') {
       runScroll();
     } else {
@@ -206,9 +213,13 @@ class Animate {
   _scrollHandler() {
     if (!this._ticking) {
       this._ticking = true;
-      window.requestAnimationFrame(() => {
-        this._scroll();
-        this._ticking = false;
+      this._frame = window.requestAnimationFrame(() => {
+        this._frame = null;
+        if (!this._initialized) return;
+        const animations = this._animations;
+        try { this._scroll(); } finally {
+          if (animations === this._animations) this._ticking = false;
+        }
       });
     }
   }
@@ -221,7 +232,9 @@ class Animate {
    * @private
    */
   _scroll() {
-    for (let i = 0; i < this._animations.length; i++) {
+    const animations = this._animations;
+    for (let i = 0; i < animations.length; i++) {
+      if (animations !== this._animations) return;
       const item = this._animations[i];
       if (!item.element.isConnected || !item.trigger.isConnected) continue;
       if (!item.fn && item.functionName && typeof window[item.functionName] === 'function') {

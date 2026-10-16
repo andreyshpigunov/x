@@ -125,6 +125,8 @@ class Lazyload {
      * @private
      */
     this._observer = null;
+    this._generation = 0;
+    this._pending = new Map();
 
     /**
      * Observer options.
@@ -147,7 +149,10 @@ class Lazyload {
     if (!('IntersectionObserver' in window)) return;
 
     if (!this._observer) {
-      this._observer = new IntersectionObserver(this._callback.bind(this), this._options);
+      const observer = new IntersectionObserver(entries => {
+        if (this._observer === observer) this._callback(entries);
+      }, this._options);
+      this._observer = observer;
     }
 
     const images = lib.qsa('[x-lazyload]');
@@ -162,6 +167,9 @@ class Lazyload {
    * SSR-safe: no-op when window is undefined.
    */
   destroy() {
+    this._generation++;
+    for (const cancel of this._pending.values()) cancel();
+    this._pending.clear();
     if (typeof window === 'undefined') return;
     if (this._observer) {
       this._observer.disconnect();
@@ -198,8 +206,18 @@ class Lazyload {
         return;
       }
       const img = new Image();
-      img.onload = resolve;
-      img.onerror = () => reject(new Error('lazyload: load failed'));
+      const finish = error => {
+        this._pending.delete(img);
+        img.onload = img.onerror = null;
+        if (error) reject(error); else resolve();
+      };
+      this._pending.set(img, () => {
+        finish(new Error('lazyload: cancelled'));
+        img.removeAttribute?.('srcset');
+        img.removeAttribute?.('src');
+      });
+      img.onload = () => finish();
+      img.onerror = () => finish(new Error('lazyload: load failed'));
       if (srcset) img.srcset = srcset;
       if (src) img.src = src;
     });
@@ -223,8 +241,10 @@ class Lazyload {
     }
 
     const obs = this._observer;
+    const generation = this._generation;
     this._fetchImage(src || null, srcset || null)
       .then(() => {
+        if (generation !== this._generation) return;
         if (srcset) {
           img.srcset = srcset;
           img.removeAttribute('data-srcset');
@@ -237,6 +257,7 @@ class Lazyload {
         if (obs) obs.unobserve(img);
       })
       .catch(() => {
+        if (generation !== this._generation) return;
         if (obs) obs.unobserve(img);
       });
   }

@@ -1,6 +1,7 @@
 /**
  * @fileoverview Autocomplete for dropdown: async load, render items, onSelect.
  *
+ * loadData(ctx, {signal}) receives an AbortSignal for fetch; stale responses are ignored.
  * Works with [x-dropdown-open] and [x-dropdown]: loadData fetches data, renderItem builds list HTML,
  * onSelect handles item choice. Debounced input, race-safe requests, pointer and keyboard navigation.
  *
@@ -75,6 +76,8 @@ class AutocompleteInstance {
     this._clicked = false;
     this._selecting = false;
     this._currentLoadId = 0;
+    this._controller = null;
+    this._destroyed = false;
     this._skipNextHideSelect = false;
     this._activeItem = null;
     this._activeIndex = -1;
@@ -110,6 +113,7 @@ class AutocompleteInstance {
       this._defaultState();
     }
 
+    if (this._destroyed) return false;
     this.field.addEventListener('focus', this.debouncedLoadData);
     this.field.addEventListener('input', this._inputHandler);
     this.field.addEventListener('keydown', this._keyHandler);
@@ -124,17 +128,14 @@ class AutocompleteInstance {
       this._loadData();
     }
 
-    return true;
+    return !this._destroyed;
   }
 
   destroy({ reset = true } = {}) {
     if (typeof window === 'undefined') return;
-    if (!this.field || !this.list || !this.dropdown) return;
-
+    if (this._destroyed || !this.field || !this.list || !this.dropdown) return;
+    this._destroyed = true;
     this._invalidateLoad();
-    if (reset) {
-      this._reset();
-    }
 
     this.field.removeEventListener('focus', this.debouncedLoadData);
     this.field.removeEventListener('input', this._inputHandler);
@@ -147,10 +148,14 @@ class AutocompleteInstance {
     this._clearActiveItem();
     this._restoreAria();
 
-    this.field = null;
-    this.list = null;
-    this.dropdown = null;
-    this.data = null;
+    try {
+      if (reset) this._reset();
+    } finally {
+      this.field = null;
+      this.list = null;
+      this.dropdown = null;
+      this.data = null;
+    }
   }
 
   _keyHandler(e) {
@@ -181,6 +186,7 @@ class AutocompleteInstance {
     if (e.key === 'Escape') {
       if (!this._isOpen()) return;
       e.preventDefault();
+      e.stopPropagation();
       this._skipNextHideSelect = true;
       this._clearActiveItem();
       this.field?.blur();
@@ -201,6 +207,8 @@ class AutocompleteInstance {
 
   _invalidateLoad() {
     this._currentLoadId++;
+    this._controller?.abort();
+    this._controller = null;
     this.debouncedLoadData.cancel();
   }
 
@@ -273,11 +281,9 @@ class AutocompleteInstance {
 
   _reset() {
     this._invalidateLoad();
-    if (this.resetFunc) {
-      this.resetFunc();
-    }
     this.data = null;
     this._defaultState();
+    if (this.resetFunc) this.resetFunc();
   }
 
   async _loadData() {
@@ -296,18 +302,26 @@ class AutocompleteInstance {
     this._loadingState();
 
     try {
-      const data = await this.loadData(this);
+      this._controller?.abort();
+      const controller = new AbortController();
+      this._controller = controller;
+      const data = await this.loadData(this, { signal: controller.signal });
       if (loadId !== this._currentLoadId) return;
 
-      this.data = this.mapData ? this.mapData(data) : data;
+      const mapped = this.mapData ? this.mapData(data) : data;
+      if (loadId !== this._currentLoadId || this._destroyed) return;
+      this.data = mapped;
       this.render();
     } catch (err) {
-      if (loadId === this._currentLoadId) this._reset();
+      if (loadId !== this._currentLoadId) return;
+      this._reset();
       console.error('Autocomplete: load error', err);
     }
   }
 
   render() {
+    if (this._destroyed || !this.list) return;
+    const loadId = this._currentLoadId;
     if (!this.data) {
       this._reset();
       return;
@@ -323,7 +337,12 @@ class AutocompleteInstance {
       return;
     }
 
-    const html = this.data.map(this.renderItem).join('');
+    const renderItem = this.renderItem;
+    const html = this.data.map((item, index, array) => {
+      if (this._destroyed || loadId !== this._currentLoadId) return '';
+      return renderItem(item, index, array);
+    }).join('');
+    if (this._destroyed || loadId !== this._currentLoadId) return;
     lib.render(this.list, html);
     this._prepareItems();
   }
@@ -433,8 +452,9 @@ class AutocompleteManager {
     this.destroy(dropdownId, { reset: false });
 
     const instance = new AutocompleteInstance(dropdownId, options);
-    if (instance.init()) {
-      this.instances.set(dropdownId, instance);
+    this.instances.set(dropdownId, instance);
+    if (!instance.init() && this.instances.get(dropdownId) === instance) {
+      this.instances.delete(dropdownId);
     }
   }
 
@@ -445,15 +465,14 @@ class AutocompleteManager {
       const instance = this.instances.get(dropdownId);
       if (!instance) return;
 
-      instance.destroy(options);
       this.instances.delete(dropdownId);
+      instance.destroy(options);
       return;
     }
 
-    this.instances.forEach(instance => {
-      instance.destroy(options);
-    });
+    const instances = [...this.instances.values()];
     this.instances.clear();
+    for (const instance of instances) instance.destroy(options);
   }
 
   get(dropdownId) {

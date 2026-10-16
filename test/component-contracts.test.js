@@ -141,6 +141,8 @@ test('sheets scopes duplicate keys to the requested container', () => {
   const secondTab = new FakeElement('button');
   const firstBody = new FakeElement('div');
   const secondBody = new FakeElement('div');
+  firstTab.closestSelectors.set('[x-sheets]', firstContainer);
+  secondTab.closestSelectors.set('[x-sheets]', secondContainer);
   firstBody.closestSelectors.set('[x-sheets]', firstContainer);
   secondBody.closestSelectors.set('[x-sheets]', secondContainer);
   const originalQs = lib.qs;
@@ -151,6 +153,8 @@ test('sheets scopes duplicate keys to the requested container', () => {
     return null;
   };
   lib.qsa = (selector, context) => {
+    if (selector === '[x-sheet-open="same"]') return context === secondContainer ? [secondTab] : [firstTab];
+    if (selector === '[x-sheet="same"]') return context === secondContainer ? [secondBody] : [firstBody];
     if (selector === '[x-sheet-open]') return context === secondContainer ? [secondTab] : [firstTab];
     if (selector === '[x-sheet]') return context === secondContainer ? [secondBody] : [firstBody];
     return [];

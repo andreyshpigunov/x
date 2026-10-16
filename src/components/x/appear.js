@@ -98,7 +98,10 @@ class Appear {
     if (!this._targets.length) return;
     
     const { root, rootMargin, threshold } = this._options;
-    this._observer = new IntersectionObserver(this._observerCallback, { root: root || null, rootMargin, threshold });
+    const observer = new IntersectionObserver(entries => {
+      if (this._observer === observer) this._observerCallback(entries);
+    }, { root: root || null, rootMargin, threshold });
+    this._observer = observer;
     for (let i = 0; i < this._targets.length; i++) {
       this._observer.observe(this._targets[i]);
     }
@@ -127,13 +130,15 @@ class Appear {
     const observer = this._observer;
     
     for (let i = 0; i < entries.length; i++) {
+      if (observer !== this._observer) return;
       const entry = entries[i];
       const target = entry.target;
       if (entry.isIntersecting) {
         if (appearedClass && !target.classList.contains(appearedClass)) {
           target.classList.add(appearedClass);
-          if (once && observer) observer.unobserve(target);
+
         }
+        if (once && observer) observer.unobserve(target);
         if (visibleClass && !target.classList.contains(visibleClass)) {
           target.classList.add(visibleClass);
           target.dispatchEvent(new CustomEvent('visible', { detail: { appeared: true } }));
